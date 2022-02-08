@@ -1,0 +1,15 @@
+.wenzi{overflow: hidden;text-overflow: ellipsis;white-space: nowrap;}
+.wenzid{overflow : hidden;text-overflow: ellipsis;display: -webkit-box;-webkit-line-clamp: 2;-webkit-box-orient: vertical;}
+.bg_f{background:#fff}
+.ios{cursor: pointer;}
+.cl:after{content:".";display:block;height:0;clear:both;visibility:hidden}
+.y{float:right}
+.z{float:left}
+.none{display:none}
+a{text-decoration:none;}
+.huis{color:#999 !important;}
+
+.pagination {height: 35px;position: relative; top: .3rem;}
+.pagination .page-item{margin: 0 2px;padding: 0 4px;}
+.page-item.active .page-link {background-color: #ff8a65;border: #ff8a65 1px solid;}
+.page-link{ color: #333;border-radius: 4px;padding: .3rem .6rem;}

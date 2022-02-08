@@ -15,8 +15,8 @@ class Manager extends Migration
     {
         Schema::create('manager', function (Blueprint $table) {
             $table->id();
-            $table->char('name',32)->unique();
-            $table->string('username',32);
+            $table->char('guid',32)->unique();
+            $table->string('username',32)->unique();
             $table->string('nickname',32);
             $table->string('email',128);
             $table->string('phone',16);
@@ -25,7 +25,7 @@ class Manager extends Migration
             $table->integer('token_expire')->unsigned();
             $table->string('avatar',255);
             $table->tinyInteger('status');
-            $table->timestamp('last_login');
+            $table->integer('last_login')->unsigned();
             $table->string('last_ip',64);
             $table->rememberToken();
             $table->timestamps();
