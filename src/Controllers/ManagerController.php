@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\ValidationException;
 
 
-class UserController extends Controller
+class ManagerController extends Controller
 {
 
     public function index(Request $request)

@@ -2,6 +2,7 @@
 
 namespace Aphly\LaravelAdmin;
 
+use Aphly\LaravelAdmin\Middleware\ManagerAuth;
 use Illuminate\Support\ServiceProvider;
 
 class AdminServiceProvider extends ServiceProvider
@@ -17,7 +18,8 @@ class AdminServiceProvider extends ServiceProvider
 		$this->mergeConfigFrom(
             __DIR__.'/config/admin.php', 'admin'
         );
-        $this->app->make('Aphly\LaravelAdmin\Controllers\TestController');
+        $this->app->make('Aphly\LaravelAdmin\Controllers\AdminController');
+        //$this->app->make('Aphly\LaravelAdmin\Controllers\ManagerController');
     }
 
     /**
@@ -34,7 +36,7 @@ class AdminServiceProvider extends ServiceProvider
         $this->loadMigrationsFrom(__DIR__.'/migrations');
         $this->loadViewsFrom(__DIR__.'/views', 'laravel-admin');
         $this->loadRoutesFrom(__DIR__.'/routes/web.php');
-        //$this->addMiddlewareAlias('xingfupeng.api', ApiAuthMiddleware::class);
+        $this->addMiddlewareAlias('ManagerAuth', ManagerAuth::class);
     }
 
     protected function addMiddlewareAlias($name, $class)

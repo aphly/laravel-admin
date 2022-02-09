@@ -13,8 +13,16 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/sss', function () {
-    return view("laravel-admin::test");
-});
+Route::get('/s', 'Aphly\LaravelAdmin\Controllers\AdminController@login');
+Route::get('/admin/login', 'Aphly\LaravelAdmin\Controllers\AdminController@login');
+//Route::get('/', function () {
+//    dd('xxx');
+//    return view("laravel-admin::test");
+//});
 
-Route::get('/t', 'Aphly\LaravelAdmin\Controllers\TestController@index');
+//Route::get('/admin/login', 'Aphly\LaravelAdmin\Controllers\AdminController@login');
+//
+Route::middleware(['ManagerAuth'])->group(function () {
+    Route::get('/admin/index', 'Aphly\LaravelAdmin\Controllers\AdminController@index');
+    Route::get('/admin/logout', 'Aphly\LaravelAdmin\Controllers\AdminController@logout');
+});
