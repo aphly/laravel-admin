@@ -12,17 +12,15 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+Route::middleware(['web'])->group(function () {
+    Route::match(['get', 'post'],'/s', 'Aphly\LaravelAdmin\Controllers\TestController@index');
+});
 
-Route::get('/s', 'Aphly\LaravelAdmin\Controllers\AdminController@login');
-Route::get('/admin/login', 'Aphly\LaravelAdmin\Controllers\AdminController@login');
-//Route::get('/', function () {
-//    dd('xxx');
-//    return view("laravel-admin::test");
-//});
+Route::middleware(['web'])->group(function () {
+    Route::match(['get', 'post'],'/admin/login', 'Aphly\LaravelAdmin\Controllers\AdminController@login');
 
-//Route::get('/admin/login', 'Aphly\LaravelAdmin\Controllers\AdminController@login');
-//
-Route::middleware(['ManagerAuth'])->group(function () {
-    Route::get('/admin/index', 'Aphly\LaravelAdmin\Controllers\AdminController@index');
-    Route::get('/admin/logout', 'Aphly\LaravelAdmin\Controllers\AdminController@logout');
+    Route::middleware(['ManagerAuth'])->group(function () {
+        Route::get('/admin/index', 'Aphly\LaravelAdmin\Controllers\AdminController@index');
+        Route::get('/admin/logout', 'Aphly\LaravelAdmin\Controllers\AdminController@logout');
+    });
 });

@@ -2,6 +2,7 @@
 
 namespace Aphly\LaravelAdmin\Controllers;
 
+use Aphly\LaravelAdmin\Requests\ManagerRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -49,10 +50,11 @@ class AdminController extends Controller
 //                    'username' =>'用户不存在',
 //                ]);
 //            }
+            $validated = $this->validated(new ManagerRequest);
+            dd($validated);
         }else{
             $data=['title'=>'后台登录'];
-
-            return view('laravel-admin::admin.test',['data'=>$data]);
+            return view('laravel-admin::admin.login',['data'=>$data]);
         }
     }
 

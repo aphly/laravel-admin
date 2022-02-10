@@ -12,7 +12,8 @@ class TestController extends Controller
 
     public function index()
     {
-        return 'xxxxx';
+        $data=['title'=>'后台登录'];
+        return view('laravel-admin::admin.login',['data'=>$data]);
     }
 
 }
