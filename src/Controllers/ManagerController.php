@@ -2,12 +2,13 @@
 
 namespace Aphly\LaravelAdmin\Controllers;
 
-use App\Http\Controllers\Controller;
+use Aphly\Laravel\Libs\Helper;
+use Aphly\LaravelAdmin\Models\Manager;
+use Aphly\LaravelAdmin\Requests\ManagerRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\ValidationException;
-
 
 class ManagerController extends Controller
 {
@@ -16,42 +17,45 @@ class ManagerController extends Controller
     {
         if($request->isMethod('post')){
             $post = $request->input('delete');
-            User::destroy($post);
+            Manager::destroy($post);
             return redirect()->route('admin.user')->with('status', 'success');
         }else{
             $res=['title'=>'我的'];
             //$res['user']=Auth::user();
-
-            $res['data'] = User::Paginate(config('G.perPage'));
-            return view('admin.user.index',['res'=>$res]);
+            $res['data'] = Manager::Paginate(config('admin.perPage'));
+            return view('laravel-admin::manager.index',['res'=>$res]);
         }
     }
 
-    public function add(Request $request)
+    public function add(ManagerRequest $request)
     {
         if($request->isMethod('post')){
-            $user = new User;
-            $post = $user->admincheck($request,'doadd');
-            $user->username = $post['username'];
-            if($post['nickname']){
-                $user->nickname = $post['nickname'];
-            }
-            if($post['email']){
-                $user->email = $post['email'];
-            }
-            if($post['phone']){
-                $user->phone = $post['phone'];
-            }
-            $user->password = Hash::make($post['password']);
-            if($user->save()){
-                return redirect()->route('admin.user')->with('status', 'success');
-            }else{
-                return back()->with('status', 'fail');
-            }
+//            $user = new Manager;
+//            $post = $user->admincheck($request,'doadd');
+//            $user->username = $post['username'];
+//            if($post['nickname']){
+//                $user->nickname = $post['nickname'];
+//            }
+//            if($post['email']){
+//                $user->email = $post['email'];
+//            }
+//            if($post['phone']){
+//                $user->phone = $post['phone'];
+//            }
+//            $user->password = Hash::make($post['password']);
+            $post = $request->all();
+            $post['uuid'] = $post['token'] = Helper::uuid();
+            $post['token_expire'] = '';
+            Manager::create($post);
+//            if($user->save()){
+//                return redirect()->route('admin.user')->with('status', 'success');
+//            }else{
+//                return back()->with('status', 'fail');
+//            }
         }else{
             $res=['title'=>'我的'];
             //$res['user']=Auth::user();
-            return view('admin.user.add',['res'=>$res]);
+            return view('laravel-admin::manager.add',['res'=>$res]);
         }
 
     }
@@ -85,7 +89,7 @@ class ManagerController extends Controller
             $res=['title'=>'我的'];
             $res['user']=Auth::user();
             $res['info'] = User::find($request->id);
-            return view('admin.user.edit',['res'=>$res]);
+            return view('laravel-admin::manager.edit',['res'=>$res]);
         }
     }
 
@@ -107,7 +111,7 @@ class ManagerController extends Controller
             $res['userrole'] = $res['info']->role->toArray();
             $res['userrole'] = array_column($res['userrole'], 'id');
             $res['role'] = Role::all()->toArray();
-            return view('admin.user.role',['res'=>$res]);
+            return view('laravel-admin::manager.role',['res'=>$res]);
         }
 
     }

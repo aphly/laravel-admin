@@ -15,19 +15,18 @@ class Manager extends Migration
     {
         Schema::create('manager', function (Blueprint $table) {
             $table->id();
-            $table->char('guid',32)->unique();
+            $table->char('uuid',32)->unique();
             $table->string('username',32)->unique();
-            $table->string('nickname',32);
-            $table->string('email',128);
-            $table->string('phone',16);
+            $table->string('nickname',32)->nullable();
+            $table->string('email',128)->nullable();
+            $table->string('phone',16)->nullable();
             $table->string('password');
             $table->string('token')->unique();
             $table->integer('token_expire')->unsigned();
-            $table->string('avatar',255);
+            $table->string('avatar',255)->nullable();
             $table->tinyInteger('status');
             $table->integer('last_login')->unsigned();
             $table->string('last_ip',64);
-            $table->rememberToken();
             $table->timestamps();
         });
     }

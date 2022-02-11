@@ -45,7 +45,7 @@
                          <button class="badge badge-danger" type="submit">删除</button></td>
                  </tr>
                  <tr>
-                     <td colspan="0">{{$res['data']->links('common.pagination')}}</td>
+                     <td colspan="0">{{$res['data']->links('laravel-admin::common.pagination')}}</td>
                  </tr>
 
              </table>

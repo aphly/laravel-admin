@@ -14,6 +14,11 @@ use Illuminate\Support\Facades\Route;
 */
 Route::middleware(['web'])->group(function () {
     Route::match(['get', 'post'],'/s', 'Aphly\LaravelAdmin\Controllers\TestController@index');
+
+    Route::prefix('admin')->group(function () {
+        Route::get('/manager/index', 'Aphly\LaravelAdmin\Controllers\ManagerController@index');
+        Route::match(['get', 'post'],'/manager/add', 'Aphly\LaravelAdmin\Controllers\ManagerController@add');
+    });
 });
 
 Route::middleware(['web'])->group(function () {

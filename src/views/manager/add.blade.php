@@ -3,7 +3,7 @@
     <h5 class="nav-title">用户新增</h5>
 </div>
 <div class="imain">
-    <form method="post" action="/admin/user/add" class="userform">
+    <form method="post" action="/admin/manager/add" class="userform">
         @csrf
         <div class="">
             <div class="form-group">

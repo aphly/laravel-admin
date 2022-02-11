@@ -8,22 +8,14 @@
         </div>
         <div class="form-group">
             <label for="exampleInputEmail1">用户名</label>
-            <input type="text" name="username" class="form-control @error('username') is-invalid @enderror" value="{{ old('username') }}">
-            @error('username')
-            <div class="invalid-feedback">
-                {{ $message }}
-            </div>
-            @enderror
+            <input type="text" name="username" class="form-control " value="">
+
         </div>
 
         <div class="form-group">
             <label for="exampleInputEmail1">密码</label>
-            <input type="password" name="password" id="password" class="form-control @error('password') is-invalid @enderror" value="">
-            @error('password')
-            <div class="invalid-feedback">
-                {{ $message }}
-            </div>
-            @enderror
+            <input type="password" name="password" id="password" class="form-control " value="">
+
         </div>
 
         @error('failedlogin')

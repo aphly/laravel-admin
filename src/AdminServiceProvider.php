@@ -19,7 +19,7 @@ class AdminServiceProvider extends ServiceProvider
             __DIR__.'/config/admin.php', 'admin'
         );
         $this->app->make('Aphly\LaravelAdmin\Controllers\AdminController');
-        //$this->app->make('Aphly\LaravelAdmin\Controllers\ManagerController');
+        $this->app->make('Aphly\LaravelAdmin\Controllers\ManagerController');
     }
 
     /**

@@ -4,7 +4,7 @@ namespace Aphly\LaravelAdmin\Requests;
 
 use Aphly\Laravel\Requests\FormRequest;
 
-class ManagerRequest extends FormRequest
+class LoginRequest extends FormRequest
 {
 
     public function rules()

@@ -22,13 +22,11 @@ class Manager extends Authenticatable
      */
 
     protected $fillable = [
-        'username',
+        'uuid',
+        'username','nickname','email','phone',
         'password',
-        'api_token',
-        'api_token_expire',
-        'lastlogin',
-        'phone',
-        'avatar'
+        'token',
+        'token_expire','avatar','status'
     ];
 
     /**
