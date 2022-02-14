@@ -2,7 +2,7 @@
     <h5 class="nav-title">用户管理</h5>
 </div>
 <div class="imain">
-    <form method="post" action="/admin/user/edit/{{$res['info']['id']}}" class="userform">
+    <form method="post" action="/admin/manager/{{$res['info']['id']}}/edit" class="userform">
         @csrf
         <div class="">
             <div class="form-group">

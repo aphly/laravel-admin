@@ -2,11 +2,13 @@
 
 namespace Aphly\LaravelAdmin\Controllers;
 
+use Aphly\Laravel\Exceptions\ApiException;
 use Aphly\Laravel\Libs\Helper;
 use Aphly\LaravelAdmin\Models\Manager;
+use Aphly\LaravelAdmin\Models\RbacRole;
+use Aphly\LaravelAdmin\Models\RbacUserRole;
 use Aphly\LaravelAdmin\Requests\ManagerRequest;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\ValidationException;
 
@@ -18,10 +20,9 @@ class ManagerController extends Controller
         if($request->isMethod('post')){
             $post = $request->input('delete');
             Manager::destroy($post);
-            return redirect()->route('admin.user')->with('status', 'success');
+            throw new ApiException(['code'=>10000,'msg'=>'操作成功']);
         }else{
             $res=['title'=>'我的'];
-            //$res['user']=Auth::user();
             $res['data'] = Manager::Paginate(config('admin.perPage'));
             return view('laravel-admin::manager.index',['res'=>$res]);
         }
@@ -30,90 +31,71 @@ class ManagerController extends Controller
     public function add(ManagerRequest $request)
     {
         if($request->isMethod('post')){
-//            $user = new Manager;
-//            $post = $user->admincheck($request,'doadd');
-//            $user->username = $post['username'];
-//            if($post['nickname']){
-//                $user->nickname = $post['nickname'];
-//            }
-//            if($post['email']){
-//                $user->email = $post['email'];
-//            }
-//            if($post['phone']){
-//                $user->phone = $post['phone'];
-//            }
-//            $user->password = Hash::make($post['password']);
             $post = $request->all();
             $post['uuid'] = $post['token'] = Helper::uuid();
-            $post['token_expire'] = '';
-            Manager::create($post);
-//            if($user->save()){
-//                return redirect()->route('admin.user')->with('status', 'success');
-//            }else{
-//                return back()->with('status', 'fail');
-//            }
+            $post['token_expire'] = time();
+            $post['password'] = Hash::make($post['password']);
+            $manager = Manager::create($post);
+            if($manager->id){
+                throw new ApiException(['code'=>10000,'msg'=>'添加成功']);
+            }else{
+                throw new ApiException(['code'=>10001,'msg'=>'添加失败']);
+            }
         }else{
             $res=['title'=>'我的'];
-            //$res['user']=Auth::user();
             return view('laravel-admin::manager.add',['res'=>$res]);
         }
-
     }
 
-    public function edit(Request $request)
+    public function edit(ManagerRequest $request)
     {
         if($request->isMethod('post')) {
-            $user = User::find($request->id);
-            $post = $user->admincheck($request,'doedit');
-            if($post['username']){
-                $user->username = $post['username'];
-            }
-            if($post['nickname']){
-                $user->nickname = $post['nickname'];
-            }
-            if($post['nickname']){
-                $user->email = $post['email'];
-            }
-            if($post['phone']){
-                $user->phone = $post['phone'];
-            }
+            $manager = Manager::find($request->id);
+            $post = $request->all();
             if($post['password']){
-                $user->password = Hash::make($post['password']);
+                $post['password'] = Hash::make($post['password']);
             }
-            if($user->save()){
-                return redirect()->route('admin.user')->with('status', 'success');
+            if($manager->update($post)){
+                throw new ApiException(['code'=>10000,'msg'=>'修改成功']);
             }else{
-                return back()->with('status', 'fail');
+                throw new ApiException(['code'=>10001,'msg'=>'修改失败']);
             }
         }else{
             $res=['title'=>'我的'];
-            $res['user']=Auth::user();
-            $res['info'] = User::find($request->id);
+            $res['info'] = Manager::find($request->id);
             return view('laravel-admin::manager.edit',['res'=>$res]);
+        }
+    }
+
+    public function del(Request $request)
+    {
+        if(Manager::find($request->id)->delete()){
+            throw new ApiException(['code'=>10000,'msg'=>'删除成功']);
+        }else{
+            throw new ApiException(['code'=>10001,'msg'=>'删除失败']);
         }
     }
 
     public function role(Request $request)
     {
         if($request->isMethod('post')) {
-            $userrole = new UserRole;
-            $user = User::find($request->id);
+            //$userrole = new RbacUserRole;
+            $user = Manager::find($request->id);
             if($user){
                 if($user->role()->sync($request->input('role_id'))){
+                    throw new ApiException(['code'=>10000,'msg'=>'删除成功']);
                     return redirect()->route('admin.user')->with('status', 'success');
                 }
             }
-            return back()->with('status', 'fail');
+            throw new ApiException(['code'=>10000,'msg'=>'删除成功']);
         }else{
             $res=['title'=>'我的'];
-            //$res['user']=Auth::user();
-            $res['info'] = User::find($request->id);
+            $res['info'] = Manager::find($request->id);
             $res['userrole'] = $res['info']->role->toArray();
             $res['userrole'] = array_column($res['userrole'], 'id');
-            $res['role'] = Role::all()->toArray();
+            $res['role'] = RbacRole::all()->toArray();
             return view('laravel-admin::manager.role',['res'=>$res]);
         }
-
     }
 
     public function avatar(Request $request)
@@ -145,13 +127,5 @@ class ManagerController extends Controller
             return view('admin.user.avatar',['res'=>$res]);
         }
     }
-
-    public function del(Request $request)
-    {
-        $user = User::find($request->id);
-        $user->delete();
-        return redirect()->route('admin.user')->with('status', 'success');
-    }
-
 
 }

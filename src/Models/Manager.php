@@ -100,16 +100,16 @@ class Manager extends Authenticatable
     protected static function boot()
     {
         parent::boot();
-        static::created(function (User $user) {
-            UserUni::create(['user_id'=>$user->id]);
-            UserInfo::create(['user_id'=>$user->id]);
-        });
-
-        static::deleted(function (User $user) {
-            UserUni::destroy($user->id);
-            UserInfo::destroy($user->id);
-            self::delAvatar($user->avatar);
-        });
+//        static::created(function (User $user) {
+//            UserUni::create(['user_id'=>$user->id]);
+//            UserInfo::create(['user_id'=>$user->id]);
+//        });
+//
+//        static::deleted(function (User $user) {
+//            UserUni::destroy($user->id);
+//            UserInfo::destroy($user->id);
+//            self::delAvatar($user->avatar);
+//        });
     }
 
     static public function delAvatar($avatar) {

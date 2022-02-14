@@ -13,13 +13,13 @@ class AdminController extends Controller
     public function layout()
     {
         $res=['title'=>'我的'];
-        return view('admin.layout',['res'=>$res]);
+        return view('laravel-admin::common.layout',['res'=>$res]);
     }
 
     public function index()
     {
         $res=['title'=>'我的'];
-        return view('admin.index.index',['res'=>$res]);
+        return view('laravel-admin::admin.index',['res'=>$res]);
     }
 
     public function login(loginRequest $request)
@@ -28,9 +28,8 @@ class AdminController extends Controller
             $failedLogin =  new FailedLogin;
             $failedLogin->logincheck($request->ip());
             $credentials = $request->only('username', 'password');
-            if (Auth::guard('admin')->attempt($credentials)) {
-                $request->session()->regenerate();
-                throw new ApiException(['code'=>11000,'msg'=>'登录成功','data'=>['redirect'=>'/admin/index']]);
+            if (Auth::guard('manager')->attempt($credentials)) {
+                throw new ApiException(['code'=>11000,'msg'=>'登录成功','data'=>['redirect'=>'/admin/index','manager'=>Auth::guard('manager')->user()->toArray()]]);
             }else{
                 $failedLogin->update_failed($request->ip());
             }
@@ -46,7 +45,7 @@ class AdminController extends Controller
         Auth::logout();
         $request->session()->invalidate();
         $request->session()->regenerateToken();
-        return redirect('/admin/login');
+        throw new ApiException(['code'=>10001,'msg'=>'成功退出','data'=>['redirect'=>'/admin/login']]);
     }
 
 

@@ -10,11 +10,20 @@ class ManagerAuth
 {
     public function handle(Request $request, Closure $next)
     {
-        if (Auth::guard('admin')->check()) {
-            config('admin.manager',Auth::user());
-            return redirect('/admin/index');
+        if($request->path()=='admin/login'){
+            if (Auth::guard('manager')->check()) {
+                return redirect('/admin/index');
+            }else{
+                return $next($request);
+            }
+        }else{
+            if (Auth::guard('manager')->check()) {
+                config('admin.manager',Auth::guard('manager')->user()->toArray());
+                return $next($request);
+            }else{
+                return redirect('/admin/login');
+            }
         }
-        return $next($request);
     }
 
 }

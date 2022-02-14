@@ -24,9 +24,9 @@ class Manager extends Migration
             $table->string('token')->unique();
             $table->integer('token_expire')->unsigned();
             $table->string('avatar',255)->nullable();
-            $table->tinyInteger('status');
-            $table->integer('last_login')->unsigned();
-            $table->string('last_ip',64);
+            $table->tinyInteger('status')->default(1)->comment('1:正常; 2:冻结; 0:删除');
+            $table->integer('last_login')->unsigned()->nullable();
+            $table->string('last_ip',64)->nullable();
             $table->timestamps();
         });
     }
