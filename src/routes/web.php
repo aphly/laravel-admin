@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+Route::match(['get', 'post'],'/admin/test', 'Aphly\LaravelAdmin\Controllers\AdminController@test');
 
 Route::middleware(['web'])->group(function () {
 

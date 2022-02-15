@@ -25,13 +25,13 @@ class FailedLogin extends Model
         $currTime = time();
         $login = self::find($ip);
         if($login) {
-            if($currTime - $login['lastupdate'] > 900){
+            if(LARAVEL_START - $login['lastupdate'] > 900){
                 $login->count=0;
                 $login->lastupdate=$currTime;
                 $login->save();
             }else{
                 if(self::LIMITTIMES<=$login['count']){
-                    throw new ApiException(['code'=>11000,'msg'=>'密码错误超过'.self::LIMITTIMES.'次数，请15分钟后再试']);
+                    throw new ApiException(['code'=>11001,'msg'=>'密码错误超过'.self::LIMITTIMES.'次数，请15分钟后再试']);
                 }
             }
         }else{
@@ -60,7 +60,7 @@ class FailedLogin extends Model
             $times=self::LIMITTIMES;
         }
         $msg = $times>0?'密码错误，还有'.$times.'次尝试机会':'密码错误，请等待15分钟再试';
-        throw new ApiException(['code'=>11000,'msg'=>$msg]);
+        throw new ApiException(['code'=>11002,'msg'=>$msg]);
     }
 
 }

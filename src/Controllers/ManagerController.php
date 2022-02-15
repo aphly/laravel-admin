@@ -5,8 +5,7 @@ namespace Aphly\LaravelAdmin\Controllers;
 use Aphly\Laravel\Exceptions\ApiException;
 use Aphly\Laravel\Libs\Helper;
 use Aphly\LaravelAdmin\Models\Manager;
-use Aphly\LaravelAdmin\Models\RbacRole;
-use Aphly\LaravelAdmin\Models\RbacUserRole;
+use Aphly\LaravelAdmin\Models\Role;
 use Aphly\LaravelAdmin\Requests\ManagerRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -52,13 +51,15 @@ class ManagerController extends Controller
         if($request->isMethod('post')) {
             $manager = Manager::find($request->id);
             $post = $request->all();
-            if($post['password']){
+            if(!empty($post['password'])){
                 $post['password'] = Hash::make($post['password']);
+            }else{
+                unset($post['password']);
             }
             if($manager->update($post)){
-                throw new ApiException(['code'=>10000,'msg'=>'修改成功']);
+                throw new ApiException(['code'=>0,'msg'=>'修改成功','data'=>['redirect'=>'/admin/manager/index']]);
             }else{
-                throw new ApiException(['code'=>10001,'msg'=>'修改失败']);
+                throw new ApiException(['code'=>1,'msg'=>'修改失败']);
             }
         }else{
             $res=['title'=>'我的'];
@@ -93,7 +94,7 @@ class ManagerController extends Controller
             $res['info'] = Manager::find($request->id);
             $res['userrole'] = $res['info']->role->toArray();
             $res['userrole'] = array_column($res['userrole'], 'id');
-            $res['role'] = RbacRole::all()->toArray();
+            $res['role'] = Role::all()->toArray();
             return view('laravel-admin::manager.role',['res'=>$res]);
         }
     }

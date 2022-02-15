@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class RbacRole extends Migration
+class Role extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,9 @@ class RbacRole extends Migration
      */
     public function up()
     {
-        Schema::create('rbac_role', function (Blueprint $table) {
+        Schema::create('role', function (Blueprint $table) {
             $table->id();
             $table->string('name', 32);
-            $table->bigInteger('manager_id')->unsigned();
-            $table->timestamps();
-            $table->index('manager_id');
             //$table->engine = 'InnoDB';
         });
     }
@@ -30,6 +27,6 @@ class RbacRole extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('rbac_role');
+        Schema::dropIfExists('role');
     }
 }

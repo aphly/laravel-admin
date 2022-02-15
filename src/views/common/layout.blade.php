@@ -2,7 +2,7 @@
 <link rel="stylesheet" href="{{ URL::asset('css/admin.css') }}">
 <section class="admin container-fluid">
     <div class="row">
-        <div class="ad_left d-none d-md-block">
+        <div class="ad_left d-none d-lg-block">
             <div class="navbar_brand_box">
                 <span class="logo">APHLY</span>
             </div>
@@ -34,7 +34,7 @@
                         </a>
                         <div id="collapse1" class="collapse ">
                             <ul class="card-body">
-                                <li class=""><a class="dj" data-title="用户列表" data-href="/admin/user/index">用户列表</a></li>
+                                <li class=""><a class="dj" data-title="用户列表" data-href="/admin/manager/index">用户列表</a></li>
                                 <li class=""><a class="dj" data-title="角色管理" data-href="/admin/role/index">角色管理</a></li>
                                 <li class=""><a class="dj" data-title="权限管理" data-href="/admin/permission/index">权限管理</a></li>
                             </ul>
@@ -97,12 +97,12 @@
 
                 </dl>
             </div>
-            <div class="menuclose d-md-none" onclick="closeMenu()"></div>
+            <div class="menuclose d-lg-none" onclick="closeMenu()"></div>
         </div>
         <div class="ad_right">
             <div class="topbar d-flex justify-content-between">
                 <div class="d-flex">
-                    <div id="showmenu" class="uni app-px1 d-md-none"></div>
+                    <div id="showmenu" class="uni app-px1 d-lg-none"></div>
                     <a href="/" class="portal" target="_blank">网站首页</a>
                 </div>
                 <div class="d-flex">
@@ -133,13 +133,13 @@
                     </div>
                 </div>
             </div>
-            <div class="d-none" id="loading">
-                <div class="spinner-border text-info" role="status">
-                    <span class="sr-only">Loading...</span>
+            <div class="iload">
+                <div class="d-none alert alert-danger" id="error_msg" role="alert"></div>
+                <div class="" id="loading" style="height: 100%;">
+                    <div class="loading-pointer-inner"><div class="pointer"></div> <div class="pointer"></div> <div class="pointer"></div></div>
                 </div>
+                <div id="iload"></div>
             </div>
-            <div class="d-none alert alert-danger" id="error_msg" role="alert"></div>
-            <div id="iload"></div>
         </div>
     </div>
 </section>
@@ -167,9 +167,71 @@
     </div>
 </form>
 
+<div>
+    <div aria-live="polite" aria-atomic="true" class="d-flex justify-content-center align-items-center" style="height: 200px;">
+        <div class="toast" id="liveToast" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="toast-header">
+                <img src="..." class="rounded mr-2" alt="...">
+                <strong class="mr-auto">Bootstrap</strong>
+                <small>11 mins ago</small>
+                <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="toast-body">
+                Hello, world! This is a toast message.
+            </div>
+        </div>
+    </div>
+</div>
+
 <script>
     $(function (){
+        $('.toast').toast({delay:12000})
         $("#iload").load('/admin/index/index');
+        $("#iload").on('submit','form.unite',function (e){
+            e.preventDefault()
+            e.stopPropagation()
+            const form = $(this)
+            if(form[0].checkValidity()===false){
+            }else{
+                let url = form.attr("action");
+                let type = form.attr("method");
+                if(url && type){
+                    $('.unite input.form-control').removeClass('is-valid').removeClass('is-invalid');
+                    $.ajax({
+                        type,url,
+                        data: form.serialize(),
+                        dataType: "json",
+                        success: function(res){
+                            $('.unite input.form-control').addClass('is-valid');
+                            if(!res.code) {
+                                $('#liveToast').toast('show')
+                                $("#iload").load(res.data.redirect);
+                            }else if(res.code===11000){
+                                for(var item in res.data){
+                                    let str = ''
+                                    res.data[item].forEach((elem, index)=>{
+                                        str = str+elem+'<br>'
+                                    })
+                                    let obj = $('#login input[name="'+item+'"]');
+                                    obj.removeClass('is-valid').addClass('is-invalid');
+                                    obj.next('.invalid-feedback').html(str);
+                                }
+                            }else{
+                                $("#msg").text(res.msg).removeClass('d-none');
+                            }
+                        },
+                        complete:function(XMLHttpRequest,textStatus){
+                            //console.log(XMLHttpRequest,textStatus)
+                        }
+                    })
+                }else{
+                    console.log('no action')
+                }
+            }
+        })
+
         $("#s_nav .dj").on('click',function (e){
             e.preventDefault();
             let ajax = $("#iload");
@@ -216,45 +278,18 @@
         $('#showmenu').on('click',function (){
             let obj = $('.ad_left');
             if(obj.hasClass('d-none')){
-                obj.removeClass('d-none d-md-block')
+                obj.removeClass('d-none d-lg-block')
                 $(this).removeClass('app-px1').addClass('app-px')
             }else{
-                obj.addClass('d-none d-md-block')
+                obj.addClass('d-none d-lg-block')
                 $(this).removeClass('app-px').addClass('app-px1')
             }
         })
-
-        $("#iload").on('submit','form',function (event){
-            event.preventDefault()
-            event.stopPropagation()
-            const form = $(this)
-            if(form[0].checkValidity()===false){
-            }else{
-                let url = form.attr("action");
-                let type = form.attr("method");
-                if(url && type){
-                    $.ajax({
-                        type,url,
-                        data: form.serialize(),
-                        dataType: "json",
-                        success: function(res){
-                            console.log(res)
-                        },
-                        complete:function(XMLHttpRequest,textStatus){
-                            console.log(XMLHttpRequest,textStatus)
-                        }
-                    })
-                }else{
-                    console.log('no action')
-                }
-            }
-            form.addClass("was-validated")
-        });
         //$("img.lazy").lazyload({effect : "fadeIn",threshold :50});
     });
 
     function closeMenu(){
-        $('.ad_left').addClass('d-none d-md-block')
+        $('.ad_left').addClass('d-none d-lg-block')
         $('#showmenu').removeClass('app-px').addClass('app-px1')
     }
 

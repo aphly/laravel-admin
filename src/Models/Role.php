@@ -5,10 +5,10 @@ namespace Aphly\LaravelAdmin\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class RbacRole extends Model
+class Role extends Model
 {
     use HasFactory;
-    protected $table = 'rbac_role';
+    protected $table = 'role';
     public $timestamps = false;
 
     static public function check($request){
@@ -23,6 +23,6 @@ class RbacRole extends Model
 
     public function permission()
     {
-        return $this->belongsToMany(RbacPermission::class,'rbac_role_permission','role_id','permission_id');
+        return $this->belongsToMany(Permission::class,'role_permission','role_id','permission_id');
     }
 }

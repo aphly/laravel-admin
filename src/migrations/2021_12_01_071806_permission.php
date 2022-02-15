@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class RbacPermission extends Migration
+class Permission extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class RbacPermission extends Migration
      */
     public function up()
     {
-        Schema::create('rbac_permission', function (Blueprint $table) {
+        Schema::create('permission', function (Blueprint $table) {
             $table->id();
             $table->string('name', 32)->nullable();
             $table->string('route', 255);
@@ -23,7 +23,6 @@ class RbacPermission extends Migration
             $table->integer('nav_sort', 0)->unsigned();
             $table->bigInteger('manager_id')->unsigned();
             $table->bigInteger('module_id')->unsigned();
-            $table->timestamps();
             $table->index('parent_id');
             $table->index(['nav_type']);
             $table->index('manager_id');
@@ -39,6 +38,6 @@ class RbacPermission extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('rbac_permission');
+        Schema::dropIfExists('permission');
     }
 }

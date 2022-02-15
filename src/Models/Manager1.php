@@ -47,9 +47,54 @@ class Manager extends Authenticatable
        //'email_verified_at' => 'datetime',
     ];
 
+    static public function admincheck($request,$type='login'){
+        $messages = [
+            'username.required' => '用户名必填',
+            'username.alpha_num' => '用户名只能是字母和数字',
+            'password.required' => '密码必填',
+            'password.alpha_num' => '密码只能是字母和数字',
+        ];
+        if($type=='login') {
+            $post = $request->validate([
+                //'username' => 'required|between:4,32|alpha_num',
+                'username' => 'required',
+                'password' => 'required|between:6,64|alpha_num',
+            ], $messages);
+        }else if($type=='doadd'){
+            $post = $request->validate([
+                'username' => 'required|between:4,32|alpha_num|unique:user',
+                'nickname' => 'nullable|string',
+                'phone' => 'nullable|numeric|regex:/^1[0-9]{10}$/|unique:user',
+                'email' => 'nullable|email:filter|unique:user',
+                'password' => 'required|between:6,64|alpha_num',
+            ], $messages);
+        }else if($type=='doedit'){
+            $post = $request->validate([
+                'username' => 'nullable|between:4,32|alpha_num',
+                'nickname' => 'nullable|string',
+                'phone' => 'nullable|numeric|regex:/^1[0-9]{10}$/',
+                'email' => 'nullable|email:filter',
+                'password' => 'nullable|alpha_num',
+            ], $messages);
+        }else{
+            $post = [];
+        }
+        return $post;
+    }
+
     public function role()
     {
-        return $this->belongsToMany(Role::class,'user_role','uuid','role_id','uuid');
+        return $this->belongsToMany(Role::class,'user_role','user_id','role_id');
+    }
+
+    public function userinfo()
+    {
+        return $this->hasOne(UserInfo::class);
+    }
+
+    public function useruni()
+    {
+        return $this->hasOne(UserUni::class);
     }
 
     protected static function boot()
@@ -67,11 +112,23 @@ class Manager extends Authenticatable
 //        });
     }
 
+    static public function delAvatar($avatar) {
+        if($avatar){
+            Storage::delete($avatar);
+        }
+    }
+
+    public function urlAvatar($avatar,$path) {
+        $path = Common\Image::avatar($avatar,$path);
+        $this->avatar = $path;
+        return $this->save();
+    }
+
     public function generateToken() {
-        $this->token = Str::random(64);
-        $this->token_expire = time()+120*60;
+        $this->api_token = Str::random(64);
+        $this->api_token_expire = time()+120*60;
         $this->save();
-        return $this->token;
+        return $this->api_token;
     }
 
     public function api_login() {
@@ -125,8 +182,8 @@ class Manager extends Authenticatable
     }
 
     public function logout() {
-        $this->token = null;
-        $this->token_expire = 0;
+        $this->api_token = null;
+        $this->api_token_expire = 0;
         return $this->save();
     }
 

@@ -15,12 +15,15 @@ class ManagerRequest extends FormRequest
             if($routeActionName=='add'){
                 return [
                     //'username' => 'required|between:4,32|alpha_num',
-                    'username' => 'required',
+                    'username' => 'required|between:4,32|alpha_num|unique:manager',
+                    'nickname' => 'nullable|string',
+                    'phone' => 'nullable|numeric|regex:/^1[0-9]{10}$/',
+                    'email' => 'nullable|email:filter|unique:user',
                     'password' => 'required|between:6,64|alpha_num',
                 ];
             }else if($routeActionName=='edit'){
                 return [
-                    'password' => 'between:3,64|alpha_num',
+                    'password' => 'nullable|between:3,64|alpha_num',
                 ];
             }
         }
@@ -40,6 +43,7 @@ class ManagerRequest extends FormRequest
         return [
             'username.required' => '请输入用户名',
             'password.required' => '请输入密码',
+            'password.alpha_num' => '密码只能是字母和数字',
         ];
     }
 

@@ -5,10 +5,10 @@ namespace Aphly\LaravelAdmin\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class RbacPermission extends Model
+class Permission extends Model
 {
     use HasFactory;
-    protected $table = 'rbac_permission';
+    protected $table = 'permission';
     public $timestamps = false;
 
     static public function check($request){

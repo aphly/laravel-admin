@@ -5,13 +5,13 @@ namespace Aphly\LaravelAdmin\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class RbacUserRole extends Model
+class RolePermission extends Model
 {
     use HasFactory;
-    protected $table = 'rbac_member_role';
+    protected $table = 'role_permission';
     public $timestamps = false;
     protected $fillable = [
-        'guid',
+        'permission_id',
         'role_id',
     ];
 }
