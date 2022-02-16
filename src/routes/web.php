@@ -25,8 +25,7 @@ Route::middleware(['web'])->group(function () {
         Route::get('/manager/index', 'Aphly\LaravelAdmin\Controllers\ManagerController@index');
         Route::match(['get', 'post'],'/manager/add', 'Aphly\LaravelAdmin\Controllers\ManagerController@add');
         Route::match(['get', 'post'],'/manager/{id}/edit', 'Aphly\LaravelAdmin\Controllers\ManagerController@edit')->where('id', '[0-9]+');
-        Route::post('/manager/{id}/del', 'Aphly\LaravelAdmin\Controllers\ManagerController@del')->where('id', '[0-9]+');
-
+        Route::post('/manager/del', 'Aphly\LaravelAdmin\Controllers\ManagerController@del');
     });
 
 });

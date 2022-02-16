@@ -133,9 +133,9 @@
                     </div>
                 </div>
             </div>
-            <div class="iload">
+            <div class="iload_box">
                 <div class="d-none alert alert-danger" id="error_msg" role="alert"></div>
-                <div class="" id="loading" style="height: 100%;">
+                <div class="loading" id="loading">
                     <div class="loading-pointer-inner"><div class="pointer"></div> <div class="pointer"></div> <div class="pointer"></div></div>
                 </div>
                 <div id="iload"></div>
@@ -167,29 +167,17 @@
     </div>
 </form>
 
-<div>
-    <div aria-live="polite" aria-atomic="true" class="d-flex justify-content-center align-items-center" style="height: 200px;">
-        <div class="toast" id="liveToast" role="alert" aria-live="assertive" aria-atomic="true">
-            <div class="toast-header">
-                <img src="..." class="rounded mr-2" alt="...">
-                <strong class="mr-auto">Bootstrap</strong>
-                <small>11 mins ago</small>
-                <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="toast-body">
-                Hello, world! This is a toast message.
-            </div>
-        </div>
-    </div>
-</div>
 
 <script>
+    function iload(url,data='') {
+        $('#loading').css('z-index',100);
+        $("#iload").load(url,data,function () {
+            $('#loading').css('z-index',-1);
+        });
+    }
     $(function (){
-        $('.toast').toast({delay:12000})
-        $("#iload").load('/admin/index/index');
-        $("#iload").on('submit','form.unite',function (e){
+        iload('/admin/index/index');
+        $("#iload").on('submit','save_form',function (e){
             e.preventDefault()
             e.stopPropagation()
             const form = $(this)
@@ -198,15 +186,15 @@
                 let url = form.attr("action");
                 let type = form.attr("method");
                 if(url && type){
-                    $('.unite input.form-control').removeClass('is-valid').removeClass('is-invalid');
+                    $('.save_form input.form-control').removeClass('is-valid').removeClass('is-invalid');
                     $.ajax({
                         type,url,
                         data: form.serialize(),
                         dataType: "json",
                         success: function(res){
-                            $('.unite input.form-control').addClass('is-valid');
+                            $('.save_form input.form-control').addClass('is-valid');
                             if(!res.code) {
-                                $('#liveToast').toast('show')
+                                alert_msg(res)
                                 $("#iload").load(res.data.redirect);
                             }else if(res.code===11000){
                                 for(var item in res.data){
@@ -214,12 +202,55 @@
                                     res.data[item].forEach((elem, index)=>{
                                         str = str+elem+'<br>'
                                     })
-                                    let obj = $('#login input[name="'+item+'"]');
+                                    let obj = $('.save_form input[name="'+item+'"]');
                                     obj.removeClass('is-valid').addClass('is-invalid');
                                     obj.next('.invalid-feedback').html(str);
                                 }
                             }else{
-                                $("#msg").text(res.msg).removeClass('d-none');
+                                alert_msg(res)
+                            }
+                        },
+                        complete:function(XMLHttpRequest,textStatus){
+                            //console.log(XMLHttpRequest,textStatus)
+                        }
+                    })
+                }else{
+                    console.log('no action')
+                }
+            }
+        })
+
+        $("#iload").on('submit','del_form',function (e){
+            e.preventDefault()
+            e.stopPropagation()
+            const form = $(this)
+            if(form[0].checkValidity()===false){
+            }else{
+                let url = form.attr("action");
+                let type = form.attr("method");
+                if(url && type){
+                    $('.save_form input.form-control').removeClass('is-valid').removeClass('is-invalid');
+                    $.ajax({
+                        type,url,
+                        data: form.serialize(),
+                        dataType: "json",
+                        success: function(res){
+                            $('.save_form input.form-control').addClass('is-valid');
+                            if(!res.code) {
+                                alert_msg(res)
+                                $("#iload").load(res.data.redirect);
+                            }else if(res.code===11000){
+                                for(var item in res.data){
+                                    let str = ''
+                                    res.data[item].forEach((elem, index)=>{
+                                        str = str+elem+'<br>'
+                                    })
+                                    let obj = $('.save_form input[name="'+item+'"]');
+                                    obj.removeClass('is-valid').addClass('is-invalid');
+                                    obj.next('.invalid-feedback').html(str);
+                                }
+                            }else{
+                                alert_msg(res)
                             }
                         },
                         complete:function(XMLHttpRequest,textStatus){
@@ -236,7 +267,7 @@
             e.preventDefault();
             let ajax = $("#iload");
             ajax.html('');
-            $('#loading').removeClass('d-none');
+            $('#loading').css('z-index',100);
             $("#s_nav .dj").removeClass('active');
             let obj = $(this);
             if(obj && obj.data('href')){
@@ -244,24 +275,24 @@
                 ajax.load(obj.data('href'),function(responseTxt,statusTxt,xhr){
                     $('title').html(obj.data('title'));
                     if(statusTxt=="success"){}
-                    $('#loading').addClass('d-none')
+                    $('#loading').css('z-index',-1);
                     closeMenu();
                 });
             }else{
                 console.log('error');
             }
         });
-        $("#iload").on('click','a.badge,a.page-link',function (e){
+        $("#iload").on('click','a.get,a.page-link',function (e){
             e.preventDefault();
             let ajax = $("#iload");
             ajax.html('');
-            $('#loading').removeClass('d-none');
+            $('#loading').css('z-index',100);
             let obj = $(this);
             if(obj && obj.data('href')){
                 obj.addClass('active');
                 ajax.load(obj.data('href'),function(responseTxt,statusTxt,xhr){
                     if(statusTxt=="success"){}
-                    $('#loading').addClass('d-none')
+                    $('#loading').css('z-index',-1);
                 });
             }else{
                 console.log('error');

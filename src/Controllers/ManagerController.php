@@ -16,15 +16,14 @@ class ManagerController extends Controller
 
     public function index(Request $request)
     {
-        if($request->isMethod('post')){
-            $post = $request->input('delete');
-            Manager::destroy($post);
-            throw new ApiException(['code'=>10000,'msg'=>'操作成功']);
-        }else{
-            $res=['title'=>'我的'];
-            $res['data'] = Manager::Paginate(config('admin.perPage'));
-            return view('laravel-admin::manager.index',['res'=>$res]);
-        }
+        $res=['title'=>'我的'];
+        $title = $request->query('search',1);
+        $res['data'] = Manager::where(
+                function($query) use ($title) {
+                    $query->where('title', 'like', "%{$title}%");
+                }
+            )->Paginate(config('admin.perPage'));
+        return view('laravel-admin::manager.index',['res'=>$res]);
     }
 
     public function add(ManagerRequest $request)
@@ -36,9 +35,9 @@ class ManagerController extends Controller
             $post['password'] = Hash::make($post['password']);
             $manager = Manager::create($post);
             if($manager->id){
-                throw new ApiException(['code'=>10000,'msg'=>'添加成功']);
+                throw new ApiException(['code'=>0,'msg'=>'添加成功','data'=>['redirect'=>'/admin/manager/index']]);
             }else{
-                throw new ApiException(['code'=>10001,'msg'=>'添加失败']);
+                throw new ApiException(['code'=>1,'msg'=>'添加失败']);
             }
         }else{
             $res=['title'=>'我的'];
@@ -70,10 +69,10 @@ class ManagerController extends Controller
 
     public function del(Request $request)
     {
-        if(Manager::find($request->id)->delete()){
-            throw new ApiException(['code'=>10000,'msg'=>'删除成功']);
-        }else{
-            throw new ApiException(['code'=>10001,'msg'=>'删除失败']);
+        $post = $request->input('delete');
+        if(!empty($post)){
+            Manager::destroy($post);
+            throw new ApiException(['code'=>0,'msg'=>'操作成功']);
         }
     }
 

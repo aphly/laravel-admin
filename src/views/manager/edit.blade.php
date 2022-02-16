@@ -2,12 +2,12 @@
     <h5 class="nav-title">用户管理</h5>
 </div>
 <div class="imain">
-    <form method="post" action="/admin/manager/{{$res['info']['id']}}/edit" class="unite">
+    <form method="post" action="/admin/manager/{{$res['info']['id']}}/edit" class="save_form">
         @csrf
         <div class="">
             <div class="form-group">
                 <label for="exampleInputEmail1">用户名</label>
-                <input type="text" name="username" required class="form-control " value="{{$res['info']['username']}}">
+                <input type="text" name="username" required class="form-control" readonly value="{{$res['info']['username']}}">
                 <div class="invalid-feedback"></div>
             </div>
             <div class="form-group">

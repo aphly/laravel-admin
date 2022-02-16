@@ -19,6 +19,7 @@ class AdminController extends Controller
     public function index()
     {
         $res=['title'=>'我的'];
+        //sleep(3);
         return view('laravel-admin::admin.index',['res'=>$res]);
     }
 
