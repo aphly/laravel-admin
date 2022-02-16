@@ -177,7 +177,34 @@
     }
     $(function (){
         iload('/admin/index/index');
-        $("#iload").on('submit','save_form',function (e){
+
+        $("#iload").on('submit','.select_form',function (e){
+            e.preventDefault()
+            e.stopPropagation()
+            const form = $(this)
+            if(form[0].checkValidity()===false){
+            }else{
+                let url = form.attr("action");
+                let type = form.attr("method");
+                if(url && type){
+                    $.ajax({
+                        type,url,
+                        data: form.serialize(),
+                        dataType: "html",
+                        success: function(res){
+                            console.log(res);
+                        },
+                        complete:function(XMLHttpRequest,textStatus){
+                            //console.log(XMLHttpRequest,textStatus)
+                        }
+                    })
+                }else{
+                    console.log('no action')
+                }
+            }
+        })
+
+        $("#iload").on('submit','.save_form',function (e){
             e.preventDefault()
             e.stopPropagation()
             const form = $(this)
@@ -220,7 +247,7 @@
             }
         })
 
-        $("#iload").on('submit','del_form',function (e){
+        $("#iload").on('submit','.del_form',function (e){
             e.preventDefault()
             e.stopPropagation()
             const form = $(this)
