@@ -17,10 +17,10 @@ class ManagerController extends Controller
     public function index(Request $request)
     {
         $res=['title'=>'我的'];
-        $title = $request->query('search',1);
-        $res['data'] = Manager::where(
-                function($query) use ($title) {
-                    $query->where('title', 'like', "%{$title}%");
+        $username = $request->query('search',false);
+        $res['data'] = Manager::when($username,
+                function($query,$username) {
+                    $query->where('username', 'like', "%{$username}%");
                 }
             )->Paginate(config('admin.perPage'));
         return view('laravel-admin::manager.index',['res'=>$res]);
