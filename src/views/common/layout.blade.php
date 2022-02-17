@@ -4,7 +4,7 @@
     <div class="row">
         <div class="ad_left d-none d-lg-block">
             <div class="navbar_brand_box">
-                <span class="logo">APHLY</span>
+                <span class="logo">管理中心</span>
             </div>
             <div class="menu">
                 <dl class="accordion" id="s_nav">
@@ -177,33 +177,14 @@
     }
     $(function (){
         iload('/admin/index/index');
-
         $("#iload").on('submit','.select_form',function (e){
             e.preventDefault()
             e.stopPropagation()
             const form = $(this)
-            if(form[0].checkValidity()===false){
-            }else{
-                let url = form.attr("action");
-                let type = form.attr("method");
-                if(url && type){
-                    $.ajax({
-                        type,url,
-                        data: form.serialize(),
-                        dataType: "html",
-                        success: function(res){
-                            console.log(res);
-                        },
-                        complete:function(XMLHttpRequest,textStatus){
-                            //console.log(XMLHttpRequest,textStatus)
-                        }
-                    })
-                }else{
-                    console.log('no action')
-                }
-            }
+            console.log(form.serialize())
+            let url = form.attr("action");
+            iload(url+'?'+form.serialize());
         })
-
         $("#iload").on('submit','.save_form',function (e){
             e.preventDefault()
             e.stopPropagation()

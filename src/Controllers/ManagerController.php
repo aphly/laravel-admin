@@ -17,12 +17,18 @@ class ManagerController extends Controller
     public function index(Request $request)
     {
         $res=['title'=>'我的'];
-        $username = $request->query('search',false);
+        $res['filter']['username'] = $username = $request->query('username',false);
+        $res['filter']['status'] = $status = $request->query('status',false);
+        $res['filter']['string'] = http_build_query($request->query());
         $res['data'] = Manager::when($username,
-                function($query,$username) {
-                    return $query->where('username', 'like', "%{$username}%");
-                }
-            )->Paginate(config('admin.perPage'));
+                    function($query,$username) {
+                        return $query->where('username', 'like', '%'.$username.'%');
+                    }
+                )->when($status,
+                    function($query,$status) {
+                        return $query->where('status', '=', $status);
+                    })
+                ->Paginate(config('admin.perPage'))->withQueryString();
         return view('laravel-admin::manager.index',['res'=>$res]);
     }
 
@@ -69,10 +75,12 @@ class ManagerController extends Controller
 
     public function del(Request $request)
     {
+        $query = $request->query();
+        $redirect = $query?'/admin/manager/index?'.http_build_query($query):'/admin/manager/index';
         $post = $request->input('delete');
         if(!empty($post)){
             Manager::destroy($post);
-            throw new ApiException(['code'=>0,'msg'=>'操作成功']);
+            throw new ApiException(['code'=>0,'msg'=>'操作成功','data'=>['redirect'=>$redirect]]);
         }
     }
 
