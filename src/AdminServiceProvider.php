@@ -18,8 +18,6 @@ class AdminServiceProvider extends ServiceProvider
 		$this->mergeConfigFrom(
             __DIR__.'/config/admin.php', 'admin'
         );
-        $this->app->make('Aphly\LaravelAdmin\Controllers\AdminController');
-        $this->app->make('Aphly\LaravelAdmin\Controllers\ManagerController');
     }
 
     /**

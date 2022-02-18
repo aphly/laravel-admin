@@ -8,7 +8,7 @@ use Aphly\LaravelAdmin\Requests\LoginRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class AdminController extends Controller
+class IndexController extends Controller
 {
     public function layout()
     {
@@ -20,7 +20,7 @@ class AdminController extends Controller
     {
         $res=['title'=>'我的'];
         //sleep(3);
-        return view('laravel-admin::admin.index',['res'=>$res]);
+        return view('laravel-admin::index.index',['res'=>$res]);
     }
 
     public function test(Request $request)
@@ -30,7 +30,7 @@ class AdminController extends Controller
             throw new ApiException(['code'=>0,'msg'=>'test成功','data'=>$credentials]);
         }else{
             $res=['title'=>'后台登录'];
-            return view('laravel-admin::admin.login',['res'=>$res]);
+            return view('laravel-admin::index.login',['res'=>$res]);
         }
     }
 
@@ -47,7 +47,7 @@ class AdminController extends Controller
             }
         }else{
             $res=['title'=>'后台登录'];
-            return view('laravel-admin::admin.login',['res'=>$res]);
+            return view('laravel-admin::index.login',['res'=>$res]);
         }
     }
 

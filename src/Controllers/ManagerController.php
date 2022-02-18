@@ -13,6 +13,7 @@ use Illuminate\Validation\ValidationException;
 
 class ManagerController extends Controller
 {
+    public $index_url='/admin/manager/index';
 
     public function index(Request $request)
     {
@@ -21,14 +22,15 @@ class ManagerController extends Controller
         $res['filter']['status'] = $status = $request->query('status',false);
         $res['filter']['string'] = http_build_query($request->query());
         $res['data'] = Manager::when($username,
-                    function($query,$username) {
-                        return $query->where('username', 'like', '%'.$username.'%');
-                    }
-                )->when($status,
-                    function($query,$status) {
-                        return $query->where('status', '=', $status);
-                    })
-                ->Paginate(config('admin.perPage'))->withQueryString();
+                            function($query,$username) {
+                                return $query->where('username', 'like', '%'.$username.'%');
+                            })
+                        ->when($status,
+                            function($query,$status) {
+                                return $query->where('status', '=', $status);
+                            })
+                        ->orderBy('id', 'desc')
+                        ->Paginate(config('admin.perPage'))->withQueryString();
         return view('laravel-admin::manager.index',['res'=>$res]);
     }
 
@@ -41,7 +43,7 @@ class ManagerController extends Controller
             $post['password'] = Hash::make($post['password']);
             $manager = Manager::create($post);
             if($manager->id){
-                throw new ApiException(['code'=>0,'msg'=>'添加成功','data'=>['redirect'=>'/admin/manager/index']]);
+                throw new ApiException(['code'=>0,'msg'=>'添加成功','data'=>['redirect'=>$this->index_url]]);
             }else{
                 throw new ApiException(['code'=>1,'msg'=>'添加失败']);
             }
@@ -62,7 +64,7 @@ class ManagerController extends Controller
                 unset($post['password']);
             }
             if($manager->update($post)){
-                throw new ApiException(['code'=>0,'msg'=>'修改成功','data'=>['redirect'=>'/admin/manager/index']]);
+                throw new ApiException(['code'=>0,'msg'=>'修改成功','data'=>['redirect'=>$this->index_url]]);
             }else{
                 throw new ApiException(['code'=>1,'msg'=>'修改失败']);
             }
@@ -76,7 +78,7 @@ class ManagerController extends Controller
     public function del(Request $request)
     {
         $query = $request->query();
-        $redirect = $query?'/admin/manager/index?'.http_build_query($query):'/admin/manager/index';
+        $redirect = $query?$this->index_url.'?'.http_build_query($query):$this->index_url;
         $post = $request->input('delete');
         if(!empty($post)){
             Manager::destroy($post);
@@ -87,20 +89,16 @@ class ManagerController extends Controller
     public function role(Request $request)
     {
         if($request->isMethod('post')) {
-            //$userrole = new RbacUserRole;
-            $user = Manager::find($request->id);
-            if($user){
-                if($user->role()->sync($request->input('role_id'))){
-                    throw new ApiException(['code'=>10000,'msg'=>'删除成功']);
-                    return redirect()->route('admin.user')->with('status', 'success');
-                }
+            $manager = Manager::find($request->id);
+            if($manager){
+                $manager->role()->sync($request->input('role_id'));
             }
-            throw new ApiException(['code'=>10000,'msg'=>'删除成功']);
+            throw new ApiException(['code'=>0,'msg'=>'操作成功','data'=>['redirect'=>$this->index_url]]);
         }else{
             $res=['title'=>'我的'];
             $res['info'] = Manager::find($request->id);
-            $res['userrole'] = $res['info']->role->toArray();
-            $res['userrole'] = array_column($res['userrole'], 'id');
+            $res['manager_role'] = $res['info']->role->toArray();
+            $res['manager_role'] = array_column($res['manager_role'], 'id');
             $res['role'] = Role::all()->toArray();
             return view('laravel-admin::manager.role',['res'=>$res]);
         }

@@ -16,17 +16,13 @@ class Permission extends Migration
         Schema::create('permission', function (Blueprint $table) {
             $table->id();
             $table->string('name', 32)->nullable();
-            $table->string('route', 255);
             $table->string('controller', 255);
-            $table->bigInteger('parent_id', 0)->unsigned();
-            $table->tinyInteger('nav_type', 0)->unsigned();
-            $table->integer('nav_sort', 0)->unsigned();
-            $table->bigInteger('manager_id')->unsigned();
-            $table->bigInteger('module_id')->unsigned();
-            $table->index('parent_id');
-            $table->index(['nav_type']);
-            $table->index('manager_id');
-            $table->index('module_id');
+            $table->bigInteger('pid', 0)->unsigned()->default(0);
+            $table->tinyInteger('is_leaf', 0)->unsigned()->default(1);
+            $table->integer('sort', 0)->unsigned()->default(0);
+            $table->index('pid');
+            $table->index(['is_leaf']);
+            $table->index('sort');
             //$table->engine = 'InnoDB';
         });
     }

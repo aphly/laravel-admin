@@ -11,14 +11,10 @@ class Permission extends Model
     protected $table = 'permission';
     public $timestamps = false;
 
-    static public function check($request){
-        $messages = [
-            'route.required' => '路由必填',
-        ];
-        $post = $request->validate([
-            'route' => 'required',
-            'name' => '',
-        ], $messages);
-        return $post;
-    }
+    protected $fillable = [
+        'name',
+        'controller'
+    ];
+
+
 }

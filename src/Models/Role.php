@@ -11,15 +11,9 @@ class Role extends Model
     protected $table = 'role';
     public $timestamps = false;
 
-    static public function check($request){
-        $messages = [
-            'name.required' => '角色名称必填',
-        ];
-        $post = $request->validate([
-            'name' => 'required',
-        ], $messages);
-        return $post;
-    }
+    protected $fillable = [
+        'name'
+    ];
 
     public function permission()
     {

@@ -13,7 +13,7 @@
             <button class="" type="submit">搜索</button>
         </div>
         </form>
-        <div class=""><a data-href="/admin/manager/add" class="badge badge-info get">新增</a></div>
+        <div class=""><a data-href="/admin/manager/add" class="badge badge-info get add">新增</a></div>
     </div>
 
     <form method="post"  @if($res['filter']['string']) action="/admin/manager/del?{{$res['filter']['string']}}" @else action="/admin/manager/del" @endif  class="del_form">
@@ -37,7 +37,7 @@
                         <li>{{$v['phone']}}</li>
                         <li>{{$v['status']}}</li>
                         <li>
-                            <a class="badge badge-success get" data-href="/admin/manager/{{$v['id']}}/role">授权</a>
+                            <a class="badge badge-success get" data-href="/admin/manager/{{$v['id']}}/role">角色</a>
                             <a class="badge badge-info get" data-href="/admin/manager/{{$v['id']}}/edit">编辑</a>
                             <a class="badge badge-info get" data-href="/admin/manager/{{$v['id']}}/avatar">头像</a>
                         </li>
@@ -46,7 +46,7 @@
                     <ul class="table_bottom">
                         <li>
                             <input type="checkbox" class="delete_box deleteboxall"  onclick="checkAll(this)">
-                            <button class="badge badge-danger" type="submit">删除</button>
+                            <button class="badge badge-danger del" type="submit">删除</button>
                         </li>
                         <li>
                             {{$res['data']->links('laravel-admin::common.pagination')}}

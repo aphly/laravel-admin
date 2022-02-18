@@ -6,13 +6,13 @@
     <div class="userinfo">
         用户名：{{$res['info']['username']}}
     </div>
-    <form method="post" action="/admin/user/{{$res['info']['id']}}/role" class="userform">
+    <form method="post" action="/admin/manager/{{$res['info']['id']}}/role" class="save_form">
         @csrf
         <div class="cl qx">
             @foreach($res['role'] as $v)
                 <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="checkbox" name="role_id[]" @if(in_array($v['id'],$res['userrole'])) checked @endif value="{{$v['id']}}">
-                    <label class="form-check-label" for="inlineCheckbox1">{{$v['name']}}</label>
+                    <input class="form-check-input" id="inlineCheckbox{{$v['id']}}" type="checkbox" name="role_id[]" @if(in_array($v['id'],$res['manager_role'])) checked @endif value="{{$v['id']}}">
+                    <label class="form-check-label" for="inlineCheckbox{{$v['id']}}">{{$v['name']}}</label>
                 </div>
             @endforeach
         </div>

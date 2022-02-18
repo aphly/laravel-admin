@@ -1,43 +1,51 @@
-
 <div class="top-bar">
     <h5 class="nav-title">权限管理</h5>
 </div>
 <div class="imain">
-    <form method="post" action="/admin/permission/index" >
-        @csrf
-        <div class="itop ">
-            <div class="shai "></div>
-            <div class=" "><a href="/admin/permission/add" class="btn btn-success">新增</a></div>
-        </div>
-
-        <ul class="list-group list-group-flush">
-            <li class="liheader list-group-item">
-                <span>ID</span>
-                <span>路由名称</span>
-                <span style="width: 500px;">路由</span>
-                <span>操作</span>
-            </li>
-            @foreach($res['data'] as $v)
-                <li class="list-group-item">
-                    <input type="checkbox" class="form-check-input deletebox" name="delete[]" value="{{$v['id']}}">
-                    <span>{{$v['id']}}</span>
-                    <span>{{$v['name']}}</span>
-                    <span style="width: 500px;">{{$v['route']}}</span>
-                    <span>
-                    <a class="badge badge-info" href="/admin/permission/edit/{{$v['id']}}">编辑</a>
-                    <a class="badge badge-danger" href="/admin/permission/del/{{$v['id']}}">删除</a>
-                </span>
-                </li>
-            @endforeach
-        </ul>
-        <div class="other">
-            <div class="tleft">
-                <input type="checkbox" class="form-check-input deleteboxall"  onclick="checkAll(this)">
-                <button class="btn btn-danger" type="submit">删除</button>
+    <div class="itop ">
+        <form method="get" action="/admin/permission/index" class="select_form">
+            <div class="filter ">
+                <input type="search" name="name" placeholder="权限名" value="{{$res['filter']['name']}}">
+                <button class="" type="submit">搜索</button>
             </div>
-            {{$res['data']->links('common.pagination')}}
-        </div>
-    </form>
+        </form>
+        <div class=""><a data-href="/admin/permission/add" class="badge badge-info get add">新增</a></div>
+    </div>
 
+    <form method="post"  @if($res['filter']['string']) action="/admin/permission/del?{{$res['filter']['string']}}" @else action="/admin/permission/del" @endif  class="del_form">
+        @csrf
+        <div class="table_scroll">
+            <div class="table">
+                <ul class="table_header">
+                    <li >ID</li>
+                    <li >路由名称</li>
+                    <li >路由</li>
+                    <li >操作</li>
+                </ul>
+                @if($res['data']->total())
+                    @foreach($res['data'] as $v)
+                        <ul class="table_tbody">
+                            <li><input type="checkbox" class="delete_box" name="delete[]" value="{{$v['id']}}">{{$v['id']}}</li>
+                            <li>{{$v['name']}}</li>
+                            <li>{{$v['route']}}</li>
+                            <li>
+                                <a class="badge badge-info get" data-href="/admin/permission/{{$v['id']}}/edit">编辑</a>
+                            </li>
+                        </ul>
+                    @endforeach
+                    <ul class="table_bottom">
+                        <li>
+                            <input type="checkbox" class="delete_box deleteboxall"  onclick="checkAll(this)">
+                            <button class="badge badge-danger del" type="submit">删除</button>
+                        </li>
+                        <li>
+                            {{$res['data']->links('laravel-admin::common.pagination')}}
+                        </li>
+                    </ul>
+                @endif
+            </div>
+        </div>
+
+    </form>
 </div>
 
