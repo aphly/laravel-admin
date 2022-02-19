@@ -29,6 +29,7 @@ class ManagerController extends Controller
                             function($query,$status) {
                                 return $query->where('status', '=', $status);
                             })
+                        ->with('role')
                         ->orderBy('id', 'desc')
                         ->Paginate(config('admin.perPage'))->withQueryString();
         return view('laravel-admin::manager.index',['res'=>$res]);
@@ -97,8 +98,8 @@ class ManagerController extends Controller
         }else{
             $res=['title'=>'我的'];
             $res['info'] = Manager::find($request->id);
-            $res['manager_role'] = $res['info']->role->toArray();
-            $res['manager_role'] = array_column($res['manager_role'], 'id');
+            $res['user_role'] = $res['info']->role->toArray();
+            $res['user_role'] = array_column($res['user_role'], 'id');
             $res['role'] = Role::all()->toArray();
             return view('laravel-admin::manager.role',['res'=>$res]);
         }

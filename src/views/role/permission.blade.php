@@ -11,7 +11,7 @@
         <div class="cl qx">
             @foreach($res['permission'] as $v)
                 <div class="form-check form-check-inline">
-                    <input class="form-check-input" id="inlineCheckbox{{$v['id']}}" type="checkbox" name="permission_id[]" @if(in_array($v['id'],$res['rolepermission'])) checked @endif value="{{$v['id']}}">
+                    <input class="form-check-input" id="inlineCheckbox{{$v['id']}}" type="checkbox" name="permission_id[]" @if(in_array($v['id'],$res['role_permission'])) checked @endif value="{{$v['id']}}">
                     <label class="form-check-label" for="inlineCheckbox{{$v['id']}}">{{$v['name']}}</label>
                 </div>
             @endforeach

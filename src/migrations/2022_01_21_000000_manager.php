@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class Manager extends Migration
+return new class extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class Manager extends Migration
      */
     public function up()
     {
-        Schema::create('manager', function (Blueprint $table) {
+        Schema::create('admin_manager', function (Blueprint $table) {
             $table->id();
             $table->char('uuid',32)->unique();
             $table->string('username',32)->unique();
@@ -38,6 +38,6 @@ class Manager extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('manager');
+        Schema::dropIfExists('admin_manager');
     }
-}
+};

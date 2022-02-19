@@ -7,6 +7,7 @@ use Aphly\LaravelAdmin\Models\Permission;
 use Aphly\LaravelAdmin\Models\Role;
 use Aphly\LaravelAdmin\Requests\RoleRequest;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 
 class RoleController extends Controller
 {
@@ -77,16 +78,16 @@ class RoleController extends Controller
             if($role){
                 $role->permission()->sync($request->input('permission_id'));
             }
+            Cache::forget('role_permission');
             throw new ApiException(['code'=>0,'msg'=>'操作成功','data'=>['redirect'=>$this->index_url]]);
         }else{
             $res=['title'=>'我的'];
             $res['info'] = Role::find($request->id);
-            $res['rolepermission'] = $res['info']->permission->toArray();
-            $res['rolepermission'] = array_column($res['rolepermission'], 'id');
+            $res['role_permission'] = $res['info']->permission->toArray();
+            $res['role_permission'] = array_column($res['role_permission'], 'id');
             $res['permission'] = Permission::get()->toArray();
             return view('laravel-admin::role.permission',['res'=>$res]);
         }
-
     }
 
 

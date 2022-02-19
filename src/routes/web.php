@@ -12,11 +12,13 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::match(['get', 'post'],'/admin/test', 'Aphly\LaravelAdmin\Controllers\AdminController@test');
+
 
 Route::middleware(['web'])->group(function () {
 
-    Route::prefix('admin')->middleware(['ManagerAuth'])->group(function () {
+    Route::middleware(['rbac'])->match(['get', 'post'],'/admin/test', 'Aphly\LaravelAdmin\Controllers\IndexController@test');
+
+    Route::prefix('admin')->middleware(['managerAuth'])->group(function () {
         Route::match(['get', 'post'],'/login', 'Aphly\LaravelAdmin\Controllers\IndexController@login');
         Route::get('/index', 'Aphly\LaravelAdmin\Controllers\IndexController@layout');
         Route::get('/index/index', 'Aphly\LaravelAdmin\Controllers\IndexController@index');

@@ -1,6 +1,9 @@
 <div class="top-bar">
     <h5 class="nav-title">权限管理</h5>
 </div>
+<style>
+    .table_scroll .table_header li:nth-child(3),.table_scroll .table_tbody li:nth-child(3){flex: 0 0 500px;}
+</style>
 <div class="imain">
     <div class="itop ">
         <form method="get" action="/admin/permission/index" class="select_form">
@@ -19,7 +22,7 @@
                 <ul class="table_header">
                     <li >ID</li>
                     <li >路由名称</li>
-                    <li >路由</li>
+                    <li >控制器</li>
                     <li >操作</li>
                 </ul>
                 @if($res['data']->total())
@@ -27,7 +30,7 @@
                         <ul class="table_tbody">
                             <li><input type="checkbox" class="delete_box" name="delete[]" value="{{$v['id']}}">{{$v['id']}}</li>
                             <li>{{$v['name']}}</li>
-                            <li>{{$v['route']}}</li>
+                            <li>{{$v['controller']}}</li>
                             <li>
                                 <a class="badge badge-info get" data-href="/admin/permission/{{$v['id']}}/edit">编辑</a>
                             </li>

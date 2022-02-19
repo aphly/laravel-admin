@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class UserRole extends Migration
+return new class extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class UserRole extends Migration
      */
     public function up()
     {
-        Schema::create('user_role', function (Blueprint $table) {
+        Schema::create('admin_user_role', function (Blueprint $table) {
             $table->id();
             $table->char('uuid',32);
             $table->bigInteger('role_id')->unsigned();
@@ -31,6 +31,6 @@ class UserRole extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('user_role');
+        Schema::dropIfExists('admin_user_role');
     }
-}
+};

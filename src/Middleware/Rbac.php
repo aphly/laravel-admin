@@ -2,56 +2,67 @@
 
 namespace Aphly\LaravelAdmin\Middleware;
 
+use Aphly\Laravel\Exceptions\ApiException;
+use Aphly\LaravelAdmin\Models\RolePermission;
+use Aphly\LaravelAdmin\Models\UserRole;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Closure;
+use Illuminate\Support\Facades\Cache;
 
 class Rbac
 {
+    public $ignore_url = [];
+
     public function handle(Request $request, Closure $next)
     {
-        if( !$this->checkPrivilege( $action->getUniqueId() ) ){
-            $this->redirect( UrlService::buildUrl( "/error/forbidden" ) );
-            return false;
+        if( !$this->checkPermission( $request->route()->getAction()['controller'] ) ){
+            throw new ApiException(['code'=>1,'msg'=>'没有权限']);
         }
         return $next($request);
     }
 
-    public function checkPrivilege( $url ){
-        //如果是超级管理员 也不需要权限判断
-        if( $this->current_user && $this->current_user['is_admin'] ){
+    public function checkPermission( $controller ){
+        if(Auth::guard('manager')->id()==1){
             return true;
         }
-
-        //有一些页面是不需要进行权限判断的
-        if( in_array( $url,$this->ignore_url ) ){
+        if( in_array( $controller,$this->ignore_url ) ){
             return true;
         }
-
-        return in_array( $url, $this->getRolePrivilege( ) );
+        return in_array( $controller, $this->getRolePermission());
     }
 
-    public function getRolePrivilege($uid = 0){
-        if( !$uid && $this->current_user ){
-            $uid = $this->current_user->id;
-        }
-
-        if( !$this->privilege_urls ){
-            $role_ids = UserRole::find()->where([ 'uid' => $uid ])->select('role_id')->asArray()->column();
-            if( $role_ids ){
-                //在通过角色 取出 所属 权限关系
-                $access_ids = RoleAccess::find()->where([ 'role_id' =>  $role_ids ])->select('access_id')->asArray()->column();
-                //在权限表中取出所有的权限链接
-                $list = Access::find()->where([ 'id' => $access_ids ])->all();
-                if( $list ){
-                    foreach( $list as $_item  ){
-                        $tmp_urls = @json_decode(  $_item['urls'],true );
-                        $this->privilege_urls = array_merge( $this->privilege_urls,$tmp_urls );
-                    }
+    public function getRolePermission(){
+        $role_ids = UserRole::where([ 'uuid' => Auth::guard('manager')->user()->uuid ])->select('role_id')->get()->toArray();
+        $role_ids = array_column($role_ids,'role_id');
+        $role_permission = Cache::rememberForever('role_permission', function () {
+            $permission = RolePermission::with('permission')->get()->toArray();
+            $role_permission = [];
+            foreach ($permission as $v) {
+                $role_permission[$v['role_id']][$v['permission']['id']] = $v['permission']['controller'];
+            }
+            return $role_permission;
+        });
+        $has_permission = [];
+        foreach($role_ids as $id){
+            if(isset($role_permission[$id])){
+                foreach ($role_permission[$id] as $k=>$v){
+                    $has_permission[$k] = $v;
                 }
             }
         }
-        return $this->privilege_urls ;
+        return $has_permission;
+    }
+
+    public function getRolePermission_bf(){
+        $role_ids = UserRole::where([ 'uuid' => Auth::guard('manager')->user()->uuid ])->select('role_id')->get()->toArray();
+        $role_ids = array_column($role_ids,'role_id');
+        $permission = RolePermission::whereIn('role_id',$role_ids)->with('permission')->get()->toArray();
+        $has_permission = [];
+        foreach ($permission as $v){
+            $has_permission[$v['permission']['id']] = $v['permission']['controller'];
+        }
+        return $has_permission;
     }
 
 }

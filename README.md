@@ -2,8 +2,8 @@
 
 
 环境<br>
-php7.0+<br>
-laravel8+<br>
+php7.3+<br>
+laravel8.37+<br>
 
 安装<br>
 `composer require aphly/laravel-admin` <br>

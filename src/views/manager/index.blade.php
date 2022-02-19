@@ -1,6 +1,10 @@
 <div class="top-bar">
     <h5 class="nav-title">用户管理</h5>
 </div>
+<style>
+    .table_scroll .table_header li:nth-child(4),.table_scroll .table_tbody li:nth-child(4){flex: 0 0 300px;}
+    .manager_role{background: #2878a7; color: #fff; border-radius: 4px; padding: 0 2px;}
+</style>
 <div class="imain">
     <div class="itop ">
         <form method="get" action="/admin/manager/index" class="select_form">
@@ -24,7 +28,7 @@
                     <li >ID</li>
                     <li >用户名</li>
                     <li >头像</li>
-                    <li >手机号</li>
+                    <li >角色</li>
                     <li >状态</li>
                     <li >操作</li>
                 </ul>
@@ -34,7 +38,11 @@
                         <li><input type="checkbox" class="delete_box" name="delete[]" value="{{$v['id']}}">{{$v['id']}}</li>
                         <li>{{$v['username']}}</li>
                         <li><img src="{{$v['avatar']}}" class="avatar"></li>
-                        <li>{{$v['phone']}}</li>
+                        <li>
+                            @foreach($v->role as $vv)
+                                <span class="manager_role">{{$vv->name}}</span>
+                            @endforeach
+                        </li>
                         <li>{{$v['status']}}</li>
                         <li>
                             <a class="badge badge-success get" data-href="/admin/manager/{{$v['id']}}/role">角色</a>

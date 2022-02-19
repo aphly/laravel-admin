@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class Role extends Migration
+return new class extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class Role extends Migration
      */
     public function up()
     {
-        Schema::create('role', function (Blueprint $table) {
+        Schema::create('admin_role', function (Blueprint $table) {
             $table->id();
             $table->string('name', 32);
             //$table->engine = 'InnoDB';
@@ -29,4 +29,4 @@ class Role extends Migration
     {
         Schema::dropIfExists('role');
     }
-}
+};

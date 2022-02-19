@@ -7,9 +7,9 @@ use Aphly\LaravelAdmin\Models\Permission;
 use Aphly\LaravelAdmin\Requests\PermissionRequest;
 use Illuminate\Http\Request;
 
-class PermissionController extends Controller
+class MenuController extends Controller
 {
-    public $index_url='/admin/permission/index';
+    public $index_url='/admin/menu/index';
 
     public function index(Request $request)
     {
@@ -37,6 +37,9 @@ class PermissionController extends Controller
             }
         }else{
             $res=['title'=>'我的'];
+//            $res['role'] = Permission::get()->toArray();
+//            $res['role'] = Helper::getTree($res['role']);
+
             return view('laravel-admin::permission.add',['res'=>$res]);
         }
     }

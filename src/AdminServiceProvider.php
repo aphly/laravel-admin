@@ -3,6 +3,7 @@
 namespace Aphly\LaravelAdmin;
 
 use Aphly\LaravelAdmin\Middleware\ManagerAuth;
+use Aphly\LaravelAdmin\Middleware\Rbac;
 use Illuminate\Support\ServiceProvider;
 
 class AdminServiceProvider extends ServiceProvider
@@ -34,7 +35,8 @@ class AdminServiceProvider extends ServiceProvider
         $this->loadMigrationsFrom(__DIR__.'/migrations');
         $this->loadViewsFrom(__DIR__.'/views', 'laravel-admin');
         $this->loadRoutesFrom(__DIR__.'/routes/web.php');
-        $this->addMiddlewareAlias('ManagerAuth', ManagerAuth::class);
+        $this->addMiddlewareAlias('managerAuth', ManagerAuth::class);
+        $this->addMiddlewareAlias('rbac', Rbac::class);
     }
 
     protected function addMiddlewareAlias($name, $class)

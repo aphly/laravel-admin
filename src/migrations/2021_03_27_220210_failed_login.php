@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class Failedlogin extends Migration
+return new class extends Migration
 {
     /**
      * Run the migrations.
@@ -15,8 +15,6 @@ class Failedlogin extends Migration
     {
         Schema::create('failed_login', function (Blueprint $table) {
             $table->string('ip',64)->primary();
-            $table->string('username',32)->index()->nullable();
-            $table->integer('user_id')->index()->nullable();
             $table->integer('count')->unsigned();
             $table->integer('lastupdate')->unsigned();
         });
@@ -31,4 +29,4 @@ class Failedlogin extends Migration
     {
         Schema::dropIfExists('failed_login');
     }
-}
+};

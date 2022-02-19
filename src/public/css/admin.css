@@ -71,7 +71,7 @@ button.badge{border: none;}
 .admin .ad_left .logo{color:#cf6646;line-height:70px;display:block;text-align:center;font-size:24px;FONT-WEIGHT:600}
 
 .admin .ad_right{width:calc(100% - 200px);}
-.admin .ad_right .topbar{width:calc(100% - 200px);height: 70px;position:fixed;top:0;right:0;background-color:#fff;-webkit-box-shadow:0 2px 4px rgb(0 0 0 / 8%);box-shadow:0 2px 4px rgb(0 0 0 / 8%)}
+.admin .ad_right .topbar{z-index: 10;width:calc(100% - 200px);height: 70px;position:fixed;top:0;right:0;background-color:#fff;-webkit-box-shadow:0 2px 4px rgb(0 0 0 / 8%);box-shadow:0 2px 4px rgb(0 0 0 / 8%)}
 .admin .ad_right .user_dropdown{width: 160px;display:flex;height:70px;justify-content:center;align-items:center}
 
 .admin .ad_right .portal{display: block;line-height: 70px;margin-left: 20px;}
