@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Role extends Model
 {
     use HasFactory;
-    protected $table = 'admin_role';
+    protected $table = 'role';
     public $timestamps = false;
 
     protected $fillable = [
@@ -20,5 +20,8 @@ class Role extends Model
         return $this->belongsToMany(Permission::class,'role_permission','role_id','permission_id');
     }
 
-
+    public function menu()
+    {
+        return $this->belongsToMany(Menu::class,'role_menu','role_id','menu_id');
+    }
 }

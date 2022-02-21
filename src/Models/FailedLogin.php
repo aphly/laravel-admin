@@ -25,7 +25,7 @@ class FailedLogin extends Model
         $currTime = time();
         $login = self::find($ip);
         if($login) {
-            if(LARAVEL_START - $login['lastupdate'] > 900){
+            if($currTime - $login['lastupdate'] > 900){
                 $login->count=0;
                 $login->lastupdate=$currTime;
                 $login->save();

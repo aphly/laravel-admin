@@ -1,6 +1,6 @@
 
 <div class="top-bar">
-    <h5 class="nav-title">权限</h5>
+    <h5 class="nav-title">角色权限</h5>
 </div>
 <div class="imain">
     <div class="userinfo">

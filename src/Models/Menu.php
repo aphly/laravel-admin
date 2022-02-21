@@ -8,12 +8,13 @@ use Illuminate\Database\Eloquent\Model;
 class Menu extends Model
 {
     use HasFactory;
-    protected $table = 'admin_menu';
+    protected $table = 'menu';
     public $timestamps = false;
 
     protected $fillable = [
         'name',
-        'controller'
+        'url',
+        'pid',
     ];
 
 

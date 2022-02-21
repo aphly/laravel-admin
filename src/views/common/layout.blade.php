@@ -37,6 +37,7 @@
                                 <li class=""><a class="dj" data-title="用户列表" data-href="/admin/manager/index">用户列表</a></li>
                                 <li class=""><a class="dj" data-title="角色管理" data-href="/admin/role/index">角色管理</a></li>
                                 <li class=""><a class="dj" data-title="权限管理" data-href="/admin/permission/index">权限管理</a></li>
+                                <li class=""><a class="dj" data-title="菜单管理" data-href="/admin/menu/index">菜单管理</a></li>
                             </ul>
                         </div>
                     </dd>
@@ -182,7 +183,7 @@
             e.preventDefault()
             e.stopPropagation()
             const form = $(this)
-            console.log(form.serialize())
+            //console.log(form.serialize())
             let url = form.attr("action");
             iload(url+'?'+form.serialize());
         })
@@ -204,8 +205,8 @@
                         success: function(res){
                             $('.save_form input.form-control').addClass('is-valid');
                             if(!res.code) {
-                                alert_msg(res)
                                 $("#iload").load(res.data.redirect);
+                                alert_msg(res)
                             }else if(res.code===11000){
                                 for(var item in res.data){
                                     let str = ''
@@ -263,7 +264,7 @@
             }
         })
 
-        $("#iload").on('click','a.get,a.page-link',function (e){
+        $("#iload").on('click','a.ajax_get,a.page-link',function (e){
             e.preventDefault();
             let ajax = $("#iload");
             ajax.html('');

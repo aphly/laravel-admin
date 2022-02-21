@@ -8,7 +8,6 @@ use Aphly\LaravelAdmin\Models\UserRole;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Closure;
-use Illuminate\Support\Facades\Cache;
 
 class Rbac
 {
@@ -35,14 +34,7 @@ class Rbac
     public function getRolePermission(){
         $role_ids = UserRole::where([ 'uuid' => Auth::guard('manager')->user()->uuid ])->select('role_id')->get()->toArray();
         $role_ids = array_column($role_ids,'role_id');
-        $role_permission = Cache::rememberForever('role_permission', function () {
-            $permission = RolePermission::with('permission')->get()->toArray();
-            $role_permission = [];
-            foreach ($permission as $v) {
-                $role_permission[$v['role_id']][$v['permission']['id']] = $v['permission']['controller'];
-            }
-            return $role_permission;
-        });
+        $role_permission = (new RolePermission)->role_permission_cache();
         $has_permission = [];
         foreach($role_ids as $id){
             if(isset($role_permission[$id])){

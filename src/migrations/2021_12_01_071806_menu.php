@@ -13,10 +13,10 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('admin_menu', function (Blueprint $table) {
+        Schema::create('menu', function (Blueprint $table) {
             $table->id();
-            $table->string('name', 32)->nullable();
-            $table->string('controller', 255);
+            $table->string('name', 32);
+            $table->string('url', 255)->nullable();
             $table->bigInteger('pid', 0)->unsigned()->default(0);
             $table->tinyInteger('is_leaf', 0)->unsigned()->default(1);
             $table->integer('sort', 0)->unsigned()->default(0);
@@ -34,6 +34,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('admin_menu');
+        Schema::dropIfExists('menu');
     }
 };

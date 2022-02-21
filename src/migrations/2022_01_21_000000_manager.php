@@ -13,7 +13,7 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('admin_manager', function (Blueprint $table) {
+        Schema::create('manager', function (Blueprint $table) {
             $table->id();
             $table->char('uuid',32)->unique();
             $table->string('username',32)->unique();
@@ -38,6 +38,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('admin_manager');
+        Schema::dropIfExists('manager');
     }
 };

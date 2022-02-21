@@ -13,13 +13,12 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('user_role', function (Blueprint $table) {
+        Schema::create('role_menu', function (Blueprint $table) {
             $table->id();
-            $table->char('uuid',32);
             $table->bigInteger('role_id')->unsigned();
-            $table->index('uuid');
+            $table->bigInteger('menu_id')->unsigned();
             $table->index('role_id');
-            //$table->timestamps();
+            $table->index('menu_id');
             //$table->engine = 'InnoDB';
         });
     }
@@ -31,6 +30,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('user_role');
+        Schema::dropIfExists('role_menu');
     }
 };

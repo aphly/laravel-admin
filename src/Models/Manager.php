@@ -14,7 +14,7 @@ use Illuminate\Support\Str;
 class Manager extends Authenticatable
 {
     use HasFactory, Notifiable;
-    protected $table = 'admin_manager';
+    protected $table = 'manager';
     /**
      * The attributes that are mass assignable.
      *

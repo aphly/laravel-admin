@@ -3,8 +3,9 @@
 namespace Aphly\LaravelAdmin\Controllers;
 
 use Aphly\Laravel\Exceptions\ApiException;
-use Aphly\LaravelAdmin\Models\Permission;
-use Aphly\LaravelAdmin\Requests\PermissionRequest;
+use Aphly\Laravel\Libs\Helper;
+use Aphly\LaravelAdmin\Models\Menu;
+use Aphly\LaravelAdmin\Requests\MenuRequest;
 use Illuminate\Http\Request;
 
 class MenuController extends Controller
@@ -16,20 +17,20 @@ class MenuController extends Controller
         $res=['title'=>'我的'];
         $res['filter']['name'] = $name = $request->query('name',false);
         $res['filter']['string'] = http_build_query($request->query());
-        $res['data'] = Permission::when($name,
+        $res['data'] = Menu::when($name,
                             function($query,$name) {
                                 return $query->where('name', 'like', '%'.$name.'%');
                             })
                         ->orderBy('id', 'desc')
                         ->Paginate(config('admin.perPage'))->withQueryString();
-        return view('laravel-admin::permission.index',['res'=>$res]);
+        return view('laravel-admin::menu.index',['res'=>$res]);
     }
 
-    public function add(PermissionRequest $request)
+    public function add(MenuRequest $request)
     {
         if($request->isMethod('post')) {
             $post = $request->all();
-            $role = Permission::create($post);
+            $role = Menu::create($post);
             if($role->id){
                 throw new ApiException(['code'=>0,'msg'=>'添加成功','data'=>['redirect'=>$this->index_url]]);
             }else{
@@ -37,17 +38,17 @@ class MenuController extends Controller
             }
         }else{
             $res=['title'=>'我的'];
-//            $res['role'] = Permission::get()->toArray();
-//            $res['role'] = Helper::getTree($res['role']);
-
-            return view('laravel-admin::permission.add',['res'=>$res]);
+            $res['menu'] = Menu::get()->toArray();
+            //$res['menu'] = Helper::getTree($res['menu']);
+            //dd($res['menu']);
+            return view('laravel-admin::menu.add',['res'=>$res]);
         }
     }
 
-    public function edit(PermissionRequest $request)
+    public function edit(MenuRequest $request)
     {
         if($request->isMethod('post')) {
-            $role = Permission::find($request->id);
+            $role = Menu::find($request->id);
             $post = $request->all();
             if($role->update($post)){
                 throw new ApiException(['code'=>0,'msg'=>'修改成功','data'=>['redirect'=>$this->index_url]]);
@@ -56,8 +57,14 @@ class MenuController extends Controller
             }
         }else{
             $res=['title'=>'我的'];
-            $res['info'] = Permission::find($request->id);
-            return view('laravel-admin::permission.edit',['res'=>$res]);
+            //$res['info'] = Menu::find($request->id);
+            $res['menu'] = Menu::get()->toArray();
+            foreach ($res['menu'] as $v){
+                if($v['id']==$request->id){
+                    $res['info']=$v;
+                }
+            }
+            return view('laravel-admin::menu.edit',['res'=>$res]);
         }
     }
 
@@ -67,7 +74,7 @@ class MenuController extends Controller
         $redirect = $query?$this->index_url.'?'.http_build_query($query):$this->index_url;
         $post = $request->input('delete');
         if(!empty($post)){
-            Permission::destroy($post);
+            Menu::destroy($post);
             throw new ApiException(['code'=>0,'msg'=>'操作成功','data'=>['redirect'=>$redirect]]);
         }
     }

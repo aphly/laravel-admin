@@ -3,6 +3,7 @@
 namespace Aphly\LaravelAdmin\Controllers;
 
 use Aphly\Laravel\Exceptions\ApiException;
+use Aphly\LaravelAdmin\Models\Menu;
 use Aphly\LaravelAdmin\Models\Permission;
 use Aphly\LaravelAdmin\Models\Role;
 use Aphly\LaravelAdmin\Requests\RoleRequest;
@@ -90,5 +91,21 @@ class RoleController extends Controller
         }
     }
 
-
+    public function menu(Request $request)
+    {
+        if($request->isMethod('post')) {
+            $role = Role::find($request->id);
+            if($role){
+                $role->menu()->sync($request->input('menu_id'));
+            }
+            throw new ApiException(['code'=>0,'msg'=>'操作成功','data'=>['redirect'=>$this->index_url]]);
+        }else{
+            $res=['title'=>'我的'];
+            $res['info'] = Role::find($request->id);
+            $res['role_menu'] = $res['info']->menu->toArray();
+            $res['role_menu'] = array_column($res['role_menu'], 'id');
+            $res['menu'] = Menu::get()->toArray();
+            return view('laravel-admin::role.menu',['res'=>$res]);
+        }
+    }
 }

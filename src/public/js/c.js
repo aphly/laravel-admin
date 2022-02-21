@@ -74,3 +74,26 @@ var urlOption={
         }
     }
 }
+
+function toTree(data) {
+    let result = []
+    if(!Array.isArray(data)) {
+        return result
+    }
+    data.forEach(item => {
+        delete item.nodes;
+    });
+    let map = {};
+    data.forEach(item => {
+        map[item.id] = item;
+    });
+    data.forEach(item => {
+        let parent = map[item.pid];
+        if(parent) {
+            (parent.nodes || (parent.nodes = [])).push(item);
+        } else {
+            result.push(item);
+        }
+    });
+    return result;
+}

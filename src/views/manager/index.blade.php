@@ -17,7 +17,7 @@
             <button class="" type="submit">搜索</button>
         </div>
         </form>
-        <div class=""><a data-href="/admin/manager/add" class="badge badge-info get add">新增</a></div>
+        <div class=""><a data-href="/admin/manager/add" class="badge badge-info ajax_get add">新增</a></div>
     </div>
 
     <form method="post"  @if($res['filter']['string']) action="/admin/manager/del?{{$res['filter']['string']}}" @else action="/admin/manager/del" @endif  class="del_form">
@@ -45,9 +45,9 @@
                         </li>
                         <li>{{$v['status']}}</li>
                         <li>
-                            <a class="badge badge-success get" data-href="/admin/manager/{{$v['id']}}/role">角色</a>
-                            <a class="badge badge-info get" data-href="/admin/manager/{{$v['id']}}/edit">编辑</a>
-                            <a class="badge badge-info get" data-href="/admin/manager/{{$v['id']}}/avatar">头像</a>
+                            <a class="badge badge-success ajax_get" data-href="/admin/manager/{{$v['id']}}/role">角色</a>
+                            <a class="badge badge-info ajax_get" data-href="/admin/manager/{{$v['id']}}/edit">编辑</a>
+                            <a class="badge badge-info ajax_get" data-href="/admin/manager/{{$v['id']}}/avatar">头像</a>
                         </li>
                     </ul>
                     @endforeach

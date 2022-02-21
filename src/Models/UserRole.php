@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class UserRole extends Model
 {
     use HasFactory;
-    protected $table = 'admin_user_role';
+    protected $table = 'user_role';
     public $timestamps = false;
     protected $fillable = [
         'uuid',
