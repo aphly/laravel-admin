@@ -98,6 +98,7 @@ class RoleController extends Controller
             if($role){
                 $role->menu()->sync($request->input('menu_id'));
             }
+            Cache::forget('role_menu');
             throw new ApiException(['code'=>0,'msg'=>'操作成功','data'=>['redirect'=>$this->index_url]]);
         }else{
             $res=['title'=>'我的'];
