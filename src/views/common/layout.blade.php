@@ -111,7 +111,7 @@
                         <a style="display: block" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <div class="user_dropdown">
                                 <img class="lazy user_avatar" src="{{url('img/avatar.png')}}" data-original="">
-                                <span class="user_name wenzi">xxxx</span>
+                                <span class="user_name wenzi">{{$res['user']['username']}}</span>
                                 <i class="uni app-xia"></i>
                             </div>
                         </a>
@@ -119,7 +119,7 @@
                             <a class="dropdown-item" href="#">Action</a>
                             <a class="dropdown-item" href="#">Another action</a>
                             <div class="dropdown-divider"></div>
-                            <a class="dropdown-item text-danger" href="/admin/logout">退出</a>
+                            <a class="dropdown-item text-danger layout_ajax_post " href="/admin/logout">退出</a>
                         </div>
                     </div>
                     <div class="dropdown">
@@ -178,6 +178,23 @@
     }
     $(function (){
         iload('/admin/index/index');
+
+        $('.layout_ajax_post').click(function (e) {
+            e.preventDefault();
+            let url = $(this).attr('href');
+            if(url){
+               $.ajax({
+                    url,
+                    dataType: "json",
+                    success: function(res){
+                        alert_msg(res)
+                        if(!res.code && res.data.redirect) {
+                            location.href=res.data.redirect
+                        }
+                    }
+                })
+            }
+        })
 
         $("#iload").on('submit','.select_form',function (e){
             e.preventDefault()

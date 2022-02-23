@@ -3,6 +3,7 @@
 namespace Aphly\LaravelAdmin\Middleware;
 
 use Aphly\Laravel\Exceptions\ApiException;
+use Aphly\LaravelAdmin\Models\Role;
 use Aphly\LaravelAdmin\Models\RolePermission;
 use Aphly\LaravelAdmin\Models\UserRole;
 use Illuminate\Http\Request;
@@ -28,22 +29,7 @@ class Rbac
         if( in_array( $controller,$this->ignore_url ) ){
             return true;
         }
-        return in_array( $controller, $this->getRolePermission());
-    }
-
-    public function getRolePermission(){
-        $role_ids = UserRole::where([ 'uuid' => Auth::guard('manager')->user()->uuid ])->select('role_id')->get()->toArray();
-        $role_ids = array_column($role_ids,'role_id');
-        $role_permission = (new RolePermission)->role_permission_cache();
-        $has_permission = [];
-        foreach($role_ids as $id){
-            if(isset($role_permission[$id])){
-                foreach ($role_permission[$id] as $k=>$v){
-                    $has_permission[$k] = $v;
-                }
-            }
-        }
-        return $has_permission;
+        return in_array( $controller, (new Role)->getRolePermission());
     }
 
     public function getRolePermission_bf(){

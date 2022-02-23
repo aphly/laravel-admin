@@ -20,6 +20,7 @@ class PermissionController extends Controller
                             function($query,$name) {
                                 return $query->where('name', 'like', '%'.$name.'%');
                             })
+                        ->where('pid','=',0)
                         ->orderBy('id', 'desc')
                         ->Paginate(config('admin.perPage'))->withQueryString();
         return view('laravel-admin::permission.index',['res'=>$res]);

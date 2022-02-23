@@ -14,13 +14,11 @@ class PermissionRequest extends FormRequest
             list($routeControllerName, $routeActionName) = explode('@',$str);
             if($routeActionName=='add'){
                 return [
-                    'name' => 'required',
-                    'controller' => 'required'
+                    'name' => 'required'
                 ];
             }else if($routeActionName=='edit'){
                 return [
                     'name' => 'required',
-                    'controller' => 'required',
                 ];
             }
         }

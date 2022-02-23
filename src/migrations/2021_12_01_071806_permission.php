@@ -15,14 +15,14 @@ return new class extends Migration
     {
         Schema::create('permission', function (Blueprint $table) {
             $table->id();
-            $table->string('name', 32)->nullable();
-            $table->string('controller', 255);
+            $table->string('name', 32);
+            $table->string('controller', 255)->nullable();
             $table->bigInteger('pid', 0)->unsigned()->default(0);
-            $table->tinyInteger('is_leaf', 0)->unsigned()->default(1);
             $table->integer('sort', 0)->unsigned()->default(0);
+            $table->tinyInteger('status')->unsigned()->default(1)->comment('1:开启; 0:关闭');
             $table->index('pid');
-            $table->index(['is_leaf']);
             $table->index('sort');
+            $table->index('status');
             //$table->engine = 'InnoDB';
         });
     }

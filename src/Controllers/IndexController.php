@@ -4,6 +4,7 @@ namespace Aphly\LaravelAdmin\Controllers;
 
 use Aphly\Laravel\Exceptions\ApiException;
 use Aphly\LaravelAdmin\Models\FailedLogin;
+use Aphly\LaravelAdmin\Models\Role;
 use Aphly\LaravelAdmin\Requests\LoginRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -13,13 +14,15 @@ class IndexController extends Controller
     public function layout()
     {
         $res=['title'=>'我的'];
+        $menu = (new Role)->getMenu();
+        $res['user'] = Auth::guard('manager')->user();
+        //dd($menu);
         return view('laravel-admin::common.layout',['res'=>$res]);
     }
 
     public function index()
     {
         $res=['title'=>'我的'];
-        //sleep(3);
         return view('laravel-admin::index.index',['res'=>$res]);
     }
 
@@ -51,7 +54,6 @@ class IndexController extends Controller
             return view('laravel-admin::index.login',['res'=>$res]);
         }
     }
-
 
     public function logout(Request $request)
     {

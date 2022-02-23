@@ -15,7 +15,7 @@
         <div class=""><a data-href="/admin/menu/add" class="badge badge-info ajax_get add">新增</a></div>
     </div>
 
-    <form method="post"  @if($res['filter']['string']) action="/admin/menu/del?{{$res['filter']['string']}}" @else action="/admin/menu/del" @endif  class="del_form">
+    <form method="post" @if($res['filter']['string']) action="/admin/menu/del?{{$res['filter']['string']}}" @else action="/admin/menu/del" @endif  class="del_form">
         @csrf
         <div class="table_scroll">
             <div class="table">

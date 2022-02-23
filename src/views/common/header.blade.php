@@ -9,5 +9,6 @@
     <link rel="stylesheet" href="{{ URL::asset('css/iconfont.css') }}">
     <script src='{{ URL::asset('js/jquery.min.js') }}' type='text/javascript'></script>
     <script src='{{ URL::asset('js/c.js') }}' type='text/javascript'></script>
+    <script src='{{ URL::asset('js/admin.js') }}' type='text/javascript'></script>
 </head>
 <body>

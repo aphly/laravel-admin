@@ -18,35 +18,23 @@
 <script>
     var menu = @json($res['menu']);
     var select_ids = @json($res['role_menu']);
-    console.log(select_ids);
-    function in_array(search,array){
-        for(var i in array){
-            if(array[i]==search){
-                return true;
-            }
-        }
-        return false;
-    }
+    var menu_ids = {}
     function toMyTree(data,select_ids=0) {
         let new_array = []
         data.forEach((item,index) => {
             if(select_ids){
                 if(in_array(item.id,select_ids)){
-                    console.log('a'+item.id);
                     new_array.push({id:item.id,text:item.name,pid:item.pid,state:{selected:true}})
                 }else{
-                    console.log(item.id);
                     new_array.push({id:item.id,text:item.name,pid:item.pid})
                 }
             }else{
-
                 new_array.push({id:item.id,text:item.name,pid:item.pid})
             }
             delete item.nodes;
         });
         return new_array;
     }
-    var menu_ids = {}
     function makeMenuInput() {
         let ids=[]
         for(var i in menu_ids){

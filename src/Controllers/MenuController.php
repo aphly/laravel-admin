@@ -21,6 +21,7 @@ class MenuController extends Controller
                             function($query,$name) {
                                 return $query->where('name', 'like', '%'.$name.'%');
                             })
+
                         ->orderBy('id', 'desc')
                         ->Paginate(config('admin.perPage'))->withQueryString();
         return view('laravel-admin::menu.index',['res'=>$res]);
