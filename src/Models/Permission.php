@@ -13,8 +13,20 @@ class Permission extends Model
 
     protected $fillable = [
         'name',
-        'controller'
+        'controller',
+        'pid',
+        'is_leaf',
+        'status',
+        'sort',
     ];
 
-
+//    protected static function boot()
+//    {
+//        parent::boot();
+//        static::deleted(function (User $user) {
+//            UserUni::destroy($user->id);
+//            UserInfo::destroy($user->id);
+//            self::delAvatar($user->avatar);
+//        });
+//    }
 }

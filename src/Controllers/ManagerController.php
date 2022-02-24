@@ -32,7 +32,7 @@ class ManagerController extends Controller
                         ->with('role')
                         ->orderBy('id', 'desc')
                         ->Paginate(config('admin.perPage'))->withQueryString();
-        return view('laravel-admin::manager.index',['res'=>$res]);
+        return $this->makeView('laravel-admin::manager.index',['res'=>$res]);
     }
 
     public function add(ManagerRequest $request)
@@ -50,7 +50,7 @@ class ManagerController extends Controller
             }
         }else{
             $res=['title'=>'我的'];
-            return view('laravel-admin::manager.add',['res'=>$res]);
+            return $this->makeView('laravel-admin::manager.add',['res'=>$res]);
         }
     }
 
@@ -72,7 +72,7 @@ class ManagerController extends Controller
         }else{
             $res=['title'=>'我的'];
             $res['info'] = Manager::find($request->id);
-            return view('laravel-admin::manager.edit',['res'=>$res]);
+            return $this->makeView('laravel-admin::manager.edit',['res'=>$res]);
         }
     }
 
@@ -101,7 +101,7 @@ class ManagerController extends Controller
             $res['user_role'] = $res['info']->role->toArray();
             $res['user_role'] = array_column($res['user_role'], 'id');
             $res['role'] = Role::all()->toArray();
-            return view('laravel-admin::manager.role',['res'=>$res]);
+            return $this->makeView('laravel-admin::manager.role',['res'=>$res]);
         }
     }
 
@@ -131,7 +131,7 @@ class ManagerController extends Controller
         }else{
             $res=['title'=>'我的'];
             $res['info'] = User::find($request->id);
-            return view('admin.user.avatar',['res'=>$res]);
+            return $this->makeView('admin.user.avatar',['res'=>$res]);
         }
     }
 

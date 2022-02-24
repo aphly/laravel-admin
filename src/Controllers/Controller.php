@@ -2,7 +2,7 @@
 
 namespace Aphly\LaravelAdmin\Controllers;
 
-class Controller extends \App\Http\Controllers\Controller
+class Controller extends \Aphly\Laravel\Controllers\Controller
 {
 
 }

@@ -25,7 +25,7 @@ class RoleController extends Controller
                             })
                         ->orderBy('id', 'desc')
                         ->Paginate(config('admin.perPage'))->withQueryString();
-        return view('laravel-admin::role.index',['res'=>$res]);
+        return $this->makeView('laravel-admin::role.index',['res'=>$res]);
     }
 
     public function add(RoleRequest $request)
@@ -40,7 +40,7 @@ class RoleController extends Controller
             }
         }else{
             $res=['title'=>'我的'];
-            return view('laravel-admin::role.add',['res'=>$res]);
+            return $this->makeView('laravel-admin::role.add',['res'=>$res]);
         }
     }
 
@@ -57,7 +57,7 @@ class RoleController extends Controller
         }else{
             $res=['title'=>'我的'];
             $res['info'] = Role::find($request->id);
-            return view('laravel-admin::role.edit',['res'=>$res]);
+            return $this->makeView('laravel-admin::role.edit',['res'=>$res]);
         }
     }
 
@@ -86,8 +86,8 @@ class RoleController extends Controller
             $res['info'] = Role::find($request->id);
             $res['role_permission'] = $res['info']->permission->toArray();
             $res['role_permission'] = array_column($res['role_permission'], 'id');
-            $res['permission'] = Permission::get()->toArray();
-            return view('laravel-admin::role.permission',['res'=>$res]);
+            $res['permission'] = Permission::where('status',1)->get()->toArray();
+            return $this->makeView('laravel-admin::role.permission',['res'=>$res]);
         }
     }
 
@@ -106,7 +106,7 @@ class RoleController extends Controller
             $res['role_menu'] = $res['info']->menu->toArray();
             $res['role_menu'] = array_column($res['role_menu'], 'id');
             $res['menu'] = Menu::get()->toArray();
-            return view('laravel-admin::role.menu',['res'=>$res]);
+            return $this->makeView('laravel-admin::role.menu',['res'=>$res]);
         }
     }
 }

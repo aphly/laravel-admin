@@ -24,7 +24,7 @@ class MenuController extends Controller
 
                         ->orderBy('id', 'desc')
                         ->Paginate(config('admin.perPage'))->withQueryString();
-        return view('laravel-admin::menu.index',['res'=>$res]);
+        return $this->makeView('laravel-admin::menu.index',['res'=>$res]);
     }
 
     public function add(MenuRequest $request)
@@ -42,7 +42,7 @@ class MenuController extends Controller
             $res['menu'] = Menu::get()->toArray();
             //$res['menu'] = Helper::getTree($res['menu']);
             //dd($res['menu']);
-            return view('laravel-admin::menu.add',['res'=>$res]);
+            return $this->makeView('laravel-admin::menu.add',['res'=>$res]);
         }
     }
 
@@ -65,7 +65,7 @@ class MenuController extends Controller
                     $res['info']=$v;
                 }
             }
-            return view('laravel-admin::menu.edit',['res'=>$res]);
+            return $this->makeView('laravel-admin::menu.edit',['res'=>$res]);
         }
     }
 

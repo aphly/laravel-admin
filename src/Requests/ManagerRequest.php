@@ -18,7 +18,7 @@ class ManagerRequest extends FormRequest
                     'username' => 'required|between:4,32|alpha_num|unique:manager',
                     'nickname' => 'nullable|string',
                     'phone' => 'nullable|numeric|regex:/^1[0-9]{10}$/',
-                    'email' => 'nullable|email:filter|unique:user',
+                    'email' => 'nullable|email:filter',
                     'password' => 'required|between:6,64|alpha_num',
                 ];
             }else if($routeActionName=='edit'){

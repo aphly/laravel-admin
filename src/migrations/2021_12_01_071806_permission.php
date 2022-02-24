@@ -20,9 +20,11 @@ return new class extends Migration
             $table->bigInteger('pid', 0)->unsigned()->default(0);
             $table->integer('sort', 0)->unsigned()->default(0);
             $table->tinyInteger('status')->unsigned()->default(1)->comment('1:开启; 0:关闭');
+            $table->tinyInteger('is_leaf')->unsigned()->default(1);
             $table->index('pid');
             $table->index('sort');
             $table->index('status');
+            $table->index('is_leaf');
             //$table->engine = 'InnoDB';
         });
     }

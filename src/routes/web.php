@@ -12,6 +12,8 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+Route::middleware(['throttle:5,10'])->match(['get', 'post'],'/admin/test', 'Aphly\LaravelAdmin\Controllers\IndexController@test');
+
 Route::middleware(['throttle:5,10'])->match(['get', 'post'],'/admin/init', 'Aphly\LaravelAdmin\Controllers\InitController@index');
 
 Route::middleware(['web'])->group(function () {
@@ -39,9 +41,6 @@ Route::middleware(['web'])->group(function () {
         Route::match(['get', 'post'],'/permission/add', 'Aphly\LaravelAdmin\Controllers\PermissionController@add');
         Route::match(['get', 'post'],'/permission/{id}/edit', 'Aphly\LaravelAdmin\Controllers\PermissionController@edit')->where('id', '[0-9]+');
         Route::post('/permission/del', 'Aphly\LaravelAdmin\Controllers\PermissionController@del');
-        Route::match(['get', 'post'],'/permission/{id}/api', 'Aphly\LaravelAdmin\Controllers\PermissionController@api')->where('id', '[0-9]+');
-        Route::match(['get', 'post'],'/permission/{id}/api/add', 'Aphly\LaravelAdmin\Controllers\PermissionController@api');
-        Route::match(['get', 'post'],'/permission/{id}/api/edit', 'Aphly\LaravelAdmin\Controllers\PermissionController@api');
 
         Route::get('/menu/index', 'Aphly\LaravelAdmin\Controllers\MenuController@index');
         Route::match(['get', 'post'],'/menu/add', 'Aphly\LaravelAdmin\Controllers\MenuController@add');

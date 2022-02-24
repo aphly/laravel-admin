@@ -1,21 +1,25 @@
 <div class="top-bar">
-    <h5 class="nav-title">权限管理</h5>
+    <h5 class="nav-title">权限管理
+        @if($res['pid'])
+            <span>- {{$res['parent']['name']}}</span>
+        @endif
+    </h5>
 </div>
 <style>
     .table_scroll .table_header li:nth-child(3),.table_scroll .table_tbody li:nth-child(3){flex: 0 0 500px;}
 </style>
 <div class="imain">
     <div class="itop ">
-        <form method="get" action="/admin/permission/index" class="select_form">
+        <form method="get" @if($res['pid']) action="/admin/permission/index?pid={{$res['pid']}}" @else action="/admin/permission/index" @endif class="select_form">
             <div class="filter ">
                 <input type="search" name="name" placeholder="权限名" value="{{$res['filter']['name']}}">
                 <button class="" type="submit">搜索</button>
             </div>
         </form>
-        <div class=""><a data-href="/admin/permission/add" class="badge badge-info ajax_get add">新增</a></div>
+        <div class=""><a data-href="/admin/permission/add?pid={{$res['pid']}}" class="badge badge-info ajax_get add">新增</a></div>
     </div>
 
-    <form method="post"  @if($res['filter']['string']) action="/admin/permission/del?{{$res['filter']['string']}}" @else action="/admin/permission/del" @endif  class="del_form">
+    <form method="post" @if($res['filter']['string']) action="/admin/permission/del?{{$res['filter']['string']}}" @else action="/admin/permission/del" @endif  class="del_form">
         @csrf
         <div class="table_scroll">
             <div class="table">
@@ -23,6 +27,7 @@
                     <li >ID</li>
                     <li >路由名称</li>
                     <li >控制器</li>
+                    <li >状态</li>
                     <li >操作</li>
                 </ul>
                 @if($res['data']->total())
@@ -32,8 +37,17 @@
                             <li>{{$v['name']}}</li>
                             <li>{{$v['controller']}}</li>
                             <li>
-                                <a class="badge badge-info ajax_get" data-href="/admin/permission/{{$v['id']}}/api">接口</a>
-                                <a class="badge badge-info ajax_get" data-href="/admin/permission/{{$v['id']}}/edit">编辑</a>
+                                @if($v['status'])
+                                    <span class="badge badge-success">开启</span>
+                                @else
+                                    <span class="badge badge-secondary">关闭</span>
+                                @endif
+                            </li>
+                            <li>
+                                <a class="badge badge-info ajax_get" data-href="/admin/permission/{{$v['id']}}/edit?pid={{$res['pid']}}">编辑</a>
+                                @if(!$v['is_leaf'])
+                                    <a class="badge badge-info ajax_get" data-href="/admin/permission/index?pid={{$v['id']}}">进入</a>
+                                @endif
                             </li>
                         </ul>
                     @endforeach

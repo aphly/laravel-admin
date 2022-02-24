@@ -17,13 +17,13 @@ class IndexController extends Controller
         $menu = (new Role)->getMenu();
         $res['user'] = Auth::guard('manager')->user();
         //dd($menu);
-        return view('laravel-admin::common.layout',['res'=>$res]);
+        return $this->makeView('laravel-admin::common.layout',['res'=>$res]);
     }
 
     public function index()
     {
         $res=['title'=>'我的'];
-        return view('laravel-admin::index.index',['res'=>$res]);
+        return $this->makeView('laravel-admin::index.index',['res'=>$res]);
     }
 
     public function test(Request $request)
@@ -34,7 +34,7 @@ class IndexController extends Controller
             throw new ApiException(['code'=>0,'msg'=>'test成功','data'=>$credentials]);
         }else{
             $res=['title'=>'后台登录'];
-            return view('laravel-admin::index.login',['res'=>$res]);
+            return $this->makeView('laravel-admin::index.login',['res'=>$res]);
         }
     }
 
@@ -51,7 +51,7 @@ class IndexController extends Controller
             }
         }else{
             $res=['title'=>'后台登录'];
-            return view('laravel-admin::index.login',['res'=>$res]);
+            return $this->makeView('laravel-admin::index.login',['res'=>$res]);
         }
     }
 

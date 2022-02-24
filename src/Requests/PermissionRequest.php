@@ -14,11 +14,19 @@ class PermissionRequest extends FormRequest
             list($routeControllerName, $routeActionName) = explode('@',$str);
             if($routeActionName=='add'){
                 return [
-                    'name' => 'required'
+                    'name' => 'required',
+                    'controller' => 'requiredIf:is_leaf,1',
+                    'status' => 'numeric',
+                    'is_leaf' => 'numeric',
+                    'sort' => 'numeric',
                 ];
             }else if($routeActionName=='edit'){
                 return [
                     'name' => 'required',
+                    'controller' => 'requiredIf:is_leaf,1',
+                    'status' => 'numeric',
+                    'is_leaf' => 'numeric',
+                    'sort' => 'numeric',
                 ];
             }
         }
@@ -33,13 +41,7 @@ class PermissionRequest extends FormRequest
 //        ];
 //    }
 
-//'controller' => Rule::requiredIf(function () {
-//    if ($this->input('is_leaf')) {
-//        return true;
-//    } else {
-//        return false;
-//    }
-//}),
+
 
     public function messages()
     {

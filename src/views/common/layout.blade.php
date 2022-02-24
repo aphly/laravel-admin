@@ -202,7 +202,11 @@
             const form = $(this)
             //console.log(form.serialize())
             let url = form.attr("action");
-            iload(url+'?'+form.serialize());
+            if(url.indexOf('?') !== -1){
+                iload(url+'&'+form.serialize());
+            }else{
+                iload(url+'?'+form.serialize());
+            }
         })
 
         $("#iload").on('submit','.save_form',function (e){
@@ -251,6 +255,10 @@
         $("#iload").on('submit','.del_form',function (e){
             e.preventDefault()
             e.stopPropagation()
+            let msg = "您真的确定要删除吗？";
+            if (confirm(msg)!==true){
+               return;
+            }
             const form = $(this)
             if(form[0].checkValidity()===false){
             }else{

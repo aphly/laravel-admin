@@ -29,7 +29,6 @@
 </div>
 <script>
     var menu = @json($res['menu']);
-
     var data = toTree(toMyTree(menu))
     $(function () {
         $('#tree').treeview({
