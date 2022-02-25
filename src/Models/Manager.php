@@ -26,7 +26,7 @@ class Manager extends Authenticatable
         'username','nickname','email','phone',
         'password',
         'token',
-        'token_expire','avatar','status'
+        'token_expire','avatar','status','gender'
     ];
 
     /**

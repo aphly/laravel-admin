@@ -26,6 +26,14 @@
                 <div class="invalid-feedback"></div>
             </div>
             <div class="form-group">
+                <label for="exampleInputEmail1">性别</label>
+                <select name="gender"  class="form-control">
+                    <option value="1" @if($res['info']['gender']==1) selected @endif>男</option>
+                    <option value="2" @if($res['info']['gender']==1) @else selected @endif >女</option>
+                </select>
+                <div class="invalid-feedback"></div>
+            </div>
+            <div class="form-group">
                 <label for="exampleInputEmail1">密码</label>
                 <input type="text" name="password" class="form-control " value="">
                 <div class="invalid-feedback"></div>

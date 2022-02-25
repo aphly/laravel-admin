@@ -6,23 +6,20 @@
     <div class="userinfo">
         角色名称：{{$res['info']['name']}}
     </div>
-    <div class="d-flex ">
-        <div>
-            <div id="tree" class="treeview"></div>
-        </div>
-        <div>
-            <form method="post" action="/admin/role/{{$res['info']['id']}}/permission" class="save_form">
-                @csrf
-                <div class="cl qx">
-                    @foreach($res['permission'] as $v)
-                        <div class="form-check form-check-inline">
-                            <input class="form-check-input" id="inlineCheckbox{{$v['id']}}" type="checkbox" name="permission_id[]" @if(in_array($v['id'],$res['role_permission'])) checked @endif value="{{$v['id']}}">
-                            <label class="form-check-label" for="inlineCheckbox{{$v['id']}}">{{$v['name']}}</label>
-                        </div>
-                    @endforeach
-                </div>
-                <button class="btn btn-primary" type="submit">保存</button>
-            </form>
+    <div class="role_permission max_width">
+        <div class="min_width d-flex">
+            <div class="permission_menu">
+                <div class="role_title">权限列表</div>
+                <div id="tree" class="treeview"></div>
+            </div>
+            <div class="role">
+                <div class="role_title">已选中</div>
+                <form method="post" action="/admin/role/{{$res['info']['id']}}/permission" class="save_form">
+                    @csrf
+                    <div class=" select_ids" id="select_ids"></div>
+                    <button class="btn btn-primary" type="submit">保存</button>
+                </form>
+            </div>
         </div>
     </div>
 
@@ -30,18 +27,14 @@
 
 <script>
     var permission = @json($res['permission']);
-    function toMyTree(data,select_ids=0) {
+    var select_ids = @json($res['select_ids']);
+    function roleData(data,select_ids=0) {
         let new_array = []
         data.forEach((item,index) => {
+            let selectable = item.is_leaf?true:false;
             if(select_ids){
-                let selected=false,disabled=false;
-                if(in_array(item.id,select_ids)){
-                    selected=true;
-                }
-                if(!item.is_leaf){
-                    disabled=true;
-                }
-                new_array.push({id:item.id,text:item.name,pid:item.pid,state:{selected,disabled}})
+                let selected=in_array(item.id,select_ids)?true:false;
+                new_array.push({id:item.id,text:item.name,pid:item.pid,state:{selected},selectable})
             }else{
                 new_array.push({id:item.id,text:item.name,pid:item.pid})
             }
@@ -49,24 +42,34 @@
         });
         return new_array;
     }
-    var data = toTree(toMyTree(permission))
-    console.log(data)
+    var data = toTree(roleData(permission,select_ids))
     $(function () {
-        $('#tree').treeview({
-            levels: 2,
-            collapseIcon:'uni app-jian',
-            expandIcon:'uni app-jia',
+        var bTree =$('#tree').treeview({
+            levels: 3,
+            collapseIcon:'uni app-arrow-right-copy',
+            expandIcon:'uni app-arrow-right',
+            selectedBackColor:'#f3faff',
+            selectedColor:'#212529',
             data,
             multiSelect:true,
             onNodeSelected: function(event, data) {
-                $('#pid').val(data.id)
+                makeInput();
             },
             onNodeUnselected: function(event, data) {
-                if($('#pid').val()==data.id){
-                    $('#pid').val(0)
-                }
+                makeInput();
             },
         });
+        var makeInput = function () {
+            let arr = bTree.treeview('getSelected');
+            let html = '';
+            for(let i in arr){
+                html += `<div data-nodeid="${arr[i].nodeId}"><input type="hidden" name="permission_id[]" value="${arr[i].id}">${arr[i].text} <span class="uni app-guanbi"></span></div> `
+            }
+            $("#select_ids").html(html);
+        }
+        makeInput();
+        $('#select_ids').on('click','div', function () {
+            bTree.treeview('unselectNode', [ $(this).data('nodeid'), { silent: false } ]);
+        });
     })
-
 </script>

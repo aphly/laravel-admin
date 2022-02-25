@@ -6,7 +6,9 @@ use Aphly\Laravel\Exceptions\ApiException;
 use Aphly\LaravelAdmin\Models\Menu;
 use Aphly\LaravelAdmin\Models\Permission;
 use Aphly\LaravelAdmin\Models\Role;
+use Aphly\LaravelAdmin\Models\RolePermission;
 use Aphly\LaravelAdmin\Requests\RoleRequest;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 
@@ -85,8 +87,8 @@ class RoleController extends Controller
             $res=['title'=>'我的'];
             $res['info'] = Role::find($request->id);
             $res['role_permission'] = $res['info']->permission->toArray();
-            $res['role_permission'] = array_column($res['role_permission'], 'id');
-            $res['permission'] = Permission::where('status',1)->get()->toArray();
+            $res['select_ids'] = array_column($res['role_permission'], 'id');
+            $res['permission'] = Permission::where('status',1)->orderBy('sort', 'desc')->get()->toArray();
             return $this->makeView('laravel-admin::role.permission',['res'=>$res]);
         }
     }
@@ -104,8 +106,8 @@ class RoleController extends Controller
             $res=['title'=>'我的'];
             $res['info'] = Role::find($request->id);
             $res['role_menu'] = $res['info']->menu->toArray();
-            $res['role_menu'] = array_column($res['role_menu'], 'id');
-            $res['menu'] = Menu::get()->toArray();
+            $res['select_ids'] = array_column($res['role_menu'], 'id');
+            $res['menu'] = Menu::where('status',1)->orderBy('sort', 'desc')->get()->toArray();
             return $this->makeView('laravel-admin::role.menu',['res'=>$res]);
         }
     }

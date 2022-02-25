@@ -24,8 +24,7 @@ class PermissionController extends Controller
                         ->where('pid','=',$pid)
                         ->orderBy('sort', 'desc')
                         ->Paginate(config('admin.perPage'))->withQueryString();
-        $res['parent'] = Permission::where('id', '=', $pid)->first();
-        $res['parent'] = !is_null($res['parent']) ? $res['parent']->toArray() : [];
+        $res['parent'] = $this->parentInfo($pid);
         return $this->makeView('laravel-admin::permission.index',['res'=>$res]);
     }
 
@@ -36,6 +35,13 @@ class PermissionController extends Controller
         }else{
             return $this->index_url;
         }
+    }
+
+    public function parentInfo($pid)
+    {
+        $parent = Permission::where('id', '=', $pid)->first();
+        $parent = !is_null($parent) ? $parent->toArray() : [];
+        return $parent;
     }
 
     public function add(PermissionRequest $request)
@@ -51,8 +57,7 @@ class PermissionController extends Controller
         }else{
             $res=['title'=>'我的'];
             $res['pid'] = $pid =  $request->query('pid',0);
-            $res['parent'] = Permission::where('id', '=', $pid)->first();
-            $res['parent'] = !is_null($res['parent']) ? $res['parent']->toArray() : [];
+            $res['parent'] = $this->parentInfo($pid);
             return $this->makeView('laravel-admin::permission.add',['res'=>$res]);
         }
     }
@@ -71,8 +76,7 @@ class PermissionController extends Controller
             $res=['title'=>'我的'];
             $res['info'] = Permission::find($request->id);
             $res['pid'] = $pid =  $request->query('pid',0);
-            $res['parent'] = Permission::where('id', '=', $pid)->first();
-            $res['parent'] = !is_null($res['parent']) ? $res['parent']->toArray() : [];
+            $res['parent'] = $this->parentInfo($pid);
             return $this->makeView('laravel-admin::permission.edit',['res'=>$res]);
         }
     }

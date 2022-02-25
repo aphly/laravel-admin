@@ -64,7 +64,7 @@ class Role extends Model
         return Cache::rememberForever('role_permission', function () {
             $permission = RolePermission::whereHas('permission', function (Builder $query) {
                 $query->where('status', 1)->where('is_leaf', 1);
-            })->get()->toArray();
+            })->with('permission')->get()->toArray();
             $role_permission = [];
             foreach ($permission as $v) {
                 $role_permission[$v['role_id']][$v['permission']['id']] = $v['permission']['controller'];

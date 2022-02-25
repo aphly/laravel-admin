@@ -44,6 +44,7 @@ class IndexController extends Controller
             $failedLogin =  new FailedLogin;
             $failedLogin->logincheck($request->ip());
             $credentials = $request->only('username', 'password');
+            $credentials['status']=1;
             if (Auth::guard('manager')->attempt($credentials)) {
                 throw new ApiException(['code'=>0,'msg'=>'登录成功','data'=>['redirect'=>'/admin/index','manager'=>Auth::guard('manager')->user()->toArray()]]);
             }else{

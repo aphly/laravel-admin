@@ -1,7 +1,7 @@
 <div class="top-bar">
     <h5 class="nav-title">权限管理
         @if($res['pid'])
-            <span>- {{$res['parent']['name']}}</span>
+            <span>- <a class="ajax_get" data-href="/admin/permission/index?pid={{$res['parent']['pid']}}">{{$res['parent']['name']}}</a></span>
         @endif
     </h5>
 </div>
@@ -35,7 +35,13 @@
                         <ul class="table_tbody">
                             <li><input type="checkbox" class="delete_box" name="delete[]" value="{{$v['id']}}">{{$v['id']}}</li>
                             <li>{{$v['name']}}</li>
-                            <li>{{$v['controller']}}</li>
+                            <li>
+                                @if(!$v['is_leaf'])
+                                    <a class="badge badge-primary ajax_get" data-href="/admin/permission/index?pid={{$v['id']}}">进入</a>
+                                @else
+                                    {{$v['controller']}}
+                                @endif
+                            </li>
                             <li>
                                 @if($v['status'])
                                     <span class="badge badge-success">开启</span>
@@ -45,9 +51,6 @@
                             </li>
                             <li>
                                 <a class="badge badge-info ajax_get" data-href="/admin/permission/{{$v['id']}}/edit?pid={{$res['pid']}}">编辑</a>
-                                @if(!$v['is_leaf'])
-                                    <a class="badge badge-info ajax_get" data-href="/admin/permission/index?pid={{$v['id']}}">进入</a>
-                                @endif
                             </li>
                         </ul>
                     @endforeach

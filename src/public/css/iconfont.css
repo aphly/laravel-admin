@@ -1,8 +1,8 @@
 @font-face {
   font-family: "uni"; /* Project id 2434079 */
-  src: url('iconfont.woff2?t=1635576262530') format('woff2'),
-       url('iconfont.woff?t=1635576262530') format('woff'),
-       url('iconfont.ttf?t=1635576262530') format('truetype');
+  src: url('iconfont.woff2?t=1645779837348') format('woff2'),
+       url('iconfont.woff?t=1645779837348') format('woff'),
+       url('iconfont.ttf?t=1645779837348') format('truetype');
 }
 
 .uni {
@@ -11,6 +11,78 @@
   font-style: normal;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+.app-back:before {
+  content: "\e670";
+}
+
+.app-info:before {
+  content: "\e6e5";
+}
+
+.app-ai-search:before {
+  content: "\e63d";
+}
+
+.app-xiugaiziliao:before {
+  content: "\e7e0";
+}
+
+.app-guolv:before {
+  content: "\e6e9";
+}
+
+.app-menu:before {
+  content: "\e62a";
+}
+
+.app-sousuo:before {
+  content: "\e651";
+}
+
+.app-aixin_shixin:before {
+  content: "\eca1";
+}
+
+.app-aixin:before {
+  content: "\eca2";
+}
+
+.app-guanbi:before {
+  content: "\e624";
+}
+
+.app-login:before {
+  content: "\e620";
+}
+
+.app-dengluzhanghao:before {
+  content: "\e621";
+}
+
+.app-xiebao:before {
+  content: "\e602";
+}
+
+.app-gouwuche:before {
+  content: "\e73d";
+}
+
+.app-wangzhan:before {
+  content: "\e630";
+}
+
+.app-anquanbaozhang:before {
+  content: "\e88c";
+}
+
+.app-arrow-right:before {
+  content: "\e617";
+}
+
+.app-arrow-right-copy:before {
+  content: "\ebc1";
 }
 
 .app-px:before {

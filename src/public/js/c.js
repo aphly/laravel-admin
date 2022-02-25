@@ -1,6 +1,7 @@
 function checkAll(_this) {
     $("input[type='checkbox']").prop("checked", $(_this).prop('checked'));
 }
+
 function alert_msg(res,time=2000){
     $("#alert_msg").remove();
     let html = '<div id="alert_msg"><div class="alert_msg"><div class="alert_msg_header"><strong class="mr-auto">提示</strong><small></small><span onclick="$(\'#alert_msg\').remove();">×</span></div><div class="alert_msg_body">'+res.msg+'</div></div></div>';
@@ -9,6 +10,7 @@ function alert_msg(res,time=2000){
     _autosize($('#alert_msg'))
     setTimeout('$("#alert_msg").remove()',time);
 }
+
 function _autosize(ele){
     if(ele.height() <= $(window).height()) {
         ele.css("top", ($(window).height() - ele.height()) / 2-20);
@@ -17,6 +19,7 @@ function _autosize(ele){
         ele.css("left", ($(window).width() - ele.width()) / 2-40);
     }
 }
+
 var urlOption={
     '_set':function (name,val,jump=false) {
         let thisURL = String(document.location);
@@ -96,4 +99,13 @@ function toTree(data) {
         }
     });
     return result;
+}
+
+function in_array(search,array){
+    for(var i in array){
+        if(array[i]==search){
+            return true;
+        }
+    }
+    return false;
 }

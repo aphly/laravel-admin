@@ -9,6 +9,26 @@
             <div class="menu">
                 <dl class="accordion" id="s_nav">
                     <dd class="">
+                        <a class="s_nav_t text-left dj"  data-title="首页" data-href="/admin/index/index">
+                            <i class="uni app-haoyou z"></i> 面板
+                        </a>
+                    </dd>
+                    <dd class="">
+                        <a class="s_nav_t text-left" data-toggle="collapse" data-target="#collapse5" aria-expanded="true" aria-controls="collapse5">
+                            <i class="uni app-haoyou z"></i> 网站设置 <i class="uni app-xia y"></i>
+                        </a>
+                        <div id="collapse5" class="collapse ">
+                            <ul class="card-body">
+                                <li class=""><a class="dj" data-title="网站设置" data-href="/admin/setting/index">网站设置</a></li>
+                                <li class=""><a class="dj" data-title="短信设置" data-href="/admin/setting/sms">短信设置</a></li>
+                                <li class=""><a class="dj" data-title="微信登录" data-href="/admin/setting/wechat">微信登录</a></li>
+                                <li class=""><a class="dj" data-title="OSS设置" data-href="/admin/setting/oss">OSS设置</a></li>
+                                <li class=""><a class="dj" data-title="支付宝" data-href="/admin/setting/payali">支付宝</a></li>
+                                <li class=""><a class="dj" data-title="微信支付" data-href="/admin/setting/paywechat">微信支付</a></li>
+                            </ul>
+                        </div>
+                    </dd>
+                    <dd class="">
                         <a class="s_nav_t text-left" data-toggle="collapse" data-target="#collapse1" aria-expanded="true" aria-controls="collapse1">
                             <i class="uni app-haoyou z"></i> 用户管理 <i class="uni app-xia y"></i>
                         </a>
@@ -18,6 +38,60 @@
                                 <li class=""><a class="dj" data-title="角色管理" data-href="/admin/role/index">角色管理</a></li>
                                 <li class=""><a class="dj" data-title="权限管理" data-href="/admin/permission/index">权限管理</a></li>
                                 <li class=""><a class="dj" data-title="菜单管理" data-href="/admin/menu/index">菜单管理</a></li>
+                            </ul>
+                        </div>
+                    </dd>
+                    <dd class="">
+                        <a class="s_nav_t text-left" data-toggle="collapse" data-target="#collapse2" aria-expanded="true" aria-controls="collapse2">
+                            <i class="uni app-haoyou z"></i> 邮件管理 <i class="uni app-xia y"></i>
+                        </a>
+                        <div id="collapse2" class="collapse ">
+                            <ul class="card-body">
+                                <li class=""><a class="dj" data-title="邮件设置" data-href="/admin/email/edit">邮件设置</a></li>
+                                <li class=""><a class="dj" data-title="邮件测试" data-href="/admin/email/index">邮件测试</a></li>
+                            </ul>
+                        </div>
+                    </dd>
+                    <dd class="">
+                        <a class="s_nav_t text-left" data-toggle="collapse" data-target="#collapse3" aria-expanded="true" aria-controls="collapse3">
+                            <i class="uni app-haoyou z"></i> 缓存管理 <i class="uni app-xia y"></i>
+                        </a>
+                        <div id="collapse3" class="collapse ">
+                            <ul class="card-body">
+                                <li class=""><a class="dj" data-title="缓存管理" data-href="/admin/cache/index">缓存管理</a></li>
+                            </ul>
+                        </div>
+                    </dd>
+                    <dd class="">
+                        <a class="s_nav_t text-left" data-toggle="collapse" data-target="#collapse6" aria-expanded="true" aria-controls="collapse6">
+                            <i class="uni app-haoyou z"></i> 队列管理 <i class="uni app-xia y"></i>
+                        </a>
+                        <div id="collapse6" class="collapse ">
+                            <ul class="card-body">
+                                <li class=""><a class="dj" data-title="队列模式" data-href="/admin/queue/set">队列模式</a></li>
+                                <li class=""><a class="dj" data-title="队列管理" data-href="/admin/queue/index">队列管理</a></li>
+                                <li class=""><a class="dj" data-title="失败队列" data-href="/admin/queue/index">失败队列</a></li>
+                            </ul>
+                        </div>
+                    </dd>
+                    <dd class="">
+                        <a class="s_nav_t text-left" data-toggle="collapse" data-target="#collapse4" aria-expanded="true" aria-controls="collapse4">
+                            <i class="uni app-haoyou z"></i> 任务计划 <i class="uni app-xia y"></i>
+                        </a>
+                        <div id="collapse4" class="collapse ">
+                            <ul class="card-body">
+                                <li class=""><a class="dj" data-title="任务计划" data-href="/admin/email/index">任务计划</a></li>
+                            </ul>
+                        </div>
+                    </dd>
+
+                    <dd class="">
+                        <a class="s_nav_t text-left" data-toggle="collapse" data-target="#collapse7" aria-expanded="true" aria-controls="collapse7">
+                            <i class="uni app-haoyou z"></i> App管理 <i class="uni app-xia y"></i>
+                        </a>
+                        <div id="collapse7" class="collapse ">
+                            <ul class="card-body">
+                                <li class=""><a class="dj" data-title="App管理" data-href="/admin/api/index">App管理</a></li>
                             </ul>
                         </div>
                     </dd>
@@ -36,7 +110,7 @@
                     <div class="dropdown">
                         <a style="display: block" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <div class="user_dropdown">
-                                <img class="lazy user_avatar" @if($res['user']['gender']==1) src="{{url('img/man.png')}}" @else src="{{url('img/woman.png')}}" @endif data-original="">
+                                <img class="lazy user_avatar" src="{{url('img/avatar.png')}}" data-original="">
                                 <span class="user_name wenzi">{{$res['user']['username']}}</span>
                                 <i class="uni app-xia"></i>
                             </div>

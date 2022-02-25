@@ -15,12 +15,18 @@ class MenuRequest extends FormRequest
             if($routeActionName=='add'){
                 return [
                     'name' => 'required',
-                    'url' => ''
+                    'url' => 'requiredIf:is_leaf,1',
+                    'status' => 'numeric',
+                    'is_leaf' => 'numeric',
+                    'sort' => 'numeric',
                 ];
             }else if($routeActionName=='edit'){
                 return [
                     'name' => 'required',
-                    'url' => '',
+                    'url' => 'requiredIf:is_leaf,1',
+                    'status' => 'numeric',
+                    'is_leaf' => 'numeric',
+                    'sort' => 'numeric',
                 ];
             }
         }
@@ -35,13 +41,7 @@ class MenuRequest extends FormRequest
 //        ];
 //    }
 
-//'controller' => Rule::requiredIf(function () {
-//    if ($this->input('is_leaf')) {
-//        return true;
-//    } else {
-//        return false;
-//    }
-//}),
+
 
     public function messages()
     {

@@ -6,28 +6,34 @@
     <div class="userinfo">
         角色名称：{{$res['info']['name']}}
     </div>
-    <form method="post" action="/admin/role/{{$res['info']['id']}}/menu" class="save_form">
-        @csrf
-        <div class="cl qx">
-            <div id="menu_ids"></div>
-            <div id="tree" class="treeview"></div>
+    <div class="role_permission max_width">
+        <div class="min_width d-flex">
+            <div class="permission_menu">
+                <div class="role_title">菜单列表</div>
+                <div id="tree" class="treeview"></div>
+            </div>
+            <div class="role">
+                <div class="role_title">已选中</div>
+                <form method="post" action="/admin/role/{{$res['info']['id']}}/menu" class="save_form">
+                    @csrf
+                    <div class=" select_ids" id="select_ids"></div>
+                    <button class="btn btn-primary" type="submit">保存</button>
+                </form>
+            </div>
         </div>
-        <button class="btn btn-primary" type="submit">保存</button>
-    </form>
+    </div>
+
 </div>
+
 <script>
     var menu = @json($res['menu']);
-    var select_ids = @json($res['role_menu']);
-    var menu_ids = {}
-    function toMyTree(data,select_ids=0) {
+    var select_ids = @json($res['select_ids']);
+    function roleData(data,select_ids=0) {
         let new_array = []
         data.forEach((item,index) => {
             if(select_ids){
-                if(in_array(item.id,select_ids)){
-                    new_array.push({id:item.id,text:item.name,pid:item.pid,state:{selected:true}})
-                }else{
-                    new_array.push({id:item.id,text:item.name,pid:item.pid})
-                }
+                let selected=in_array(item.id,select_ids)?true:false;
+                new_array.push({id:item.id,text:item.name,pid:item.pid,state:{selected}})
             }else{
                 new_array.push({id:item.id,text:item.name,pid:item.pid})
             }
@@ -35,37 +41,34 @@
         });
         return new_array;
     }
-    function makeMenuInput() {
-        let ids=[]
-        for(var i in menu_ids){
-            if(menu_ids[i]){
-                ids.push(i)
-            }
-        }
-        $("#menu_ids").html('');
-        let html = '';
-        ids.forEach(i=>{
-            html += `<input type="hidden" name="menu_id[]" value="${i}">`
-        })
-        $("#menu_ids").append(html);
-    }
-    var data = toTree(toMyTree(menu,select_ids))
+    var data = toTree(roleData(menu,select_ids))
     $(function () {
-        $('#tree').treeview({
-            levels: 2,
-            collapseIcon:'uni app-jian',
-            expandIcon:'uni app-jia',
-            multiSelect:true,
+        var bTree =$('#tree').treeview({
+            levels: 3,
+            collapseIcon:'uni app-arrow-right-copy',
+            expandIcon:'uni app-arrow-right',
+            selectedBackColor:'#f3faff',
+            selectedColor:'#212529',
             data,
+            multiSelect:true,
             onNodeSelected: function(event, data) {
-                menu_ids[data.id]=true;
-                makeMenuInput()
+                makeInput();
             },
             onNodeUnselected: function(event, data) {
-                menu_ids[data.id]=false;
-                makeMenuInput()
+                makeInput();
             },
         });
+        var makeInput = function () {
+            let arr = bTree.treeview('getSelected');
+            let html = '';
+            for(let i in arr){
+                html += `<div data-nodeid="${arr[i].nodeId}"><input type="hidden" name="menu_id[]" value="${arr[i].id}">${arr[i].text} <span class="uni app-guanbi"></span></div> `
+            }
+            $("#select_ids").html(html);
+        }
+        makeInput();
+        $('#select_ids').on('click','div', function () {
+            bTree.treeview('unselectNode', [ $(this).data('nodeid'), { silent: false } ]);
+        });
     })
-
 </script>

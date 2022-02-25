@@ -15,6 +15,10 @@ class Menu extends Model
         'name',
         'url',
         'pid',
+        'icon',
+        'is_leaf',
+        'status',
+        'sort',
     ];
 
 
