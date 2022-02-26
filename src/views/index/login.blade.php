@@ -1,27 +1,56 @@
 @include('laravel-admin::common.header')
-<link rel="stylesheet" href="{{ URL::asset('css/pc.css') }}">
-<section class="" >
-    <form method="post" action="/admin/login" id="login" class="">
-        @csrf
-        <div class="formtitle">
-            <h2 class="text-center">后台登录</h2>
-        </div>
-        <div class="form-group">
-            <label for="exampleInputEmail1">用户名</label>
-            <input type="text" name="username" class="form-control" value="">
-            <div class="invalid-feedback"></div>
-        </div>
+<link rel="stylesheet" href="{{ URL::asset('css/login.css') }}">
+<section class="login d-flex" >
+    <div class="login1">
+        <span>
+            " 相伴十载，出发下一站 "
+        </span>
+    </div>
+    <div class="login2">
+        <form method="post" action="/admin/login" id="login" class="login_form">
+            @csrf
+            <div class="login_title">
+                <span class="text-center">后台登录</span>
+            </div>
+            <h3 class="" style="">
+                登录
+                <span style="font-size:16px">
+                    没有帐号?
+                    <a href="">注册</a>
+                </span>
+            </h3>
+            <div class="form-group">
+                <input type="text" name="username" class="form-control" placeholder="用户名" value="">
+                <div class="invalid-feedback"></div>
+            </div>
+            <div class="form-group">
+                <input type="password" name="password" class="form-control " placeholder="密码" value="">
+                <div class="invalid-feedback"></div>
+            </div>
 
-        <div class="form-group">
-            <label for="exampleInputEmail1">密码</label>
-            <input type="password" name="password" class="form-control " value="">
-            <div class="invalid-feedback"></div>
+            <div class="d-flex justify-content-between">
+                <span></span>
+                <sapn><a href="">忘记密码</a></sapn>
+            </div>
+
+            <div class="alert alert-warning d-none" id="msg"></div>
+            <div class="login_btn">
+                <button class="btn btn-primary " type="submit">登录</button>
+            </div>
+
+        </form>
+
+        <div class="login_form">
+            <div class="position-relative login_other">
+                <div class="login_hr"></div>
+                <div class="login_hrx">使用第三方帐号直接登录</div>
+            </div>
+            <hr class="login_hr">
+            <p>©{{date('Y')}} - {{env('APP_URL')}}. All rights reserved.</p>
+            <p>推荐使用 新版浏览器 访问本站</p>
         </div>
+    </div>
 
-        <div class="alert alert-warning d-none" id="msg"></div>
-
-        <button class="btn btn-primary" type="submit">登录</button>
-    </form>
 </section>
 <script>
 $(function (){
