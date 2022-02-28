@@ -42,12 +42,11 @@
                             <div class="user_dropdown">
                                 <img class="lazy user_avatar" @if($res['user']['gender']==1) src="{{url('img/man.png')}}" @else src="{{url('img/woman.png')}}" @endif data-original="">
                                 <span class="user_name wenzi">{{$res['user']['username']}}</span>
-                                <i class="uni app-xia"></i>
+                                <i class="uni app-xia" style="position: relative;top: 3px;"></i>
                             </div>
                         </a>
                         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuLink">
-                            <a class="dropdown-item" href="#">Action</a>
-                            <a class="dropdown-item" href="#">Another action</a>
+                            <a class="dropdown-item " href="#" style="display: none;">Action</a>
                             <div class="dropdown-divider"></div>
                             <a class="dropdown-item text-danger layout_ajax_post " href="/admin/logout">退出</a>
                         </div>
@@ -59,7 +58,7 @@
                             </div>
                         </a>
                         <div class="dropdown-menu dropdown-menu-right" id="dropdownsettingbox" aria-labelledby="dropdownsetting">
-                            <a class="dropdown-item">test</a>
+                            <a class="dropdown-item layout_ajax_post" href="/admin/cache">清空缓存</a>
                         </div>
                     </div>
                 </div>

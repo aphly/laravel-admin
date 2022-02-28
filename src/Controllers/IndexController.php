@@ -9,6 +9,7 @@ use Aphly\LaravelAdmin\Requests\LoginRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Aphly\Laravel\Libs\Helper;
+use Illuminate\Support\Facades\Cache;
 
 class IndexController extends Controller
 {
@@ -67,7 +68,11 @@ class IndexController extends Controller
         throw new ApiException(['code'=>0,'msg'=>'成功退出','data'=>['redirect'=>'/admin/login']]);
     }
 
-
+    public function cache()
+    {
+        Cache::flush();
+        throw new ApiException(['code'=>0,'msg'=>'缓存已清空','data'=>['redirect'=>'/admin/index']]);
+    }
 
 
 }

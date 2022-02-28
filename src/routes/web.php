@@ -22,6 +22,7 @@ Route::middleware(['web'])->group(function () {
         Route::match(['get', 'post'],'/login', 'Aphly\LaravelAdmin\Controllers\IndexController@login');
         Route::get('/index', 'Aphly\LaravelAdmin\Controllers\IndexController@layout');
         Route::get('/logout', 'Aphly\LaravelAdmin\Controllers\IndexController@logout');
+        Route::get('/cache', 'Aphly\LaravelAdmin\Controllers\IndexController@cache');
 
         Route::middleware(['rbac'])->group(function () {
             Route::get('/index/index', 'Aphly\LaravelAdmin\Controllers\IndexController@index');
@@ -48,6 +49,7 @@ Route::middleware(['web'])->group(function () {
             Route::match(['get', 'post'],'/menu/add', 'Aphly\LaravelAdmin\Controllers\MenuController@add');
             Route::match(['get', 'post'],'/menu/{id}/edit', 'Aphly\LaravelAdmin\Controllers\MenuController@edit')->where('id', '[0-9]+');
             Route::post('/menu/del', 'Aphly\LaravelAdmin\Controllers\MenuController@del');
+
         });
     });
 
