@@ -24,7 +24,7 @@
             </div>
             <div class="form-group" id="controller">
                 <label for="exampleInputEmail1">控制器</label>
-                <input type="text" name="controller" class="form-control " value="">
+                <input type="text" name="controller" class="form-control " value="" placeholder="Aphly\LaravelAdmin\Controllers\IndexController@index">
                 <div class="invalid-feedback"></div>
             </div>
             <div class="form-group" id="status">

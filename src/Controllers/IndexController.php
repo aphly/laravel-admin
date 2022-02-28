@@ -8,15 +8,19 @@ use Aphly\LaravelAdmin\Models\Role;
 use Aphly\LaravelAdmin\Requests\LoginRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Aphly\Laravel\Libs\Helper;
 
 class IndexController extends Controller
 {
+    public $menu_id=1;
+
     public function layout()
     {
         $res=['title'=>'我的'];
-        $menu = (new Role)->getMenu();
+        $res['menu'] = (new Role)->getMenu();
+        $res['menu_tree'] = Helper::getTree($res['menu'],true);
+        Helper::getTreeByid($res['menu_tree'],$this->menu_id,$res['menu_tree']);
         $res['user'] = Auth::guard('manager')->user();
-        //dd($menu);
         return $this->makeView('laravel-admin::common.layout',['res'=>$res]);
     }
 
@@ -28,7 +32,6 @@ class IndexController extends Controller
 
     public function test(Request $request)
     {
-
         if($request->isMethod('post')) {
             $credentials = $request->only('username');
             throw new ApiException(['code'=>0,'msg'=>'test成功','data'=>$credentials]);
@@ -63,6 +66,8 @@ class IndexController extends Controller
         $request->session()->regenerateToken();
         throw new ApiException(['code'=>0,'msg'=>'成功退出','data'=>['redirect'=>'/admin/login']]);
     }
+
+
 
 
 }

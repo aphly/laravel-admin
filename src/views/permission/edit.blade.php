@@ -24,7 +24,7 @@
             </div>
             <div class="form-group" id="controller" @if($res['info']['is_leaf']) @else style="display: none;" @endif>
                 <label for="exampleInputEmail1">控制器</label>
-                <input type="text" name="controller" class="form-control " value="{{$res['info']['controller']}}">
+                <input type="text" name="controller" class="form-control " placeholder="Aphly\LaravelAdmin\Controllers\IndexController@index" value="{{$res['info']['controller']}}">
                 <div class="invalid-feedback"></div>
             </div>
             <div class="form-group" id="status" @if($res['info']['is_leaf']) @else style="display: none;" @endif>

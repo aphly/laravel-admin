@@ -7,6 +7,7 @@ use Aphly\Laravel\Libs\Helper;
 use Aphly\LaravelAdmin\Models\Menu;
 use Aphly\LaravelAdmin\Requests\MenuRequest;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 
 class MenuController extends Controller
 {
@@ -51,6 +52,7 @@ class MenuController extends Controller
             $post = $request->all();
             $role = Menu::create($post);
             if($role->id){
+                Cache::forget('role_menu');
                 throw new ApiException(['code'=>0,'msg'=>'添加成功','data'=>['redirect'=>$this->index_url($post)]]);
             }else{
                 throw new ApiException(['code'=>1,'msg'=>'添加失败']);
@@ -69,6 +71,7 @@ class MenuController extends Controller
             $role = Menu::find($request->id);
             $post = $request->all();
             if($role->update($post)){
+                Cache::forget('role_menu');
                 throw new ApiException(['code'=>0,'msg'=>'修改成功','data'=>['redirect'=>$this->index_url($post)]]);
             }else{
                 throw new ApiException(['code'=>1,'msg'=>'修改失败']);

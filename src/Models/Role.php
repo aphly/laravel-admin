@@ -75,7 +75,9 @@ class Role extends Model
 
     public function role_menu_cache(){
         return Cache::rememberForever('role_menu', function () {
-            $menu = RoleMenu::with('menu')->get()->toArray();
+            $menu = RoleMenu::whereHas('menu', function (Builder $query) {
+                $query->where('status', 1);
+            })->with('menu')->get()->toArray();
             $role_menu = [];
             foreach ($menu as $v) {
                 $role_menu[$v['role_id']][$v['menu']['id']] = $v['menu'];

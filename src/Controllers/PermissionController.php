@@ -6,6 +6,7 @@ use Aphly\Laravel\Exceptions\ApiException;
 use Aphly\LaravelAdmin\Models\Permission;
 use Aphly\LaravelAdmin\Requests\PermissionRequest;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 
 class PermissionController extends Controller
 {
@@ -50,6 +51,7 @@ class PermissionController extends Controller
             $post = $request->all();
             $role = Permission::create($post);
             if($role->id){
+                Cache::forget('role_permission');
                 throw new ApiException(['code'=>0,'msg'=>'添加成功','data'=>['redirect'=>$this->index_url($post)]]);
             }else{
                 throw new ApiException(['code'=>1,'msg'=>'添加失败']);
@@ -68,6 +70,7 @@ class PermissionController extends Controller
             $role = Permission::find($request->id);
             $post = $request->all();
             if($role->update($post)){
+                Cache::forget('role_permission');
                 throw new ApiException(['code'=>0,'msg'=>'修改成功','data'=>['redirect'=>$this->index_url($post)]]);
             }else{
                 throw new ApiException(['code'=>1,'msg'=>'修改失败']);

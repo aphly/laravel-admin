@@ -8,20 +8,24 @@
             </div>
             <div class="menu">
                 <dl class="accordion" id="s_nav">
-                    <dd class="">
-                        <a class="s_nav_t text-left" data-toggle="collapse" data-target="#collapse1" aria-expanded="true" aria-controls="collapse1">
-                            <i class="uni app-haoyou z"></i> 用户管理 <i class="uni app-xia y"></i>
-                        </a>
-                        <div id="collapse1" class="collapse ">
-                            <ul class="card-body">
-                                <li class=""><a class="dj" data-title="用户列表" data-href="/admin/manager/index">用户列表</a></li>
-                                <li class=""><a class="dj" data-title="角色管理" data-href="/admin/role/index">角色管理</a></li>
-                                <li class=""><a class="dj" data-title="权限管理" data-href="/admin/permission/index">权限管理</a></li>
-                                <li class=""><a class="dj" data-title="菜单管理" data-href="/admin/menu/index">菜单管理</a></li>
-                            </ul>
-                        </div>
-                    </dd>
-
+                    @if(isset($res['menu_tree']['child']))
+                        @foreach($res['menu_tree']['child'] as $val)
+                            <dd class="">
+                                <a class="s_nav_t text-left" data-toggle="collapse" data-target="#collapse{{$val['id']}}" aria-expanded="true" aria-controls="collapse{{$val['id']}}">
+                                    <i class="{{$val['icon']}}"></i> {{$val['name']}} <i class="uni app-xia y"></i>
+                                </a>
+                                @if(isset($val['child']))
+                                <div id="collapse{{$val['id']}}" class="collapse ">
+                                    <ul class="card-body">
+                                        @foreach($val['child'] as $v)
+                                        <li class=""><a class="dj" data-title="{{$v['name']}}" data-href="{{$v['url']}}">{{$v['name']}}</a></li>
+                                        @endforeach
+                                    </ul>
+                                </div>
+                                @endif
+                            </dd>
+                        @endforeach
+                    @endif
                 </dl>
             </div>
             <div class="menuclose d-lg-none" onclick="closeMenu()"></div>
@@ -70,30 +74,6 @@
         </div>
     </div>
 </section>
-
-<form method="post" action="/admin/cache/index" class="userform">
-    @csrf
-    <div class="modal fade" id="cacheModal" tabindex="-1" aria-labelledby="cacheModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="cacheModalLabel">清空缓存</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    确认清空缓存吗
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
-                    <button type="submit" class="btn btn-primary">确认</button>
-                </div>
-            </div>
-        </div>
-    </div>
-</form>
-
 
 <script>
     function iload(url,data='') {
