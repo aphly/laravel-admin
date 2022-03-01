@@ -1,6 +1,5 @@
 **laravel 后台管理**<br>
 
-
 环境<br>
 php7.3+<br>
 laravel8.37+<br>
@@ -10,7 +9,18 @@ laravel8.37+<br>
 `php artisan vendor:publish --provider="Aphly\LaravelAdmin\AdminServiceProvider"` <br>
 `php artisan migrate` <br>
 
-配置文件<br>
-config/admin.php<br>
+1、config/auth.php<br>
+数组guards中 添加<br> 
+`'manager' => [
+'driver' => 'session',
+'provider' => 'manager'
+]`
+数组providers中 添加<br>
+`'manager' => [
+'driver' => 'eloquent',
+'model' => Aphly\LaravelAdmin\Models\Manager::class,
+],`
 
+2、`www.xxxx.com/admin/init` 初始化管理员帐户密码
 
+3、初始化完成后，将配置文件 config/admin.php  init设置为false

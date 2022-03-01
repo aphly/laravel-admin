@@ -12,9 +12,9 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::match(['get', 'post'],'/admin/test', 'Aphly\LaravelAdmin\Controllers\IndexController@test');
+Route::middleware(['throttle:5,10'])->match(['get', 'post'],'/admin/test', 'Aphly\LaravelAdmin\Controllers\IndexController@test');
 
-Route::middleware(['throttle:5,10'])->match(['get', 'post'],'/admin/init', 'Aphly\LaravelAdmin\Controllers\InitController@index');
+Route::get('/admin/init', 'Aphly\LaravelAdmin\Controllers\InitController@index');
 
 Route::middleware(['web'])->group(function () {
 

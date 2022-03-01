@@ -1,5 +1,5 @@
 @include('laravel-admin::common.header')
-<link rel="stylesheet" href="{{ URL::asset('css/admin.css') }}">
+<link rel="stylesheet" href="{{ URL::asset('vendor/laravel-admin/css/admin.css') }}">
 <section class="admin container-fluid">
     <div class="row">
         <div class="ad_left d-none d-lg-block">

@@ -33,13 +33,7 @@ class IndexController extends Controller
 
     public function test(Request $request)
     {
-        if($request->isMethod('post')) {
-            $credentials = $request->only('username');
-            throw new ApiException(['code'=>0,'msg'=>'test成功','data'=>$credentials]);
-        }else{
-            $res=['title'=>'后台登录'];
-            return $this->makeView('laravel-admin::index.login',['res'=>$res]);
-        }
+        return 'test';
     }
 
     public function login(loginRequest $request)

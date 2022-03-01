@@ -1,4 +1,4 @@
-<script src='{{ URL::asset('js/bootstrap-treeview.js') }}' type='text/javascript'></script>
+<script src='{{ URL::asset('vendor/laravel-admin/js/bootstrap-treeview.js') }}' type='text/javascript'></script>
 <div class="top-bar">
     <h5 class="nav-title">角色菜单</h5>
 </div>
