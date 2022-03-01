@@ -12,7 +12,7 @@
                         @foreach($res['menu_tree']['child'] as $val)
                             <dd class="">
                                 <a class="s_nav_t text-left" data-toggle="collapse" data-target="#collapse{{$val['id']}}" aria-expanded="true" aria-controls="collapse{{$val['id']}}">
-                                    <i class="{{$val['icon']}}"></i> {{$val['name']}} <i class="uni app-xia y"></i>
+                                    <i class="{{$val['icon']}}"></i> {{$val['name']}} <i class="uni app-caret-right-copy y"></i>
                                 </a>
                                 @if(isset($val['child']))
                                 <div id="collapse{{$val['id']}}" class="collapse ">
@@ -40,7 +40,7 @@
                     <div class="dropdown">
                         <a style="display: block" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <div class="user_dropdown">
-                                <img class="lazy user_avatar" @if($res['user']['gender']==1) src="{{url('img/man.png')}}" @else src="{{url('img/woman.png')}}" @endif data-original="">
+                                <img class="lazy user_avatar" @if($res['user']['gender']==1) src="{{url('vendor/laravel-admin/img/man.png')}}" @else src="{{url('vendor/laravel-admin/img/woman.png')}}" @endif data-original="">
                                 <span class="user_name wenzi">{{$res['user']['username']}}</span>
                                 <i class="uni app-xia" style="position: relative;top: 3px;"></i>
                             </div>
@@ -234,10 +234,10 @@
 
         $('.accordion .s_nav_t').on('click', function () {
             let obj = $(this).children().filter(".y");
-            if(obj.hasClass('app-xia')){
-                obj.removeClass('app-xia').addClass('app-caret-up');
+            if(obj.hasClass('app-caret-right-copy')){
+                obj.removeClass('app-caret-right-copy').addClass('app-xia');
             }else{
-                obj.removeClass('app-caret-up').addClass('app-xia');
+                obj.removeClass('app-xia').addClass('app-caret-right-copy');
             }
         });
         $('#showmenu').on('click',function (){

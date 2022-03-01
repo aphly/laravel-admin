@@ -1,8 +1,8 @@
 @font-face {
   font-family: "uni"; /* Project id 2434079 */
-  src: url('iconfont.woff2?t=1645779837348') format('woff2'),
-       url('iconfont.woff?t=1645779837348') format('woff'),
-       url('iconfont.ttf?t=1645779837348') format('truetype');
+  src: url('iconfont.woff2?t=1646101505424') format('woff2'),
+       url('iconfont.woff?t=1646101505424') format('woff'),
+       url('iconfont.ttf?t=1646101505424') format('truetype');
 }
 
 .uni {
@@ -119,6 +119,10 @@
 
 .app-shezhi:before {
   content: "\e611";
+}
+
+.app-caret-right-copy:before {
+  content: "\eca3";
 }
 
 .app-check:before {

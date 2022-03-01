@@ -15,7 +15,7 @@ laravel8.37+<br>
 'driver' => 'session',
 'provider' => 'manager'
 ]`
-数组providers中 添加<br>
+<br>数组providers中 添加<br>
 `'manager' => [
 'driver' => 'eloquent',
 'model' => Aphly\LaravelAdmin\Models\Manager::class,
