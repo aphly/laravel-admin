@@ -12,7 +12,6 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::middleware(['throttle:5,10'])->match(['get', 'post'],'/admin/test', 'Aphly\LaravelAdmin\Controllers\IndexController@test');
 
 Route::get('/admin/init', 'Aphly\LaravelAdmin\Controllers\InitController@index');
 

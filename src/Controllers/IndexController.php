@@ -31,11 +31,6 @@ class IndexController extends Controller
         return $this->makeView('laravel-admin::index.index',['res'=>$res]);
     }
 
-    public function test(Request $request)
-    {
-        return 'test';
-    }
-
     public function login(loginRequest $request)
     {
         if($request->isMethod('post')) {

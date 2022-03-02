@@ -14,6 +14,7 @@ class InitController extends Controller
         if(config('admin.init')){
             $user = DB::table('manager')->where('username', 'admin')->first();
             if(!$user){
+                DB::table('manager')->truncate();
                 $post['username'] = 'admin';
                 $password = 'asdasd';
                 $post['uuid'] = $post['token'] = Helper::uuid();
@@ -21,6 +22,7 @@ class InitController extends Controller
                 $post['password'] = Hash::make($password);
                 $manager = Manager::create($post);
 
+                DB::table('menu')->truncate();
                 $data=[];
                 $data[] =['name' => '系统后台','url' =>'','pid'=>0,'is_leaf'=>0];
                 $data[] =['name' => '用户管理','url' =>'','pid'=>1,'is_leaf'=>0];
@@ -30,10 +32,12 @@ class InitController extends Controller
                 $data[] =['name' => '菜单管理','url' =>'/admin/menu/index','pid'=>2,'is_leaf'=>1];
                 DB::table('menu')->insert($data);
 
+                DB::table('role')->truncate();
                 $data=[];
                 $data[] =['name' => '管理员'];
                 DB::table('role')->insert($data);
 
+                DB::table('role_menu')->truncate();
                 $data=[];
                 $data[] =['role_id' => 1,'menu_id'=>1];
                 $data[] =['role_id' => 1,'menu_id'=>2];
@@ -43,6 +47,7 @@ class InitController extends Controller
                 $data[] =['role_id' => 1,'menu_id'=>6];
                 DB::table('role_menu')->insert($data);
 
+                DB::table('user_role')->truncate();
                 $data=[];
                 $data[] =['uuid' => $manager->uuid,'role_id'=>1];
                 DB::table('user_role')->insert($data);
