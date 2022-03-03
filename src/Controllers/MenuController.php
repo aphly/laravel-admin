@@ -58,7 +58,7 @@ class MenuController extends Controller
                 throw new ApiException(['code'=>1,'msg'=>'添加失败']);
             }
         }else{
-            $res=['title'=>'我的'];
+            $res['title']='我的';
             $res['pid'] = $pid =  $request->query('pid',0);
             $res['parent'] = $this->parentInfo($pid);
             return $this->makeView('laravel-admin::menu.add',['res'=>$res]);
@@ -77,7 +77,7 @@ class MenuController extends Controller
                 throw new ApiException(['code'=>1,'msg'=>'修改失败']);
             }
         }else{
-            $res=['title'=>'我的'];
+            $res['title']='我的';
             $res['info'] = Menu::find($request->id);
             $res['pid'] = $pid =  $request->query('pid',0);
             $res['parent'] = $this->parentInfo($pid);
@@ -99,5 +99,14 @@ class MenuController extends Controller
                 throw new ApiException(['code'=>1,'msg'=>'请先删除目录内的菜单','data'=>['redirect'=>$redirect]]);
             }
         }
+    }
+
+    public function show(Request $request)
+    {
+        $res['menu'] = Menu::where('status',1)->orderBy('sort', 'desc')->get()->toArray();
+        $res['menu_tree'] = Helper::getTree($res['menu'],true);
+        Helper::getTreeByid($res['menu_tree'],$request->id,$res['menu_tree']);
+        Helper::TreeToArr([$res['menu_tree']],$res['menu_show']);
+        return $this->makeView('laravel-admin::menu.show',['res'=>$res]);
     }
 }

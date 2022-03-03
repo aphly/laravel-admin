@@ -51,6 +51,7 @@
                             </li>
                             <li>
                                 <a class="badge badge-info ajax_get" data-href="/admin/permission/{{$v['id']}}/edit?pid={{$res['pid']}}">编辑</a>
+                                <a class="badge badge-info ajax_get" data-href="/admin/permission/{{$v['id']}}/show">浏览</a>
                             </li>
                         </ul>
                     @endforeach

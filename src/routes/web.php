@@ -43,12 +43,13 @@ Route::middleware(['web'])->group(function () {
             Route::match(['get', 'post'],'/permission/add', 'Aphly\LaravelAdmin\Controllers\PermissionController@add');
             Route::match(['get', 'post'],'/permission/{id}/edit', 'Aphly\LaravelAdmin\Controllers\PermissionController@edit')->where('id', '[0-9]+');
             Route::post('/permission/del', 'Aphly\LaravelAdmin\Controllers\PermissionController@del');
+            Route::get('/permission/{id}/show', 'Aphly\LaravelAdmin\Controllers\PermissionController@show')->where('id', '[0-9]+');
 
             Route::get('/menu/index', 'Aphly\LaravelAdmin\Controllers\MenuController@index');
             Route::match(['get', 'post'],'/menu/add', 'Aphly\LaravelAdmin\Controllers\MenuController@add');
             Route::match(['get', 'post'],'/menu/{id}/edit', 'Aphly\LaravelAdmin\Controllers\MenuController@edit')->where('id', '[0-9]+');
             Route::post('/menu/del', 'Aphly\LaravelAdmin\Controllers\MenuController@del');
-
+            Route::get('/menu/{id}/show', 'Aphly\LaravelAdmin\Controllers\MenuController@show')->where('id', '[0-9]+');
         });
     });
 

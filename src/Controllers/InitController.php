@@ -3,7 +3,7 @@
 namespace Aphly\LaravelAdmin\Controllers;
 
 use Aphly\Laravel\Libs\Helper;
-use Aphly\LaravelAdmin\Models\Manager;
+use Aphly\LaravelAdmin\Models\User;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 
@@ -20,13 +20,14 @@ class InitController extends Controller
                 $post['uuid'] = $post['token'] = Helper::uuid();
                 $post['token_expire'] = time();
                 $post['password'] = Hash::make($password);
-                $manager = Manager::create($post);
+                $manager = User::create($post);
 
                 DB::table('menu')->truncate();
                 $data=[];
                 $data[] =['name' => '系统后台','url' =>'','pid'=>0,'is_leaf'=>0];
-                $data[] =['name' => '用户管理','url' =>'','pid'=>1,'is_leaf'=>0];
+                $data[] =['name' => '系统管理','url' =>'','pid'=>1,'is_leaf'=>0];
                 $data[] =['name' => '系统用户','url' =>'/admin/manager/index','pid'=>2,'is_leaf'=>1];
+                $data[] =['name' => '用户列表','url' =>'/admin/user/index','pid'=>2,'is_leaf'=>1];
                 $data[] =['name' => '角色管理','url' =>'/admin/role/index','pid'=>2,'is_leaf'=>1];
                 $data[] =['name' => '权限管理','url' =>'/admin/permission/index','pid'=>2,'is_leaf'=>1];
                 $data[] =['name' => '菜单管理','url' =>'/admin/menu/index','pid'=>2,'is_leaf'=>1];
@@ -45,6 +46,7 @@ class InitController extends Controller
                 $data[] =['role_id' => 1,'menu_id'=>4];
                 $data[] =['role_id' => 1,'menu_id'=>5];
                 $data[] =['role_id' => 1,'menu_id'=>6];
+                $data[] =['role_id' => 1,'menu_id'=>7];
                 DB::table('role_menu')->insert($data);
 
                 DB::table('user_role')->truncate();

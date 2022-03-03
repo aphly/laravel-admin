@@ -15,7 +15,6 @@ class MenuRequest extends FormRequest
             if($routeActionName=='add'){
                 return [
                     'name' => 'required',
-                    'url' => 'requiredIf:is_leaf,1',
                     'status' => 'numeric',
                     'is_leaf' => 'numeric',
                     'sort' => 'numeric',
@@ -23,7 +22,6 @@ class MenuRequest extends FormRequest
             }else if($routeActionName=='edit'){
                 return [
                     'name' => 'required',
-                    'url' => 'requiredIf:is_leaf,1',
                     'status' => 'numeric',
                     'is_leaf' => 'numeric',
                     'sort' => 'numeric',

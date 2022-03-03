@@ -38,7 +38,7 @@
                         <li><input type="checkbox" class="delete_box" name="delete[]" value="{{$v['id']}}">{{$v['id']}}</li>
                         <li>{{$v['username']}}</li>
                         <li>
-                            <img class="lazy user_avatar" @if($v['gender']==1) src="{{url('img/man.png')}}" @else src="{{url('img/woman.png')}}" @endif >
+                            <img class="lazy user_avatar" @if($v['gender']==1) src="{{url('vendor/laravel/img/man.png')}}" @else src="{{url('vendor/laravel/img/woman.png')}}" @endif >
                         </li>
                         <li>
                             @foreach($v->role as $vv)

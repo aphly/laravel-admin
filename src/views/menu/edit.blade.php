@@ -46,12 +46,3 @@
     </form>
 </div>
 
-<script>
-    $('#is_leaf').change(function () {
-        if($(this).val()==='1'){
-            $('#url').show();
-        }else{
-            $('#url').hide();
-        }
-    })
-</script>

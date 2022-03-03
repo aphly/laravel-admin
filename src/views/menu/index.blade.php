@@ -36,10 +36,9 @@
                             <li><input type="checkbox" class="delete_box" name="delete[]" value="{{$v['id']}}">{{$v['id']}}</li>
                             <li>{{$v['name']}}</li>
                             <li>
+                                {{$v['url']}}
                                 @if(!$v['is_leaf'])
-                                    <a class="badge badge-primary ajax_get" data-href="/admin/menu/index?pid={{$v['id']}}">进入</a>
-                                @else
-                                    {{$v['url']}}
+                                     <a class="badge badge-primary ajax_get" data-href="/admin/menu/index?pid={{$v['id']}}">进入</a>
                                 @endif
                             </li>
                             <li>
@@ -51,6 +50,7 @@
                             </li>
                             <li>
                                 <a class="badge badge-info ajax_get" data-href="/admin/menu/{{$v['id']}}/edit?pid={{$res['pid']}}">编辑</a>
+                                <a class="badge badge-info ajax_get" data-href="/admin/menu/{{$v['id']}}/show">浏览</a>
                             </li>
                         </ul>
                     @endforeach

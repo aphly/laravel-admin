@@ -6,6 +6,7 @@ laravel8.37+<br>
 
 安装<br>
 `composer require aphly/laravel-admin` <br>
+`php artisan vendor:publish --provider="Aphly\Laravel\InitServiceProvider"` (如果执行过，请不要执行)<br>
 `php artisan vendor:publish --provider="Aphly\LaravelAdmin\AdminServiceProvider"` <br>
 `php artisan migrate` <br>
 

@@ -3,6 +3,7 @@
 namespace Aphly\LaravelAdmin\Controllers;
 
 use Aphly\Laravel\Exceptions\ApiException;
+use Aphly\Laravel\Libs\Helper;
 use Aphly\LaravelAdmin\Models\Permission;
 use Aphly\LaravelAdmin\Requests\PermissionRequest;
 use Illuminate\Http\Request;
@@ -14,7 +15,7 @@ class PermissionController extends Controller
 
     public function index(Request $request)
     {
-        $res=['title'=>'我的'];
+        $res['title']='我的';
         $res['pid'] = $pid = $request->query('pid',0);
         $res['filter']['name'] = $name = $request->query('name',false);
         $res['filter']['string'] = http_build_query($request->query());
@@ -57,7 +58,7 @@ class PermissionController extends Controller
                 throw new ApiException(['code'=>1,'msg'=>'添加失败']);
             }
         }else{
-            $res=['title'=>'我的'];
+            $res['title']='我的';
             $res['pid'] = $pid =  $request->query('pid',0);
             $res['parent'] = $this->parentInfo($pid);
             return $this->makeView('laravel-admin::permission.add',['res'=>$res]);
@@ -76,7 +77,7 @@ class PermissionController extends Controller
                 throw new ApiException(['code'=>1,'msg'=>'修改失败']);
             }
         }else{
-            $res=['title'=>'我的'];
+            $res['title']='我的';
             $res['info'] = Permission::find($request->id);
             $res['pid'] = $pid =  $request->query('pid',0);
             $res['parent'] = $this->parentInfo($pid);
@@ -98,5 +99,14 @@ class PermissionController extends Controller
                 throw new ApiException(['code'=>1,'msg'=>'请先删除目录内的权限','data'=>['redirect'=>$redirect]]);
             }
         }
+    }
+
+    public function show(Request $request)
+    {
+        $res['permission'] = Permission::where('status',1)->orderBy('sort', 'desc')->get()->toArray();
+        $res['permission_tree'] = Helper::getTree($res['permission'],true);
+        Helper::getTreeByid($res['permission_tree'],$request->id,$res['permission_tree']);
+        Helper::TreeToArr([$res['permission_tree']],$res['permission_show']);
+        return $this->makeView('laravel-admin::permission.show',['res'=>$res]);
     }
 }

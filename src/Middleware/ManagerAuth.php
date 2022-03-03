@@ -18,7 +18,7 @@ class ManagerAuth
             }
         }else{
             if (Auth::guard('manager')->check()) {
-                config('admin.manager',Auth::guard('manager')->user()->toArray());
+                //config('admin.manager',Auth::guard('manager')->user()->toArray());
                 return $next($request);
             }else{
                 return redirect('/admin/login');

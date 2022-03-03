@@ -17,7 +17,7 @@ class IndexController extends Controller
 
     public function layout()
     {
-        $res=['title'=>'我的'];
+        $res['title']='我的';
         $res['menu'] = (new Role)->getMenu();
         $res['menu_tree'] = Helper::getTree($res['menu'],true);
         Helper::getTreeByid($res['menu_tree'],$this->menu_id,$res['menu_tree']);
@@ -27,7 +27,7 @@ class IndexController extends Controller
 
     public function index()
     {
-        $res=['title'=>'我的'];
+        $res['title']='我的';
         return $this->makeView('laravel-admin::index.index',['res'=>$res]);
     }
 
