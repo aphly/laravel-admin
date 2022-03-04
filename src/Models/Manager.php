@@ -67,63 +67,6 @@ class Manager extends Authenticatable
 //        });
     }
 
-    public function generateToken() {
-        $this->token = Str::random(64);
-        $this->token_expire = time()+120*60;
-        $this->save();
-        return $this->token;
-    }
-
-    public function api_login() {
-        $this->api_token = Str::random(64);
-        $this->api_token_expire = TIMESTAMP+120*60;
-        $this->lastlogin = TIMESTAMP;
-        $this->save();
-        return $this->api_user_data();
-    }
-
-    static public function api_reg(string $type='',string $val='') {
-        $data = [];
-        if($type =='phone'){
-            $data['phone'] = $val;
-        }
-        $data['username'] = Str::lower(Str::random(8));
-        $old = Str::random(8);
-        $data['nickname'] = Str::random(4);
-        $data['password'] = Hash::make($old);
-        $data['api_token'] = Str::random(64);
-        $data['api_token_expire'] = time()+120*60;
-        $data['lastlogin'] = TIMESTAMP;
-        $user = self::create($data);
-        if($user){
-            //通知
-            return $user;
-        }else{
-            Common::resJson([
-                'code'=> 10026,
-                'msg' => '注册错误',
-                'data' => $user->api_user_data()
-            ]);
-        }
-    }
-
-    public function api_user_data() {
-        return ['api_token'=>Crypt::encryptString($this->api_token),
-            'user_id'=>$this->id,
-            'username'=>$this->username,
-            'nickname'=>$this->nickname,
-            'avatar'=>Common::filePath($this->avatar)
-        ];
-    }
-
-    public function api_changepw($password) {
-        $this->password = Hash::make($password);
-        $this->api_token = Str::random(64);
-        $this->api_token_expire = time()+120*60;
-        $this->save();
-        return $this;
-    }
-
     public function logout() {
         $this->token = null;
         $this->token_expire = 0;

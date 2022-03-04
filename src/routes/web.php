@@ -32,6 +32,11 @@ Route::middleware(['web'])->group(function () {
             Route::post('/manager/del', 'Aphly\LaravelAdmin\Controllers\ManagerController@del');
             Route::match(['get', 'post'],'/manager/{id}/role', 'Aphly\LaravelAdmin\Controllers\ManagerController@role')->where('id', '[0-9]+');
 
+            Route::get('/user/index', 'Aphly\LaravelAdmin\Controllers\UserController@index');
+            Route::match(['get', 'post'],'/user/add', 'Aphly\LaravelAdmin\Controllers\UserController@add');
+            Route::match(['get', 'post'],'/user/{id}/edit', 'Aphly\LaravelAdmin\Controllers\UserController@edit')->where('id', '[0-9]+');
+            Route::post('/user/del', 'Aphly\LaravelAdmin\Controllers\UserController@del');
+
             Route::get('/role/index', 'Aphly\LaravelAdmin\Controllers\RoleController@index');
             Route::match(['get', 'post'],'/role/add', 'Aphly\LaravelAdmin\Controllers\RoleController@add');
             Route::match(['get', 'post'],'/role/{id}/edit', 'Aphly\LaravelAdmin\Controllers\RoleController@edit')->where('id', '[0-9]+');

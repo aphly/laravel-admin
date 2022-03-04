@@ -13,6 +13,7 @@ class FailedLogin extends Model
     protected $primaryKey = 'ip';
     protected $keyType = 'string';
     public $timestamps = false;
+    public $incrementing = false;
     protected $fillable = [
         'ip',
         'count',

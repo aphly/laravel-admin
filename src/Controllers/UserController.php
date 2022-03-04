@@ -20,18 +20,18 @@ class UserController extends Controller
         $res['filter']['username'] = $username = $request->query('username',false);
         $res['filter']['status'] = $status = $request->query('status',false);
         $res['filter']['string'] = http_build_query($request->query());
-        $res['data'] = User::when($username,
+        $res['data'] = User::leftJoin('user_auth','user_auth.uuid', '=' ,'user.uuid')->when($username,
                             function($query,$username) {
-                                return $query->where('username', 'like', '%'.$username.'%');
+                                return $query->where('user_auth.identifier', 'like', '%'.$username.'%')->where('user_auth.identity_type', 'email');
                             })
                         ->when($status,
                             function($query,$status) {
-                                return $query->where('status', '=', $status);
+                                return $query->where('user.status', '=', $status);
                             })
-                        ->with('role')
-                        ->orderBy('id', 'desc')
+                        ->orderBy('user.created_at', 'desc')
                         ->Paginate(config('admin.perPage'))->withQueryString();
-        return $this->makeView('laravel-admin::manager.index',['res'=>$res]);
+        
+        return $this->makeView('laravel-admin::user.index',['res'=>$res]);
     }
 
     public function add(ManagerRequest $request)
@@ -49,7 +49,7 @@ class UserController extends Controller
             }
         }else{
             $res['title']='我的';
-            return $this->makeView('laravel-admin::manager.add',['res'=>$res]);
+            return $this->makeView('laravel-admin::user.add',['res'=>$res]);
         }
     }
 
@@ -71,7 +71,7 @@ class UserController extends Controller
         }else{
             $res['title']='我的';
             $res['info'] = User::find($request->id);
-            return $this->makeView('laravel-admin::manager.edit',['res'=>$res]);
+            return $this->makeView('laravel-admin::user.edit',['res'=>$res]);
         }
     }
 
