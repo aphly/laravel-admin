@@ -51,9 +51,9 @@ class IndexController extends Controller
 
     public function logout(Request $request)
     {
-        Auth::logout();
-        $request->session()->invalidate();
-        $request->session()->regenerateToken();
+        Auth::guard('manager')->logout();
+//        $request->session()->invalidate();
+//        $request->session()->regenerateToken();
         throw new ApiException(['code'=>0,'msg'=>'成功退出','data'=>['redirect'=>'/admin/login']]);
     }
 

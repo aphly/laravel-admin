@@ -20,30 +20,20 @@ class MenuController extends Controller
         $res['filter']['name'] = $name = $request->query('name', false);
         $res['filter']['string'] = http_build_query($request->query());
         $res['data'] = Menu::when($name,
-            function ($query, $name) {
-                return $query->where('name', 'like', '%' . $name . '%');
-            })
-            ->orderBy('sort', 'desc')
-            ->where('pid','=',$pid)
-            ->Paginate(config('admin.perPage'))->withQueryString();
+                            function ($query, $name) {
+                                return $query->where('name', 'like', '%' . $name . '%');
+                            })
+                        ->orderBy('sort', 'desc')
+                        ->where('pid',$pid)
+                        ->Paginate(config('admin.perPage'))->withQueryString();
         $res['parent'] = $this->parentInfo($pid);
         return $this->makeView('laravel-admin::menu.index', ['res' => $res]);
-    }
-
-    public function index_url($post): string
-    {
-        if (!empty($post['pid'])) {
-            return $this->index_url . '?pid=' . $post['pid'];
-        } else {
-            return $this->index_url;
-        }
     }
 
     public function parentInfo($pid)
     {
         $parent = Menu::where('id', '=', $pid)->first();
-        $parent = !is_null($parent) ? $parent->toArray() : [];
-        return $parent;
+        return !is_null($parent) ? $parent->toArray() : [];
     }
 
     public function add(MenuRequest $request)

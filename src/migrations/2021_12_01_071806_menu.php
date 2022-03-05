@@ -17,15 +17,11 @@ return new class extends Migration
             $table->id();
             $table->string('name', 32);
             $table->string('url', 255)->nullable();
-            $table->bigInteger('pid', 0)->unsigned()->default(0);
-            $table->tinyInteger('status')->unsigned()->default(1)->comment('1:开启; 0:关闭');
-            $table->integer('sort', 0)->unsigned()->default(0);
+            $table->bigInteger('pid', 0)->unsigned()->default(0)->index();
+            $table->tinyInteger('status')->unsigned()->default(1)->comment('1:开启; 0:关闭')->index();
+            $table->integer('sort', 0)->unsigned()->default(0)->index();
             $table->string('icon', 32)->nullable();
-            $table->tinyInteger('is_leaf')->unsigned()->default(1);
-            $table->index('pid');
-            $table->index('status');
-            $table->index('sort');
-            $table->index('is_leaf');
+            $table->tinyInteger('is_leaf')->unsigned()->default(1)->index();
             //$table->engine = 'InnoDB';
         });
     }

@@ -33,8 +33,7 @@ Route::middleware(['web'])->group(function () {
             Route::match(['get', 'post'],'/manager/{id}/role', 'Aphly\LaravelAdmin\Controllers\ManagerController@role')->where('id', '[0-9]+');
 
             Route::get('/user/index', 'Aphly\LaravelAdmin\Controllers\UserController@index');
-            Route::match(['get', 'post'],'/user/add', 'Aphly\LaravelAdmin\Controllers\UserController@add');
-            Route::match(['get', 'post'],'/user/{id}/edit', 'Aphly\LaravelAdmin\Controllers\UserController@edit')->where('id', '[0-9]+');
+            Route::match(['get', 'post'],'/user/{uuid}/edit', 'Aphly\LaravelAdmin\Controllers\UserController@edit');
             Route::post('/user/del', 'Aphly\LaravelAdmin\Controllers\UserController@del');
 
             Route::get('/role/index', 'Aphly\LaravelAdmin\Controllers\RoleController@index');
@@ -43,6 +42,7 @@ Route::middleware(['web'])->group(function () {
             Route::post('/role/del', 'Aphly\LaravelAdmin\Controllers\RoleController@del');
             Route::match(['get', 'post'],'/role/{id}/permission', 'Aphly\LaravelAdmin\Controllers\RoleController@permission')->where('id', '[0-9]+');
             Route::match(['get', 'post'],'/role/{id}/menu', 'Aphly\LaravelAdmin\Controllers\RoleController@menu')->where('id', '[0-9]+');
+            Route::get('/role/{id}/show', 'Aphly\LaravelAdmin\Controllers\RoleController@show')->where('id', '[0-9]+');
 
             Route::get('/permission/index', 'Aphly\LaravelAdmin\Controllers\PermissionController@index');
             Route::match(['get', 'post'],'/permission/add', 'Aphly\LaravelAdmin\Controllers\PermissionController@add');

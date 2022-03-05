@@ -15,7 +15,11 @@ class Role extends Model
     public $timestamps = false;
 
     protected $fillable = [
-        'name'
+        'name',
+        'pid',
+        'is_leaf',
+        'status',
+        'sort',
     ];
 
     public function permission()

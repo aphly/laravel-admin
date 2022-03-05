@@ -2,27 +2,12 @@
     <h5 class="nav-title">用户管理</h5>
 </div>
 <div class="imain">
-    <form method="post" action="/admin/manager/{{$res['info']['id']}}/edit" class="save_form">
+    <form method="post" action="/admin/user/{{$res['info']['uuid']}}/edit" class="save_form">
         @csrf
         <div class="">
             <div class="form-group">
-                <label for="exampleInputEmail1">用户名</label>
-                <input type="text" name="username" required class="form-control" readonly value="{{$res['info']['username']}}">
-                <div class="invalid-feedback"></div>
-            </div>
-            <div class="form-group">
                 <label for="exampleInputEmail1">昵称</label>
                 <input type="text" name="nickname" pattern="[A-Za-z0-9]{6,30}" class="form-control " value="{{$res['info']['nickname']}}">
-                <div class="invalid-feedback"></div>
-            </div>
-            <div class="form-group">
-                <label for="exampleInputEmail1">手机号</label>
-                <input type="text" name="phone" class="form-control " value="{{$res['info']['phone']}}">
-                <div class="invalid-feedback"></div>
-            </div>
-            <div class="form-group">
-                <label for="exampleInputEmail1">邮箱</label>
-                <input type="text" name="email" class="form-control " value="{{$res['info']['email']}}">
                 <div class="invalid-feedback"></div>
             </div>
             <div class="form-group">
@@ -35,9 +20,14 @@
             </div>
             <div class="form-group">
                 <label for="exampleInputEmail1">密码</label>
-                <input type="text" name="password" class="form-control " value="">
+                <input type="text" name="credential" class="form-control " value="">
                 <div class="invalid-feedback"></div>
             </div>
+            @foreach($res['info']->userAuth as $v)
+                <div>
+                    {{$v->identity_type}} {{$v->identifier}} {{$v->verified}} {{date('Y-m-d H:i:s',$v->last_login)}} {{$v->last_ip}}
+                </div>
+            @endforeach
             <button class="btn btn-primary" type="submit">保存</button>
         </div>
     </form>

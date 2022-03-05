@@ -7,9 +7,9 @@
 </style>
 <div class="imain">
     <div class="itop ">
-        <form method="get" action="/admin/manager/index" class="select_form">
+        <form method="get" action="/admin/user/index" class="select_form">
         <div class="filter ">
-            <input type="search" name="username" placeholder="用户名" value="{{$res['filter']['username']}}">
+            <input type="search" name="identifier" placeholder="邮箱" value="{{$res['filter']['identifier']}}">
             <select name="status" >
                 <option value ="1" @if($res['filter']['status']==1) selected @endif>正常</option>
                 <option value ="2" @if($res['filter']['status']==2) selected @endif>冻结</option>
@@ -17,41 +17,45 @@
             <button class="" type="submit">搜索</button>
         </div>
         </form>
-        <div class=""><a data-href="/admin/manager/add" class="badge badge-info ajax_get add">新增</a></div>
+        <div class=""><a href="/register" target="_blank" class="badge badge-info  add">新增</a></div>
     </div>
 
-    <form method="post"  @if($res['filter']['string']) action="/admin/manager/del?{{$res['filter']['string']}}" @else action="/admin/manager/del" @endif  class="del_form">
+    <form method="post"  @if($res['filter']['string']) action="/admin/user/del?{{$res['filter']['string']}}" @else action="/admin/user/del" @endif  class="del_form">
     @csrf
         <div class="table_scroll">
             <div class="table">
                 <ul class="table_header">
-                    <li >ID</li>
-                    <li >用户名</li>
+                    <li >UUID</li>
+                    <li >昵称</li>
                     <li >头像</li>
-                    <li >角色</li>
                     <li >状态</li>
                     <li >操作</li>
                 </ul>
                 @if($res['data']->total())
                     @foreach($res['data'] as $v)
                     <ul class="table_tbody">
-                        <li><input type="checkbox" class="delete_box" name="delete[]" value="{{$v['id']}}">{{$v['id']}}</li>
-                        <li>{{$v['username']}}</li>
+                        <li>
+                            <input type="checkbox" class="delete_box" name="delete[]" value="{{$v['uuid']}}">
+                            <a target="_blank" href="/autologin/{{ Illuminate\Support\Facades\Crypt::encryptString($v->token)}}">{{$v['uuid']}}</a>
+                        </li>
+                        <li>{{$v['nickname']}}</li>
                         <li>
                             <img class="lazy user_avatar" @if($v['gender']==1) src="{{url('vendor/laravel/img/man.png')}}" @else src="{{url('vendor/laravel/img/woman.png')}}" @endif >
                         </li>
-                        <li>
-                            @foreach($v->role as $vv)
-                                <span class="manager_role">{{$vv->name}}</span>
-                            @endforeach
-                        </li>
                         <li>{{$v['status']}}</li>
                         <li>
-                            <a class="badge badge-success ajax_get" data-href="/admin/manager/{{$v['id']}}/role">角色</a>
-                            <a class="badge badge-info ajax_get" data-href="/admin/manager/{{$v['id']}}/edit">编辑</a>
-                            <a class="badge badge-info ajax_get" data-href="/admin/manager/{{$v['id']}}/avatar">头像</a>
+                            <a class="badge badge-success ajax_get" data-href="/admin/user/{{$v['uuid']}}/role">角色</a>
+                            <a class="badge badge-info ajax_get" data-href="/admin/user/{{$v['uuid']}}/edit">编辑</a>
                         </li>
                     </ul>
+                    <div style="margin-left: 40px;margin-bottom: 10px;">
+                        @foreach($v->userAuth as $vv)
+                            <div style="margin-right: 40px;">
+                                <span class="badge badge-warning">{{$vv->identity_type}}</span>
+                                <span class="">{{$vv->identifier}}</span>
+                            </div>
+                        @endforeach
+                    </div>
                     @endforeach
                     <ul class="table_bottom">
                         <li>

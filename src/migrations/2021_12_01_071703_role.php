@@ -16,7 +16,10 @@ return new class extends Migration
         Schema::create('role', function (Blueprint $table) {
             $table->id();
             $table->string('name', 32);
-            $table->tinyInteger('status')->unsigned()->default(1)->comment('1:开启; 0:关闭');
+            $table->bigInteger('pid', 0)->unsigned()->default(0)->index();
+            $table->tinyInteger('status')->unsigned()->default(1)->comment('1:开启; 0:关闭')->index();
+            $table->tinyInteger('is_leaf')->unsigned()->default(1)->index();
+            $table->integer('sort', 0)->unsigned()->default(0)->index();
             //$table->engine = 'InnoDB';
         });
     }

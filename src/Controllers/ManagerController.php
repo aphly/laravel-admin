@@ -5,6 +5,7 @@ namespace Aphly\LaravelAdmin\Controllers;
 use Aphly\Laravel\Exceptions\ApiException;
 use Aphly\Laravel\Libs\Helper;
 use Aphly\LaravelAdmin\Models\Manager;
+use Aphly\LaravelAdmin\Models\Permission;
 use Aphly\LaravelAdmin\Models\Role;
 use Aphly\LaravelAdmin\Requests\ManagerRequest;
 use Illuminate\Http\Request;
@@ -99,8 +100,8 @@ class ManagerController extends Controller
             $res['title']='我的';
             $res['info'] = Manager::find($request->id);
             $res['user_role'] = $res['info']->role->toArray();
-            $res['user_role'] = array_column($res['user_role'], 'id');
-            $res['role'] = Role::all()->toArray();
+            $res['select_ids'] = array_column($res['user_role'], 'id');
+            $res['role'] = Role::where('status',1)->orderBy('sort', 'desc')->get()->toArray();
             return $this->makeView('laravel-admin::manager.role',['res'=>$res]);
         }
     }

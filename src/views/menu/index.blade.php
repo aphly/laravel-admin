@@ -25,7 +25,7 @@
             <div class="table">
                 <ul class="table_header">
                     <li >ID</li>
-                    <li >菜单名称</li>
+                    <li >名称</li>
                     <li >链接地址</li>
                     <li >状态</li>
                     <li >操作</li>
@@ -37,9 +37,6 @@
                             <li>{{$v['name']}}</li>
                             <li>
                                 {{$v['url']}}
-                                @if(!$v['is_leaf'])
-                                     <a class="badge badge-primary ajax_get" data-href="/admin/menu/index?pid={{$v['id']}}">进入</a>
-                                @endif
                             </li>
                             <li>
                                 @if($v['status'])
@@ -49,6 +46,9 @@
                                 @endif
                             </li>
                             <li>
+                                @if(!$v['is_leaf'])
+                                    <a class="badge badge-primary ajax_get" data-href="/admin/menu/index?pid={{$v['id']}}">进入</a>
+                                @endif
                                 <a class="badge badge-info ajax_get" data-href="/admin/menu/{{$v['id']}}/edit?pid={{$res['pid']}}">编辑</a>
                                 <a class="badge badge-info ajax_get" data-href="/admin/menu/{{$v['id']}}/show">浏览</a>
                             </li>

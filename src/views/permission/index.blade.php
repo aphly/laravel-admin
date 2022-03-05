@@ -25,7 +25,7 @@
             <div class="table">
                 <ul class="table_header">
                     <li >ID</li>
-                    <li >路由名称</li>
+                    <li >名称</li>
                     <li >控制器</li>
                     <li >状态</li>
                     <li >操作</li>
@@ -36,10 +36,10 @@
                             <li><input type="checkbox" class="delete_box" name="delete[]" value="{{$v['id']}}">{{$v['id']}}</li>
                             <li>{{$v['name']}}</li>
                             <li>
-                                @if(!$v['is_leaf'])
-                                    <a class="badge badge-primary ajax_get" data-href="/admin/permission/index?pid={{$v['id']}}">进入</a>
+                                @if($v['is_leaf'])
+                                {{$v['controller']}}
                                 @else
-                                    {{$v['controller']}}
+                                    -
                                 @endif
                             </li>
                             <li>
@@ -50,6 +50,9 @@
                                 @endif
                             </li>
                             <li>
+                                @if(!$v['is_leaf'])
+                                    <a class="badge badge-primary ajax_get" data-href="/admin/permission/index?pid={{$v['id']}}">进入</a>
+                                @endif
                                 <a class="badge badge-info ajax_get" data-href="/admin/permission/{{$v['id']}}/edit?pid={{$res['pid']}}">编辑</a>
                                 <a class="badge badge-info ajax_get" data-href="/admin/permission/{{$v['id']}}/show">浏览</a>
                             </li>

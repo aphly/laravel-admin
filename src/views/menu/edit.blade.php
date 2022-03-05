@@ -14,7 +14,7 @@
                 <div class="invalid-feedback"></div>
             </div>
             <div class="form-group">
-                <label for="exampleInputEmail1">菜单名称</label>
+                <label for="exampleInputEmail1">名称</label>
                 <input type="text" name="name" class="form-control " value="{{$res['info']['name']}}">
                 <div class="invalid-feedback"></div>
             </div>

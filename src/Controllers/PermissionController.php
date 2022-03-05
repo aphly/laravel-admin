@@ -23,27 +23,18 @@ class PermissionController extends Controller
                             function($query,$name) {
                                 return $query->where('name', 'like', '%'.$name.'%');
                             })
-                        ->where('pid','=',$pid)
+                        ->where('pid',$pid)
                         ->orderBy('sort', 'desc')
                         ->Paginate(config('admin.perPage'))->withQueryString();
         $res['parent'] = $this->parentInfo($pid);
         return $this->makeView('laravel-admin::permission.index',['res'=>$res]);
     }
 
-    public function index_url($post): string
-    {
-        if(!empty($post['pid'])){
-            return $this->index_url.'?pid='.$post['pid'];
-        }else{
-            return $this->index_url;
-        }
-    }
 
     public function parentInfo($pid)
     {
         $parent = Permission::where('id', '=', $pid)->first();
-        $parent = !is_null($parent) ? $parent->toArray() : [];
-        return $parent;
+        return !is_null($parent) ? $parent->toArray() : [];
     }
 
     public function add(PermissionRequest $request)

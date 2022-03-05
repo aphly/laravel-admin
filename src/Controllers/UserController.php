@@ -6,6 +6,8 @@ use Aphly\Laravel\Exceptions\ApiException;
 use Aphly\Laravel\Libs\Helper;
 use Aphly\Laravel\Models\User;
 use Aphly\LaravelAdmin\Requests\ManagerRequest;
+use Aphly\LaravelAdmin\Requests\UserRequest;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\ValidationException;
@@ -17,60 +19,40 @@ class UserController extends Controller
     public function index(Request $request)
     {
         $res['title']='我的';
-        $res['filter']['username'] = $username = $request->query('username',false);
+        $res['filter']['identifier'] = $identifier = $request->query('identifier',false);
         $res['filter']['status'] = $status = $request->query('status',false);
         $res['filter']['string'] = http_build_query($request->query());
-        $res['data'] = User::leftJoin('user_auth','user_auth.uuid', '=' ,'user.uuid')->when($username,
-                            function($query,$username) {
-                                return $query->where('user_auth.identifier', 'like', '%'.$username.'%')->where('user_auth.identity_type', 'email');
-                            })
-                        ->when($status,
-                            function($query,$status) {
-                                return $query->where('user.status', '=', $status);
-                            })
-                        ->orderBy('user.created_at', 'desc')
-                        ->Paginate(config('admin.perPage'))->withQueryString();
-        
+        $res['data'] = User::when($status,
+                                function($query,$status) {
+                                    return $query->where('status', '=', $status);
+                                })
+                            ->whereHas('userAuth', function (Builder $query) use ($identifier) {
+                                if($identifier){
+                                    $query->where('identifier', 'like', '%'.$identifier.'%')
+                                        ->where('identity_type', config('laravel.identity_type'));
+                                }
+                            })->orderBy('created_at', 'desc')->with('userAuth')->Paginate(config('admin.perPage'))->withQueryString();
         return $this->makeView('laravel-admin::user.index',['res'=>$res]);
     }
 
-    public function add(ManagerRequest $request)
-    {
-        if($request->isMethod('post')){
-            $post = $request->all();
-            $post['uuid'] = $post['token'] = Helper::uuid();
-            $post['token_expire'] = time();
-            $post['password'] = Hash::make($post['password']);
-            $manager = User::create($post);
-            if($manager->id){
-                throw new ApiException(['code'=>0,'msg'=>'添加成功','data'=>['redirect'=>$this->index_url]]);
-            }else{
-                throw new ApiException(['code'=>1,'msg'=>'添加失败']);
-            }
-        }else{
-            $res['title']='我的';
-            return $this->makeView('laravel-admin::user.add',['res'=>$res]);
-        }
-    }
-
-    public function edit(ManagerRequest $request)
+    public function edit(UserRequest $request)
     {
         if($request->isMethod('post')) {
-            $manager = User::find($request->id);
+            $user = User::find($request->uuid);
             $post = $request->all();
-            if(!empty($post['password'])){
-                $post['password'] = Hash::make($post['password']);
+            if(!empty($post['credential'])){
+                $post['credential'] = Hash::make($post['credential']);
             }else{
-                unset($post['password']);
+                unset($post['credential']);
             }
-            if($manager->update($post)){
+            if($user->update($post)){
                 throw new ApiException(['code'=>0,'msg'=>'修改成功','data'=>['redirect'=>$this->index_url]]);
             }else{
                 throw new ApiException(['code'=>1,'msg'=>'修改失败']);
             }
         }else{
             $res['title']='我的';
-            $res['info'] = User::find($request->id);
+            $res['info'] = User::where('uuid',$request->uuid)->first();
             return $this->makeView('laravel-admin::user.edit',['res'=>$res]);
         }
     }
