@@ -49,7 +49,6 @@
                         <li>
                             <a class="badge badge-success ajax_get" data-href="/admin/manager/{{$v['id']}}/role">角色</a>
                             <a class="badge badge-info ajax_get" data-href="/admin/manager/{{$v['id']}}/edit">编辑</a>
-                            <a class="badge badge-info ajax_get" data-href="/admin/manager/{{$v['id']}}/avatar">头像</a>
                         </li>
                     </ul>
                     @endforeach

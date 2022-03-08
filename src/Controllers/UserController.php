@@ -3,14 +3,14 @@
 namespace Aphly\LaravelAdmin\Controllers;
 
 use Aphly\Laravel\Exceptions\ApiException;
-use Aphly\Laravel\Libs\Helper;
+use Aphly\Laravel\Libs\UploadFile;
 use Aphly\Laravel\Models\User;
-use Aphly\LaravelAdmin\Requests\ManagerRequest;
+use Aphly\Laravel\Models\UserAuth;
+use Aphly\LaravelAdmin\Models\Role;
 use Aphly\LaravelAdmin\Requests\UserRequest;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Validation\ValidationException;
+use Illuminate\Support\Facades\Storage;
 
 class UserController extends Controller
 {
@@ -32,6 +32,8 @@ class UserController extends Controller
                                         ->where('identity_type', config('laravel.identity_type'));
                                 }
                             })->orderBy('created_at', 'desc')->with('userAuth')->Paginate(config('admin.perPage'))->withQueryString();
+        $res['role'] = (new Role)->getRoleById(3);
+        $res['role'] = array_column($res['role'], null, 'id');
         return $this->makeView('laravel-admin::user.index',['res'=>$res]);
     }
 
@@ -40,20 +42,32 @@ class UserController extends Controller
         if($request->isMethod('post')) {
             $user = User::find($request->uuid);
             $post = $request->all();
-            if(!empty($post['credential'])){
-                $post['credential'] = Hash::make($post['credential']);
-            }else{
-                unset($post['credential']);
-            }
             if($user->update($post)){
+                $post['verified']  = isset($post['verified'])?1:0;
+                UserAuth::where(['identity_type'=>'email','uuid'=>$user->uuid])->update(['verified'=>$post['verified']]);
                 throw new ApiException(['code'=>0,'msg'=>'修改成功','data'=>['redirect'=>$this->index_url]]);
-            }else{
-                throw new ApiException(['code'=>1,'msg'=>'修改失败']);
             }
+            throw new ApiException(['code'=>1,'msg'=>'修改失败']);
         }else{
             $res['title']='我的';
             $res['info'] = User::where('uuid',$request->uuid)->first();
             return $this->makeView('laravel-admin::user.edit',['res'=>$res]);
+        }
+    }
+
+    public function password(Request $request)
+    {
+        if($request->isMethod('post')) {
+            $post = $request->all();
+            if(!empty($post['credential'])){
+                (new UserAuth)->changePassword($request->uuid,$post['credential']);
+                throw new ApiException(['code'=>0,'msg'=>'密码修改成功','data'=>['redirect'=>$this->index_url]]);
+            }
+            throw new ApiException(['code'=>1,'msg'=>'修改失败']);
+        }else{
+            $res['title']='我的';
+            $res['info'] = User::where('uuid',$request->uuid)->first();
+            return $this->makeView('laravel-admin::user.password',['res'=>$res]);
         }
     }
 
@@ -68,33 +82,43 @@ class UserController extends Controller
         }
     }
 
+    public function role(Request $request)
+    {
+        if($request->isMethod('post')) {
+            User::where('uuid',$request->uuid)->update($request->only('role_id'));
+            throw new ApiException(['code'=>0,'msg'=>'操作成功','data'=>['redirect'=>$this->index_url]]);
+        }else{
+            $res['title']='我的';
+            $res['info'] = User::find($request->uuid);
+            $res['select_ids'] = [$res['info']['role_id']];
+            $res['role'] = (new Role)->getRoleById(3);
+            return $this->makeView('laravel-admin::user.role',['res'=>$res]);
+        }
+    }
+
     public function avatar(Request $request)
     {
         if($request->isMethod('post')) {
             //$cache = Setting::getCache();
             //$host = $cache['oss_status'] ? $cache['siteurl'] : $cache['oss_host'];
             $file = $request->file('avatar');
-            $avatar = Common::uploadFile($file,'avatar','avatar');
+            $avatar = UploadFile::upload($file,'public/avatar');
             if ($avatar) {
-                $user = User::find($request->id);
-                $oldavatar = $user->avatar;
+                $user = User::find($request->uuid);
+                $oldAvatar = $user->avatar;
                 $user->avatar = $avatar;
                 if ($user->save()) {
-                    $user->delAvatar($oldavatar);
-                    return redirect()->route('admin.user')->with('status', 'success');
+                    $user->delAvatar($oldAvatar);
+                    throw new ApiException(['code'=>0,'msg'=>'上传成功','data'=>['redirect'=>$this->index_url,'avatar'=>Storage::url($avatar)]]);
                 } else {
-                    throw ValidationException::withMessages([
-                        'avatar' =>'保存错误',
-                    ]);
+                    throw new ApiException(['code'=>1,'msg'=>'保存错误']);
                 }
             }
-            throw ValidationException::withMessages([
-                'avatar' =>'上传错误',
-            ]);
+            throw new ApiException(['code'=>2,'data'=>'','msg'=>'上传错误']);
         }else{
             $res['title']='我的';
-            $res['info'] = User::find($request->id);
-            return $this->makeView('admin.user.avatar',['res'=>$res]);
+            $res['info'] = User::find($request->uuid);
+            return $this->makeView('laravel-admin::user.avatar',['res'=>$res]);
         }
     }
 

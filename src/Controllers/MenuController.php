@@ -3,7 +3,6 @@
 namespace Aphly\LaravelAdmin\Controllers;
 
 use Aphly\Laravel\Exceptions\ApiException;
-use Aphly\Laravel\Libs\Helper;
 use Aphly\LaravelAdmin\Models\Menu;
 use Aphly\LaravelAdmin\Requests\MenuRequest;
 use Illuminate\Http\Request;
@@ -93,10 +92,7 @@ class MenuController extends Controller
 
     public function show(Request $request)
     {
-        $res['menu'] = Menu::where('status',1)->orderBy('sort', 'desc')->get()->toArray();
-        $res['menu_tree'] = Helper::getTree($res['menu'],true);
-        Helper::getTreeByid($res['menu_tree'],$request->id,$res['menu_tree']);
-        Helper::TreeToArr([$res['menu_tree']],$res['menu_show']);
+        $res['menu_show'] = (new Menu)->getMenuById($request->id);
         return $this->makeView('laravel-admin::menu.show',['res'=>$res]);
     }
 }

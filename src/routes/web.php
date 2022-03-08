@@ -34,7 +34,10 @@ Route::middleware(['web'])->group(function () {
 
             Route::get('/user/index', 'Aphly\LaravelAdmin\Controllers\UserController@index');
             Route::match(['get', 'post'],'/user/{uuid}/edit', 'Aphly\LaravelAdmin\Controllers\UserController@edit');
+            Route::match(['get', 'post'],'/user/{uuid}/password', 'Aphly\LaravelAdmin\Controllers\UserController@password');
             Route::post('/user/del', 'Aphly\LaravelAdmin\Controllers\UserController@del');
+            Route::match(['get', 'post'],'/user/{uuid}/role', 'Aphly\LaravelAdmin\Controllers\UserController@role');
+            Route::match(['get', 'post'],'/user/{uuid}/avatar', 'Aphly\LaravelAdmin\Controllers\UserController@avatar');
 
             Route::get('/role/index', 'Aphly\LaravelAdmin\Controllers\RoleController@index');
             Route::match(['get', 'post'],'/role/add', 'Aphly\LaravelAdmin\Controllers\RoleController@add');

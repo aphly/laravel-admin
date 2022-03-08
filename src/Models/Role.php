@@ -2,6 +2,7 @@
 
 namespace Aphly\LaravelAdmin\Models;
 
+use Aphly\Laravel\Libs\Helper;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -90,5 +91,13 @@ class Role extends Model
         });
     }
 
-
+    public function getRoleById($id){
+        return Cache::rememberForever('role_'.$id, function () use ($id) {
+            $res['role'] = Role::where('status',1)->orderBy('sort', 'desc')->get()->toArray();
+            $res['role_tree'] = Helper::getTree($res['role'],true);
+            Helper::getTreeByid($res['role_tree'],$id,$res['role_tree']);
+            Helper::TreeToArr([$res['role_tree']],$res['role_show']);
+            return $res['role_show'];
+        });
+    }
 }

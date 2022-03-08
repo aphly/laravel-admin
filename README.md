@@ -26,3 +26,5 @@ laravel8.37+<br>
 
 3、初始化完成后，将配置文件 config/admin.php  init设置为false
 
+4、www.xxxx.com/admin/login 后台登录地址
+

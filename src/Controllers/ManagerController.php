@@ -106,34 +106,5 @@ class ManagerController extends Controller
         }
     }
 
-    public function avatar(Request $request)
-    {
-        if($request->isMethod('post')) {
-            //$cache = Setting::getCache();
-            //$host = $cache['oss_status'] ? $cache['siteurl'] : $cache['oss_host'];
-            $file = $request->file('avatar');
-            $avatar = Common::uploadFile($file,'avatar','avatar');
-            if ($avatar) {
-                $user = User::find($request->id);
-                $oldavatar = $user->avatar;
-                $user->avatar = $avatar;
-                if ($user->save()) {
-                    $user->delAvatar($oldavatar);
-                    return redirect()->route('admin.user')->with('status', 'success');
-                } else {
-                    throw ValidationException::withMessages([
-                        'avatar' =>'保存错误',
-                    ]);
-                }
-            }
-            throw ValidationException::withMessages([
-                'avatar' =>'上传错误',
-            ]);
-        }else{
-            $res['title']='我的';
-            $res['info'] = User::find($request->id);
-            return $this->makeView('admin.user.avatar',['res'=>$res]);
-        }
-    }
 
 }

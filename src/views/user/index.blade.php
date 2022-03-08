@@ -2,8 +2,8 @@
     <h5 class="nav-title">用户管理</h5>
 </div>
 <style>
-    .table_scroll .table_header li:nth-child(4),.table_scroll .table_tbody li:nth-child(4){flex: 0 0 300px;}
-    .manager_role{background: #2878a7; color: #fff; border-radius: 4px; padding: 0 2px;}
+    .table_scroll .table_header li:nth-child(4),.table_scroll .table_tbody li:nth-child(4){flex: 0 0 200px;}
+    .del_form .table_scroll .table_header li:nth-child(6),.del_form .table_scroll .table_tbody li:nth-child(6){flex-basis:300px;}
 </style>
 <div class="imain">
     <div class="itop ">
@@ -28,6 +28,7 @@
                     <li >UUID</li>
                     <li >昵称</li>
                     <li >头像</li>
+                    <li >用户组</li>
                     <li >状态</li>
                     <li >操作</li>
                 </ul>
@@ -38,14 +39,21 @@
                             <input type="checkbox" class="delete_box" name="delete[]" value="{{$v['uuid']}}">
                             <a target="_blank" href="/autologin/{{ Illuminate\Support\Facades\Crypt::encryptString($v->token)}}">{{$v['uuid']}}</a>
                         </li>
-                        <li>{{$v['nickname']}}</li>
+                        <li > <span style="color:#111;">{{$v['nickname']}}</span></li>
                         <li>
+                            @if($v['avatar'])
+                                <img class="lazy user_avatar" src="{{Storage::url($v['avatar'])}}" />
+                            @else
                             <img class="lazy user_avatar" @if($v['gender']==1) src="{{url('vendor/laravel/img/man.png')}}" @else src="{{url('vendor/laravel/img/woman.png')}}" @endif >
+                            @endif
                         </li>
-                        <li>{{$v['status']}}</li>
+                        <li>{{$res['role'][$v['role_id']]['name']}}</li>
+                        <li>{{Aphly\Laravel\Models\User::getStatus($v['status'])}}</li>
                         <li>
-                            <a class="badge badge-success ajax_get" data-href="/admin/user/{{$v['uuid']}}/role">角色</a>
+                            <a class="badge badge-success ajax_get" data-href="/admin/user/{{$v['uuid']}}/role">用户组</a>
                             <a class="badge badge-info ajax_get" data-href="/admin/user/{{$v['uuid']}}/edit">编辑</a>
+                            <a class="badge badge-info ajax_get" data-href="/admin/user/{{$v['uuid']}}/password">修改密码</a>
+                            <a class="badge badge-info ajax_get" data-href="/admin/user/{{$v['uuid']}}/avatar">头像</a>
                         </li>
                     </ul>
                     <div style="margin-left: 40px;margin-bottom: 10px;">

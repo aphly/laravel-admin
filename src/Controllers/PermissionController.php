@@ -94,10 +94,7 @@ class PermissionController extends Controller
 
     public function show(Request $request)
     {
-        $res['permission'] = Permission::where('status',1)->orderBy('sort', 'desc')->get()->toArray();
-        $res['permission_tree'] = Helper::getTree($res['permission'],true);
-        Helper::getTreeByid($res['permission_tree'],$request->id,$res['permission_tree']);
-        Helper::TreeToArr([$res['permission_tree']],$res['permission_show']);
+        $res['permission_show'] = (new Permission)->getPermissionById($request->id);
         return $this->makeView('laravel-admin::permission.show',['res'=>$res]);
     }
 }

@@ -37,7 +37,7 @@ class InitController extends Controller
                 $data=[];
                 $data[] =['name' => '后台角色','pid'=>0,'is_leaf'=>0];
                 $data[] =['name' => '管理员','pid'=>1,'is_leaf'=>1];
-                $data[] =['name' => '前台角色','pid'=>0,'is_leaf'=>0];
+                $data[] =['name' => '前台用户组','pid'=>0,'is_leaf'=>0];
                 $data[] =['name' => 'LV0','pid'=>3,'is_leaf'=>1];
                 $data[] =['name' => 'LV1','pid'=>3,'is_leaf'=>1];
                 $data[] =['name' => 'LV2','pid'=>3,'is_leaf'=>1];

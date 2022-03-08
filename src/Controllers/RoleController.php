@@ -93,10 +93,7 @@ class RoleController extends Controller
 
     public function show(Request $request)
     {
-        $res['role'] = Role::where('status',1)->orderBy('sort', 'desc')->get()->toArray();
-        $res['role_tree'] = Helper::getTree($res['role'],true);
-        Helper::getTreeByid($res['role_tree'],$request->id,$res['role_tree']);
-        Helper::TreeToArr([$res['role_tree']],$res['role_show']);
+        $res['role_show'] = (new Role)->getRoleById($request->id);
         return $this->makeView('laravel-admin::role.show',['res'=>$res]);
     }
 

@@ -250,6 +250,8 @@
                 $(this).removeClass('app-px').addClass('app-px1')
             }
         })
+
+
         //$("img.lazy").lazyload({effect : "fadeIn",threshold :50});
     });
 
