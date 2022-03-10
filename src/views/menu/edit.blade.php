@@ -24,7 +24,7 @@
                 <div class="invalid-feedback"></div>
             </div>
             <div class="form-group">
-                <label for="exampleInputEmail1">图标</label>
+                <label for="exampleInputEmail1">图标 class</label>
                 <input type="text" name="icon" class="form-control " value="{{$res['info']['icon']}}">
                 <div class="invalid-feedback"></div>
             </div>

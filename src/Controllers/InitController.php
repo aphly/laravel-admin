@@ -65,7 +65,7 @@ class InitController extends Controller
                 $data=[];
                 $data[] =['uuid' => $manager->uuid,'role_id'=>2];
                 DB::table('user_role')->insert($data);
-                return '初始化成功！超级管理员帐户:'.$post['username'].' 密码:'.$password;
+                return '初始化成功！超级管理员帐户:'.$post['username'].' 密码:'.$password.' 登录地址：/admin/login';
             }else{
                 return '已初始化';
             }

@@ -45,7 +45,13 @@
                                 <span class="manager_role">{{$vv->name}}</span>
                             @endforeach
                         </li>
-                        <li>{{$v['status']}}</li>
+                        <li>
+                            @if($v['status']==1)
+                                正常
+                            @else
+                                冻结
+                            @endif
+                        </li>
                         <li>
                             <a class="badge badge-success ajax_get" data-href="/admin/manager/{{$v['id']}}/role">角色</a>
                             <a class="badge badge-info ajax_get" data-href="/admin/manager/{{$v['id']}}/edit">编辑</a>
