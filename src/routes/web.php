@@ -58,6 +58,12 @@ Route::middleware(['web'])->group(function () {
             Route::match(['get', 'post'],'/menu/{id}/edit', 'Aphly\LaravelAdmin\Controllers\MenuController@edit')->where('id', '[0-9]+');
             Route::post('/menu/del', 'Aphly\LaravelAdmin\Controllers\MenuController@del');
             Route::get('/menu/{id}/show', 'Aphly\LaravelAdmin\Controllers\MenuController@show')->where('id', '[0-9]+');
+
+            Route::get('/dictionary/index', 'Aphly\LaravelAdmin\Controllers\DictionaryController@index');
+            Route::match(['get', 'post'],'/dictionary/add', 'Aphly\LaravelAdmin\Controllers\DictionaryController@add');
+            Route::match(['get', 'post'],'/dictionary/{id}/edit', 'Aphly\LaravelAdmin\Controllers\DictionaryController@edit')->where('id', '[0-9]+');
+            Route::post('/dictionary/del', 'Aphly\LaravelAdmin\Controllers\DictionaryController@del');
+            Route::get('/dictionary/{id}/show', 'Aphly\LaravelAdmin\Controllers\DictionaryController@show')->where('id', '[0-9]+');
         });
     });
 

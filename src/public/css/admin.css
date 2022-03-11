@@ -1,5 +1,5 @@
 .top-bar{border-bottom: 1px solid #eee; margin-bottom: 10px; margin-top: 4px;height: 46px;line-height: 46px;}
-.top-bar h5.nav-title {font-weight: 500;font-size: 14px;line-height: 16px;border-left: 2px solid #88b7e0;padding-left: 10px;margin: 0;display: inline-block;margin-right: 10px;}
+.top-bar h5.nav-title {font-weight: 500;font-size: 16px;line-height: 16px;border-left: 2px solid #88b7e0;padding-left: 10px;margin: 0;display: inline-block;margin-right: 10px;}
 
 .imain{padding-bottom: 20px;}
 .itop,.liheader{padding-left: 30px;display: flex;justify-content: space-between; flex-wrap: nowrap;border: none;}
@@ -94,6 +94,9 @@ button.badge{border: none;}
 .role_permission .role form{padding: 10px;}
 .role_permission .role button{margin-top: 20px;margin-left: 10px;}
 .role_permission .select_ids div span{font-size: 14px;}
+
+.fast_select{position: relative;}
+.fast_select .treeview{position: absolute;height: 300px;overflow: auto;width: 100%;}
 
 @media (max-width: 1199.98px) {
     .table_scroll .table,.min_width{width: 1000px;}

@@ -28,21 +28,7 @@
 <script>
     var permission = @json($res['permission']);
     var select_ids = @json($res['select_ids']);
-    function roleData(data,select_ids=0) {
-        let new_array = []
-        data.forEach((item,index) => {
-            let selectable = item.is_leaf?true:false;
-            if(select_ids){
-                let selected=in_array(item.id,select_ids)?true:false;
-                new_array.push({id:item.id,text:item.name,pid:item.pid,state:{selected},selectable})
-            }else{
-                new_array.push({id:item.id,text:item.name,pid:item.pid})
-            }
-            delete item.nodes;
-        });
-        return new_array;
-    }
-    var data = toTree(roleData(permission,select_ids))
+    var data = toTree(treeData(permission,select_ids))
     $(function () {
         var bTree =$('#tree').treeview({
             levels: 3,
