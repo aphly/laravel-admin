@@ -31,6 +31,7 @@ class InitController extends Controller
                 $data[] =['name' => '角色管理','url' =>'/admin/role/index','pid'=>2,'is_leaf'=>1];
                 $data[] =['name' => '权限管理','url' =>'/admin/permission/index','pid'=>2,'is_leaf'=>1];
                 $data[] =['name' => '菜单管理','url' =>'/admin/menu/index','pid'=>2,'is_leaf'=>1];
+                $data[] =['name' => '菜单管理','url' =>'/admin/dictionary/index','pid'=>2,'is_leaf'=>1];
                 DB::table('menu')->insert($data);
 
                 DB::table('role')->truncate();
@@ -59,6 +60,7 @@ class InitController extends Controller
                 $data[] =['role_id' => 2,'menu_id'=>5];
                 $data[] =['role_id' => 2,'menu_id'=>6];
                 $data[] =['role_id' => 2,'menu_id'=>7];
+                $data[] =['role_id' => 2,'menu_id'=>8];
                 DB::table('role_menu')->insert($data);
 
                 DB::table('user_role')->truncate();

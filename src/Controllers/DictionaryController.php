@@ -3,6 +3,7 @@
 namespace Aphly\LaravelAdmin\Controllers;
 
 use Aphly\Laravel\Exceptions\ApiException;
+use Aphly\Laravel\Libs\Func;
 use Aphly\Laravel\Models\Dictionary;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
@@ -17,7 +18,7 @@ class DictionaryController extends Controller
         $res['pid'] = $pid = $request->query('pid', 0);
         $res['filter']['name'] = $name = $request->query('name', false);
         $res['filter']['string'] = http_build_query($request->query());
-        $res['data'] = Dictionary::when($name,
+        $res['list'] = Dictionary::when($name,
                             function ($query, $name) {
                                 return $query->where('name', 'like', '%' . $name . '%');
                             })
@@ -38,6 +39,13 @@ class DictionaryController extends Controller
     {
         if($request->isMethod('post')) {
             $post = $request->all();
+            if(isset($post['json'])){
+                foreach ($post['json'] as $k=>$v){
+                    $post['json'][$k] = $v;
+                    $post['json'][$k]['sort'] = intval($v['sort']);
+                }
+                $post['json'] = json_encode($post['json']);
+            }
             $role = Dictionary::create($post);
             if($role->id){
                 Cache::forget('role_menu');
@@ -58,6 +66,9 @@ class DictionaryController extends Controller
         if($request->isMethod('post')) {
             $role = Dictionary::find($request->id);
             $post = $request->all();
+            if(isset($post['json'])){
+                $post['json'] = json_encode($post['json']);
+            }
             if($role->update($post)){
                 Cache::forget('role_menu');
                 throw new ApiException(['code'=>0,'msg'=>'修改成功','data'=>['redirect'=>$this->index_url($post)]]);
@@ -67,6 +78,8 @@ class DictionaryController extends Controller
         }else{
             $res['title']='我的';
             $res['info'] = Dictionary::find($request->id);
+            $res['info']['json'] = json_decode($res['info']['json'],true);
+            $res['info']['json'] = Func::array_orderby($res['info']['json'],'sort',SORT_DESC);
             $res['pid'] = $pid =  $request->query('pid',0);
             $res['parent'] = $this->parentInfo($pid);
             return $this->makeView('laravel-admin::dictionary.edit',['res'=>$res]);
