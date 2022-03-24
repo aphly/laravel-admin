@@ -37,23 +37,23 @@
                 <div class="invalid-feedback"></div>
             </div>
             <div class="form-group">
-                <div onclick="addDiv()">+</div>
+                <div onclick="attr_addDiv()" class="add_div_btn"><i class="uni app-jia"></i> 添加属性</div>
                 <div class="add_div">
-                    <ul>
+                    <ul class="add_div_ul">
                         <li class="d-flex">
-                            <div>名称</div>
-                            <div>值</div>
-                            <div>图标</div>
-                            <div>排序</div>
-                            <div>操作</div>
+                            <div class="attr1">名称</div>
+                            <div class="attr2">值</div>
+                            <div class="attr3">图标</div>
+                            <div class="attr4">排序</div>
+                            <div class="attr5">操作</div>
                         </li>
                         @foreach($res['info']['json'] as $k=>$v)
                             <li class="d-flex" data-id="{{$k}}">
-                                <div><input type="text" name="json[{{$k}}][name]" value="{{$v['name']}}"></div>
-                                <div><input type="text" name="json[{{$k}}][value]" value="{{$v['value']}}"></div>
-                                <div><input type="text" name="json[{{$k}}][img]" value="{{$v['img']}}"></div>
-                                <div><input type="text" name="json[{{$k}}][sort]" value="{{$v['sort']}}"></div>
-                                <div onclick="delDiv(this)">x</div>
+                                <div class="attr1"><input type="text" name="json[{{$k}}][name]" value="{{$v['name']}}"></div>
+                                <div class="attr2"><input type="text" name="json[{{$k}}][value]" value="{{$v['value']}}"></div>
+                                <div class="attr3"><input type="text" name="json[{{$k}}][img]" value="{{$v['img']}}"></div>
+                                <div class="attr4"><input type="number" name="json[{{$k}}][sort]" value="{{$v['sort']}}"></div>
+                                <div class="attr5" onclick="attr_delDiv(this)"><i class="uni app-lajitong"></i></div>
                             </li>
                         @endforeach
                     </ul>
@@ -63,19 +63,4 @@
         </div>
     </form>
 </div>
-<script>
-    function addDiv() {
-        let id = randomId(8);
-        let html = `<li class="d-flex" data-id="${id}">
-                        <div><input type="text" name="json[${id}][name]"></div>
-                        <div><input type="text" name="json[${id}][value]"></div>
-                        <div><input type="text" name="json[${id}][img]"></div>
-                        <div><input type="text" name="json[${id}][sort]"></div>
-                        <div onclick="delDiv(this)">x</div>
-                    </li>`;
-        $('.add_div ul').append(html);
-    }
-    function delDiv(_this) {
-        $(_this).parent().remove()
-    }
-</script>
+

@@ -42,15 +42,15 @@
                 <div class="invalid-feedback"></div>
             </div>
             <div class="form-group">
-                <div onclick="addDiv()">+</div>
+                <div onclick="attr_addDiv()" class="add_div_btn"><i class="uni app-jia"></i> 添加属性</div>
                 <div class="add_div">
-                    <ul>
+                    <ul class="add_div_ul">
                         <li class="d-flex">
-                            <div>名称</div>
-                            <div>值</div>
-                            <div>图标</div>
-                            <div>排序</div>
-                            <div>操作</div>
+                            <div class="attr1">名称</div>
+                            <div class="attr2">值</div>
+                            <div class="attr3">图标</div>
+                            <div class="attr4">排序</div>
+                            <div class="attr5">操作</div>
                         </li>
                     </ul>
                 </div>
@@ -60,20 +60,10 @@
     </form>
 
 </div>
+<style>
+
+</style>
 <script>
-    function addDiv() {
-        let id = randomId(8);
-        let html = `<li class="d-flex" data-id="${id}">
-                        <div><input type="text" name="json[${id}][name]"></div>
-                        <div><input type="text" name="json[${id}][value]"></div>
-                        <div><input type="text" name="json[${id}][img]"></div>
-                        <div><input type="text" name="json[${id}][sort]"></div>
-                        <div onclick="delDiv(this)">x</div>
-                    </li>`;
-        $('.add_div ul').append(html);
-    }
-    function delDiv(_this) {
-        $(_this).parent().remove()
-    }
+
 </script>
 

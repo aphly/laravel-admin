@@ -46,8 +46,8 @@ class DictionaryController extends Controller
                 }
                 $post['json'] = json_encode($post['json']);
             }
-            $role = Dictionary::create($post);
-            if($role->id){
+            $dictionary = Dictionary::create($post);
+            if($dictionary->id){
                 Cache::forget('role_menu');
                 throw new ApiException(['code'=>0,'msg'=>'添加成功','data'=>['redirect'=>$this->index_url($post)]]);
             }else{
@@ -64,13 +64,17 @@ class DictionaryController extends Controller
     public function edit(Request $request)
     {
         if($request->isMethod('post')) {
-            $role = Dictionary::find($request->id);
+            $dictionary = Dictionary::find($request->id);
             $post = $request->all();
             if(isset($post['json'])){
+                foreach ($post['json'] as $k=>$v){
+                    $post['json'][$k] = $v;
+                    $post['json'][$k]['sort'] = intval($v['sort']);
+                }
                 $post['json'] = json_encode($post['json']);
             }
-            if($role->update($post)){
-                Cache::forget('role_menu');
+            if($dictionary->update($post)){
+                Cache::forget('dictionary_menu');
                 throw new ApiException(['code'=>0,'msg'=>'修改成功','data'=>['redirect'=>$this->index_url($post)]]);
             }else{
                 throw new ApiException(['code'=>1,'msg'=>'修改失败']);
@@ -104,7 +108,7 @@ class DictionaryController extends Controller
 
     public function show(Request $request)
     {
-        $res['menu_show'] = (new Dictionary)->getMenuById($request->id);
+        $res['dictionary_show'] = (new Dictionary)->getMenuById($request->id);
         return $this->makeView('laravel-admin::dictionary.show',['res'=>$res]);
     }
 }

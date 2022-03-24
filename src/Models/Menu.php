@@ -26,7 +26,7 @@ class Menu extends Model
     public function getMenuById($id)
     {
         return Cache::rememberForever('menu_'.$id, function () use ($id) {
-            $res['menu'] = Menu::where('status',1)->orderBy('sort', 'desc')->get()->toArray();
+            $res['menu'] = self::where('status',1)->orderBy('sort', 'desc')->get()->toArray();
             $res['menu_tree'] = Helper::getTree($res['menu'],true);
             Helper::getTreeByid($res['menu_tree'],$id,$res['menu_tree']);
             Helper::TreeToArr([$res['menu_tree']],$res['menu_show']);

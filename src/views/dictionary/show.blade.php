@@ -15,7 +15,7 @@
 </div>
 
 <script>
-    var menu = @json($res['menu_show']);
+    var dictionary = @json($res['dictionary_show']);
     function roleData(data) {
         let new_array = []
         data.forEach((item,index) => {
@@ -24,7 +24,7 @@
         });
         return new_array;
     }
-    var data = toTree(roleData(menu))
+    var data = toTree(roleData(dictionary))
     $(function () {
         var bTree =$('#tree').treeview({
             levels: 3,

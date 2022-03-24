@@ -17,7 +17,7 @@
             </div>
         </form>
         <div class="">
-            <a data-href="/admin/dictionary/add_fast" class="badge badge-info ajax_get add">快速新增</a>
+{{--            <a data-href="/admin/dictionary/add_fast" class="badge badge-info ajax_get add">快速新增</a>--}}
             <a data-href="/admin/dictionary/add?pid={{$res['pid']}}" class="badge badge-info ajax_get add">新增</a>
         </div>
     </div>
