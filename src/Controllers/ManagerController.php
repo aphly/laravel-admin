@@ -22,7 +22,7 @@ class ManagerController extends Controller
         $res['filter']['username'] = $username = $request->query('username',false);
         $res['filter']['status'] = $status = $request->query('status',false);
         $res['filter']['string'] = http_build_query($request->query());
-        $res['data'] = Manager::when($username,
+        $res['list'] = Manager::when($username,
                             function($query,$username) {
                                 return $query->where('username', 'like', '%'.$username.'%');
                             })

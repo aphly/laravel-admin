@@ -18,7 +18,7 @@ class MenuController extends Controller
         $res['pid'] = $pid = $request->query('pid', 0);
         $res['filter']['name'] = $name = $request->query('name', false);
         $res['filter']['string'] = http_build_query($request->query());
-        $res['data'] = Menu::when($name,
+        $res['list'] = Menu::when($name,
                             function ($query, $name) {
                                 return $query->where('name', 'like', '%' . $name . '%');
                             })

@@ -22,7 +22,7 @@ class UserController extends Controller
         $res['filter']['identifier'] = $identifier = $request->query('identifier',false);
         $res['filter']['status'] = $status = $request->query('status',false);
         $res['filter']['string'] = http_build_query($request->query());
-        $res['data'] = User::when($status,
+        $res['list'] = User::when($status,
                                 function($query,$status) {
                                     return $query->where('status', '=', $status);
                                 })

@@ -6,7 +6,8 @@
     </h5>
 </div>
 <style>
-    .table_scroll .table_header li:nth-child(3),.table_scroll .table_tbody li:nth-child(3){flex: 0 0 500px;}
+    .table_scroll .table_header li:nth-child(2),.table_scroll .table_tbody li:nth-child(2){flex: 0 0 500px;}
+    .table_scroll .table_header li:nth-child(3),.table_scroll .table_tbody li:nth-child(3){flex: 0 0 200px;}
 </style>
 <div class="imain">
     <div class="itop ">
@@ -29,7 +30,7 @@
                 <ul class="table_header">
                     <li >ID</li>
                     <li >名称</li>
-                    <li >链接地址</li>
+                    <li >值</li>
                     <li >状态</li>
                     <li >操作</li>
                 </ul>
@@ -39,7 +40,7 @@
                             <li><input type="checkbox" class="delete_box" name="delete[]" value="{{$v['id']}}">{{$v['id']}}</li>
                             <li>{{$v['name']}}</li>
                             <li>
-                                {{$v['url']}}
+                                {{$v['value']}}
                             </li>
                             <li>
                                 @if($v['status'])
@@ -51,9 +52,9 @@
                             <li>
                                 @if(!$v['is_leaf'])
                                     <a class="badge badge-primary ajax_get" data-href="/admin/dictionary/index?pid={{$v['id']}}">进入</a>
+                                    <a class="badge badge-info ajax_get" data-href="/admin/dictionary/{{$v['id']}}/show">浏览</a>
                                 @endif
                                 <a class="badge badge-info ajax_get" data-href="/admin/dictionary/{{$v['id']}}/edit?pid={{$res['pid']}}">编辑</a>
-                                <a class="badge badge-info ajax_get" data-href="/admin/dictionary/{{$v['id']}}/show">浏览</a>
                             </li>
                         </ul>
                     @endforeach

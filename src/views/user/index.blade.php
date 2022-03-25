@@ -32,8 +32,8 @@
                     <li >状态</li>
                     <li >操作</li>
                 </ul>
-                @if($res['data']->total())
-                    @foreach($res['data'] as $v)
+                @if($res['list']->total())
+                    @foreach($res['list'] as $v)
                     <ul class="table_tbody">
                         <li>
                             <input type="checkbox" class="delete_box" name="delete[]" value="{{$v['uuid']}}">
@@ -71,7 +71,7 @@
                             <button class="badge badge-danger del" type="submit">删除</button>
                         </li>
                         <li>
-                            {{$res['data']->links('laravel-admin::common.pagination')}}
+                            {{$res['list']->links('laravel-admin::common.pagination')}}
                         </li>
                     </ul>
                 @endif

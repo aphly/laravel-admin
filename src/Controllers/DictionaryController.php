@@ -43,6 +43,7 @@ class DictionaryController extends Controller
                 foreach ($post['json'] as $k=>$v){
                     $post['json'][$k] = $v;
                     $post['json'][$k]['sort'] = intval($v['sort']);
+                    $post['json'][$k]['group'] = intval($v['group']);
                 }
                 $post['json'] = json_encode($post['json']);
             }
@@ -70,6 +71,7 @@ class DictionaryController extends Controller
                 foreach ($post['json'] as $k=>$v){
                     $post['json'][$k] = $v;
                     $post['json'][$k]['sort'] = intval($v['sort']);
+                    $post['json'][$k]['group'] = intval($v['group']);
                 }
                 $post['json'] = json_encode($post['json']);
             }
@@ -82,8 +84,10 @@ class DictionaryController extends Controller
         }else{
             $res['title']='我的';
             $res['info'] = Dictionary::find($request->id);
-            $res['info']['json'] = json_decode($res['info']['json'],true);
-            $res['info']['json'] = Func::array_orderby($res['info']['json'],'sort',SORT_DESC);
+            if($res['info']['json']){
+                $res['info']['json'] = json_decode($res['info']['json'],true);
+                $res['info']['json'] = Func::array_orderby($res['info']['json'],'sort',SORT_DESC);
+            }
             $res['pid'] = $pid =  $request->query('pid',0);
             $res['parent'] = $this->parentInfo($pid);
             return $this->makeView('laravel-admin::dictionary.edit',['res'=>$res]);

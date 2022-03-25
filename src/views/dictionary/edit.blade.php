@@ -19,6 +19,11 @@
                 <div class="invalid-feedback"></div>
             </div>
             <div class="form-group">
+                <label for="exampleInputEmail1">值</label>
+                <input type="text" name="value" class="form-control "  value="{{$res['info']['value']}}">
+                <div class="invalid-feedback"></div>
+            </div>
+            <div class="form-group">
                 <label for="exampleInputEmail1">图标</label>
                 <input type="text" name="icon" class="form-control "  value="{{$res['info']['icon']}}">
                 <div class="invalid-feedback"></div>
@@ -45,17 +50,24 @@
                             <div class="attr2">值</div>
                             <div class="attr3">图标</div>
                             <div class="attr4">排序</div>
+                            <div class="attr0">组</div>
                             <div class="attr5">操作</div>
                         </li>
+                        @if($res['info']['json'])
                         @foreach($res['info']['json'] as $k=>$v)
                             <li class="d-flex" data-id="{{$k}}">
                                 <div class="attr1"><input type="text" name="json[{{$k}}][name]" value="{{$v['name']}}"></div>
                                 <div class="attr2"><input type="text" name="json[{{$k}}][value]" value="{{$v['value']}}"></div>
                                 <div class="attr3"><input type="text" name="json[{{$k}}][img]" value="{{$v['img']}}"></div>
                                 <div class="attr4"><input type="number" name="json[{{$k}}][sort]" value="{{$v['sort']}}"></div>
-                                <div class="attr5" onclick="attr_delDiv(this)"><i class="uni app-lajitong"></i></div>
+                                <div class="attr4"><input type="number" name="json[{{$k}}][group]" value="{{$v['group']}}"></div>
+                                <div class="attr5" >
+                                    <i class="uni app-lajitong" onclick="attr_delDiv(this)"></i>
+                                    {{$k}}
+                                </div>
                             </li>
                         @endforeach
+                        @endif
                     </ul>
                 </div>
             </div>

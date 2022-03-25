@@ -24,6 +24,11 @@
                 <div class="invalid-feedback"></div>
             </div>
             <div class="form-group">
+                <label for="exampleInputEmail1">值</label>
+                <input type="text" name="value" class="form-control " value="">
+                <div class="invalid-feedback"></div>
+            </div>
+            <div class="form-group">
                 <label for="exampleInputEmail1">图标</label>
                 <input type="text" name="icon" class="form-control " value="">
                 <div class="invalid-feedback"></div>
@@ -50,6 +55,7 @@
                             <div class="attr2">值</div>
                             <div class="attr3">图标</div>
                             <div class="attr4">排序</div>
+                            <div class="attr0">组</div>
                             <div class="attr5">操作</div>
                         </li>
                     </ul>
