@@ -31,6 +31,8 @@ class Permission extends Model
             return $res['permission_show'];
         });
     }
+
+
 //    protected static function boot()
 //    {
 //        parent::boot();

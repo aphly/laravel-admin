@@ -112,7 +112,7 @@ class DictionaryController extends Controller
 
     public function show(Request $request)
     {
-        $res['dictionary_show'] = (new Dictionary)->getMenuById($request->id);
+        $res['dictionary_show'] = (new Dictionary)->getDictionaryById($request->id);
         return $this->makeView('laravel-admin::dictionary.show',['res'=>$res]);
     }
 }
