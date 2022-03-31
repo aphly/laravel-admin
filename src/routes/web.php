@@ -18,7 +18,7 @@ Route::get('/admin/init', 'Aphly\LaravelAdmin\Controllers\InitController@index')
 Route::middleware(['web'])->group(function () {
 
     Route::prefix('admin')->middleware(['managerAuth'])->group(function () {
-        Route::match(['get', 'post'],'/login', 'Aphly\LaravelAdmin\Controllers\IndexController@login');
+        Route::match(['get', 'post'],'/login', 'Aphly\LaravelAdmin\Controllers\IndexController@login')->name('adminLogin');
         Route::get('/index', 'Aphly\LaravelAdmin\Controllers\IndexController@layout');
         Route::get('/logout', 'Aphly\LaravelAdmin\Controllers\IndexController@logout');
         Route::get('/cache', 'Aphly\LaravelAdmin\Controllers\IndexController@cache');

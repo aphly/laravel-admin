@@ -43,7 +43,7 @@
             </div>
             <div class="form-group">
                 <label for="exampleInputEmail1">排序</label>
-                <input type="text" name="sort" class="form-control " value="0">
+                <input type="number" name="sort" class="form-control " value="0">
                 <div class="invalid-feedback"></div>
             </div>
             <div class="form-group">
@@ -53,9 +53,13 @@
                         <li class="d-flex">
                             <div class="attr1">名称</div>
                             <div class="attr2">值</div>
+                            <div class="attr6">价格</div>
+                            <div class="attr7">数量</div>
                             <div class="attr3">图标</div>
                             <div class="attr4">排序</div>
                             <div class="attr0">组</div>
+                            <div class="attr8">扩1</div>
+                            <div class="attr9">扩2</div>
                             <div class="attr5">操作</div>
                         </li>
                     </ul>

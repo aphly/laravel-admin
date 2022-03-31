@@ -10,7 +10,7 @@ class ManagerAuth
 {
     public function handle(Request $request, Closure $next)
     {
-        if($request->path()=='admin/login'){
+        if($request->url() == route('adminLogin')){
             if (Auth::guard('manager')->check()) {
                 return redirect('/admin/index');
             }else{
@@ -18,10 +18,9 @@ class ManagerAuth
             }
         }else{
             if (Auth::guard('manager')->check()) {
-                //config('admin.manager',Auth::guard('manager')->user()->toArray());
                 return $next($request);
             }else{
-                return redirect('/admin/login');
+                return redirect()->route('adminLogin');
             }
         }
     }
