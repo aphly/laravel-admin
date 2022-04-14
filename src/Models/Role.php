@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Cache;
 class Role extends Model
 {
     use HasFactory;
-    protected $table = 'role';
+    protected $table = 'admin_role';
     public $timestamps = false;
 
     protected $fillable = [
@@ -25,12 +25,12 @@ class Role extends Model
 
     public function permission()
     {
-        return $this->belongsToMany(Permission::class,'role_permission','role_id','permission_id');
+        return $this->belongsToMany(Permission::class,'admin_role_permission','role_id','permission_id');
     }
 
     public function menu()
     {
-        return $this->belongsToMany(Menu::class,'role_menu','role_id','menu_id');
+        return $this->belongsToMany(Menu::class,'admin_role_menu','role_id','menu_id');
     }
 
     public function getRolePermission(): array

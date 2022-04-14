@@ -14,7 +14,9 @@ use Illuminate\Support\Str;
 class Manager extends Authenticatable
 {
     use HasFactory, Notifiable;
-    protected $table = 'manager';
+    protected $table = 'admin_manager';
+    protected $primaryKey = 'uuid';
+    public $incrementing = false;
     /**
      * The attributes that are mass assignable.
      *
@@ -26,7 +28,7 @@ class Manager extends Authenticatable
         'username','nickname','email','phone',
         'password',
         'token',
-        'token_expire','avatar','status','gender'
+        'token_expire','avatar','status','gender','super'
     ];
 
     /**
@@ -49,7 +51,7 @@ class Manager extends Authenticatable
 
     public function role()
     {
-        return $this->belongsToMany(Role::class,'user_role','uuid','role_id','uuid');
+        return $this->belongsToMany(Role::class,'admin_user_role','uuid','role_id','uuid');
     }
 
     protected static function boot()

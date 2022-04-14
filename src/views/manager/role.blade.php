@@ -14,7 +14,7 @@
             </div>
             <div class="role">
                 <div class="role_title">已选中</div>
-                <form method="post" action="/admin/manager/{{$res['info']['id']}}/role" class="save_form">
+                <form method="post" action="/admin/manager/{{$res['info']['uuid']}}/role" class="save_form">
                     @csrf
                     <div class=" select_ids" id="select_ids"></div>
                     <button class="btn btn-primary" type="submit">保存</button>

@@ -13,9 +13,8 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('manager', function (Blueprint $table) {
-            $table->id();
-            $table->char('uuid',32)->unique();
+        Schema::create('admin_manager', function (Blueprint $table) {
+            $table->unsignedBigInteger('uuid')->primary();
             $table->string('username',32)->unique();
             $table->string('nickname',32)->nullable();
             $table->string('email',128)->nullable();
@@ -28,6 +27,7 @@ return new class extends Migration
             $table->tinyInteger('gender')->default(1);
             $table->integer('last_login')->unsigned()->nullable();
             $table->string('last_ip',64)->nullable();
+            $table->tinyInteger('super')->default(0);
             $table->timestamps();
         });
     }
@@ -39,6 +39,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('manager');
+        Schema::dropIfExists('admin_manager');
     }
 };

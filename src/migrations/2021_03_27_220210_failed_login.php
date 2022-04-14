@@ -13,7 +13,7 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('failed_login', function (Blueprint $table) {
+        Schema::create('admin_failed_login', function (Blueprint $table) {
             $table->string('ip',64)->primary();
             $table->integer('count')->unsigned();
             $table->integer('lastupdate')->unsigned();
@@ -27,6 +27,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('failed_login');
+        Schema::dropIfExists('admin_failed_login');
     }
 };

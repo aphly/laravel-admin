@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 class FailedLogin extends Model
 {
     use HasFactory;
-    protected $table = 'failed_login';
+    protected $table = 'admin_failed_login';
     protected $primaryKey = 'ip';
     protected $keyType = 'string';
     public $timestamps = false;

@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Cache;
 class Permission extends Model
 {
     use HasFactory;
-    protected $table = 'permission';
+    protected $table = 'admin_permission';
     public $timestamps = false;
 
     protected $fillable = [

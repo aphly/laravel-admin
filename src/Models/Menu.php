@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Cache;
 class Menu extends Model
 {
     use HasFactory;
-    protected $table = 'menu';
+    protected $table = 'admin_menu';
     public $timestamps = false;
 
     protected $fillable = [

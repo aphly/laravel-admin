@@ -47,7 +47,7 @@
                             <img class="lazy user_avatar" @if($v['gender']==1) src="{{url('vendor/laravel/img/man.png')}}" @else src="{{url('vendor/laravel/img/woman.png')}}" @endif >
                             @endif
                         </li>
-                        <li>{{$res['role'][$v['role_id']]['name']}}</li>
+                        <li>{{$res['role'][$v['role_id']]['name']??''}}</li>
                         <li>{{Aphly\Laravel\Models\User::getStatus($v['status'])}}</li>
                         <li>
                             <a class="badge badge-success ajax_get" data-href="/admin/user/{{$v['uuid']}}/role">用户组</a>

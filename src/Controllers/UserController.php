@@ -18,7 +18,7 @@ class UserController extends Controller
 
     public function index(Request $request)
     {
-        $res['title']='我的';
+        $res['title'] = '';
         $res['filter']['identifier'] = $identifier = $request->query('identifier',false);
         $res['filter']['status'] = $status = $request->query('status',false);
         $res['filter']['string'] = http_build_query($request->query());
@@ -49,7 +49,7 @@ class UserController extends Controller
             }
             throw new ApiException(['code'=>1,'msg'=>'修改失败']);
         }else{
-            $res['title']='我的';
+            $res['title'] = '';
             $res['info'] = User::where('uuid',$request->uuid)->first();
             return $this->makeView('laravel-admin::user.edit',['res'=>$res]);
         }
@@ -65,7 +65,7 @@ class UserController extends Controller
             }
             throw new ApiException(['code'=>1,'msg'=>'修改失败']);
         }else{
-            $res['title']='我的';
+            $res['title'] = '';
             $res['info'] = User::where('uuid',$request->uuid)->first();
             return $this->makeView('laravel-admin::user.password',['res'=>$res]);
         }
@@ -88,7 +88,7 @@ class UserController extends Controller
             User::where('uuid',$request->uuid)->update($request->only('role_id'));
             throw new ApiException(['code'=>0,'msg'=>'操作成功','data'=>['redirect'=>$this->index_url]]);
         }else{
-            $res['title']='我的';
+            $res['title'] = '';
             $res['info'] = User::find($request->uuid);
             $res['select_ids'] = [$res['info']['role_id']];
             $res['role'] = (new Role)->getRoleById(3);
@@ -116,7 +116,7 @@ class UserController extends Controller
             }
             throw new ApiException(['code'=>2,'data'=>'','msg'=>'上传错误']);
         }else{
-            $res['title']='我的';
+            $res['title'] = '';
             $res['info'] = User::find($request->uuid);
             return $this->makeView('laravel-admin::user.avatar',['res'=>$res]);
         }

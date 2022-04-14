@@ -47,7 +47,7 @@ class MenuController extends Controller
                 throw new ApiException(['code'=>1,'msg'=>'添加失败']);
             }
         }else{
-            $res['title']='我的';
+            $res['title'] = '';
             $res['pid'] = $pid =  $request->query('pid',0);
             $res['parent'] = $this->parentInfo($pid);
             return $this->makeView('laravel-admin::menu.add',['res'=>$res]);
@@ -66,7 +66,7 @@ class MenuController extends Controller
                 throw new ApiException(['code'=>1,'msg'=>'修改失败']);
             }
         }else{
-            $res['title']='我的';
+            $res['title'] = '';
             $res['info'] = Menu::find($request->id);
             $res['pid'] = $pid =  $request->query('pid',0);
             $res['parent'] = $this->parentInfo($pid);

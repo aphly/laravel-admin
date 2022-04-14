@@ -14,7 +14,7 @@ class DictionaryController extends Controller
 
     public function index(Request $request)
     {
-        $res = ['title' => '我的'];
+        $res['title'] = '';
         $res['pid'] = $pid = $request->query('pid', 0);
         $res['filter']['name'] = $name = $request->query('name', false);
         $res['filter']['string'] = http_build_query($request->query());
@@ -55,7 +55,7 @@ class DictionaryController extends Controller
                 throw new ApiException(['code'=>1,'msg'=>'添加失败']);
             }
         }else{
-            $res['title']='我的';
+            $res['title'] = '';
             $res['pid'] = $pid =  $request->query('pid',0);
             $res['parent'] = $this->parentInfo($pid);
             return $this->makeView('laravel-admin::dictionary.add',['res'=>$res]);
@@ -82,7 +82,7 @@ class DictionaryController extends Controller
                 throw new ApiException(['code'=>1,'msg'=>'修改失败']);
             }
         }else{
-            $res['title']='我的';
+            $res['title'] = '';
             $res['info'] = Dictionary::find($request->id);
             if($res['info']['json']){
                 $res['info']['json'] = json_decode($res['info']['json'],true);

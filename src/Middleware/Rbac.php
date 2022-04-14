@@ -23,7 +23,8 @@ class Rbac
     }
 
     public function checkPermission( $controller ){
-        if(Auth::guard('manager')->id()==1){
+
+        if(Auth::guard('manager')->user()->super==1){
             return true;
         }
         if( in_array( $controller,$this->ignore_url ) ){

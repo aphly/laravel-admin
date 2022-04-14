@@ -25,7 +25,7 @@
         <div class="table_scroll">
             <div class="table">
                 <ul class="table_header">
-                    <li >ID</li>
+                    <li >UUID</li>
                     <li >用户名</li>
                     <li >头像</li>
                     <li >角色</li>
@@ -35,7 +35,7 @@
                 @if($res['list']->total())
                     @foreach($res['list'] as $v)
                     <ul class="table_tbody">
-                        <li><input type="checkbox" class="delete_box" name="delete[]" value="{{$v['id']}}">{{$v['id']}}</li>
+                        <li><input type="checkbox" class="delete_box" name="delete[]" value="{{$v['uuid']}}">{{$v['uuid']}}</li>
                         <li>{{$v['username']}}</li>
                         <li>
                             <img class="lazy user_avatar" @if($v['gender']==1) src="{{url('vendor/laravel/img/man.png')}}" @else src="{{url('vendor/laravel/img/woman.png')}}" @endif >
@@ -53,8 +53,8 @@
                             @endif
                         </li>
                         <li>
-                            <a class="badge badge-success ajax_get" data-href="/admin/manager/{{$v['id']}}/role">角色</a>
-                            <a class="badge badge-info ajax_get" data-href="/admin/manager/{{$v['id']}}/edit">编辑</a>
+                            <a class="badge badge-success ajax_get" data-href="/admin/manager/{{$v['uuid']}}/role">角色</a>
+                            <a class="badge badge-info ajax_get" data-href="/admin/manager/{{$v['uuid']}}/edit">编辑</a>
                         </li>
                     </ul>
                     @endforeach

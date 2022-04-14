@@ -17,7 +17,7 @@ class RoleController extends Controller
 
     public function index(Request $request)
     {
-        $res['title']='我的';
+        $res['title'] = '';
         $res['pid'] = $pid = $request->query('pid', 0);
         $res['filter']['name'] = $name = $request->query('name',false);
         $res['filter']['string'] = http_build_query($request->query());
@@ -49,7 +49,7 @@ class RoleController extends Controller
                 throw new ApiException(['code'=>1,'msg'=>'添加失败']);
             }
         }else{
-            $res['title']='我的';
+            $res['title'] = '';
             $res['pid'] = $pid =  $request->query('pid',0);
             $res['parent'] = $this->parentInfo($pid);
             return $this->makeView('laravel-admin::role.add',['res'=>$res]);
@@ -67,7 +67,7 @@ class RoleController extends Controller
                 throw new ApiException(['code'=>1,'msg'=>'修改失败']);
             }
         }else{
-            $res['title']='我的';
+            $res['title'] = '';
             $res['info'] = Role::find($request->id);
             $res['pid'] = $pid =  $request->query('pid',0);
             $res['parent'] = $this->parentInfo($pid);
@@ -107,7 +107,7 @@ class RoleController extends Controller
             Cache::forget('role_permission');
             throw new ApiException(['code'=>0,'msg'=>'操作成功','data'=>['redirect'=>$this->index_url]]);
         }else{
-            $res['title']='我的';
+            $res['title'] = '';
             $res['info'] = Role::find($request->id);
             $res['role_permission'] = $res['info']->permission->toArray();
             $res['select_ids'] = array_column($res['role_permission'], 'id');
@@ -126,7 +126,7 @@ class RoleController extends Controller
             Cache::forget('role_menu');
             throw new ApiException(['code'=>0,'msg'=>'操作成功','data'=>['redirect'=>$this->index_url]]);
         }else{
-            $res['title']='我的';
+            $res['title'] = '';
             $res['info'] = Role::find($request->id);
             $res['role_menu'] = $res['info']->menu->toArray();
             $res['select_ids'] = array_column($res['role_menu'], 'id');

@@ -13,7 +13,7 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('permission', function (Blueprint $table) {
+        Schema::create('admin_permission', function (Blueprint $table) {
             $table->id();
             $table->string('name', 32);
             $table->string('controller', 255)->nullable();
@@ -32,6 +32,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('permission');
+        Schema::dropIfExists('admin_permission');
     }
 };

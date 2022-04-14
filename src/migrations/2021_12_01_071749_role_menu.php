@@ -13,7 +13,7 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('role_menu', function (Blueprint $table) {
+        Schema::create('admin_role_menu', function (Blueprint $table) {
             $table->id();
             $table->bigInteger('role_id')->unsigned();
             $table->bigInteger('menu_id')->unsigned();
@@ -30,6 +30,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('role_menu');
+        Schema::dropIfExists('admin_role_menu');
     }
 };

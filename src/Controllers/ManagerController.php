@@ -18,7 +18,7 @@ class ManagerController extends Controller
 
     public function index(Request $request)
     {
-        $res['title']='我的';
+        $res['title']='';
         $res['filter']['username'] = $username = $request->query('username',false);
         $res['filter']['status'] = $status = $request->query('status',false);
         $res['filter']['string'] = http_build_query($request->query());
@@ -31,7 +31,7 @@ class ManagerController extends Controller
                                 return $query->where('status', '=', $status);
                             })
                         ->with('role')
-                        ->orderBy('id', 'desc')
+                        ->orderBy('uuid', 'desc')
                         ->Paginate(config('admin.perPage'))->withQueryString();
         return $this->makeView('laravel-admin::manager.index',['res'=>$res]);
     }
@@ -44,13 +44,13 @@ class ManagerController extends Controller
             $post['token_expire'] = time();
             $post['password'] = Hash::make($post['password']);
             $manager = Manager::create($post);
-            if($manager->id){
+            if($manager->uuid){
                 throw new ApiException(['code'=>0,'msg'=>'添加成功','data'=>['redirect'=>$this->index_url]]);
             }else{
                 throw new ApiException(['code'=>1,'msg'=>'添加失败']);
             }
         }else{
-            $res['title']='我的';
+            $res['title']='';
             return $this->makeView('laravel-admin::manager.add',['res'=>$res]);
         }
     }
@@ -58,7 +58,7 @@ class ManagerController extends Controller
     public function edit(ManagerRequest $request)
     {
         if($request->isMethod('post')) {
-            $manager = Manager::find($request->id);
+            $manager = Manager::find($request->uuid);
             $post = $request->all();
             if(!empty($post['password'])){
                 $post['password'] = Hash::make($post['password']);
@@ -71,8 +71,7 @@ class ManagerController extends Controller
                 throw new ApiException(['code'=>1,'msg'=>'修改失败']);
             }
         }else{
-            $res['title']='我的';
-            $res['info'] = Manager::find($request->id);
+            $res['info'] = Manager::find($request->uuid);
             return $this->makeView('laravel-admin::manager.edit',['res'=>$res]);
         }
     }
@@ -91,14 +90,13 @@ class ManagerController extends Controller
     public function role(Request $request)
     {
         if($request->isMethod('post')) {
-            $manager = Manager::find($request->id);
+            $manager = Manager::find($request->uuid);
             if($manager){
                 $manager->role()->sync($request->input('role_id'));
             }
             throw new ApiException(['code'=>0,'msg'=>'操作成功','data'=>['redirect'=>$this->index_url]]);
         }else{
-            $res['title']='我的';
-            $res['info'] = Manager::find($request->id);
+            $res['info'] = Manager::find($request->uuid);
             $res['user_role'] = $res['info']->role->toArray();
             $res['select_ids'] = array_column($res['user_role'], 'id');
             $res['role'] = Role::where('status',1)->orderBy('sort', 'desc')->get()->toArray();

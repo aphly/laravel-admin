@@ -15,7 +15,7 @@ class PermissionController extends Controller
 
     public function index(Request $request)
     {
-        $res['title']='我的';
+        $res['title'] = '';
         $res['pid'] = $pid = $request->query('pid',0);
         $res['filter']['name'] = $name = $request->query('name',false);
         $res['filter']['string'] = http_build_query($request->query());
@@ -49,7 +49,7 @@ class PermissionController extends Controller
                 throw new ApiException(['code'=>1,'msg'=>'添加失败']);
             }
         }else{
-            $res['title']='我的';
+            $res['title'] = '';
             $res['pid'] = $pid =  $request->query('pid',0);
             $res['parent'] = $this->parentInfo($pid);
             return $this->makeView('laravel-admin::permission.add',['res'=>$res]);
@@ -68,7 +68,7 @@ class PermissionController extends Controller
                 throw new ApiException(['code'=>1,'msg'=>'修改失败']);
             }
         }else{
-            $res['title']='我的';
+            $res['title'] = '';
             $res['info'] = Permission::find($request->id);
             $res['pid'] = $pid =  $request->query('pid',0);
             $res['parent'] = $this->parentInfo($pid);
