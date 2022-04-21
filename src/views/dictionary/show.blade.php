@@ -1,12 +1,12 @@
-<script src='{{ URL::asset('vendor/laravel/js/bootstrap-treeview.js') }}' type='text/javascript'></script>
+
 <div class="top-bar">
-    <h5 class="nav-title">菜单</h5>
+    <h5 class="nav-title">字典</h5>
 </div>
 <div class="imain">
     <div class="role_permission max_width">
         <div class="min_width d-flex">
             <div class="permission_menu">
-                <div class="role_title">菜单列表</div>
+                <div class="role_title">字典列表</div>
                 <div id="tree" class="treeview"></div>
             </div>
 
@@ -16,15 +16,8 @@
 
 <script>
     var dictionary = @json($res['dictionary_show']);
-    function roleData(data) {
-        let new_array = []
-        data.forEach((item,index) => {
-            new_array.push({id:item.id,text:item.name,pid:item.pid})
-            delete item.nodes;
-        });
-        return new_array;
-    }
-    var data = toTree(roleData(dictionary))
+
+    var data = toTree(selectData(dictionary,false))
     $(function () {
         var bTree =$('#tree').treeview({
             levels: 3,

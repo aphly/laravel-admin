@@ -32,7 +32,7 @@ class InitController extends Controller
                 $data[] =['name' => '角色管理','url' =>'/admin/role/index','pid'=>2,'is_leaf'=>1];
                 $data[] =['name' => '权限管理','url' =>'/admin/permission/index','pid'=>2,'is_leaf'=>1];
                 $data[] =['name' => '菜单管理','url' =>'/admin/menu/index','pid'=>2,'is_leaf'=>1];
-                $data[] =['name' => '菜单管理','url' =>'/admin/dictionary/index','pid'=>2,'is_leaf'=>1];
+                $data[] =['name' => '字典管理','url' =>'/admin/dictionary/index','pid'=>2,'is_leaf'=>1];
                 DB::table('admin_menu')->insert($data);
 
                 DB::table('admin_role')->truncate();

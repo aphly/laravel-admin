@@ -1,4 +1,3 @@
-<script src='{{ URL::asset('vendor/laravel/js/bootstrap-treeview.js') }}' type='text/javascript'></script>
 <div class="top-bar">
     <h5 class="nav-title">权限</h5>
 </div>
@@ -16,15 +15,7 @@
 
 <script>
     var permission = @json($res['permission_show']);
-    function roleData(data) {
-        let new_array = []
-        data.forEach((item,index) => {
-            new_array.push({id:item.id,text:item.name,pid:item.pid})
-            delete item.nodes;
-        });
-        return new_array;
-    }
-    var data = toTree(roleData(permission))
+    var data = toTree(selectData(permission,false))
     $(function () {
         var bTree =$('#tree').treeview({
             levels: 3,

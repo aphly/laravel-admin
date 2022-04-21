@@ -10,5 +10,6 @@
     <script src='{{ URL::asset('vendor/laravel/js/jquery.min.js') }}' type='text/javascript'></script>
     <script src='{{ URL::asset('vendor/laravel/js/c.js') }}' type='text/javascript'></script>
     <script src='{{ URL::asset('vendor/laravel-admin/js/admin.js') }}' type='text/javascript'></script>
+    <script src='{{ URL::asset('vendor/laravel/js/bootstrap-treeview.js') }}' type='text/javascript'></script>
 </head>
 <body>

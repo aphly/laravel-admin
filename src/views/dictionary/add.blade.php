@@ -53,8 +53,6 @@
                         <li class="d-flex">
                             <div class="attr1">名称</div>
                             <div class="attr2">值</div>
-                            <div class="attr6">价格</div>
-                            <div class="attr7">数量</div>
                             <div class="attr3">图标</div>
                             <div class="attr4">排序</div>
                             <div class="attr0">组</div>
@@ -70,10 +68,4 @@
     </form>
 
 </div>
-<style>
-
-</style>
-<script>
-
-</script>
 

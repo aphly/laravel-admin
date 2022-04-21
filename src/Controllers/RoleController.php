@@ -29,6 +29,7 @@ class RoleController extends Controller
                         ->orderBy('id', 'desc')
                         ->Paginate(config('admin.perPage'))->withQueryString();
         $res['parent'] = $this->parentInfo($pid);
+        $res['role'] = Role::where('status',1)->orderBy('sort', 'desc')->get()->toArray();
         return $this->makeView('laravel-admin::role.index',['res'=>$res]);
     }
 

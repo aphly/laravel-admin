@@ -26,6 +26,7 @@ class DictionaryController extends Controller
                         ->where('pid',$pid)
                         ->Paginate(config('admin.perPage'))->withQueryString();
         $res['parent'] = $this->parentInfo($pid);
+        $res['dictionary'] = Dictionary::where('status',1)->orderBy('sort', 'desc')->get()->toArray();
         return $this->makeView('laravel-admin::dictionary.index', ['res' => $res]);
     }
 

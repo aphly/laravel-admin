@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->string('name',64)->index();
             $table->integer('sort')->index();
-            $table->integer('pid')->index();
+            $table->integer('pid')->index()->default(0);
             $table->tinyInteger('status')->default(1)->comment('1:正常;')->index();
             $table->tinyInteger('is_leaf')->default(1)->index();
             $table->string('icon',255)->nullable();

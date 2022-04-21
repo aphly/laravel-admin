@@ -10,13 +10,24 @@ function toMyTree(data,id=0) {
     });
     return new_array;
 }
+function selectData(data,select_ids=0) {
+    let new_array = []
+    data.forEach((item,index) => {
+        if(select_ids){
+            let selected=in_array(item.id,select_ids)?true:false;
+            new_array.push({id:item.id,text:item.name,pid:item.pid,state:{selected}})
+        }else{
+            new_array.push({id:item.id,text:item.name,pid:item.pid})
+        }
+        delete item.nodes;
+    });
+    return new_array;
+}
 function attr_addDiv() {
     let id = randomId(8);
     let html = `<li class="d-flex" data-id="${id}">
                         <div class="attr1"><input type="text" name="json[${id}][name]"></div>
                         <div class="attr2"><input type="text" name="json[${id}][value]"></div>
-                        <div class="attr6"><input type="text" name="json[${id}][price]"></div>
-                        <div class="attr7"><input type="text" name="json[${id}][quantity]"></div>
                         <div class="attr3"><input type="text" name="json[${id}][img]"></div>
                         <div class="attr4"><input type="number" name="json[${id}][sort]"></div>
                         <div class="attr0"><input type="number" name="json[${id}][group]" value="0"></div>

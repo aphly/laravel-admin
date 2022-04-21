@@ -62,7 +62,7 @@ button.badge{border: none;}
 .filter {font-size: 12px;}
 .filter button{height: 32px;padding: 5px 20px;background:#e7e7e7;border: 1px solid #ced4da;border-radius: 2px;}
 .filter button:hover,.filter input:hover{box-shadow:0 2px 4px rgb(0 0 0 / 20%)}
-.badge.add{font-size: 12px;padding: 10px 20px;}
+.badge.add,.fast_add{font-size: 12px;padding: 10px 20px;}
 .badge.del{padding: 5px 10px;}
 .admin .ad_left{width:200px;}
 .admin .ad_left .menu{overflow-y: auto;width:200px;bottom:0;margin-top:0;position:fixed;top:70px;background:#efefef;-webkit-box-shadow:0 2px 4px rgb(0 0 0 / 8%);box-shadow:0 2px 4px rgb(0 0 0 / 20%)}
@@ -100,14 +100,14 @@ button.badge{border: none;}
 
 .add_div_ul li .attr1{flex:0 0 18%;margin: 5px 1%;}
 .add_div_ul li .attr2{flex:0 0 8%;margin: 5px 1%;}
-.add_div_ul li .attr3{flex:0 0 4%;margin: 5px 1%;}
+.add_div_ul li .attr3{flex:0 0 8%;margin: 5px 1%;}
 .add_div_ul li .attr4{flex:0 0 8%;margin: 5px 1%;}
 .add_div_ul li .attr0{flex:0 0 8%;margin: 5px 1%;}
-.add_div_ul li .attr5{flex:0 0 8%;margin: 5px 1%;display: flex;}
+.add_div_ul li .attr5{flex:0 0 4%;margin: 5px 1%;display: flex;}
 .add_div_ul li .attr6{flex:0 0 4%;margin: 5px 1%;display: flex;}
 .add_div_ul li .attr7{flex:0 0 4%;margin: 5px 1%;display: flex;}
-.add_div_ul li .attr8{flex:0 0 4%;margin: 5px 1%;display: flex;}
-.add_div_ul li .attr9{flex:0 0 4%;margin: 5px 1%;display: flex;}
+.add_div_ul li .attr8{flex:0 0 8%;margin: 5px 1%;display: flex;}
+.add_div_ul li .attr9{flex:0 0 8%;margin: 5px 1%;display: flex;}
 .add_div_ul li div input{border: 1px solid #ced4da;width: 100%;border-radius:4px;box-sizing: border-box;padding: 5px;}
 .add_div_ul li .attr5 i{cursor: pointer;display: block;width: 50px;text-align: center;font-size: 20px;}
 .add_div_ul li .attr5 i:hover{color:darkred}

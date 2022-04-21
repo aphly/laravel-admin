@@ -1,4 +1,3 @@
-<script src='{{ URL::asset('vendor/laravel/js/bootstrap-treeview.js') }}' type='text/javascript'></script>
 <div class="top-bar">
     <h5 class="nav-title">用户组</h5>
 </div>

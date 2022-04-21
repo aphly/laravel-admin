@@ -26,6 +26,7 @@ class MenuController extends Controller
                         ->where('pid',$pid)
                         ->Paginate(config('admin.perPage'))->withQueryString();
         $res['parent'] = $this->parentInfo($pid);
+        $res['menu'] = Menu::where('status',1)->orderBy('sort', 'desc')->get()->toArray();
         return $this->makeView('laravel-admin::menu.index', ['res' => $res]);
     }
 

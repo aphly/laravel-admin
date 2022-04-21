@@ -27,6 +27,7 @@ class PermissionController extends Controller
                         ->orderBy('sort', 'desc')
                         ->Paginate(config('admin.perPage'))->withQueryString();
         $res['parent'] = $this->parentInfo($pid);
+        $res['permission'] = Permission::where('status',1)->orderBy('sort', 'desc')->get()->toArray();
         return $this->makeView('laravel-admin::permission.index',['res'=>$res]);
     }
 

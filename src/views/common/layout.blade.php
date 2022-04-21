@@ -75,11 +75,22 @@
 </section>
 
 <script>
+    function ajax_complete() {
+        $('.ajax_modal').modal('hide');
+    }
     function iload(url,data='') {
         $('#loading').css('z-index',100);
         $("#iload").load(url,data,function () {
             $('#loading').css('z-index',-1);
         });
+        // $.ajax({
+        //     url,data,
+        //     dataType: "html",
+        //     success: function(res){
+        //         $('#loading').css('z-index',-1);
+        //         $("#iload").html(res)
+        //     }
+        // })
     }
     $(function (){
         iload('/admin/index/index');
@@ -148,7 +159,7 @@
                             }
                         },
                         complete:function(XMLHttpRequest,textStatus){
-                            //console.log(XMLHttpRequest,textStatus)
+                            ajax_complete()
                         }
                     })
                 }else{
