@@ -4,7 +4,7 @@ namespace Aphly\LaravelAdmin\Models;
 
 use Aphly\Laravel\Libs\Helper;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
+use Aphly\Laravel\Models\Model;
 use Illuminate\Support\Facades\Cache;
 
 class Permission extends Model

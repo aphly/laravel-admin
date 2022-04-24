@@ -3,7 +3,7 @@
 namespace Aphly\LaravelAdmin\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
+use Aphly\Laravel\Models\Model;
 
 class UserRole extends Model
 {
