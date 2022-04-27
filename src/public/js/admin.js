@@ -13,11 +13,12 @@ function toMyTree(data,id=0) {
 function selectData(data,select_ids=0) {
     let new_array = []
     data.forEach((item,index) => {
+        let color = item.status?'inherit':'#ddd';
         if(select_ids){
             let selected=in_array(item.id,select_ids)?true:false;
-            new_array.push({id:item.id,text:item.name,pid:item.pid,state:{selected}})
+            new_array.push({id:item.id,text:item.name,pid:item.pid,state:{selected},color})
         }else{
-            new_array.push({id:item.id,text:item.name,pid:item.pid})
+            new_array.push({id:item.id,text:item.name,pid:item.pid,color})
         }
         delete item.nodes;
     });

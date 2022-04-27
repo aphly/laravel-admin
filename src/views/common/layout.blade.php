@@ -18,7 +18,20 @@
                                 <div id="collapse{{$val['id']}}" class="collapse ">
                                     <ul class="card-body">
                                         @foreach($val['child'] as $v)
-                                        <li class=""><a class="dj" data-title="{{$v['name']}}" data-href="{{$v['url']}}">{{$v['name']}}</a></li>
+                                        <li class="">
+                                            @if(isset($v['child']))
+                                                <a class="s_nav_t text-left" data-toggle="collapse" data-target="#collapse{{$v['id']}}" aria-expanded="true" aria-controls="collapse{{$v['id']}}">{{$v['name']}}<i class="uni app-caret-right-copy y"></i></a>
+                                                <div id="collapse{{$v['id']}}" class="collapse ">
+                                                    <ul class="card-body">
+                                                        @foreach($v['child'] as $v1)
+                                                            <li class=""><a class="dj" data-title="{{$v1['name']}}" data-href="{{$v1['url']}}">{{$v1['name']}}</a></li>
+                                                        @endforeach
+                                                    </ul>
+                                                </div>
+                                            @else
+                                                <a class="dj" data-title="{{$v['name']}}" data-href="{{$v['url']}}">{{$v['name']}}</a>
+                                            @endif
+                                        </li>
                                         @endforeach
                                     </ul>
                                 </div>
