@@ -2,27 +2,25 @@
 <div class="top-bar">
     <h5 class="nav-title">菜单</h5>
 </div>
+
 <div class="imain">
-    <div class="role_permission max_width">
-        <div class="min_width d-flex">
-            <div class="permission_menu">
-                <div class="role_title">菜单列表</div>
+    <div class="show_all0 max_width">
+        <div class="min_width d-flex justify-content-between">
+            <div class="show_all">
+                <div class="show_title">菜单列表</div>
                 <div id="tree" class="treeview"></div>
             </div>
-            <div style="width: 45%;">
+            <div class="show_op" >
                 <div id="show_btn"></div>
-                <div>
-                    <form method="post" action="/admin/menu/save" data-action="/admin/menu/save" id="fast_form">
+                <div id="fast_form" style="display: none;">
+                    <form method="post" >
                         @csrf
+                        <input type="hidden" name="pid" class="form-control" value="0" >
                         <div class="">
-                            <div class="form-group" style="position: relative;">
-                                <label for="exampleInputEmail1">父级菜单</label>
-                                <input type="text" id="p_name" class="form-control" value="" readonly>
-                            </div>
                             <div class="form-group">
                                 <label for="exampleInputEmail1">类型</label>
                                 <select name="is_leaf" id="is_leaf" class="form-control">
-                                    <option value="1">菜单</option>
+                                    <option value="1">子菜单</option>
                                     <option value="0">目录</option>
                                 </select>
                                 <div class="invalid-feedback"></div>
@@ -31,6 +29,10 @@
                                 <label for="exampleInputEmail1">名称</label>
                                 <input type="text" name="name" class="form-control " value="">
                                 <div class="invalid-feedback"></div>
+                            </div>
+                            <div class="form-group" style="position: relative;">
+{{--                                <label for="exampleInputEmail1">父级</label>--}}
+{{--                                <input type="text" class="form-control p_name" value="" readonly>--}}
                             </div>
                             <div class="form-group" id="url">
                                 <label for="exampleInputEmail1">链接地址</label>
@@ -57,7 +59,7 @@
                             </div>
                         </div>
                     </form>
-                    <button class="btn btn-primary" onclick="save('#fast_form')">保存</button>
+                    <button class="btn btn-primary" onclick="fast_save()">保存</button>
                 </div>
             </div>
         </div>
@@ -65,25 +67,18 @@
 </div>
 
 <script>
+    var fast_form = '#fast_form';
     var list = @json($res['list']);
     var listById = @json($res['listById']);
     var data = toTree(selectData(list,false))
-    //console.log(selectData(list,false))
-    var selectId = 0;
-    function show_btn() {
-        if(selectId){
-            if(listById[selectId].is_leaf){
-                $('#show_btn').html('编辑 删除')
-            }else{
-                $('#show_btn').html('新增 编辑 删除')
-            }
-        }else{
-            $('#show_btn').html('新增')
-        }
-    }
+    var id = 0;
+    var fast_save_url = '/admin/menu/save';
+    var fast_del_url = '/admin/menu/del';
+    var fast_del_url_return = '/admin/menu/show';
+    var _token = '{{csrf_token()}}';
 
     $(function () {
-        show_btn()
+        fast_show_btn()
         $('#tree').treeview({
             levels: 3,
             collapseIcon:'uni app-arrow-right-copy',
@@ -92,40 +87,17 @@
             selectedColor:'#212529',
             data,
             onNodeSelected: function(event, data) {
-                selectId = data.id
-                show_btn()
+                id = data.id
+                fast_show_btn()
             },
             onNodeUnselected: function(event, data) {
-                selectId = 0
-                show_btn()
+                id = 0
+                fast_show_btn()
             },
         });
-    })
-    function save(id) {
-        let url = '/admin/menu/save?id={{request()->query('id',0)}}';
-        $.ajax({
-            url,
-            dataType:'json',
-            type:'post',
-            data:$(id).serialize(),
-            success:function (res) {
-                if(!res.code) {
-                    $("#iload").load(res.data.redirect);
-                    alert_msg(res)
-                }else if(res.code===11000){
-                    for(var item in res.data){
-                        let str = ''
-                        res.data[item].forEach((elem, index)=>{
-                            str = str+elem+'<br>'
-                        })
-                        let obj = $(id+' input[name="'+item+'"]');
-                        obj.removeClass('is-valid').addClass('is-invalid');
-                        obj.next('.invalid-feedback').html(str);
-                    }
-                }else{
-                    alert_msg(res)
-                }
-            }
+        $('#show_btn').on('click','span',function () {
+            $(this).addClass('curr').siblings().removeClass('curr')
         })
-    }
+    })
+
 </script>

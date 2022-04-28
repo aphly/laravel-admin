@@ -55,9 +55,6 @@
                             <div class="attr2">值</div>
                             <div class="attr3">图标</div>
                             <div class="attr4">排序</div>
-                            <div class="attr0">组</div>
-                            <div class="attr8">扩1</div>
-                            <div class="attr9">扩2</div>
                             <div class="attr5">操作</div>
                         </li>
                     </ul>

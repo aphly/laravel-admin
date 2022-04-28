@@ -102,7 +102,8 @@ class MenuController extends Controller
 
     public function save(Request $request)
     {
-        Menu::updateOrCreate(['id'=>$request->query('id',0)],$request->all());
+        Menu::updateOrCreate(['id'=>$request->query('id',0),'pid'=>$request->input('pid',0)],$request->all());
         throw new ApiException(['code'=>0,'msg'=>'成功','data'=>['redirect'=>'/admin/menu/show']]);
     }
+
 }

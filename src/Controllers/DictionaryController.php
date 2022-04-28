@@ -111,9 +111,17 @@ class DictionaryController extends Controller
         }
     }
 
-    public function show(Request $request)
+    public function show()
     {
-        $res['dictionary_show'] = (new Dictionary)->getDictionaryById($request->id);
+        $data = Dictionary::orderBy('sort', 'desc')->get();
+        $res['list'] = $data->toArray();
+        $res['listById'] = $data->keyBy('id')->toArray();
         return $this->makeView('laravel-admin::dictionary.show',['res'=>$res]);
+    }
+
+    public function save(Request $request)
+    {
+        Dictionary::updateOrCreate(['id'=>$request->query('id',0),'pid'=>$request->input('pid',0)],$request->all());
+        throw new ApiException(['code'=>0,'msg'=>'成功','data'=>['redirect'=>'/admin/dictionary/show']]);
     }
 }

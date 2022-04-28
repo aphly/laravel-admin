@@ -93,9 +93,17 @@ class PermissionController extends Controller
         }
     }
 
-    public function show(Request $request)
+    public function show()
     {
-        $res['permission_show'] = (new Permission)->getPermissionById($request->id);
+        $data = Permission::orderBy('sort', 'desc')->get();
+        $res['list'] = $data->toArray();
+        $res['listById'] = $data->keyBy('id')->toArray();
         return $this->makeView('laravel-admin::permission.show',['res'=>$res]);
+    }
+
+    public function save(Request $request)
+    {
+        Permission::updateOrCreate(['id'=>$request->query('id',0),'pid'=>$request->input('pid',0)],$request->all());
+        throw new ApiException(['code'=>0,'msg'=>'成功','data'=>['redirect'=>'/admin/permission/show']]);
     }
 }

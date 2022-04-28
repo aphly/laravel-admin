@@ -92,10 +92,18 @@ class RoleController extends Controller
         }
     }
 
-    public function show(Request $request)
+    public function show()
     {
-        $res['role_show'] = (new Role)->getRoleById($request->id);
+        $data = Role::orderBy('sort', 'desc')->get();
+        $res['list'] = $data->toArray();
+        $res['listById'] = $data->keyBy('id')->toArray();
         return $this->makeView('laravel-admin::role.show',['res'=>$res]);
+    }
+
+    public function save(Request $request)
+    {
+        Role::updateOrCreate(['id'=>$request->query('id',0),'pid'=>$request->input('pid',0)],$request->all());
+        throw new ApiException(['code'=>0,'msg'=>'成功','data'=>['redirect'=>'/admin/role/show']]);
     }
 
     public function permission(Request $request)

@@ -16,7 +16,9 @@
                 <button class="" type="submit">搜索</button>
             </div>
         </form>
-        <div class=""><a href="javascript:void(0);" data-toggle="modal" data-target="#fast_add" class="badge badge-info fast_add">新增</a></div>
+        <div class="">
+            <a class="badge badge-primary ajax_get show_all0_btn" data-href="/admin/permission/show">浏览</a>
+            <a href="javascript:void(0);" data-toggle="modal" data-target="#fast_add" class="badge badge-info fast_add">新增</a></div>
         <div class="d-none"><a data-href="/admin/permission/add?pid={{$res['pid']}}" class="badge badge-info ajax_get add">新增</a></div>
     </div>
 
@@ -53,7 +55,6 @@
                             <li>
                                 @if(!$v['is_leaf'])
                                     <a class="badge badge-primary ajax_get" data-href="/admin/permission/index?pid={{$v['id']}}">进入</a>
-                                    <a class="badge badge-info ajax_get" data-href="/admin/permission/{{$v['id']}}/show">浏览</a>
                                 @endif
                                 <a class="badge badge-info ajax_get" data-href="/admin/permission/{{$v['id']}}/edit?pid={{$res['pid']}}">编辑</a>
                             </li>

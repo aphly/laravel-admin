@@ -45,19 +45,20 @@ Route::middleware(['web'])->group(function () {
             Route::post('/role/del', 'Aphly\LaravelAdmin\Controllers\RoleController@del');
             Route::match(['get', 'post'],'/role/{id}/permission', 'Aphly\LaravelAdmin\Controllers\RoleController@permission')->where('id', '[0-9]+');
             Route::match(['get', 'post'],'/role/{id}/menu', 'Aphly\LaravelAdmin\Controllers\RoleController@menu')->where('id', '[0-9]+');
-            Route::get('/role/{id}/show', 'Aphly\LaravelAdmin\Controllers\RoleController@show')->where('id', '[0-9]+');
+            Route::get('/role/show', 'Aphly\LaravelAdmin\Controllers\RoleController@show');
+            Route::post('/role/save', 'Aphly\LaravelAdmin\Controllers\RoleController@save');
 
             Route::get('/permission/index', 'Aphly\LaravelAdmin\Controllers\PermissionController@index');
             Route::match(['get', 'post'],'/permission/add', 'Aphly\LaravelAdmin\Controllers\PermissionController@add');
             Route::match(['get', 'post'],'/permission/{id}/edit', 'Aphly\LaravelAdmin\Controllers\PermissionController@edit')->where('id', '[0-9]+');
             Route::post('/permission/del', 'Aphly\LaravelAdmin\Controllers\PermissionController@del');
-            Route::get('/permission/{id}/show', 'Aphly\LaravelAdmin\Controllers\PermissionController@show')->where('id', '[0-9]+');
+            Route::get('/permission/show', 'Aphly\LaravelAdmin\Controllers\PermissionController@show');
+            Route::post('/permission/save', 'Aphly\LaravelAdmin\Controllers\PermissionController@save');
 
             Route::get('/menu/index', 'Aphly\LaravelAdmin\Controllers\MenuController@index');
             Route::match(['get', 'post'],'/menu/add', 'Aphly\LaravelAdmin\Controllers\MenuController@add');
             Route::match(['get', 'post'],'/menu/{id}/edit', 'Aphly\LaravelAdmin\Controllers\MenuController@edit')->where('id', '[0-9]+');
             Route::post('/menu/del', 'Aphly\LaravelAdmin\Controllers\MenuController@del');
-            Route::get('/menu/{id}/show', 'Aphly\LaravelAdmin\Controllers\MenuController@show')->where('id', '[0-9]+');
             Route::get('/menu/show', 'Aphly\LaravelAdmin\Controllers\MenuController@show');
             Route::post('/menu/save', 'Aphly\LaravelAdmin\Controllers\MenuController@save');
 
@@ -65,7 +66,8 @@ Route::middleware(['web'])->group(function () {
             Route::match(['get', 'post'],'/dictionary/add', 'Aphly\LaravelAdmin\Controllers\DictionaryController@add');
             Route::match(['get', 'post'],'/dictionary/{id}/edit', 'Aphly\LaravelAdmin\Controllers\DictionaryController@edit')->where('id', '[0-9]+');
             Route::post('/dictionary/del', 'Aphly\LaravelAdmin\Controllers\DictionaryController@del');
-            Route::get('/dictionary/{id}/show', 'Aphly\LaravelAdmin\Controllers\DictionaryController@show')->where('id', '[0-9]+');
+            Route::get('/dictionary/show', 'Aphly\LaravelAdmin\Controllers\DictionaryController@show');
+            Route::post('/dictionary/save', 'Aphly\LaravelAdmin\Controllers\DictionaryController@save');
         });
     });
 

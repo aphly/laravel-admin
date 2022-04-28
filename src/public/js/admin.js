@@ -24,6 +24,92 @@ function selectData(data,select_ids=0) {
     });
     return new_array;
 }
+
+//fast_show_start
+function fast_show_btn() {
+    $(fast_form).hide();
+    if(id){
+        if(listById[id].is_leaf){
+            $('#show_btn').html(`<div class="d-flex fast_form_btn"><span onclick="fast_show_make_form('edit')">编辑</span> <span class="fast_del" onclick="fast_del()">删除</span></div>`)
+        }else{
+            $('#show_btn').html(`<div class="d-flex fast_form_btn"><span onclick="fast_show_make_form('add')">新增</span> <span onclick="fast_show_make_form('edit')">编辑</span> <span class="fast_del" onclick="fast_del()">删除</span></div>`)
+        }
+    }else{
+        $('#show_btn').html(`<div class="d-flex fast_form_btn"><span onclick="fast_show_make_form('add')">新增</span></div>`)
+    }
+}
+function fast_show_make_form(type) {
+    $(fast_form).show();
+    if(type==='add'){
+        if(id){
+            for(let i in listById[id]) {
+                $(fast_form + ' input[name="' + i + '"]').val('');
+                $(fast_form + ' select[name="' + i + '"]').val(1);
+            }
+            $(fast_form+' input[name="pid"]').val(listById[id]['id']);
+            //$(fast_form+' .p_name').val(listById[id]['name']);
+        }else{
+            $(fast_form+' form')[0].reset();
+            $(fast_form+' input[name="pid"]').val(0);
+        }
+    }else{
+        if(id){
+            for(let i in listById[id]){
+                $(fast_form+' input[name="'+i+'"]').val(listById[id][i]);
+                $(fast_form+' select[name="'+i+'"]').val(listById[id][i]);
+                // if(i=='pid'){
+                //     let pid = listById[id][i];
+                //     $(fast_form+' .p_name').val(listById[pid]['name']);
+                // }
+            }
+        }
+    }
+}
+function fast_save() {
+    let url = fast_save_url+'?id='+id
+    $.ajax({
+        url,
+        dataType:'json',
+        type:'post',
+        data:$(fast_form+' form').serialize(),
+        success:function (res) {
+            if(!res.code) {
+                alert_msg(res)
+                $("#iload").load(res.data.redirect);
+            }else if(res.code===11000){
+                for(var item in res.data){
+                    let str = ''
+                    res.data[item].forEach((elem, index)=>{
+                        str = str+elem+'<br>'
+                    })
+                    let obj = $(fast_form+' input[name="'+item+'"]');
+                    obj.removeClass('is-valid').addClass('is-invalid');
+                    obj.next('.invalid-feedback').html(str);
+                }
+            }else{
+                alert_msg(res)
+            }
+        }
+    })
+}
+function fast_del() {
+    if(confirm('确认删除吗') && id){
+        $.ajax({
+            url:fast_del_url,
+            dataType:'json',
+            type:'post',
+            data:{'delete[]':id,_token},
+            success:function (res) {
+                alert_msg(res)
+                if(!res.code) {
+                    $("#iload").load(fast_del_url_return);
+                }
+            }
+        })
+    }
+}
+//fast_show_end
+
 function attr_addDiv() {
     let id = randomId(8);
     let html = `<li class="d-flex" data-id="${id}">
@@ -31,9 +117,6 @@ function attr_addDiv() {
                         <div class="attr2"><input type="text" name="json[${id}][value]"></div>
                         <div class="attr3"><input type="text" name="json[${id}][img]"></div>
                         <div class="attr4"><input type="number" name="json[${id}][sort]"></div>
-                        <div class="attr0"><input type="number" name="json[${id}][group]" value="0"></div>
-                        <div class="attr8"><input type="text" name="json[${id}][ext1]" ></div>
-                        <div class="attr9"><input type="text" name="json[${id}][ext2]" ></div>
                         <div class="attr5" onclick="attr_delDiv(this)"><i class="uni app-lajitong"></i></div>
                     </li>`;
     $('.add_div ul').append(html);
