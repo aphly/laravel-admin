@@ -6,7 +6,7 @@
         @csrf
         <div class="">
             <div class="form-group">
-                <label for="exampleInputEmail1">密码</label>
+                <label for="">密码</label>
                 <input type="text" name="credential" class="form-control " value="">
                 <div class="invalid-feedback"></div>
             </div>

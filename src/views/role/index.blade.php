@@ -72,14 +72,14 @@
                     @csrf
                     <div class="">
                         <div class="form-group" style="position: relative;">
-                            <label for="exampleInputEmail1">父级角色</label>
+                            <label for="">父级角色</label>
                             <input type="text" id="p_name" class="form-control" value="" onclick="mytoggle(this)" readonly>
                             <div id="tree_p" style="position: absolute;display: none;width: 100%;background: #fff;box-shadow: 0 1px 4px rgb(24 38 16 / 10%);">
                                 <div id="tree" class="treeview"></div>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="exampleInputEmail1">类型</label>
+                            <label for="">类型</label>
                             <select name="is_leaf" id="is_leaf" class="form-control">
                                 <option value="1">角色</option>
                                 <option value="0">目录</option>
@@ -87,12 +87,12 @@
                             <div class="invalid-feedback"></div>
                         </div>
                         <div class="form-group">
-                            <label for="exampleInputEmail1">名称</label>
+                            <label for="">名称</label>
                             <input type="text" name="name" class="form-control " value="">
                             <div class="invalid-feedback"></div>
                         </div>
                         <div class="form-group">
-                            <label for="exampleInputEmail1">状态</label>
+                            <label for="">状态</label>
                             <select name="status" class="form-control">
                                 <option value="1" >开启</option>
                                 <option value="0" >关闭</option>
@@ -100,7 +100,7 @@
                             <div class="invalid-feedback"></div>
                         </div>
                         <div class="form-group">
-                            <label for="exampleInputEmail1">排序</label>
+                            <label for="">排序</label>
                             <input type="text" name="sort" class="form-control " value="0">
                             <div class="invalid-feedback"></div>
                         </div>

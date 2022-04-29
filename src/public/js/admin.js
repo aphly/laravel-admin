@@ -45,6 +45,7 @@ function fast_show_make_form(type) {
             for(let i in listById[id]) {
                 $(fast_form + ' input[name="' + i + '"]').val('');
                 $(fast_form + ' select[name="' + i + '"]').val(1);
+                $(fast_form + ' textarea[name="' + i + '"]').val('');
             }
             $(fast_form+' input[name="pid"]').val(listById[id]['id']);
             //$(fast_form+' .p_name').val(listById[id]['name']);
@@ -57,6 +58,7 @@ function fast_show_make_form(type) {
             for(let i in listById[id]){
                 $(fast_form+' input[name="'+i+'"]').val(listById[id][i]);
                 $(fast_form+' select[name="'+i+'"]').val(listById[id][i]);
+                $(fast_form+' textarea[name="'+i+'"]').val(listById[id][i]);
                 // if(i=='pid'){
                 //     let pid = listById[id][i];
                 //     $(fast_form+' .p_name').val(listById[pid]['name']);

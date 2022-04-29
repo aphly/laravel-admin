@@ -7,7 +7,7 @@
         @csrf
         <div class="">
             <div class="form-group">
-                <label for="exampleInputEmail1">头像图片</label>
+                <label for="">头像图片</label>
                 <input type="file" accept="image/gif,image/jpeg,image/jpg,image/png" id="avatar" name="avatar" class="form-control-file " >
                 <div class="invalid-feedback"></div>
             </div>

@@ -7,7 +7,7 @@
         @csrf
         <div class="">
             <div class="form-group">
-                <label for="exampleInputEmail1">类型</label>
+                <label for="">类型</label>
                 <select name="is_leaf" id="is_leaf" class="form-control" disabled="disabled">
                     <option value="1" @if($res['info']['is_leaf']) selected @endif>权限</option>
                     <option value="0" @if($res['info']['is_leaf']) @else selected @endif>目录</option>
@@ -15,12 +15,12 @@
                 <div class="invalid-feedback"></div>
             </div>
             <div class="form-group">
-                <label for="exampleInputEmail1">名称</label>
+                <label for="">名称</label>
                 <input type="text" name="name" class="form-control " value="{{$res['info']['name']}}">
                 <div class="invalid-feedback"></div>
             </div>
             <div class="form-group" id="status" @if($res['info']['is_leaf']) @else style="display: none;" @endif>
-                <label for="exampleInputEmail1">状态</label>
+                <label for="">状态</label>
                 <select name="status" class="form-control">
                     <option value="1" @if($res['info']['status']) selected @endif>开启</option>
                     <option value="0" @if($res['info']['status']) @else selected @endif>关闭</option>
@@ -28,7 +28,7 @@
                 <div class="invalid-feedback"></div>
             </div>
             <div class="form-group">
-                <label for="exampleInputEmail1">排序</label>
+                <label for="">排序</label>
                 <input type="text" name="sort" class="form-control " value="{{$res['info']['sort']}}">
                 <div class="invalid-feedback"></div>
             </div>

@@ -6,12 +6,12 @@
         @csrf
         <div class="">
             <div class="form-group">
-                <label for="exampleInputEmail1">昵称</label>
+                <label for="">昵称</label>
                 <input type="text" name="nickname"  class="form-control " value="{{$res['info']['nickname']}}">
                 <div class="invalid-feedback"></div>
             </div>
             <div class="form-group">
-                <label for="exampleInputEmail1">性别</label>
+                <label for="">性别</label>
                 <select name="gender"  class="form-control">
                     <option value="1" @if($res['info']['gender']==1) selected @endif>男</option>
                     <option value="2" @if($res['info']['gender']==1) @else selected @endif >女</option>
@@ -19,7 +19,7 @@
                 <div class="invalid-feedback"></div>
             </div>
             <div class="form-group">
-                <label for="exampleInputEmail1">状态</label>
+                <label for="">状态</label>
                 <select name="status"  class="form-control">
                     <option value="1" @if($res['info']['status']==1) selected @endif>正常</option>
                     <option value="2" @if($res['info']['status']==1) @else selected @endif >冻结</option>

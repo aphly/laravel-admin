@@ -18,7 +18,7 @@
                         <input type="hidden" name="pid" class="form-control" value="0" >
                         <div class="">
                             <div class="form-group">
-                                <label for="exampleInputEmail1">类型</label>
+                                <label for="">类型</label>
                                 <select name="is_leaf" id="is_leaf" class="form-control">
                                     <option value="1">子菜单</option>
                                     <option value="0">目录</option>
@@ -26,26 +26,26 @@
                                 <div class="invalid-feedback"></div>
                             </div>
                             <div class="form-group">
-                                <label for="exampleInputEmail1">名称</label>
+                                <label for="">名称</label>
                                 <input type="text" name="name" class="form-control " value="">
                                 <div class="invalid-feedback"></div>
                             </div>
                             <div class="form-group" style="position: relative;">
-{{--                                <label for="exampleInputEmail1">父级</label>--}}
+{{--                                <label for="">父级</label>--}}
 {{--                                <input type="text" class="form-control p_name" value="" readonly>--}}
                             </div>
                             <div class="form-group" id="url">
-                                <label for="exampleInputEmail1">链接地址</label>
+                                <label for="">链接地址</label>
                                 <input type="text" name="url" class="form-control " value="">
                                 <div class="invalid-feedback"></div>
                             </div>
                             <div class="form-group">
-                                <label for="exampleInputEmail1">图标 class</label>
+                                <label for="">图标 class</label>
                                 <input type="text" name="icon" class="form-control " value="">
                                 <div class="invalid-feedback"></div>
                             </div>
                             <div class="form-group">
-                                <label for="exampleInputEmail1">状态</label>
+                                <label for="">状态</label>
                                 <select name="status" class="form-control">
                                     <option value="1" >开启</option>
                                     <option value="0" >关闭</option>
@@ -53,7 +53,7 @@
                                 <div class="invalid-feedback"></div>
                             </div>
                             <div class="form-group">
-                                <label for="exampleInputEmail1">排序</label>
+                                <label for="">排序</label>
                                 <input type="text" name="sort" class="form-control " value="0">
                                 <div class="invalid-feedback"></div>
                             </div>
