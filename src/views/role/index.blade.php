@@ -11,7 +11,7 @@
         </form>
         <div class="">
             <a class="badge badge-primary ajax_get show_all0_btn" data-href="/admin/role/show">浏览</a>
-            <a href="javascript:void(0);" data-toggle="modal" data-target="#fast_add" class="badge badge-info fast_add">新增</a></div>
+            <a href="javascript:void(0);" data-toggle="modal" data-target="#fast_add" class="d-none badge badge-info fast_add">新增</a></div>
         <div class="d-none"><a data-href="/admin/role/add?pid={{$res['pid']}}" class="badge badge-info ajax_get add">新增</a></div>
     </div>
 
@@ -38,7 +38,7 @@
                                     <a class="badge badge-success ajax_get" data-href="/admin/role/{{$v['id']}}/permission">授权</a>
                                     <a class="badge badge-success ajax_get" data-href="/admin/role/{{$v['id']}}/menu">菜单</a>
                                 @endif
-                                <a class="badge badge-info ajax_get" data-href="/admin/role/{{$v['id']}}/edit?pid={{$res['pid']}}">编辑</a>
+                                <a class="badge badge-info ajax_get d-none" data-href="/admin/role/{{$v['id']}}/edit?pid={{$res['pid']}}">编辑</a>
                             </li>
                         </ul>
                     @endforeach

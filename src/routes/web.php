@@ -62,12 +62,17 @@ Route::middleware(['web'])->group(function () {
             Route::get('/menu/show', 'Aphly\LaravelAdmin\Controllers\MenuController@show');
             Route::post('/menu/save', 'Aphly\LaravelAdmin\Controllers\MenuController@save');
 
-            Route::get('/dictionary/index', 'Aphly\LaravelAdmin\Controllers\DictionaryController@index');
-            Route::match(['get', 'post'],'/dictionary/add', 'Aphly\LaravelAdmin\Controllers\DictionaryController@add');
-            Route::match(['get', 'post'],'/dictionary/{id}/edit', 'Aphly\LaravelAdmin\Controllers\DictionaryController@edit')->where('id', '[0-9]+');
-            Route::post('/dictionary/del', 'Aphly\LaravelAdmin\Controllers\DictionaryController@del');
-            Route::get('/dictionary/show', 'Aphly\LaravelAdmin\Controllers\DictionaryController@show');
-            Route::post('/dictionary/save', 'Aphly\LaravelAdmin\Controllers\DictionaryController@save');
+//            Route::get('/dictionary/index', 'Aphly\LaravelAdmin\Controllers\DictionaryController@index');
+//            Route::match(['get', 'post'],'/dictionary/add', 'Aphly\LaravelAdmin\Controllers\DictionaryController@add');
+//            Route::match(['get', 'post'],'/dictionary/{id}/edit', 'Aphly\LaravelAdmin\Controllers\DictionaryController@edit')->where('id', '[0-9]+');
+//            Route::post('/dictionary/del', 'Aphly\LaravelAdmin\Controllers\DictionaryController@del');
+//            Route::get('/dictionary/show', 'Aphly\LaravelAdmin\Controllers\DictionaryController@show');
+//            Route::post('/dictionary/save', 'Aphly\LaravelAdmin\Controllers\DictionaryController@save');
+
+            Route::get('/dict/index', 'Aphly\LaravelAdmin\Controllers\DictController@index');
+            Route::get('/dict/form', 'Aphly\LaravelAdmin\Controllers\DictController@form');
+            Route::post('/dict/save', 'Aphly\LaravelAdmin\Controllers\DictController@save');
+            Route::post('/dict/del', 'Aphly\LaravelAdmin\Controllers\DictController@del');
         });
     });
 

@@ -13,10 +13,12 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('admin_dict', function (Blueprint $table) {
+        Schema::create('admin_dict_value', function (Blueprint $table) {
             $table->id();
-            $table->string('name',64);
-            $table->string('key',64)->index();
+            $table->unsignedInteger('dict_id')->index();
+            $table->string('name',64)->nullable();
+            $table->string('value',255)->nullable();
+            $table->tinyInteger('fixed')->default(0);
             $table->integer('sort')->nullable()->index();
         });
     }
@@ -28,6 +30,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('admin_dict');
+        Schema::dropIfExists('admin_dict_value');
     }
 };

@@ -15,7 +15,7 @@
                 <div class="role_title">已选中</div>
                 <form method="post" action="/admin/role/{{$res['info']['id']}}/menu" class="save_form">
                     @csrf
-                    <div class=" select_ids" id="select_ids"></div>
+                    <div class="select_ids d-flex flex-wrap" id="select_ids"></div>
                     <button class="btn btn-primary" type="submit">保存</button>
                 </form>
             </div>
@@ -23,7 +23,9 @@
     </div>
 
 </div>
+<style>
 
+</style>
 <script>
     var menu = @json($res['menu']);
     var select_ids = @json($res['select_ids']);

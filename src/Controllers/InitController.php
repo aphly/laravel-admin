@@ -27,12 +27,12 @@ class InitController extends Controller
                 $data=[];
                 $data[] =['id'=>1,'name' => '系统后台','url' =>'','pid'=>0,'is_leaf'=>0];
                 $data[] =['id'=>2,'name' => '系统管理','url' =>'','pid'=>1,'is_leaf'=>0];
-                $data[] =['id'=>3,'name' => '系统用户','url' =>'/admin/manager/index','pid'=>2,'is_leaf'=>1];
-                $data[] =['id'=>4,'name' => '用户列表','url' =>'/admin/user/index','pid'=>2,'is_leaf'=>1];
+                $data[] =['id'=>3,'name' => '用户列表','url' =>'/admin/user/index','pid'=>2,'is_leaf'=>1];
+                $data[] =['id'=>4,'name' => '系统用户','url' =>'/admin/manager/index','pid'=>2,'is_leaf'=>1];
                 $data[] =['id'=>5,'name' => '角色管理','url' =>'/admin/role/index','pid'=>2,'is_leaf'=>1];
                 $data[] =['id'=>6,'name' => '权限管理','url' =>'/admin/permission/index','pid'=>2,'is_leaf'=>1];
                 $data[] =['id'=>7,'name' => '菜单管理','url' =>'/admin/menu/index','pid'=>2,'is_leaf'=>1];
-                $data[] =['id'=>8,'name' => '字典管理','url' =>'/admin/dictionary/index','pid'=>2,'is_leaf'=>1];
+                $data[] =['id'=>8,'name' => '字典管理','url' =>'/admin/dict/index','pid'=>2,'is_leaf'=>1];
                 DB::table('admin_menu')->insert($data);
 
                 DB::table('admin_role')->truncate();
