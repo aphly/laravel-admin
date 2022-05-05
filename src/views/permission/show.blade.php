@@ -38,8 +38,9 @@
                             <div class="form-group" id="status">
                                 <label for="">状态</label>
                                 <select name="status" class="form-control">
-                                    <option value="1" >开启</option>
-                                    <option value="0" >关闭</option>
+                                    @foreach($dict['status'] as $key=>$val)
+                                        <option value="{{$key}}" >{{$val}}</option>
+                                    @endforeach
                                 </select>
                                 <div class="invalid-feedback"></div>
                             </div>

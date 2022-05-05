@@ -20,7 +20,7 @@ class Menu extends Model
         'icon',
         'is_leaf',
         'status',
-        'sort',
+        'sort','module_id'
     ];
 
     public function getMenuById($id)

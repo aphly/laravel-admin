@@ -22,12 +22,7 @@ class Dict extends Model
             $arr = self::leftJoin('admin_dict_value','admin_dict_value.dict_id','=','admin_dict.id')->get()->toArray();
             $res = [];
             foreach ($arr as $val){
-                $res[$val['key']][] = [
-                    'id'=>$val['id'],
-                    'dict_id'=>$val['dict_id'],
-                    'name'=>$val['name'],
-                    'value'=>$val['value'],
-                ];
+                $res[$val['key']][$val['value']] = $val['name'];
             }
             return $res;
         });

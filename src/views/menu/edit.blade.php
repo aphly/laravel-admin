@@ -2,7 +2,7 @@
     <h5 class="nav-title">菜单编辑</h5>
 </div>
 <div class="imain">
-    <form method="post" @if($res['pid']) action="/admin/menu/{{$res['info']['id']}}/edit?pid={{$res['pid']}}" @else action="/admin/menu/{{$res['info']['id']}}/edit" @endif class="save_form">
+    <form method="post" action="/admin/menu/{{$res['info']['id']}}/edit" class="save_form">
         @csrf
         <div class="">
             <div class="form-group">
@@ -31,8 +31,9 @@
             <div class="form-group">
                 <label for="">状态</label>
                 <select name="status" class="form-control">
-                    <option value="1" @if($res['info']['status']) selected @endif>开启</option>
-                    <option value="0" @if($res['info']['status']) @else selected @endif>关闭</option>
+                    @foreach($dict['status'] as $key=>$val)
+                        <option value="{{$key}}" @if($res['info']['status']==$key) selected @endif>{{$val}}</option>
+                    @endforeach
                 </select>
                 <div class="invalid-feedback"></div>
             </div>

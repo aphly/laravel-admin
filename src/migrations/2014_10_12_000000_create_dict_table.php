@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('name',64);
             $table->string('key',64)->index();
             $table->integer('sort')->nullable()->index();
+            $table->unsignedInteger('module_id')->default(1)->index();
         });
     }
 

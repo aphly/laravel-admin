@@ -34,8 +34,18 @@
             <div class="form-group">
                 <label for="">性别</label>
                 <select name="gender"  class="form-control">
-                    <option value="1">男</option>
-                    <option value="2">女</option>
+                    @foreach($dict['user_gender'] as $key=>$val)
+                        <option value="{{$key}}" >{{$val}}</option>
+                    @endforeach
+                </select>
+                <div class="invalid-feedback"></div>
+            </div>
+            <div class="form-group">
+                <label for="">状态</label>
+                <select name="status" class="form-control">
+                    @foreach($dict['user_status'] as $key=>$val)
+                        <option value="{{$key}}" >{{$val}}</option>
+                    @endforeach
                 </select>
                 <div class="invalid-feedback"></div>
             </div>

@@ -17,6 +17,15 @@
                         @csrf
                         <input type="hidden" name="pid" class="form-control" value="0" >
                         <div class="">
+                            <div class="form-group module_id" style="display: none;">
+                                <label for="">模块</label>
+                                <select name="module_id" class="form-control">
+                                    @foreach($res['module'] as $key=>$val)
+                                        <option value="{{$key}}">{{$val}}</option>
+                                    @endforeach
+                                </select>
+                                <div class="invalid-feedback"></div>
+                            </div>
                             <div class="form-group">
                                 <label for="">类型</label>
                                 <select name="is_leaf" id="is_leaf" class="form-control">
@@ -47,8 +56,9 @@
                             <div class="form-group">
                                 <label for="">状态</label>
                                 <select name="status" class="form-control">
-                                    <option value="1" >开启</option>
-                                    <option value="0" >关闭</option>
+                                    @foreach($dict['status'] as $key=>$val)
+                                        <option value="{{$key}}" >{{$val}}</option>
+                                    @endforeach
                                 </select>
                                 <div class="invalid-feedback"></div>
                             </div>

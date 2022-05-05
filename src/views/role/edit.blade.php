@@ -22,8 +22,9 @@
             <div class="form-group" id="status" @if($res['info']['is_leaf']) @else style="display: none;" @endif>
                 <label for="">状态</label>
                 <select name="status" class="form-control">
-                    <option value="1" @if($res['info']['status']) selected @endif>开启</option>
-                    <option value="0" @if($res['info']['status']) @else selected @endif>关闭</option>
+                    @foreach($dict['status'] as $key=>$val)
+                        <option value="{{$key}}" @if($res['info']['status']==$key) selected @endif>{{$val}}</option>
+                    @endforeach
                 </select>
                 <div class="invalid-feedback"></div>
             </div>

@@ -73,6 +73,11 @@ Route::middleware(['web'])->group(function () {
             Route::get('/dict/form', 'Aphly\LaravelAdmin\Controllers\DictController@form');
             Route::post('/dict/save', 'Aphly\LaravelAdmin\Controllers\DictController@save');
             Route::post('/dict/del', 'Aphly\LaravelAdmin\Controllers\DictController@del');
+
+            Route::get('/module/index', 'Aphly\LaravelAdmin\Controllers\ModuleController@index');
+            Route::get('/module/form', 'Aphly\LaravelAdmin\Controllers\ModuleController@form');
+            Route::post('/module/save', 'Aphly\LaravelAdmin\Controllers\ModuleController@save');
+            Route::post('/module/del', 'Aphly\LaravelAdmin\Controllers\ModuleController@del');
         });
     });
 

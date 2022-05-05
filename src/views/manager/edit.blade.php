@@ -6,6 +6,10 @@
         @csrf
         <div class="">
             <div class="form-group">
+                <label for="">UUID : {{$res['info']['uuid']}}</label>
+                <div class="invalid-feedback"></div>
+            </div>
+            <div class="form-group">
                 <label for="">用户名</label>
                 <input type="text" name="username" required class="form-control" readonly value="{{$res['info']['username']}}">
                 <div class="invalid-feedback"></div>
@@ -28,14 +32,24 @@
             <div class="form-group">
                 <label for="">性别</label>
                 <select name="gender"  class="form-control">
-                    <option value="1" @if($res['info']['gender']==1) selected @endif>男</option>
-                    <option value="2" @if($res['info']['gender']==1) @else selected @endif >女</option>
+                    @foreach($dict['user_gender'] as $key=>$val)
+                        <option value="{{$key}}" @if($res['info']['gender']==$key) selected @endif>{{$val}}</option>
+                    @endforeach
                 </select>
                 <div class="invalid-feedback"></div>
             </div>
             <div class="form-group">
                 <label for="">密码</label>
                 <input type="text" name="password" class="form-control " value="">
+                <div class="invalid-feedback"></div>
+            </div>
+            <div class="form-group">
+                <label for="">状态</label>
+                <select name="status" class="form-control">
+                    @foreach($dict['user_status'] as $key=>$val)
+                        <option value="{{$key}}" @if($res['info']['status']==$key) selected @endif>{{$val}}</option>
+                    @endforeach
+                </select>
                 <div class="invalid-feedback"></div>
             </div>
             <button class="btn btn-primary" type="submit">保存</button>

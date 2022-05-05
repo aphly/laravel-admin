@@ -11,8 +11,9 @@
         <div class="filter ">
             <input type="search" name="identifier" placeholder="邮箱" value="{{$res['filter']['identifier']}}">
             <select name="status" >
-                <option value ="1" @if($res['filter']['status']==1) selected @endif>正常</option>
-                <option value ="2" @if($res['filter']['status']==2) selected @endif>冻结</option>
+                @foreach($dict['user_status'] as $key=>$val)
+                    <option value="{{$key}}" @if($res['filter']['status']==$key) selected @endif>{{$val}}</option>
+                @endforeach
             </select>
             <button class="" type="submit">搜索</button>
         </div>
@@ -48,7 +49,15 @@
                             @endif
                         </li>
                         <li>{{$res['role'][$v['role_id']]['name']??''}}</li>
-                        <li>{{Aphly\Laravel\Models\User::getStatus($v['status'])}}</li>
+                        <li>
+                            @if($dict['user_status'])
+                                @if($v['status'])
+                                    <span class="badge badge-success">{{$dict['status'][$v['status']]}}</span>
+                                @else
+                                    <span class="badge badge-secondary">{{$dict['status'][$v['status']]}}</span>
+                                @endif
+                            @endif
+                        </li>
                         <li>
                             <a class="badge badge-success ajax_get" data-href="/admin/user/{{$v['uuid']}}/role">用户组</a>
                             <a class="badge badge-info ajax_get" data-href="/admin/user/{{$v['uuid']}}/edit">编辑</a>

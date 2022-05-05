@@ -46,10 +46,12 @@
                                 @endif
                             </li>
                             <li>
-                                @if($v['status'])
-                                    <span class="badge badge-success">开启</span>
-                                @else
-                                    <span class="badge badge-secondary">关闭</span>
+                                @if($dict['status'])
+                                    @if($v['status'])
+                                        <span class="badge badge-success">{{$dict['status'][$v['status']]}}</span>
+                                    @else
+                                        <span class="badge badge-secondary">{{$dict['status'][$v['status']]}}</span>
+                                    @endif
                                 @endif
                             </li>
                             <li>
@@ -117,8 +119,9 @@
                         <div class="form-group" id="status">
                             <label for="">状态</label>
                             <select name="status" class="form-control">
-                                <option value="1" >开启</option>
-                                <option value="0" >关闭</option>
+                                @foreach($dict['status'] as $key=>$val)
+                                    <option value="{{$key}}" >{{$val}}</option>
+                                @endforeach
                             </select>
                             <div class="invalid-feedback"></div>
                         </div>

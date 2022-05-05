@@ -19,9 +19,10 @@ return new class extends Migration
             $table->string('url', 255)->nullable();
             $table->bigInteger('pid', 0)->unsigned()->default(0)->index();
             $table->tinyInteger('status')->unsigned()->default(1)->comment('1:开启; 0:关闭')->index();
-            $table->integer('sort', 0)->unsigned()->default(0)->nullable()->index();
+            $table->unsignedInteger('sort', 0)->default(0)->nullable()->index();
             $table->string('icon', 32)->nullable();
             $table->tinyInteger('is_leaf')->unsigned()->default(1)->index();
+            $table->unsignedInteger('module_id')->default(1)->index();
             //$table->engine = 'InnoDB';
         });
     }

@@ -3,8 +3,8 @@
 namespace Aphly\LaravelAdmin\Controllers;
 
 use Aphly\Laravel\Exceptions\ApiException;
-use Aphly\Laravel\Libs\Helper;
 use Aphly\LaravelAdmin\Models\Menu;
+use Aphly\LaravelAdmin\Models\Module;
 use Aphly\LaravelAdmin\Requests\MenuRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
@@ -16,18 +16,15 @@ class MenuController extends Controller
     public function index(Request $request)
     {
         $res = ['title' => '我的'];
-        $res['pid'] = $pid = $request->query('pid', 0);
         $res['filter']['name'] = $name = $request->query('name', false);
         $res['filter']['string'] = http_build_query($request->query());
         $res['list'] = Menu::when($name,
                             function ($query, $name) {
                                 return $query->where('name', 'like', '%' . $name . '%');
                             })
-                        ->orderBy('sort', 'desc')
-                        ->where('pid',$pid)
+                        ->orderBy('sort', 'desc')->orderBy('id', 'desc')
                         ->Paginate(config('admin.perPage'))->withQueryString();
-        $res['parent'] = $this->parentInfo($pid);
-        $res['menu'] = Menu::where('status',1)->orderBy('sort', 'desc')->get()->toArray();
+
         return $this->makeView('laravel-admin::menu.index', ['res' => $res]);
     }
 
@@ -70,8 +67,6 @@ class MenuController extends Controller
         }else{
             $res['title'] = '';
             $res['info'] = Menu::find($request->id);
-            $res['pid'] = $pid =  $request->query('pid',0);
-            $res['parent'] = $this->parentInfo($pid);
             return $this->makeView('laravel-admin::menu.edit',['res'=>$res]);
         }
     }
@@ -97,12 +92,21 @@ class MenuController extends Controller
         $data = Menu::orderBy('sort', 'desc')->get();
         $res['list'] = $data->toArray();
         $res['listById'] = $data->keyBy('id')->toArray();
+        $res['module'] = (new Module)->getByCache();
         return $this->makeView('laravel-admin::menu.show',['res'=>$res]);
     }
 
     public function save(Request $request)
     {
-        Menu::updateOrCreate(['id'=>$request->query('id',0),'pid'=>$request->input('pid',0)],$request->all());
+        $input = $request->all();
+        $pid = $request->input('pid',0);
+        if($pid){
+            $pInfo = Menu::where('id',$pid)->first();
+            if($pInfo){
+                $input['module_id'] = $pInfo->module_id;
+            }
+        }
+        Menu::updateOrCreate(['id'=>$request->query('id',0),'pid'=>$pid],$input);
         throw new ApiException(['code'=>0,'msg'=>'成功','data'=>['redirect'=>'/admin/menu/show']]);
     }
 
