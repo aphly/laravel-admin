@@ -4,6 +4,7 @@ namespace Aphly\LaravelAdmin\Controllers;
 
 use Aphly\Laravel\Exceptions\ApiException;
 use Aphly\Laravel\Libs\Helper;
+use Aphly\LaravelAdmin\Models\Module;
 use Aphly\LaravelAdmin\Models\Permission;
 use Aphly\LaravelAdmin\Requests\PermissionRequest;
 use Illuminate\Http\Request;
@@ -16,18 +17,18 @@ class PermissionController extends Controller
     public function index(Request $request)
     {
         $res['title'] = '';
-        $res['pid'] = $pid = $request->query('pid',0);
+        //$res['pid'] = $pid = $request->query('pid',0);
         $res['filter']['name'] = $name = $request->query('name',false);
         $res['filter']['string'] = http_build_query($request->query());
         $res['list'] = Permission::when($name,
                             function($query,$name) {
                                 return $query->where('name', 'like', '%'.$name.'%');
                             })
-                        ->where('pid',$pid)
-                        ->orderBy('sort', 'desc')
+                        //->where('pid',$pid)
+                        ->orderBy('sort', 'desc')->orderBy('id', 'desc')
                         ->Paginate(config('admin.perPage'))->withQueryString();
-        $res['parent'] = $this->parentInfo($pid);
-        $res['permission'] = Permission::where('status',1)->orderBy('sort', 'desc')->get()->toArray();
+//        $res['parent'] = $this->parentInfo($pid);
+//        $res['permission'] = Permission::where('status',1)->orderBy('sort', 'desc')->get()->toArray();
         return $this->makeView('laravel-admin::permission.index',['res'=>$res]);
     }
 
@@ -71,8 +72,8 @@ class PermissionController extends Controller
         }else{
             $res['title'] = '';
             $res['info'] = Permission::find($request->id);
-            $res['pid'] = $pid =  $request->query('pid',0);
-            $res['parent'] = $this->parentInfo($pid);
+//            $res['pid'] = $pid =  $request->query('pid',0);
+//            $res['parent'] = $this->parentInfo($pid);
             return $this->makeView('laravel-admin::permission.edit',['res'=>$res]);
         }
     }
@@ -98,12 +99,21 @@ class PermissionController extends Controller
         $data = Permission::orderBy('sort', 'desc')->get();
         $res['list'] = $data->toArray();
         $res['listById'] = $data->keyBy('id')->toArray();
+        $res['module'] = (new Module)->getByCache();
         return $this->makeView('laravel-admin::permission.show',['res'=>$res]);
     }
 
     public function save(Request $request)
     {
-        Permission::updateOrCreate(['id'=>$request->query('id',0),'pid'=>$request->input('pid',0)],$request->all());
+        $input = $request->all();
+        $pid = $request->input('pid',0);
+        if($pid){
+            $pInfo = Permission::where('id',$pid)->first();
+            if($pInfo){
+                $input['module_id'] = $pInfo->module_id;
+            }
+        }
+        Permission::updateOrCreate(['id'=>$request->query('id',0),'pid'=>$pid],$input);
         throw new ApiException(['code'=>0,'msg'=>'成功','data'=>['redirect'=>'/admin/permission/show']]);
     }
 }

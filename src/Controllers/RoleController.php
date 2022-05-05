@@ -5,6 +5,7 @@ namespace Aphly\LaravelAdmin\Controllers;
 use Aphly\Laravel\Exceptions\ApiException;
 use Aphly\Laravel\Libs\Helper;
 use Aphly\LaravelAdmin\Models\Menu;
+use Aphly\LaravelAdmin\Models\Module;
 use Aphly\LaravelAdmin\Models\Permission;
 use Aphly\LaravelAdmin\Models\Role;
 use Aphly\LaravelAdmin\Requests\RoleRequest;
@@ -18,18 +19,18 @@ class RoleController extends Controller
     public function index(Request $request)
     {
         $res['title'] = '';
-        $res['pid'] = $pid = $request->query('pid', 0);
+        //$res['pid'] = $pid = $request->query('pid', 0);
         $res['filter']['name'] = $name = $request->query('name',false);
         $res['filter']['string'] = http_build_query($request->query());
         $res['list'] = Role::when($name,
                             function($query,$name) {
                                 return $query->where('name', 'like', '%'.$name.'%');
                             })
-                        ->where('pid',$pid)
-                        ->orderBy('id', 'desc')
+                        //->where('pid',$pid)
+                        ->orderBy('sort', 'desc')->orderBy('id', 'desc')
                         ->Paginate(config('admin.perPage'))->withQueryString();
-        $res['parent'] = $this->parentInfo($pid);
-        $res['role'] = Role::where('status',1)->orderBy('sort', 'desc')->get()->toArray();
+//        $res['parent'] = $this->parentInfo($pid);
+//        $res['role'] = Role::where('status',1)->orderBy('sort', 'desc')->get()->toArray();
         return $this->makeView('laravel-admin::role.index',['res'=>$res]);
     }
 
@@ -70,8 +71,8 @@ class RoleController extends Controller
         }else{
             $res['title'] = '';
             $res['info'] = Role::find($request->id);
-            $res['pid'] = $pid =  $request->query('pid',0);
-            $res['parent'] = $this->parentInfo($pid);
+//            $res['pid'] = $pid =  $request->query('pid',0);
+//            $res['parent'] = $this->parentInfo($pid);
             return $this->makeView('laravel-admin::role.edit',['res'=>$res]);
         }
     }
@@ -97,12 +98,21 @@ class RoleController extends Controller
         $data = Role::orderBy('sort', 'desc')->get();
         $res['list'] = $data->toArray();
         $res['listById'] = $data->keyBy('id')->toArray();
+        $res['module'] = (new Module)->getByCache();
         return $this->makeView('laravel-admin::role.show',['res'=>$res]);
     }
 
     public function save(Request $request)
     {
-        Role::updateOrCreate(['id'=>$request->query('id',0),'pid'=>$request->input('pid',0)],$request->all());
+        $input = $request->all();
+        $pid = $request->input('pid',0);
+        if($pid){
+            $pInfo = Role::where('id',$pid)->first();
+            if($pInfo){
+                $input['module_id'] = $pInfo->module_id;
+            }
+        }
+        Role::updateOrCreate(['id'=>$request->query('id',0),'pid'=>$pid],$input);
         throw new ApiException(['code'=>0,'msg'=>'成功','data'=>['redirect'=>'/admin/role/show']]);
     }
 

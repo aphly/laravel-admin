@@ -12,7 +12,7 @@ class Dict extends Model
     protected $table = 'admin_dict';
     public $timestamps = false;
     protected $fillable = [
-        'name','sort','key'
+        'name','sort','key','module_id'
     ];
 
     public function getByKey()

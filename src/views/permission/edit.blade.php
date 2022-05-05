@@ -1,12 +1,9 @@
 <div class="top-bar">
     <h5 class="nav-title">权限编辑
-        @if($res['pid'])
-            <span>- {{$res['parent']['name']}}</span>
-        @endif
     </h5>
 </div>
 <div class="imain">
-    <form method="post" @if($res['pid']) action="/admin/permission/{{$res['info']['id']}}/edit?pid={{$res['pid']}}" @else action="/admin/permission/{{$res['info']['id']}}/edit" @endif class="save_form">
+    <form method="post" action="/admin/permission/{{$res['info']['id']}}/edit" class="save_form">
         @csrf
         <div class="">
             <div class="form-group">

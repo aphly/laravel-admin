@@ -20,7 +20,7 @@ class Role extends Model
         'pid',
         'is_leaf',
         'status',
-        'sort',
+        'sort','module_id'
     ];
 
     public function permission()

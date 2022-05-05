@@ -11,7 +11,7 @@ class Setting extends Model
     protected $table = 'admin_setting';
     public $timestamps = false;
     protected $fillable = [
-        'code','key','value','is_json'
+        'code','key','value','is_json','module_id'
     ];
 
     function saveByCode($code,$key,$input){

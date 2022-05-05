@@ -86,7 +86,7 @@
     var fast_del_url = '/admin/menu/del';
     var fast_del_url_return = '/admin/menu/show';
     var _token = '{{csrf_token()}}';
-
+    var hide_id = []
     $(function () {
         fast_show_btn()
         $('#tree').treeview({

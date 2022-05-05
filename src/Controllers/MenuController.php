@@ -24,7 +24,6 @@ class MenuController extends Controller
                             })
                         ->orderBy('sort', 'desc')->orderBy('id', 'desc')
                         ->Paginate(config('admin.perPage'))->withQueryString();
-
         return $this->makeView('laravel-admin::menu.index', ['res' => $res]);
     }
 

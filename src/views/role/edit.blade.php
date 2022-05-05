@@ -3,7 +3,7 @@
     <h5 class="nav-title">角色编辑</h5>
 </div>
 <div class="imain">
-    <form method="post" @if($res['pid']) action="/admin/role/{{$res['info']['id']}}/edit?pid={{$res['pid']}}" @else action="/admin/role/{{$res['info']['id']}}/edit" @endif class="save_form">
+    <form method="post" action="/admin/role/{{$res['info']['id']}}/edit" class="save_form">
         @csrf
         <div class="">
             <div class="form-group">

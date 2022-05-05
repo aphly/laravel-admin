@@ -30,7 +30,7 @@
                                 <input type="text" name="name" class="form-control " value="">
                                 <div class="invalid-feedback"></div>
                             </div>
-                            <div class="form-group">
+                            <div class="form-group" id="status">
                                 <label for="">状态</label>
                                 <select name="status" class="form-control">
                                     @foreach($dict['status'] as $key=>$val)
@@ -63,6 +63,7 @@
     var fast_del_url = '/admin/role/del';
     var fast_del_url_return = '/admin/role/show';
     var _token = '{{csrf_token()}}';
+    var hide_id = ['#status']
 
     $(function () {
         fast_show_btn()
@@ -84,6 +85,13 @@
         });
         $('#show_btn').on('click','span',function () {
             $(this).addClass('curr').siblings().removeClass('curr')
+        })
+        $('#is_leaf').change(function () {
+            if($(this).val()==='1'){
+                $('#status').show();
+            }else{
+                $('#status').hide();
+            }
         })
     })
 
