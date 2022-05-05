@@ -30,9 +30,9 @@ function fast_show_btn() {
     $(fast_form).hide();
     if(id){
         if(listById[id].is_leaf){
-            $('#show_btn').html(`<div class="d-flex fast_form_btn"><span onclick="fast_show_make_form('edit')">编辑</span> <span class="fast_del" onclick="fast_del()">删除</span></div>`)
+            $('#show_btn').html(`<div class="d-flex fast_form_btn justify-content-between"><div class="d-flex"><span onclick="fast_show_make_form('edit')">编辑</span></div> <div class="fast_del" onclick="fast_del()">删除</div></div>`)
         }else{
-            $('#show_btn').html(`<div class="d-flex fast_form_btn"><span onclick="fast_show_make_form('add')">新增</span> <span onclick="fast_show_make_form('edit')">编辑</span> <span class="fast_del" onclick="fast_del()">删除</span></div>`)
+            $('#show_btn').html(`<div class="d-flex fast_form_btn justify-content-between"><div class="d-flex"><span onclick="fast_show_make_form('add')">新增</span> <span onclick="fast_show_make_form('edit')">编辑</span></div> <div class="fast_del" onclick="fast_del()">删除</div></div>`)
         }
     }else{
         $('#show_btn').html(`<div class="d-flex fast_form_btn"><span onclick="fast_show_make_form('add')">新增</span></div>`)
@@ -40,7 +40,12 @@ function fast_show_btn() {
 }
 function fast_show_make_form(type) {
     $(fast_form).show();
+    $(fast_form+' .module_id').hide()
+    for (let i in hide_id) {
+        $(hide_id[i]).show();
+    }
     if(type==='add'){
+        $(fast_form+' select[name="is_leaf"]').removeAttr("disabled");
         if(id){
             for(let i in listById[id]) {
                 $(fast_form + ' input[name="' + i + '"]').val('');
@@ -52,8 +57,11 @@ function fast_show_make_form(type) {
         }else{
             $(fast_form+' form')[0].reset();
             $(fast_form+' input[name="pid"]').val(0);
+            $(fast_form+' .module_id').show()
+            $(fast_form+' .module_id select').removeAttr("disabled");
         }
     }else{
+        $(fast_form+' select[name="is_leaf"]').attr("disabled","disabled");
         if(id){
             for(let i in listById[id]){
                 $(fast_form+' input[name="'+i+'"]').val(listById[id][i]);
@@ -63,6 +71,15 @@ function fast_show_make_form(type) {
                 //     let pid = listById[id][i];
                 //     $(fast_form+' .p_name').val(listById[pid]['name']);
                 // }
+            }
+            if(!listById[id]['pid']){
+                $(fast_form+' .module_id').show()
+                $(fast_form+' .module_id select').attr("disabled","disabled");
+            }
+            if(!listById[id]['is_leaf']) {
+                for (let i in hide_id) {
+                    $(hide_id[i]).hide();
+                }
             }
         }
     }
