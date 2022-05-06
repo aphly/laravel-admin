@@ -17,6 +17,7 @@ return new class extends Migration
             $table->id();
             $table->string('name',64);
             $table->string('key',64)->index();
+            $table->string('classname',255);
             $table->tinyInteger('status')->nullable()->default(1)->index();
             $table->integer('sort')->nullable()->default(0)->index();
         });

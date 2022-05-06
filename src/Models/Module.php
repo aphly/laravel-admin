@@ -12,7 +12,7 @@ class Module extends Model
     protected $table = 'admin_module';
     public $timestamps = false;
     protected $fillable = [
-        'name','sort','key','status'
+        'name','sort','key','status','classname'
     ];
 
     public function getByCache()

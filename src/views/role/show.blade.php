@@ -52,7 +52,9 @@
         </div>
     </div>
 </div>
-
+<style>
+   .fast_form_btn a.ajax_get { line-height: 34px;padding: 0 15px;}
+</style>
 <script>
     var fast_form = '#fast_form';
     var list = @json($res['list']);
@@ -66,7 +68,7 @@
     var hide_id = ['#status']
 
     $(function () {
-        fast_show_btn()
+        fast_show_btn(true)
         $('#tree').treeview({
             levels: 3,
             collapseIcon:'uni app-arrow-right-copy',
@@ -76,11 +78,11 @@
             data,
             onNodeSelected: function(event, data) {
                 id = data.id
-                fast_show_btn()
+                fast_show_btn(true)
             },
             onNodeUnselected: function(event, data) {
                 id = 0
-                fast_show_btn()
+                fast_show_btn(true)
             },
         });
         $('#show_btn').on('click','span',function () {
@@ -94,6 +96,5 @@
             }
         })
     })
-
 
 </script>

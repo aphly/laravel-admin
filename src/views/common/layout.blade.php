@@ -8,8 +8,8 @@
             </div>
             <div class="menu">
                 <dl class="accordion" id="s_nav">
-                    @if(isset($res['menu_tree']['child']))
-                        @foreach($res['menu_tree']['child'] as $val)
+                    @if(isset($res['menu_tree']))
+                        @foreach($res['menu_tree'] as $val)
                             <dd class="">
                                 <a class="s_nav_t text-left" data-toggle="collapse" data-target="#collapse{{$val['id']}}" aria-expanded="true" aria-controls="collapse{{$val['id']}}">
                                     <i class="{{$val['icon']}}"></i> {{$val['name']}} <i class="uni app-caret-right-copy y"></i>
@@ -120,6 +120,22 @@
                         if(!res.code && res.data.redirect) {
                             location.href=res.data.redirect
                         }
+                    }
+                })
+            }
+        })
+
+        $("#iload").on('click','.ajax_post',function (e){
+            e.preventDefault()
+            e.stopPropagation()
+            let url = $(this).attr('data-href');
+            if(url){
+                $.ajax({
+                    url,
+                    dataType: "json",
+                    success: function(res){
+                        alert_msg(res)
+                        iload(res.data.redirect);
                     }
                 })
             }

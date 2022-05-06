@@ -31,6 +31,22 @@ class ModuleController extends Controller
         return $this->makeView('laravel-admin::module.form',['res'=>$res]);
     }
 
+    public function install(Request $request)
+    {
+        $info = Module::where('id',$request->query('id',0))->first();
+        if($info){
+            $status = $request->query('status',0);
+            if($status){
+                (new $info->classname)->install();
+            }else{
+                (new $info->classname)->uninstall();
+            }
+            $info->status=$status;
+            $info->save();
+        }
+        throw new ApiException(['code'=>0,'msg'=>'操作成功','data'=>['redirect'=>$this->index_url]]);
+    }
+
     public function save(Request $request){
         $input = $request->all();
         $input['key'] = trim($input['key']);

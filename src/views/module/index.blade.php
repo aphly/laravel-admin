@@ -37,17 +37,23 @@
                         <li>{{ $v['name'] }}</li>
                         <li>{{ $v['key'] }}</li>
                         <li>
-                            @if($dict['status'])
-                                @if($v['status'])
-                                    <span class="badge badge-success">{{$dict['status'][$v['status']]}}</span>
-                                @else
-                                    <span class="badge badge-secondary">{{$dict['status'][$v['status']]}}</span>
-                                @endif
+                            @if($v['status'])
+                                <span class="badge badge-success">已安装</span>
+                            @else
+                                <span class="badge badge-secondary">未安装</span>
                             @endif
                         </li>
                         <li>{{$v['sort']}}</li>
                         <li>
                             <a class="badge badge-info ajax_get" data-href="/admin/module/form?id={{$v['id']}}">编辑</a>
+                            @if($v['id']==1)
+                            @else
+                                @if($v['status'])
+                                    <a class="badge badge-primary ajax_post" data-href="/admin/module/install?id={{$v['id']}}&status=0">卸载</a>
+                                @else
+                                    <a class="badge badge-primary ajax_post" data-href="/admin/module/install?id={{$v['id']}}&status=1">安装</a>
+                                @endif
+                            @endif
                         </li>
                     </ul>
                     @endforeach

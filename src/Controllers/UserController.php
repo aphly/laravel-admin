@@ -4,9 +4,9 @@ namespace Aphly\LaravelAdmin\Controllers;
 
 use Aphly\Laravel\Exceptions\ApiException;
 use Aphly\Laravel\Libs\UploadFile;
-use Aphly\Laravel\Models\User;
-use Aphly\Laravel\Models\UserAuth;
 use Aphly\LaravelAdmin\Models\Role;
+use Aphly\LaravelAdmin\Models\User;
+use Aphly\LaravelAdmin\Models\UserAuth;
 use Aphly\LaravelAdmin\Requests\UserRequest;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;

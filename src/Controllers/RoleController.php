@@ -73,6 +73,7 @@ class RoleController extends Controller
             $res['info'] = Role::find($request->id);
 //            $res['pid'] = $pid =  $request->query('pid',0);
 //            $res['parent'] = $this->parentInfo($pid);
+            $res['module'] = (new Module)->getByCache();
             return $this->makeView('laravel-admin::role.edit',['res'=>$res]);
         }
     }

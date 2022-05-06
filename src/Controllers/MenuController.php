@@ -66,6 +66,7 @@ class MenuController extends Controller
         }else{
             $res['title'] = '';
             $res['info'] = Menu::find($request->id);
+            $res['module'] = (new Module)->getByCache();
             return $this->makeView('laravel-admin::menu.edit',['res'=>$res]);
         }
     }

@@ -26,11 +26,21 @@ function selectData(data,select_ids=0) {
 }
 
 //fast_show_start
-function fast_show_btn() {
+function fast_show_btn($role=false) {
     $(fast_form).hide();
     if(id){
         if(listById[id].is_leaf){
-            $('#show_btn').html(`<div class="d-flex fast_form_btn justify-content-between"><div class="d-flex"><span onclick="fast_show_make_form('edit')">编辑</span></div> <div class="fast_del" onclick="fast_del()">删除</div></div>`)
+            if($role){
+                $('#show_btn').html(`<div class="d-flex fast_form_btn justify-content-between">
+                                        <div class="d-flex">
+                                            <span onclick="fast_show_make_form('edit')">编辑</span>
+                                            <a class="badge badge-success ajax_get" data-href="/admin/role/${id}/permission">授权</a>
+                                            <a class="badge badge-success ajax_get" data-href="/admin/role/${id}/menu">菜单</a>
+                                        </div> <div class="fast_del" onclick="fast_del()">删除</div>
+                                    </div>`)
+            }else{
+                $('#show_btn').html(`<div class="d-flex fast_form_btn justify-content-between"><div class="d-flex"><span onclick="fast_show_make_form('edit')">编辑</span></div> <div class="fast_del" onclick="fast_del()">删除</div></div>`)
+            }
         }else{
             $('#show_btn').html(`<div class="d-flex fast_form_btn justify-content-between"><div class="d-flex"><span onclick="fast_show_make_form('add')">新增</span> <span onclick="fast_show_make_form('edit')">编辑</span></div> <div class="fast_del" onclick="fast_del()">删除</div></div>`)
         }

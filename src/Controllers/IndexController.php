@@ -13,14 +13,15 @@ use Illuminate\Support\Facades\Cache;
 
 class IndexController extends Controller
 {
-    public $menu_id=1;
+    //public $menu_id=1;
+
 
     public function layout()
     {
         $res['title'] = '';
         $res['menu'] = (new Role)->getMenu();
         $res['menu_tree'] = Helper::getTree($res['menu'],true);
-        Helper::getTreeByid($res['menu_tree'],$this->menu_id,$res['menu_tree']);
+        //Helper::getTreeByid($res['menu_tree'],$this->menu_id,$res['menu_tree']);
         $res['user'] = Auth::guard('manager')->user();
         return $this->makeView('laravel-admin::common.layout',['res'=>$res]);
     }

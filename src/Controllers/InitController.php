@@ -25,15 +25,14 @@ class InitController extends Controller
 
                 DB::table('admin_menu')->truncate();
                 $data=[];
-                $data[] =['id'=>1,'name' => '系统后台','url' =>'','pid'=>0,'is_leaf'=>0,'module_id'=>1];
-                $data[] =['id'=>2,'name' => '系统管理','url' =>'','pid'=>1,'is_leaf'=>0,'module_id'=>1];
-                $data[] =['id'=>3,'name' => '用户列表','url' =>'/admin/user/index','pid'=>2,'is_leaf'=>1,'module_id'=>1];
-                $data[] =['id'=>4,'name' => '系统用户','url' =>'/admin/manager/index','pid'=>2,'is_leaf'=>1,'module_id'=>1];
-                $data[] =['id'=>5,'name' => '角色管理','url' =>'/admin/role/index','pid'=>2,'is_leaf'=>1,'module_id'=>1];
-                $data[] =['id'=>6,'name' => '权限管理','url' =>'/admin/permission/index','pid'=>2,'is_leaf'=>1,'module_id'=>1];
-                $data[] =['id'=>7,'name' => '菜单管理','url' =>'/admin/menu/index','pid'=>2,'is_leaf'=>1,'module_id'=>1];
-                $data[] =['id'=>8,'name' => '字典管理','url' =>'/admin/dict/index','pid'=>2,'is_leaf'=>1,'module_id'=>1];
-                $data[] =['id'=>9,'name' => '模块管理','url' =>'/admin/module/index','pid'=>2,'is_leaf'=>1,'module_id'=>1];
+                $data[] =['id'=>1,'name' => '系统管理','url' =>'','pid'=>0,'is_leaf'=>0,'module_id'=>1];
+                $data[] =['id'=>2,'name' => '模块管理','url' =>'/admin/module/index','pid'=>1,'is_leaf'=>1,'module_id'=>1];
+                $data[] =['id'=>3,'name' => '用户列表','url' =>'/admin/user/index','pid'=>1,'is_leaf'=>1,'module_id'=>1];
+                $data[] =['id'=>4,'name' => '系统用户','url' =>'/admin/manager/index','pid'=>1,'is_leaf'=>1,'module_id'=>1];
+                $data[] =['id'=>5,'name' => '角色管理','url' =>'/admin/role/index','pid'=>1,'is_leaf'=>1,'module_id'=>1];
+                $data[] =['id'=>6,'name' => '权限管理','url' =>'/admin/permission/index','pid'=>1,'is_leaf'=>1,'module_id'=>1];
+                $data[] =['id'=>7,'name' => '菜单管理','url' =>'/admin/menu/index','pid'=>1,'is_leaf'=>1,'module_id'=>1];
+                $data[] =['id'=>8,'name' => '字典管理','url' =>'/admin/dict/index','pid'=>1,'is_leaf'=>1,'module_id'=>1];
                 DB::table('admin_menu')->insert($data);
 
                 DB::table('admin_role')->truncate();
@@ -63,7 +62,6 @@ class InitController extends Controller
                 $data[] =['role_id' => 2,'menu_id'=>6];
                 $data[] =['role_id' => 2,'menu_id'=>7];
                 $data[] =['role_id' => 2,'menu_id'=>8];
-                $data[] =['role_id' => 2,'menu_id'=>9];
                 DB::table('admin_role_menu')->insert($data);
 
                 DB::table('admin_user_role')->truncate();
@@ -87,7 +85,7 @@ class InitController extends Controller
                 DB::table('admin_dict_value')->insert($data);
 
                 $data=[];
-                $data[] =['name' => 'admin-system','key' => 'admin','status'=>1,'sort'=>0];
+                $data[] =['id'=>1,'name' => 'admin-system','key' => 'admin','status'=>1,'sort'=>0,'url'=>'-'];
                 DB::table('admin_module')->insert($data);
 
                 return '初始化成功！超级管理员帐户:'.$post['username'].' 密码:'.$password.' 登录地址：/admin/login';

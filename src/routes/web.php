@@ -12,8 +12,14 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+Route::prefix('center')->middleware(['web'])->group(function () {
+    Route::get('/seccode', 'Aphly\LaravelAdmin\Controllers\SeccodeController@index');
+    Route::get('/seccode/{code}', 'Aphly\LaravelAdmin\Controllers\SeccodeController@check');
+});
 
 Route::get('/admin/init', 'Aphly\LaravelAdmin\Controllers\InitController@index');
+
+Route::get('/admin/test', 'Aphly\LaravelAdmin\Controllers\ModuleController@install');
 
 Route::middleware(['web'])->group(function () {
 
@@ -62,13 +68,6 @@ Route::middleware(['web'])->group(function () {
             Route::get('/menu/show', 'Aphly\LaravelAdmin\Controllers\MenuController@show');
             Route::post('/menu/save', 'Aphly\LaravelAdmin\Controllers\MenuController@save');
 
-//            Route::get('/dictionary/index', 'Aphly\LaravelAdmin\Controllers\DictionaryController@index');
-//            Route::match(['get', 'post'],'/dictionary/add', 'Aphly\LaravelAdmin\Controllers\DictionaryController@add');
-//            Route::match(['get', 'post'],'/dictionary/{id}/edit', 'Aphly\LaravelAdmin\Controllers\DictionaryController@edit')->where('id', '[0-9]+');
-//            Route::post('/dictionary/del', 'Aphly\LaravelAdmin\Controllers\DictionaryController@del');
-//            Route::get('/dictionary/show', 'Aphly\LaravelAdmin\Controllers\DictionaryController@show');
-//            Route::post('/dictionary/save', 'Aphly\LaravelAdmin\Controllers\DictionaryController@save');
-
             Route::get('/dict/index', 'Aphly\LaravelAdmin\Controllers\DictController@index');
             Route::get('/dict/form', 'Aphly\LaravelAdmin\Controllers\DictController@form');
             Route::post('/dict/save', 'Aphly\LaravelAdmin\Controllers\DictController@save');
@@ -78,6 +77,7 @@ Route::middleware(['web'])->group(function () {
             Route::get('/module/form', 'Aphly\LaravelAdmin\Controllers\ModuleController@form');
             Route::post('/module/save', 'Aphly\LaravelAdmin\Controllers\ModuleController@save');
             Route::post('/module/del', 'Aphly\LaravelAdmin\Controllers\ModuleController@del');
+            Route::get('/module/install', 'Aphly\LaravelAdmin\Controllers\ModuleController@install');
         });
     });
 

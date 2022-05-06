@@ -23,7 +23,7 @@
         <div class="table_scroll">
             <div class="table">
                 <ul class="table_header">
-                    <li >ID</li>
+                    <li >[模块id] ID</li>
                     <li >字典名称</li>
                     <li >key</li>
                     <li ></li>
@@ -33,7 +33,7 @@
                 @if($res['list']->total())
                     @foreach($res['list'] as $v)
                     <ul class="table_tbody">
-                        <li><input type="checkbox" class="delete_box" name="delete[]" value="{{$v['id']}}">{{$v['id']}}</li>
+                        <li><input type="checkbox" class="delete_box" name="delete[]" value="{{$v['id']}}"><span class="huis">[{{$v['module_id']}}]</span> {{$v['id']}}</li>
                         <li>{{ $v['name'] }}</li>
                         <li>{{$v['key']}}</li>
                         <li>

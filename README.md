@@ -7,7 +7,6 @@ mysql5.7+<br>
 
 安装<br>
 `composer require aphly/laravel-admin` <br>
-`php artisan vendor:publish --provider="Aphly\Laravel\InitServiceProvider"` (如果执行过，请不要执行)<br>
 `php artisan vendor:publish --provider="Aphly\LaravelAdmin\AdminServiceProvider"` <br>
 `php artisan migrate` <br>
 
@@ -16,12 +15,18 @@ mysql5.7+<br>
 `'manager' => [
 'driver' => 'session',
 'provider' => 'manager'
+],'user' => [
+'driver' => 'session',
+'provider' => 'user'
 ]`
 <br>数组providers中 添加<br>
 `'manager' => [
 'driver' => 'eloquent',
-'model' => Aphly\LaravelAdmin\Models\Manager::class,
-],`
+'model' => Aphly\LaravelAdmin\Models\Manager::class
+],'user' => [
+'driver' => 'eloquent',
+'model' => \Aphly\LaravelAdmin\Models\User::class
+]`
 
 2、`www.xxxx.com/admin/init` 初始化 管理员帐户:admin 密码:asdasd
 

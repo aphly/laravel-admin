@@ -21,6 +21,15 @@
                 <input type="number" name="sort" class="form-control " value="{{$res['dict']->sort??0}}">
                 <div class="invalid-feedback"></div>
             </div>
+            <div class="form-group" id="status">
+                <label for="">模块</label>
+                <select name="module_id" class="form-control">
+                    @foreach($res['module'] as $key=>$val)
+                        <option value="{{$key}}" @if($key==$res['dict']->module_id) selected @endif>{{$val}}</option>
+                    @endforeach
+                </select>
+                <div class="invalid-feedback"></div>
+            </div>
             <div class="form-group filter">
                 <div onclick="dict_addDiv()" class="add_div_btn"><i class="uni app-jia"></i> 字典值</div>
                 <div class="add_div">

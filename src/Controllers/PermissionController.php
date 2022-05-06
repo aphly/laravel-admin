@@ -74,6 +74,7 @@ class PermissionController extends Controller
             $res['info'] = Permission::find($request->id);
 //            $res['pid'] = $pid =  $request->query('pid',0);
 //            $res['parent'] = $this->parentInfo($pid);
+            $res['module'] = (new Module)->getByCache();
             return $this->makeView('laravel-admin::permission.edit',['res'=>$res]);
         }
     }

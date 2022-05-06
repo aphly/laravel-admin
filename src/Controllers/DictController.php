@@ -5,6 +5,7 @@ namespace Aphly\LaravelAdmin\Controllers;
 use Aphly\Laravel\Exceptions\ApiException;
 use Aphly\LaravelAdmin\Models\Dict;
 use Aphly\LaravelAdmin\Models\DictValue;
+use Aphly\LaravelAdmin\Models\Module;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 
@@ -33,6 +34,7 @@ class DictController extends Controller
         if($res['dict']->id){
             $res['dictValue'] = DictValue::where('dict_id',$res['dict']->id)->orderBy('sort','desc')->get();
         }
+        $res['module'] = (new Module)->getByCache();
         return $this->makeView('laravel-admin::dict.form',['res'=>$res]);
     }
 

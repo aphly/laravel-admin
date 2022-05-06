@@ -6,6 +6,15 @@
     <form method="post" action="/admin/role/{{$res['info']['id']}}/edit" class="save_form">
         @csrf
         <div class="">
+            <div class="form-group" id="status">
+                <label for="">模块</label>
+                <select name="module_id" class="form-control" disabled="disabled">
+                    @foreach($res['module'] as $key=>$val)
+                        <option value="{{$key}}" @if($key==$res['info']->module_id) selected @endif>{{$val}}</option>
+                    @endforeach
+                </select>
+                <div class="invalid-feedback"></div>
+            </div>
             <div class="form-group">
                 <label for="">类型</label>
                 <select name="is_leaf" id="is_leaf" class="form-control" disabled="disabled">
