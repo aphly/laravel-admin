@@ -11,19 +11,19 @@ class Setting extends Model
     protected $table = 'admin_setting';
     public $timestamps = false;
     protected $fillable = [
-        'code','key','value','is_json','module_id'
+        'code','key','value','is_json','module_id','name'
     ];
 
-    function saveByCode($code,$key,$input){
-        return self::updateOrCreate(['code'=>$code,'key'=>$key],$input);
-    }
-
-    function getByCode($code,$key){
-        $arr = self::get()->toArray();
-        $res = [];
-        foreach ($arr as $val){
-            $res[$val['code']][$val['key']] = $val['value'];
-        }
-        return $res;
-    }
+//    function saveByCode($code,$key,$input){
+//        return self::updateOrCreate(['code'=>$code,'key'=>$key],$input);
+//    }
+//
+//    function getByCode($code,$key){
+//        $arr = self::get()->toArray();
+//        $res = [];
+//        foreach ($arr as $val){
+//            $res[$val['code']][$val['key']] = $val['value'];
+//        }
+//        return $res;
+//    }
 }

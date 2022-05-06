@@ -68,16 +68,19 @@ Route::middleware(['web'])->group(function () {
             Route::get('/menu/show', 'Aphly\LaravelAdmin\Controllers\MenuController@show');
             Route::post('/menu/save', 'Aphly\LaravelAdmin\Controllers\MenuController@save');
 
-            Route::get('/dict/index', 'Aphly\LaravelAdmin\Controllers\DictController@index');
-            Route::get('/dict/form', 'Aphly\LaravelAdmin\Controllers\DictController@form');
-            Route::post('/dict/save', 'Aphly\LaravelAdmin\Controllers\DictController@save');
-            Route::post('/dict/del', 'Aphly\LaravelAdmin\Controllers\DictController@del');
+            $route_arr = [
+                ['dict','\DictController'],['module','\ModuleController'],['setting','\SettingController']
+            ];
 
-            Route::get('/module/index', 'Aphly\LaravelAdmin\Controllers\ModuleController@index');
-            Route::get('/module/form', 'Aphly\LaravelAdmin\Controllers\ModuleController@form');
-            Route::post('/module/save', 'Aphly\LaravelAdmin\Controllers\ModuleController@save');
-            Route::post('/module/del', 'Aphly\LaravelAdmin\Controllers\ModuleController@del');
             Route::get('/module/install', 'Aphly\LaravelAdmin\Controllers\ModuleController@install');
+
+            foreach ($route_arr as $val){
+                Route::get('/'.$val[0].'/index', 'Aphly\LaravelAdmin\Controllers'.$val[1].'@index');
+                Route::get('/'.$val[0].'/form', 'Aphly\LaravelAdmin\Controllers'.$val[1].'@form');
+                Route::post('/'.$val[0].'/save', 'Aphly\LaravelAdmin\Controllers'.$val[1].'@save');
+                Route::post('/'.$val[0].'/del', 'Aphly\LaravelAdmin\Controllers'.$val[1].'@del');
+            }
+
         });
     });
 

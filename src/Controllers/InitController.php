@@ -33,6 +33,7 @@ class InitController extends Controller
                 $data[] =['id'=>6,'name' => '权限管理','url' =>'/admin/permission/index','pid'=>1,'is_leaf'=>1,'module_id'=>1];
                 $data[] =['id'=>7,'name' => '菜单管理','url' =>'/admin/menu/index','pid'=>1,'is_leaf'=>1,'module_id'=>1];
                 $data[] =['id'=>8,'name' => '字典管理','url' =>'/admin/dict/index','pid'=>1,'is_leaf'=>1,'module_id'=>1];
+                $data[] =['id'=>9,'name' => '参数管理','url' =>'/admin/setting/index','pid'=>1,'is_leaf'=>1,'module_id'=>1];
                 DB::table('admin_menu')->insert($data);
 
                 DB::table('admin_role')->truncate();
@@ -62,6 +63,7 @@ class InitController extends Controller
                 $data[] =['role_id' => 2,'menu_id'=>6];
                 $data[] =['role_id' => 2,'menu_id'=>7];
                 $data[] =['role_id' => 2,'menu_id'=>8];
+                $data[] =['role_id' => 2,'menu_id'=>9];
                 DB::table('admin_role_menu')->insert($data);
 
                 DB::table('admin_user_role')->truncate();
@@ -73,6 +75,7 @@ class InitController extends Controller
                 $data[] =['name' => '状态','key'=>'status','module_id'=>1];
                 $data[] =['name' => '用户状态','key'=>'user_status','module_id'=>1];
                 $data[] =['name' => '用户性别','key'=>'user_gender','module_id'=>1];
+                $data[] =['name' => '是否','key'=>'yes_no','module_id'=>1];
                 DB::table('admin_dict')->insert($data);
 
                 $data=[];
@@ -82,6 +85,8 @@ class InitController extends Controller
                 $data[] =['dict_id' => '2','name'=>'冻结','value'=>'2','fixed'=>'0'];
                 $data[] =['dict_id' => '3','name'=>'男','value'=>'1','fixed'=>'0'];
                 $data[] =['dict_id' => '3','name'=>'女','value'=>'2','fixed'=>'0'];
+                $data[] =['dict_id' => '4','name'=>'是','value'=>'1','fixed'=>'0'];
+                $data[] =['dict_id' => '4','name'=>'否','value'=>'0','fixed'=>'0'];
                 DB::table('admin_dict_value')->insert($data);
 
                 $data=[];
