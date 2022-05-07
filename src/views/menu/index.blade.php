@@ -43,7 +43,7 @@
                             </li>
                             <li>
                                 @if($dict['status'])
-                                    @if($v->status)
+                                    @if($v->status==1)
                                         <span class="badge badge-success">{{$dict['status'][$v->status]}}</span>
                                     @else
                                         <span class="badge badge-secondary">{{$dict['status'][$v->status]}}</span>

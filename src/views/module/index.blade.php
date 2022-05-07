@@ -48,7 +48,7 @@
                             <a class="badge badge-info ajax_get" data-href="/admin/module/form?id={{$v['id']}}">编辑</a>
                             @if($v['id']==1)
                             @else
-                                @if($v['status'])
+                                @if($v['status']==1)
                                     <a class="badge badge-primary ajax_post" data-href="/admin/module/install?id={{$v['id']}}&status=0">卸载</a>
                                 @else
                                     <a class="badge badge-primary ajax_post" data-href="/admin/module/install?id={{$v['id']}}&status=1">安装</a>

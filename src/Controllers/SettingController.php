@@ -20,6 +20,7 @@ class SettingController extends Controller
                             function ($query, $name) {
                                 return $query->where('name', 'like', '%' . $name . '%');
                             })
+                        ->orderBy('id', 'desc')
                         ->Paginate(config('admin.perPage'))->withQueryString();
         return $this->makeView('laravel-admin::setting.index', ['res' => $res]);
     }

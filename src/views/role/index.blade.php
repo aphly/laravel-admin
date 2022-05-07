@@ -23,6 +23,7 @@
                     <li >[模块id] ID</li>
                     <li >名称</li>
                     <li >类型</li>
+                    <li >状态</li>
                     <li >操作</li>
                 </ul>
                 @if($res['list']->total())
@@ -34,9 +35,20 @@
                             </li>
                             <li>
                                 @if($v['is_leaf'])
-                                    权限
+                                    角色
                                 @else
                                     目录
+                                @endif
+                            </li>
+                            <li>
+                                @if($dict['status'] && $v['is_leaf'])
+                                    @if($v->status==1)
+                                        <span class="badge badge-success">{{$dict['status'][$v->status]}}</span>
+                                    @else
+                                        <span class="badge badge-secondary">{{$dict['status'][$v->status]}}</span>
+                                    @endif
+                                @else
+                                    -
                                 @endif
                             </li>
                             <li>

@@ -25,7 +25,7 @@ class PermissionController extends Controller
                                 return $query->where('name', 'like', '%'.$name.'%');
                             })
                         //->where('pid',$pid)
-                        ->orderBy('sort', 'desc')->orderBy('id', 'desc')
+                        ->orderBy('id', 'desc')
                         ->Paginate(config('admin.perPage'))->withQueryString();
 //        $res['parent'] = $this->parentInfo($pid);
 //        $res['permission'] = Permission::where('status',1)->orderBy('sort', 'desc')->get()->toArray();

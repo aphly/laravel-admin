@@ -79,14 +79,14 @@ class InitController extends Controller
                 DB::table('admin_dict')->insert($data);
 
                 $data=[];
-                $data[] =['dict_id' => '1','name'=>'开启','value'=>'1','fixed'=>'0'];
-                $data[] =['dict_id' => '1','name'=>'关闭','value'=>'0','fixed'=>'0'];
-                $data[] =['dict_id' => '2','name'=>'开启','value'=>'1','fixed'=>'0'];
-                $data[] =['dict_id' => '2','name'=>'冻结','value'=>'2','fixed'=>'0'];
-                $data[] =['dict_id' => '3','name'=>'男','value'=>'1','fixed'=>'0'];
-                $data[] =['dict_id' => '3','name'=>'女','value'=>'2','fixed'=>'0'];
-                $data[] =['dict_id' => '4','name'=>'是','value'=>'1','fixed'=>'0'];
-                $data[] =['dict_id' => '4','name'=>'否','value'=>'0','fixed'=>'0'];
+                $data[] =['dict_id' => 1,'name'=>'开启','value'=>'1','fixed'=>'0'];
+                $data[] =['dict_id' => 1,'name'=>'关闭','value'=>'2','fixed'=>'0'];
+                $data[] =['dict_id' => 2,'name'=>'开启','value'=>'1','fixed'=>'0'];
+                $data[] =['dict_id' => 2,'name'=>'冻结','value'=>'2','fixed'=>'0'];
+                $data[] =['dict_id' => 3,'name'=>'男','value'=>'1','fixed'=>'0'];
+                $data[] =['dict_id' => 3,'name'=>'女','value'=>'2','fixed'=>'0'];
+                $data[] =['dict_id' => 4,'name'=>'是','value'=>'1','fixed'=>'0'];
+                $data[] =['dict_id' => 4,'name'=>'否','value'=>'2','fixed'=>'0'];
                 DB::table('admin_dict_value')->insert($data);
 
                 $data=[];
