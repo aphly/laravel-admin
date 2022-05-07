@@ -90,7 +90,8 @@ class InitController extends Controller
                 DB::table('admin_dict_value')->insert($data);
 
                 $data=[];
-                $data[] =['id'=>1,'name' => 'admin-system','key' => 'admin','status'=>1,'sort'=>0,'url'=>'-'];
+                $data[] =['id'=>1,'name' => 'admin-system','key' => 'admin','status'=>1,'sort'=>0,'classname'=>'-'];
+                $data[] =['id'=>2,'name' => 'shop-system','key' => 'shop','status'=>0,'sort'=>0,'classname'=>'\Aphly\LaravelShop\Controllers\Admin\InstallController'];
                 DB::table('admin_module')->insert($data);
 
                 return '初始化成功！超级管理员帐户:'.$post['username'].' 密码:'.$password.' 登录地址：/admin/login';

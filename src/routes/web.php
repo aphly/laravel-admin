@@ -19,7 +19,9 @@ Route::prefix('center')->middleware(['web'])->group(function () {
 
 Route::get('/admin/init', 'Aphly\LaravelAdmin\Controllers\InitController@index');
 
-Route::get('/admin/test', 'Aphly\LaravelAdmin\Controllers\ModuleController@install');
+Route::get('/admin/test', function (){
+
+});
 
 Route::middleware(['web'])->group(function () {
 

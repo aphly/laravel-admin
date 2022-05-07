@@ -32,11 +32,7 @@ class SettingController extends Controller
     }
 
     public function save(Request $request){
-        $input = $request->all();
-        $input['key'] = trim($input['key']);
-        $input['code'] = trim($input['code']);
-        Setting::updateOrCreate(['id'=>$request->query('id',0)],$input);
-        Cache::forget('setting');
+        (new Setting)->saveInput($request);
         throw new ApiException(['code'=>0,'msg'=>'success','data'=>['redirect'=>$this->index_url]]);
     }
 
