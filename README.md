@@ -34,3 +34,5 @@ mysql5.7+<br>
 
 4、`www.xxxx.com/admin/login` 后台登录地址
 
+
+![image](https://github.com/aphly/laravel-admin/blob/main/logo.png)
