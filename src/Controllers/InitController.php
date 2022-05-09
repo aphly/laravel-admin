@@ -81,7 +81,7 @@ class InitController extends Controller
                 $data=[];
                 $data[] =['dict_id' => 1,'name'=>'开启','value'=>'1','fixed'=>'0'];
                 $data[] =['dict_id' => 1,'name'=>'关闭','value'=>'2','fixed'=>'0'];
-                $data[] =['dict_id' => 2,'name'=>'开启','value'=>'1','fixed'=>'0'];
+                $data[] =['dict_id' => 2,'name'=>'正常','value'=>'1','fixed'=>'0'];
                 $data[] =['dict_id' => 2,'name'=>'冻结','value'=>'2','fixed'=>'0'];
                 $data[] =['dict_id' => 3,'name'=>'男','value'=>'1','fixed'=>'0'];
                 $data[] =['dict_id' => 3,'name'=>'女','value'=>'2','fixed'=>'0'];
