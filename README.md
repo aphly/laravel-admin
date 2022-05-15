@@ -28,7 +28,7 @@ mysql5.7+<br>
 'model' => \Aphly\LaravelAdmin\Models\User::class
 ]`
 
-2、`www.xxxx.com/admin/init` 初始化 管理员帐户:admin 密码:asdasd
+2、`www.xxxx.com/admin/init` 初始化 管理员帐户:admin 密码:admin
 
 3、初始化完成后，将配置文件 config/admin.php  init设置为false
 

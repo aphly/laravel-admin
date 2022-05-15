@@ -73,8 +73,6 @@
             levels: 3,
             collapseIcon:'uni app-arrow-right-copy',
             expandIcon:'uni app-arrow-right',
-            selectedBackColor:'#f3faff',
-            selectedColor:'#212529',
             data,
             onNodeSelected: function(event, data) {
                 id = data.id

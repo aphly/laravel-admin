@@ -46,8 +46,6 @@
             levels: 3,
             collapseIcon:'uni app-arrow-right-copy',
             expandIcon:'uni app-arrow-right',
-            selectedBackColor:'#f3faff',
-            selectedColor:'#212529',
             data,
             multiSelect:false,
             onNodeSelected: function(event, data) {

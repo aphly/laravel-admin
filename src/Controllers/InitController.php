@@ -17,7 +17,7 @@ class InitController extends Controller
                 DB::table('admin_manager')->truncate();
                 $post['uuid'] = $post['token'] = Helper::uuid();
                 $post['username'] = 'admin';
-                $password = 'asdasd';
+                $password = 'admin';
                 $post['token_expire'] = time();
                 $post['super'] = 1;
                 $post['password'] = Hash::make($password);
