@@ -30,7 +30,7 @@
                 <label for="">Value是否json</label>
                 <select name="is_json" class="form-control">
                     @foreach($dict['yes_no'] as $key=>$val)
-                        <option value="{{$key}}" @if($key==$res['setting']->is_json) selected @endif>{{$val}}</option>
+                        <option value="{{$key}}" @if($key==($res['setting']->is_json??2)) selected @endif>{{$val}}</option>
                     @endforeach
                 </select>
                 <div class="invalid-feedback"></div>
