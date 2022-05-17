@@ -29,7 +29,6 @@
                     <li >UUID</li>
                     <li >昵称</li>
                     <li >头像</li>
-                    <li >用户组</li>
                     <li >状态</li>
                     <li >操作</li>
                 </ul>
@@ -48,7 +47,6 @@
                             <img class="lazy user_avatar" @if($v['gender']==1) src="{{url('vendor/laravel/img/man.png')}}" @else src="{{url('vendor/laravel/img/woman.png')}}" @endif >
                             @endif
                         </li>
-                        <li>{{$res['role'][$v['role_id']]['name']??''}}</li>
                         <li>
                             @if($dict['user_status'])
                                 @if($v['status'])
@@ -59,7 +57,7 @@
                             @endif
                         </li>
                         <li>
-                            <a class="badge badge-success ajax_get" data-href="/admin/user/{{$v['uuid']}}/role">用户组</a>
+{{--                            <a class="badge badge-success ajax_get" data-href="/admin/user/{{$v['uuid']}}/role">用户组</a>--}}
                             <a class="badge badge-info ajax_get" data-href="/admin/user/{{$v['uuid']}}/edit">编辑</a>
                             <a class="badge badge-info ajax_get" data-href="/admin/user/{{$v['uuid']}}/password">修改密码</a>
                             <a class="badge badge-info ajax_get" data-href="/admin/user/{{$v['uuid']}}/avatar">头像</a>
