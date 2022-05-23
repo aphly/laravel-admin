@@ -25,7 +25,7 @@ mysql5.7+<br>
 'model' => Aphly\LaravelAdmin\Models\Manager::class
 ],'user' => [
 'driver' => 'eloquent',
-'model' => \Aphly\LaravelAdmin\Models\User::class
+'model' => Aphly\LaravelAdmin\Models\User::class
 ]`
 
 2、`www.xxxx.com/admin/init` 初始化 管理员帐户:admin 密码:admin
