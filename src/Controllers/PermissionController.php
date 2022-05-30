@@ -110,7 +110,7 @@ class PermissionController extends Controller
         $pid = $request->input('pid',0);
         if($pid){
             $pInfo = Permission::where('id',$pid)->first();
-            if($pInfo){
+            if(!empty($pInfo)){
                 $input['module_id'] = $pInfo->module_id;
             }
         }

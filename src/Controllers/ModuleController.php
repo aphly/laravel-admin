@@ -34,7 +34,7 @@ class ModuleController extends Controller
     public function install(Request $request)
     {
         $info = Module::where('id',$request->query('id',0))->first();
-        if($info){
+        if(!empty($info)){
             $status = $request->query('status',0);
             if($status){
                 (new $info->classname)->install();

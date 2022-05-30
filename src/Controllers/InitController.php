@@ -13,7 +13,7 @@ class InitController extends Controller
     {
         if(config('admin.init')){
             $user = DB::table('admin_manager')->where('username', 'admin')->first();
-            if(!$user){
+            if(empty($user)){
                 DB::table('admin_manager')->truncate();
                 $post['uuid'] = $post['token'] = Helper::uuid();
                 $post['username'] = 'admin';
