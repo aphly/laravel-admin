@@ -44,7 +44,7 @@
                             @if($v['avatar'])
                                 <img class="lazy user_avatar" src="{{Storage::url($v['avatar'])}}" />
                             @else
-                            <img class="lazy user_avatar" @if($v['gender']==1) src="{{url('vendor/laravel/img/man.png')}}" @else src="{{url('vendor/laravel/img/woman.png')}}" @endif >
+                            <img class="lazy user_avatar" @if($v['gender']==1) src="{{url('vendor/laravel-admin/img/man.png')}}" @else src="{{url('vendor/laravel-admin/img/woman.png')}}" @endif >
                             @endif
                         </li>
                         <li>
