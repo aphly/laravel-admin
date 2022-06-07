@@ -15,7 +15,7 @@
                                     <i class="{{$val['icon']}}"></i> {{$val['name']}} <i class="uni app-caret-right-copy y"></i>
                                 </a>
                                 @if(isset($val['child']))
-                                <div id="collapse{{$val['id']}}" class="collapse ">
+                                <div id="collapse{{$val['id']}}" class="collapse show">
                                     <ul class="card-body">
                                         @foreach($val['child'] as $v)
                                         <li class="">
@@ -24,7 +24,7 @@
                                                 <div id="collapse{{$v['id']}}" class="collapse ">
                                                     <ul class="card-body">
                                                         @foreach($v['child'] as $v1)
-                                                            <li class=""><a class="dj" data-title="{{$v1['name']}}" data-href="{{$v1['url']}}">{{$v1['name']}}</a></li>
+                                                            <li class="third_menu"><a class="dj" data-title="{{$v1['name']}}" data-href="{{$v1['url']}}">{{$v1['name']}}</a></li>
                                                         @endforeach
                                                     </ul>
                                                 </div>

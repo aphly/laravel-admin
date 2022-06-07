@@ -79,13 +79,15 @@ class Role extends Model
     }
 
     public function role_menu_cache(){
+
         return Cache::rememberForever('role_menu', function () {
-            $menu = RoleMenu::whereHas('menu', function (Builder $query) {
-                $query->where('status', 1);
-            })->with('menu')->get()->toArray();
+//            $menu = RoleMenu::whereHas('menu', function (Builder $query) {
+//                $query->where('status', 1);
+//            })->with('menu')->get()->toArray();
+            $menu = RoleMenu::leftJoin('admin_menu','admin_menu.id','=','admin_role_menu.menu_id')->where('admin_menu.status',1)->orderBy('admin_menu.sort','desc')->get()->toArray();
             $role_menu = [];
             foreach ($menu as $v) {
-                $role_menu[$v['role_id']][$v['menu']['id']] = $v['menu'];
+                $role_menu[$v['role_id']][$v['menu_id']] = $v;
             }
             return $role_menu;
         });
