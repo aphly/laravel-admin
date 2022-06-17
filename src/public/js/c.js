@@ -3,6 +3,7 @@ function checkAll(_this) {
 }
 
 function alert_msg(res,time=2000){
+    $('#loading').css('z-index',-1);
     $("#alert_msg").remove();
     let html = '<div id="alert_msg"><div class="alert_msg"><div class="alert_msg_header"><strong class="mr-auto">Tips</strong><small></small><span onclick="$(\'#alert_msg\').remove();">×</span></div><div class="alert_msg_body">'+res.msg+'</div></div></div>';
     let body = $('body');

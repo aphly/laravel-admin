@@ -92,18 +92,12 @@
         $('.ajax_modal').modal('hide');
     }
     function iload(url,data='') {
-        $('#loading').css('z-index',100);
-        $("#iload").load(url,data,function () {
-            $('#loading').css('z-index',-1);
-        });
-        // $.ajax({
-        //     url,data,
-        //     dataType: "html",
-        //     success: function(res){
-        //         $('#loading').css('z-index',-1);
-        //         $("#iload").html(res)
-        //     }
-        // })
+        if(url){
+            $('#loading').css('z-index',100);
+            $("#iload").load(url,data,function () {
+                $('#loading').css('z-index',-1);
+            });
+        }
     }
     $(function (){
         iload('/admin/index/index');
@@ -116,10 +110,10 @@
                     url,
                     dataType: "json",
                     success: function(res){
-                        alert_msg(res)
                         if(!res.code && res.data.redirect) {
                             location.href=res.data.redirect
                         }
+                        alert_msg(res)
                     }
                 })
             }
@@ -134,8 +128,8 @@
                     url,
                     dataType: "json",
                     success: function(res){
-                        alert_msg(res)
                         iload(res.data.redirect);
+                        alert_msg(res)
                     }
                 })
             }
@@ -218,11 +212,9 @@
                         success: function(res){
                             $('.save_form input.form-control').addClass('is-valid');
                             if(!res.code) {
-                                alert_msg(res)
                                 $("#iload").load(res.data.redirect);
-                            }else{
-                                alert_msg(res)
                             }
+                            alert_msg(res)
                         },
                         complete:function(XMLHttpRequest,textStatus){
                             //console.log(XMLHttpRequest,textStatus)
