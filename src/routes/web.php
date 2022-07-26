@@ -19,10 +19,6 @@ Route::prefix('center')->middleware(['web'])->group(function () {
 
 Route::get('/admin/init', 'Aphly\LaravelAdmin\Controllers\InitController@index');
 
-Route::get('/admin/test', function (){
-
-});
-
 Route::middleware(['web'])->group(function () {
 
     Route::prefix('admin')->middleware(['managerAuth'])->group(function () {
@@ -39,13 +35,6 @@ Route::middleware(['web'])->group(function () {
             Route::match(['get', 'post'],'/manager/{uuid}/edit', 'Aphly\LaravelAdmin\Controllers\ManagerController@edit')->where('uuid', '[0-9]+');
             Route::post('/manager/del', 'Aphly\LaravelAdmin\Controllers\ManagerController@del');
             Route::match(['get', 'post'],'/manager/{uuid}/role', 'Aphly\LaravelAdmin\Controllers\ManagerController@role')->where('uuid', '[0-9]+');
-
-            Route::get('/user/index', 'Aphly\LaravelAdmin\Controllers\UserController@index');
-            Route::match(['get', 'post'],'/user/{uuid}/edit', 'Aphly\LaravelAdmin\Controllers\UserController@edit')->where('uuid', '[0-9]+');
-            Route::match(['get', 'post'],'/user/{uuid}/password', 'Aphly\LaravelAdmin\Controllers\UserController@password')->where('uuid', '[0-9]+');
-            Route::post('/user/del', 'Aphly\LaravelAdmin\Controllers\UserController@del');
-            Route::match(['get', 'post'],'/user/{uuid}/role', 'Aphly\LaravelAdmin\Controllers\UserController@role')->where('uuid', '[0-9]+');
-            Route::match(['get', 'post'],'/user/{uuid}/avatar', 'Aphly\LaravelAdmin\Controllers\UserController@avatar')->where('uuid', '[0-9]+');
 
             Route::get('/role/index', 'Aphly\LaravelAdmin\Controllers\RoleController@index');
             Route::match(['get', 'post'],'/role/add', 'Aphly\LaravelAdmin\Controllers\RoleController@add');

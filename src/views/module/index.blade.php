@@ -32,30 +32,32 @@
                 </ul>
                 @if($res['list']->total())
                     @foreach($res['list'] as $v)
-                    <ul class="table_tbody">
-                        <li><input type="checkbox" class="delete_box" name="delete[]" value="{{$v['id']}}">{{$v['id']}}</li>
-                        <li>{{ $v['name'] }}</li>
-                        <li>{{ $v['key'] }}</li>
-                        <li>
-                            @if($v['status'])
-                                <span class="badge badge-success">已安装</span>
-                            @else
-                                <span class="badge badge-secondary">未安装</span>
-                            @endif
-                        </li>
-                        <li>{{$v['sort']}}</li>
-                        <li>
-                            <a class="badge badge-info ajax_get" data-href="/admin/module/form?id={{$v['id']}}">编辑</a>
-                            @if($v['id']==1)
-                            @else
-                                @if($v['status']==1)
-                                    <a class="badge badge-primary ajax_post" data-href="/admin/module/install?id={{$v['id']}}&status=0">卸载</a>
+                        @if(class_exists($v['classname']))
+                        <ul class="table_tbody">
+                            <li><input type="checkbox" class="delete_box" name="delete[]" value="{{$v['id']}}">{{$v['id']}}</li>
+                            <li>{{ $v['name'] }}</li>
+                            <li>{{ $v['key'] }}</li>
+                            <li>
+                                @if($v['status'])
+                                    <span class="badge badge-success">已安装</span>
                                 @else
-                                    <a class="badge badge-primary ajax_post" data-href="/admin/module/install?id={{$v['id']}}&status=1">安装</a>
+                                    <span class="badge badge-secondary">未安装</span>
                                 @endif
-                            @endif
-                        </li>
-                    </ul>
+                            </li>
+                            <li>{{$v['sort']}}</li>
+                            <li>
+                                <a class="badge badge-info ajax_get" data-href="/admin/module/form?id={{$v['id']}}">编辑</a>
+                                @if($v['id']==1)
+                                @else
+                                    @if($v['status']==1)
+                                        <a class="badge badge-primary ajax_post" data-href="/admin/module/install?id={{$v['id']}}&status=0">卸载</a>
+                                    @else
+                                        <a class="badge badge-primary ajax_post" data-href="/admin/module/install?id={{$v['id']}}&status=1">安装</a>
+                                    @endif
+                                @endif
+                            </li>
+                        </ul>
+                        @endif
                     @endforeach
                     <ul class="table_bottom">
                         <li>

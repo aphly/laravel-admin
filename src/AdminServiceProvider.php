@@ -2,11 +2,10 @@
 
 namespace Aphly\LaravelAdmin;
 
+use Aphly\Laravel\Providers\ServiceProvider;
 use Aphly\LaravelAdmin\Middleware\Common;
 use Aphly\LaravelAdmin\Middleware\ManagerAuth;
 use Aphly\LaravelAdmin\Middleware\Rbac;
-use Aphly\LaravelAdmin\Middleware\UserAuth;
-use Illuminate\Support\ServiceProvider;
 
 class AdminServiceProvider extends ServiceProvider
 {
@@ -39,17 +38,9 @@ class AdminServiceProvider extends ServiceProvider
         $this->loadRoutesFrom(__DIR__.'/routes/web.php');
         $this->addMiddlewareAlias('managerAuth', ManagerAuth::class);
         $this->addMiddlewareAlias('rbac', Rbac::class);
-        $this->addMiddlewareAlias('userAuth', UserAuth::class);
         $this->addMiddlewareAlias('common', Common::class);
     }
 
-    protected function addMiddlewareAlias($name, $class)
-    {
-        $router = $this->app['router'];
-        if (method_exists($router, 'aliasMiddleware')) {
-            return $router->aliasMiddleware($name, $class);
-        }
-        return $router->middleware($name, $class);
-    }
+
 
 }

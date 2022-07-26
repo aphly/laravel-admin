@@ -1,8 +1,8 @@
 **laravel 后台管理**<br>
 
 环境<br>
-php7.3+<br>
-laravel8.37+<br>
+php8.0+<br>
+laravel9.0+<br>
 mysql5.7+<br>
 
 安装<br>
@@ -15,17 +15,11 @@ mysql5.7+<br>
 `'manager' => [
 'driver' => 'session',
 'provider' => 'manager'
-],'user' => [
-'driver' => 'session',
-'provider' => 'user'
 ]`
 <br>数组providers中 添加<br>
 `'manager' => [
 'driver' => 'eloquent',
 'model' => Aphly\LaravelAdmin\Models\Manager::class
-],'user' => [
-'driver' => 'eloquent',
-'model' => Aphly\LaravelAdmin\Models\User::class
 ]`
 
 2、`www.xxxx.com/admin/init` 初始化 管理员帐户:admin 密码:admin
