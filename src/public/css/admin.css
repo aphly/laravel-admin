@@ -128,6 +128,8 @@ button.badge{border: none;}
 .show_all0 .fast_form_btn .fast_del,.fast_form_btn .fast_del.curr{background:#e59598;color: #fff;border: none;}
 .show_all0_btn{ background:#007bff;font-size: 12px;padding: 10px 20px;}
 
+.module_id{color: #fff;background-color: #3c19b5;}
+
 @media (max-width: 1199.98px) {
     .table_scroll .table,.min_width{width: 1000px;}
     .max_width{overflow-x: auto;width: 100%;}

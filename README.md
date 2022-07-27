@@ -32,6 +32,7 @@ mysql5.7+<br>
 1、 数据库迁移报错 app/Providers/AppServiceProvider.php boot()中 添加 `Schema::defaultStringLength(191);`<br>
 2、 `composer dump-autoload`<br>
 3、 `php artisan storage:link`<br>
+4、 后台不显示清下缓存<br>
 
 ![image](https://github.com/aphly/laravel-admin/blob/main/logo.png)
 因和谐原因，如果图片不显示，请修改本地hosts

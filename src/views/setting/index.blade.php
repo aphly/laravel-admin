@@ -2,8 +2,8 @@
     <h5 class="nav-title">参数管理</h5>
 </div>
 <style>
-    .table_scroll .table_header li:nth-child(2),.table_scroll .table_tbody li:nth-child(2){flex: 0 0 300px;}
     .table_scroll .table_header li:nth-child(3),.table_scroll .table_tbody li:nth-child(3){flex: 0 0 300px;}
+    .table_scroll .table_header li:nth-child(4),.table_scroll .table_tbody li:nth-child(4){flex: 0 0 300px;}
 </style>
 <div class="imain">
     <div class="itop ">
@@ -23,21 +23,20 @@
         <div class="table_scroll">
             <div class="table">
                 <ul class="table_header">
-                    <li >[模块id] ID</li>
+                    <li >ID</li>
+                    <li >模块id</li>
                     <li >参数Code</li>
                     <li >Key</li>
-                    <li ></li>
                     <li ></li>
                     <li >操作</li>
                 </ul>
                 @if($res['list']->total())
                     @foreach($res['list'] as $v)
                     <ul class="table_tbody">
-                        <li><input type="checkbox" class="delete_box" name="delete[]" value="{{$v['id']}}"><span class="huis">[{{$v['module_id']}}]</span> {{$v['id']}}</li>
+                        <li><input type="checkbox" class="delete_box" name="delete[]" value="{{$v['id']}}">{{$v['id']}}</li>
+                        <li><span class="module_id badge">{{$v['module_id']}}</span></li>
                         <li>{{ $v['name'] }}</li>
                         <li>{{$v['key']}}</li>
-                        <li>
-                        </li>
                         <li></li>
                         <li>
                             <a class="badge badge-info ajax_get" data-href="/admin/setting/form?id={{$v['id']}}">编辑</a>
