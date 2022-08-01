@@ -14,10 +14,10 @@ function alert_msg(res,time=2000){
 
 function _autosize(ele){
     if(ele.height() <= $(window).height()) {
-        ele.css("top", ($(window).height() - ele.height()) / 2-20);
+        ele.css("top", ($(window).height() - ele.height()) / 2);
     }
     if(ele.width() <= $(window).width()) {
-        ele.css("left", ($(window).width() - ele.width()) / 2-40);
+        ele.css("left", ($(window).width() - ele.width()) / 2);
     }
 }
 

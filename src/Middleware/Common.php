@@ -10,13 +10,13 @@ class Common
 {
     public function handle(Request $request, Closure $next)
     {
-        if($request->path()=='login' || $request->path()=='register' || $request->path()=='logout' || $request->path()=='forget'
-            || $request->path()=='forget-password' || $request->is('admin/*') ){
-        }else{
-            if($request->url()){
-                Cookie::queue('refer', $request->url(), 60);
-            }
-        }
+//        if($request->path()=='login' || $request->path()=='register' || $request->path()=='logout' || $request->path()=='forget'
+//            || $request->path()=='forget-password' || $request->is('admin/*') ){
+//        }else{
+//            if($request->url()){
+//                Cookie::queue('refer', $request->url(), 60);
+//            }
+//        }
         return $next($request);
     }
 
