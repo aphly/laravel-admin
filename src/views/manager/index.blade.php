@@ -49,9 +49,9 @@
                         <li>
                             @if($dict['user_status'])
                                 @if($v['status'])
-                                    <span class="badge badge-success">{{$dict['status'][$v['status']]}}</span>
+                                    <span class="badge badge-success">{{$dict['user_status'][$v['status']]}}</span>
                                 @else
-                                    <span class="badge badge-secondary">{{$dict['status'][$v['status']]}}</span>
+                                    <span class="badge badge-secondary">{{$dict['user_status'][$v['status']]}}</span>
                                 @endif
                             @endif
                         </li>

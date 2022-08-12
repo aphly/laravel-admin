@@ -97,7 +97,7 @@ button.badge{border: none;}
 .role_permission .role{width: calc(55% - 14px)}
 .role_permission .permission_menu{margin-right: 10px;}
 .role_permission .role_title{padding: 10px ;border-bottom: 1px solid #f1f1f1;font-weight: 600;}
-.role_permission .select_ids div{margin-right: 20px;height: 37px;line-height: 37px;padding:0 10px;cursor: pointer;display: flex;justify-content: space-between;}
+.role_permission .select_ids div{margin-right: 20px;height: 37px;line-height: 37px;padding:0 10px;cursor: pointer;display: flex;justify-content: space-between;border: 1px solid #f1f1f1; margin-bottom: 10px; border-radius: 4px;}
 .role_permission .select_ids div:hover{background: #f1f1f1;border-radius: 4px;}
 .role_permission .role form{padding: 10px;}
 .role_permission .role button{margin-top: 20px;margin-left: 10px;}
