@@ -94,21 +94,27 @@
     function iload(url,data='') {
         if(url){
             $('#loading').css('z-index',100);
-            $("#iload").load(url,data,function () {
-                $('#loading').css('z-index',-1);
-            });
+            $.ajax({
+                url,data,
+                dataType: "html",
+                success: function(res){
+                    $("#iload").html(res)
+                },
+                complete:function (){
+                    $('#loading').css('z-index',-1);
+                    closeMenu()
+                }
+            })
         }
     }
     $(function (){
-        iload('/admin/index/index');
-
+        iload('/admin/home/index');
         $('.layout_ajax_post').click(function (e) {
             e.preventDefault();
             let url = $(this).attr('href');
             if(url){
                $.ajax({
-                    url,
-                    dataType: "json",
+                    url,dataType: "json",
                     success: function(res){
                         if(!res.code && res.data.redirect) {
                             location.href=res.data.redirect
@@ -125,8 +131,7 @@
             let url = $(this).attr('data-href');
             if(url){
                 $.ajax({
-                    url,
-                    dataType: "json",
+                    url,dataType: "json",
                     success: function(res){
                         iload(res.data.redirect);
                         alert_msg(res)
@@ -159,13 +164,12 @@
                 if(url && type){
                     $('.save_form input.form-control').removeClass('is-valid').removeClass('is-invalid');
                     $.ajax({
-                        type,url,
-                        data: form.serialize(),
+                        type,url,data: form.serialize(),
                         dataType: "json",
                         success: function(res){
                             $('.save_form input.form-control').addClass('is-valid');
                             if(!res.code) {
-                                $("#iload").load(res.data.redirect);
+                                iload(res.data.redirect)
                                 alert_msg(res)
                             }else if(res.code===11000){
                                 for(var item in res.data){
@@ -206,13 +210,12 @@
                 if(url && type){
                     $('.save_form input.form-control').removeClass('is-valid').removeClass('is-invalid');
                     $.ajax({
-                        type,url,
-                        data: form.serialize(),
+                        type,url,data: form.serialize(),
                         dataType: "json",
                         success: function(res){
                             $('.save_form input.form-control').addClass('is-valid');
                             if(!res.code) {
-                                $("#iload").load(res.data.redirect);
+                                iload(res.data.redirect)
                             }
                             alert_msg(res)
                         },
@@ -234,10 +237,7 @@
             let obj = $(this);
             if(obj && obj.data('href')){
                 obj.addClass('active');
-                ajax.load(obj.data('href'),function(responseTxt,statusTxt,xhr){
-                    if(statusTxt=="success"){}
-                    $('#loading').css('z-index',-1);
-                });
+                iload(obj.data('href'))
             }else{
                 console.log('error',obj,obj.data('href'));
             }
@@ -253,12 +253,7 @@
             let obj = $(this);
             if(obj && obj.data('href')){
                 obj.addClass('active');
-                ajax.load(obj.data('href'),function(responseTxt,statusTxt,xhr){
-                    $('title').html(obj.data('title'));
-                    if(statusTxt=="success"){}
-                    $('#loading').css('z-index',-1);
-                    closeMenu();
-                });
+                iload(obj.data('href'))
             }else{
                 console.log('error');
             }
@@ -283,8 +278,8 @@
             }
         })
 
-
         //$("img.lazy").lazyload({effect : "fadeIn",threshold :50});
+
     });
 
     function closeMenu(){

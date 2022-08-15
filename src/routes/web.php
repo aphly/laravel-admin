@@ -22,13 +22,13 @@ Route::get('/admin/init', 'Aphly\LaravelAdmin\Controllers\InitController@index')
 Route::middleware(['web'])->group(function () {
 
     Route::prefix('admin')->middleware(['managerAuth'])->group(function () {
-        Route::match(['get', 'post'],'/login', 'Aphly\LaravelAdmin\Controllers\IndexController@login')->name('adminLogin');
-        Route::get('/index', 'Aphly\LaravelAdmin\Controllers\IndexController@layout');
-        Route::get('/logout', 'Aphly\LaravelAdmin\Controllers\IndexController@logout');
-        Route::get('/cache', 'Aphly\LaravelAdmin\Controllers\IndexController@cache');
+        Route::match(['get', 'post'],'/login', 'Aphly\LaravelAdmin\Controllers\HomeController@login')->name('adminLogin');
+        Route::get('/index', 'Aphly\LaravelAdmin\Controllers\HomeController@layout');
+        Route::get('/logout', 'Aphly\LaravelAdmin\Controllers\HomeController@logout');
+        Route::get('/cache', 'Aphly\LaravelAdmin\Controllers\HomeController@cache');
 
         Route::middleware(['rbac'])->group(function () {
-            Route::get('/index/index', 'Aphly\LaravelAdmin\Controllers\IndexController@index');
+            Route::get('/home/index', 'Aphly\LaravelAdmin\Controllers\HomeController@index');
 
             Route::get('/manager/index', 'Aphly\LaravelAdmin\Controllers\ManagerController@index');
             Route::match(['get', 'post'],'/manager/add', 'Aphly\LaravelAdmin\Controllers\ManagerController@add');

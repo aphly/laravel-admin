@@ -11,10 +11,9 @@ use Illuminate\Support\Facades\Auth;
 use Aphly\Laravel\Libs\Helper;
 use Illuminate\Support\Facades\Cache;
 
-class IndexController extends Controller
+class HomeController extends Controller
 {
     //public $menu_id=1;
-
 
     public function layout()
     {
@@ -29,7 +28,7 @@ class IndexController extends Controller
     public function index()
     {
         $res['title'] = '';
-        return $this->makeView('laravel-admin::index.index',['res'=>$res]);
+        return $this->makeView('laravel-admin::home.index',['res'=>$res]);
     }
 
     public function login(loginRequest $request)
@@ -46,7 +45,7 @@ class IndexController extends Controller
             }
         }else{
             $res['title'] = '';
-            return $this->makeView('laravel-admin::index.login',['res'=>$res]);
+            return $this->makeView('laravel-admin::home.login',['res'=>$res]);
         }
     }
 
