@@ -8,7 +8,7 @@
         <div class="">
             <div class="form-group">
                 <label for="">标题</label>
-                <input type="text" name="title" class="form-control " value="{{$res['info']->title}}">
+                <input type="text" name="title" required class="form-control " value="{{$res['info']->title}}">
                 <div class="invalid-feedback"></div>
             </div>
 
@@ -20,11 +20,9 @@
 
             <div class="form-group ">
                 <label for="">内容</label>
-                <div class="ckeditor">
-                    <div id="toolbar-container"></div>
-                    <div id="editor" class="editor">
-                        {!! $res['info']->content !!}
-                    </div>
+                <div id="editor—wrapper">
+                    <div id="editor-toolbar"></div>
+                    <div id="editor-container"></div>
                 </div>
             </div>
 
@@ -51,18 +49,24 @@
 
 <script>
     $(function () {
-        DecoupledEditor.create(document.querySelector( '#editor' ),{
-            //toolbar: [ "fontSize","fontFamily","fontColor","fontBackgroundColor","alignment","bold","italic","strikethrough","underline","blockQuote","link","indent","outdent","numberedList","bulletedList","uploadImage","mediaEmbed","insertTable","undo","redo"],
-            toolbar: [ "fontSize","fontFamily","fontColor","fontBackgroundColor","alignment","bold","italic","strikethrough","underline","blockQuote","link","indent","outdent","numberedList","bulletedList","insertTable","undo","redo"],
-            ckfinder: {uploadUrl: '/'}
-        }).then(editor => {
-            const toolbarContainer = document.querySelector( '#toolbar-container' );
-            toolbarContainer.appendChild( editor.ui.view.toolbar.element );
-            editor.model.document.on('change:data', function () {
-                $('#content').html(editor.getData());
-            });
-        }).catch( error => {
-            console.log( error );
-        });
+        const { createEditor, createToolbar } = window.wangEditor
+        const editorConfig = {
+            onChange(editor) {
+                $('#content').html(editor.getHtml());
+            }
+        }
+        const editor = createEditor({
+            selector: '#editor-container',
+            html: '{!! $res['info']->content !!}',
+            config: editorConfig,
+            mode: 'simple',
+        })
+        const toolbarConfig = {}
+        const toolbar = createToolbar({
+            editor,
+            selector: '#editor-toolbar',
+            config: toolbarConfig,
+            mode: 'simple',
+        })
     })
 </script>

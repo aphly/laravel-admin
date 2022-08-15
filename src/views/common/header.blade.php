@@ -11,9 +11,12 @@
     <script src='{{ URL::asset('vendor/laravel-admin/js/c.js') }}' type='text/javascript'></script>
     <script src='{{ URL::asset('vendor/laravel-admin/js/admin.js') }}' type='text/javascript'></script>
     <script src='{{ URL::asset('vendor/laravel-admin/js/bootstrap-treeview.js') }}' type='text/javascript'></script>
-    <script src='{{ URL::asset('vendor/laravel-admin/js/ckeditor.js') }}' type='text/javascript'></script>
+    <link rel="stylesheet" href="{{ URL::asset('vendor/laravel-admin/editor/style.css') }}">
+    <script src="{{ URL::asset('vendor/laravel-admin/editor/index.js') }}"></script>
 </head>
 <body>
 <style>
-    .ck-editor__editable_inline {height: 500px;border-left:1px solid #c4c4c4 !important;border-bottom:1px solid #c4c4c4 !important;border-right:1px solid #c4c4c4 !important;border-top:none !important;}
+    #editor—wrapper{border: 1px solid #ced4da;border-radius: 2px;}
+    #editor-toolbar{border-bottom: 1px solid #ced4da;}
+    #editor-container{border-bottom: 1px solid #ced4da;min-height: 300px;}
 </style>
