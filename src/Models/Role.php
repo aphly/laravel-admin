@@ -15,6 +15,8 @@ class Role extends Model
     protected $table = 'admin_role';
     public $timestamps = false;
 
+    const MANAGER = 2;
+
     protected $fillable = [
         'name',
         'pid',
