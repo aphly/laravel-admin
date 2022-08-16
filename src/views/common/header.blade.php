@@ -13,6 +13,7 @@
     <script src='{{ URL::asset('vendor/laravel-admin/js/bootstrap-treeview.js') }}' type='text/javascript'></script>
     <link rel="stylesheet" href="{{ URL::asset('vendor/laravel-admin/editor/style.css') }}">
     <script src="{{ URL::asset('vendor/laravel-admin/editor/index.js') }}"></script>
+    <link rel="stylesheet" href="{{ URL::asset('vendor/laravel-admin/css/links.css') }}">
 </head>
 <body>
 <style>
