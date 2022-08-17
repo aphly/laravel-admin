@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\View;
 class Controller extends \Aphly\Laravel\Controllers\Controller
 {
 
-    public $manager = [];
+    public $manager = null;
 
     public function __construct()
     {
