@@ -1,15 +1,25 @@
+let _res;
+
 function checkAll(_this) {
     $("input[type='checkbox']").prop("checked", $(_this).prop('checked'));
 }
 
-function alert_msg(res,time=2000){
+function alert_msg(res,redirect=false,time=2000){
+    _res = res
     $('#loading').css('z-index',-1);
     $("#alert_msg").remove();
     let html = '<div id="alert_msg"><div class="alert_msg"><div class="alert_msg_header"><strong class="mr-auto">Tips</strong><small></small><span onclick="$(\'#alert_msg\').remove();">×</span></div><div class="alert_msg_body">'+res.msg+'</div></div></div>';
     let body = $('body');
     body.append(html);
     _autosize($('#alert_msg'))
-    setTimeout('$("#alert_msg").remove()',time);
+    setTimeout("after_alert_msg("+redirect+")",time);
+}
+
+function after_alert_msg(redirect){
+    $("#alert_msg").remove()
+    if(redirect && !_res.code && _res.data.redirect){
+        location.href = _res.data.redirect
+    }
 }
 
 function _autosize(ele){
