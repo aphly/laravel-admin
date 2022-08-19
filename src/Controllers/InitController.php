@@ -76,7 +76,6 @@ class InitController extends Controller
                 $data=[];
                 $data[] =['id'=>1,'name' => 'admin-system','key' => 'admin','status'=>1,'sort'=>0,'classname'=>'-'];
                 $data[] =['id'=>2,'name' => 'common-system','key' => 'common','status'=>0,'sort'=>0,'classname'=>'\Aphly\LaravelCommon\Controllers\Admin\InstallController'];
-                $data[] =['id'=>3,'name' => 'user-system','key' => 'user','status'=>0,'sort'=>0,'classname'=>'\Aphly\LaravelUser\Controllers\Admin\InstallController'];
                 $data[] =['id'=>4,'name' => 'payment-system','key' => 'payment','status'=>0,'sort'=>0,'classname'=>'\Aphly\LaravelPayment\Controllers\Admin\InstallController'];
                 $data[] =['id'=>5,'name' => 'novel-system','key' => 'novel','status'=>0,'sort'=>0,'classname'=>'\Aphly\LaravelNovel\Controllers\Admin\InstallController'];
                 DB::table('admin_module')->insert($data);
