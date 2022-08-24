@@ -19,9 +19,9 @@ class ManagerController extends Controller
     public function index(Request $request)
     {
         $res['title']='';
-        $res['filter']['username'] = $username = $request->query('username',false);
-        $res['filter']['status'] = $status = $request->query('status',false);
-        $res['filter']['string'] = http_build_query($request->query());
+        $res['search']['username'] = $username = $request->query('username',false);
+        $res['search']['status'] = $status = $request->query('status',false);
+        $res['search']['string'] = http_build_query($request->query());
         $res['list'] = Manager::when($username,
                             function($query,$username) {
                                 return $query->where('username', 'like', '%'.$username.'%');

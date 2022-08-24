@@ -14,8 +14,8 @@ class SettingController extends Controller
 
     public function index(Request $request)
     {
-        $res['filter']['name'] = $name = $request->query('name', false);
-        $res['filter']['string'] = http_build_query($request->query());
+        $res['search']['name'] = $name = $request->query('name', false);
+        $res['search']['string'] = http_build_query($request->query());
         $res['list'] = Setting::when($name,
                             function ($query, $name) {
                                 return $query->where('name', 'like', '%' . $name . '%');

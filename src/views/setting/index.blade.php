@@ -8,8 +8,8 @@
 <div class="imain">
     <div class="itop ">
         <form method="get" action="/admin/setting/index" class="select_form">
-        <div class="filter ">
-            <input type="search" name="name" placeholder="参数名称" value="{{$res['filter']['name']}}">
+        <div class="search_box ">
+            <input type="search" name="name" placeholder="参数名称" value="{{$res['search']['name']}}">
             <button class="" type="submit">搜索</button>
         </div>
         </form>
@@ -18,7 +18,7 @@
         </div>
     </div>
 
-    <form method="post"  @if($res['filter']['string']) action="/admin/setting/del?{{$res['filter']['string']}}" @else action="/admin/setting/del" @endif  class="del_form">
+    <form method="post"  @if($res['search']['string']) action="/admin/setting/del?{{$res['search']['string']}}" @else action="/admin/setting/del" @endif  class="del_form">
     @csrf
         <div class="table_scroll">
             <div class="table">

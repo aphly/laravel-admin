@@ -64,12 +64,13 @@ button.badge{border: none;}
 .delete_box{margin-right: 10px;}
 .badge{margin-right:6px;}
 
-.filter input{border: 1px solid #ced4da;outline-style: none;padding: 5px 10px;border-radius: 2px;line-height: 20px;}
-.filter select {line-height: 20px;padding: 5px 10px;border: 1px solid #ced4da;border-radius: 2px;height: 32px;color: #7e7e7e;}
-.filter select option{padding: 5px 10px;border: 1px solid #ced4da;height: 32px;}
-.filter {font-size: 12px;}
-.filter button{height: 32px;padding: 5px 20px;background:#e7e7e7;border: 1px solid #ced4da;border-radius: 2px;}
-.filter button:hover,.filter input:hover{box-shadow:0 2px 4px rgb(0 0 0 / 20%)}
+.search_box input{border: 1px solid #ced4da;outline-style: none;padding: 5px 10px;border-radius: 2px;line-height: 20px;}
+.search_box select {line-height: 20px;padding: 5px 10px;border: 1px solid #ced4da;border-radius: 2px;height: 32px;color: #7e7e7e;}
+.search_box select option{padding: 5px 10px;border: 1px solid #ced4da;height: 32px;}
+.search_box {font-size: 12px;}
+.search_box button{height: 32px;padding: 5px 20px;background:#e7e7e7;border: 1px solid #ced4da;border-radius: 2px;}
+.search_box button:hover,.search_box input:hover{box-shadow:0 2px 4px rgb(0 0 0 / 20%)}
+
 .badge.add,.fast_add{font-size: 12px;padding: 10px 20px;}
 .badge.del{padding: 5px 10px;}
 .admin .ad_left{width:200px;}

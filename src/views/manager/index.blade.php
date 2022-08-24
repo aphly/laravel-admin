@@ -8,11 +8,11 @@
 <div class="imain">
     <div class="itop ">
         <form method="get" action="/admin/manager/index" class="select_form">
-        <div class="filter ">
-            <input type="search" name="username" placeholder="用户名" value="{{$res['filter']['username']}}">
+        <div class="search_box ">
+            <input type="search" name="username" placeholder="用户名" value="{{$res['search']['username']}}">
             <select name="status" >
                 @foreach($dict['user_status'] as $key=>$val)
-                    <option value="{{$key}}" @if($res['filter']['status']==$key) selected @endif>{{$val}}</option>
+                    <option value="{{$key}}" @if($res['search']['status']==$key) selected @endif>{{$val}}</option>
                 @endforeach
             </select>
             <button class="" type="submit">搜索</button>
@@ -21,7 +21,7 @@
         <div class=""><a data-href="/admin/manager/add" class="badge badge-info ajax_get add">新增</a></div>
     </div>
 
-    <form method="post"  @if($res['filter']['string']) action="/admin/manager/del?{{$res['filter']['string']}}" @else action="/admin/manager/del" @endif  class="del_form">
+    <form method="post"  @if($res['search']['string']) action="/admin/manager/del?{{$res['search']['string']}}" @else action="/admin/manager/del" @endif  class="del_form">
     @csrf
         <div class="table_scroll">
             <div class="table">

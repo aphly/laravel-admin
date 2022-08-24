@@ -4,8 +4,8 @@
 <div class="imain">
     <div class="itop ">
         <form method="get" action="/admin/role/index" class="select_form">
-            <div class="filter ">
-                <input type="search" name="name" placeholder="角色名" value="{{$res['filter']['name']}}">
+            <div class="search_box ">
+                <input type="search" name="name" placeholder="角色名" value="{{$res['search']['name']}}">
                 <button class="" type="submit">搜索</button>
             </div>
         </form>
@@ -15,7 +15,7 @@
 {{--        <div class="d-none"><a data-href="/admin/role/add?pid={{$res['pid']}}" class="badge badge-info ajax_get add">新增</a></div>--}}
     </div>
 
-    <form method="post"  @if($res['filter']['string']) action="/admin/role/del?{{$res['filter']['string']}}" @else action="/admin/role/del" @endif  class="del_form">
+    <form method="post"  @if($res['search']['string']) action="/admin/role/del?{{$res['search']['string']}}" @else action="/admin/role/del" @endif  class="del_form">
         @csrf
         <div class="table_scroll">
             <div class="table">

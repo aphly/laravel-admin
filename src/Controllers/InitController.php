@@ -9,6 +9,8 @@ use Illuminate\Support\Facades\Hash;
 
 class InitController extends Controller
 {
+    public $module_id = 1;
+
     public function index()
     {
         if(config('admin.init')){
@@ -25,21 +27,20 @@ class InitController extends Controller
 
                 DB::table('admin_menu')->truncate();
                 $data=[];
-                $data[] =['id'=>1,'name' => '系统管理','url' =>'','pid'=>0,'is_leaf'=>0,'module_id'=>1];
-                $data[] =['id'=>2,'name' => '模块管理','url' =>'/admin/module/index','pid'=>1,'is_leaf'=>1,'module_id'=>1];
-                $data[] =['id'=>3,'name' => '系统用户','url' =>'/admin/manager/index','pid'=>1,'is_leaf'=>1,'module_id'=>1];
-                $data[] =['id'=>4,'name' => '角色管理','url' =>'/admin/role/index','pid'=>1,'is_leaf'=>1,'module_id'=>1];
-                $data[] =['id'=>5,'name' => '权限管理','url' =>'/admin/permission/index','pid'=>1,'is_leaf'=>1,'module_id'=>1];
-                $data[] =['id'=>6,'name' => '菜单管理','url' =>'/admin/menu/index','pid'=>1,'is_leaf'=>1,'module_id'=>1];
-                $data[] =['id'=>7,'name' => '字典管理','url' =>'/admin/dict/index','pid'=>1,'is_leaf'=>1,'module_id'=>1];
-                $data[] =['id'=>8,'name' => '参数管理','url' =>'/admin/setting/index','pid'=>1,'is_leaf'=>1,'module_id'=>1];
-                $data[] =['id'=>9,'name' => '文章管理','url' =>'/admin/news/index','pid'=>1,'is_leaf'=>1,'module_id'=>1];
+                $data[] =['id'=>1,'name' => '系统管理','url' =>'','pid'=>0,'is_leaf'=>0,'module_id'=>$this->module_id];
+                $data[] =['id'=>2,'name' => '模块管理','url' =>'/admin/module/index','pid'=>1,'is_leaf'=>1,'module_id'=>$this->module_id];
+                $data[] =['id'=>3,'name' => '系统用户','url' =>'/admin/manager/index','pid'=>1,'is_leaf'=>1,'module_id'=>$this->module_id];
+                $data[] =['id'=>4,'name' => '角色管理','url' =>'/admin/role/index','pid'=>1,'is_leaf'=>1,'module_id'=>$this->module_id];
+                $data[] =['id'=>5,'name' => '权限管理','url' =>'/admin/permission/index','pid'=>1,'is_leaf'=>1,'module_id'=>$this->module_id];
+                $data[] =['id'=>6,'name' => '菜单管理','url' =>'/admin/menu/index','pid'=>1,'is_leaf'=>1,'module_id'=>$this->module_id];
+                $data[] =['id'=>7,'name' => '字典管理','url' =>'/admin/dict/index','pid'=>1,'is_leaf'=>1,'module_id'=>$this->module_id];
+                $data[] =['id'=>8,'name' => '参数管理','url' =>'/admin/setting/index','pid'=>1,'is_leaf'=>1,'module_id'=>$this->module_id];
                 DB::table('admin_menu')->insert($data);
 
                 DB::table('admin_role')->truncate();
                 $data=[];
-                $data[] =['id'=>1,'name' => '后台角色','pid'=>0,'is_leaf'=>0,'module_id'=>1];
-                $data[] =['id'=>2,'name' => '管理员','pid'=>1,'is_leaf'=>1,'module_id'=>1];
+                $data[] =['id'=>1,'name' => '后台角色','pid'=>0,'is_leaf'=>0,'module_id'=>$this->module_id];
+                $data[] =['id'=>2,'name' => '管理员','pid'=>1,'is_leaf'=>1,'module_id'=>$this->module_id];
 
                 DB::table('admin_role')->insert($data);
 
@@ -56,10 +57,10 @@ class InitController extends Controller
                 DB::table('admin_user_role')->insert($data);
 
                 $data=[];
-                $data[] =['name' => '状态','key'=>'status','module_id'=>1];
-                $data[] =['name' => '用户状态','key'=>'user_status','module_id'=>1];
-                $data[] =['name' => '用户性别','key'=>'user_gender','module_id'=>1];
-                $data[] =['name' => '是否','key'=>'yes_no','module_id'=>1];
+                $data[] =['name' => '状态','key'=>'status','module_id'=>$this->module_id];
+                $data[] =['name' => '用户状态','key'=>'user_status','module_id'=>$this->module_id];
+                $data[] =['name' => '用户性别','key'=>'user_gender','module_id'=>$this->module_id];
+                $data[] =['name' => '是否','key'=>'yes_no','module_id'=>$this->module_id];
                 DB::table('admin_dict')->insert($data);
 
                 $data=[];

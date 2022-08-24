@@ -10,8 +10,8 @@
     <div class="itop ">
 {{--        <form method="get" @if($res['pid']) action="/admin/menu/index?pid={{$res['pid']}}" @else action="/admin/menu/index" @endif class="select_form">--}}
         <form method="get" action="/admin/menu/index" class="select_form">
-            <div class="filter ">
-                <input type="search" name="name" placeholder="菜单名称" value="{{$res['filter']['name']}}">
+            <div class="search_box ">
+                <input type="search" name="name" placeholder="菜单名称" value="{{$res['search']['name']}}">
                 <button class="" type="submit">搜索</button>
             </div>
         </form>
@@ -22,7 +22,7 @@
 {{--        <div class="d-none"><a data-href="/admin/menu/add?pid={{$res['pid']}}" class="badge badge-info ajax_get add">新增</a></div>--}}
     </div>
 
-    <form method="post" @if($res['filter']['string']) action="/admin/menu/del?{{$res['filter']['string']}}" @else action="/admin/menu/del" @endif  class="del_form">
+    <form method="post" @if($res['search']['string']) action="/admin/menu/del?{{$res['search']['string']}}" @else action="/admin/menu/del" @endif  class="del_form">
         @csrf
         <div class="table_scroll">
             <div class="table">
