@@ -36,10 +36,14 @@ class ModuleController extends Controller
         $info = Module::where('id',$request->query('id',0))->first();
         if(!empty($info)){
             $status = $request->query('status',0);
-            if($status){
-                (new $info->classname)->install();
-            }else{
-                (new $info->classname)->uninstall();
+            try{
+                if($status){
+                    (new $info->classname)->install();
+                }else{
+                    (new $info->classname)->uninstall();
+                }
+            }catch (ApiException $e){
+                throw $e;
             }
             $info->status=$status;
             $info->save();

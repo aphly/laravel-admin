@@ -21,6 +21,10 @@ class Manager extends Authenticatable
      * @var array
      */
 
+    public function fromDateTime($value){
+        return strtotime(parent::fromDateTime($value));
+    }
+
     protected $fillable = [
         'uuid',
         'username','nickname','email','phone',
