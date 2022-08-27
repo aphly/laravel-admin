@@ -1,5 +1,10 @@
 let _res;
 
+function processAjaxData(urlPath,title,state={}){
+    window.document.title = title;
+    window.history.pushState(state,title,urlPath);
+}
+
 function checkAll(_this) {
     $("input[type='checkbox']").prop("checked", $(_this).prop('checked'));
 }
@@ -197,3 +202,5 @@ function randomId(n,all=false) {
     }
     return res;
 }
+
+
