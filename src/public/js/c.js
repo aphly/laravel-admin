@@ -39,7 +39,7 @@ function _autosize(ele){
 var urlOption={
     '_set':function (name,val,jump=false) {
         //str
-        let res = ''
+        let url = ''
         let thisURL = String(document.location);
         let url_arr = thisURL.split('?');
         if(url_arr[1]){
@@ -54,47 +54,47 @@ var urlOption={
                     }
                 })
                 let url_p = arr.join('&');
-                res = url_arr[0]+'?'+url_p;
+                url = url_arr[0]+'?'+url_p;
             }else{
-                res = url_arr[0]+'?'+url_arr[1]+'&'+name+'='+val;
+                url = url_arr[0]+'?'+url_arr[1]+'&'+name+'='+val;
             }
         }else{
-            res = url_arr[0]+'?'+name+'='+val;
+            url = url_arr[0]+'?'+name+'='+val;
         }
         if(jump){
-            location.href = res;
+            location.href = url;
         }else{
-            return res;
+            return url;
         }
     },
-    '__set':function (str,jump=false) {
-        //arr
-        let res = ''
-        let thisURL = String(document.location);
-        let url_arr = thisURL.split('?');
-        if(url_arr[1]){
-            let url_arr_p = url_arr[1].split('&');
-            url_arr_p.push(str);
-            let arr = [...new Set(url_arr_p)];
-            let url_p = arr.join('&');
-            res = url_arr[0]+'?'+url_p;
-        }else{
-            res = url_arr[0]+'?'+str;
-        }
-        if(jump){
-            location.href = res;
-        }else{
-            return res;
-        }
-    },
+    // '__set':function (str,jump=false) {
+    //     //arr
+    //     let res = ''
+    //     let thisURL = String(document.location);
+    //     let url_arr = thisURL.split('?');
+    //     if(url_arr[1]){
+    //         let url_arr_p = url_arr[1].split('&');
+    //         url_arr_p.push(str);
+    //         let arr = [...new Set(url_arr_p)];
+    //         let url_p = arr.join('&');
+    //         res = url_arr[0]+'?'+url_p;
+    //     }else{
+    //         res = url_arr[0]+'?'+str;
+    //     }
+    //     if(jump){
+    //         location.href = res;
+    //     }else{
+    //         return res;
+    //     }
+    // },
     '_get':function (name) {
         let reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
         let r = window.location.search.substr(1).match(reg);
         if(r!=null)return  unescape(r[2]); return null;
     },
-    '_del':function (name) {
+    '_del':function (name,jump=false) {
         //str
-        let res = ''
+        let url = ''
         let thisURL = String(document.location);
         let url_arr = thisURL.split('?');
         if(url_arr[1]){
@@ -108,36 +108,36 @@ var urlOption={
                     }
                 })
                 let url_p = arr.join('&');
-                res = url_arr[0]+'?'+url_p;
+                url = url_arr[0]+'?'+url_p;
             }else{
-                res = url_arr[0]+'?'+url_arr[1];
+                url = url_arr[0]+'?'+url_arr[1];
             }
         }else{
-            res = url_arr[0];
+            url = url_arr[0];
         }
         if(jump){
-            location.href = res;
+            location.href = url;
         }else{
-            return res;
+            return url;
         }
-    },
-    '__del':function (str,jump=false) {
-        let res = ''
-        let thisURL = String(document.location);
-        let url_arr = thisURL.split('?');
-        if(url_arr[1]){
-            let url_arr_p = url_arr[1].split('&');
-            let arr =  url_arr_p.filter(item=>{
-                return item!=str
-            })
-            let url_p = arr.join('&');
-            res = url_arr[0]+'?'+url_p;
-        }
-        if(jump){
-            location.href = res;
-        }else{
-            return res;
-        }
+    // },
+    // '__del':function (str,jump=false) {
+    //     let res = ''
+    //     let thisURL = String(document.location);
+    //     let url_arr = thisURL.split('?');
+    //     if(url_arr[1]){
+    //         let url_arr_p = url_arr[1].split('&');
+    //         let arr =  url_arr_p.filter(item=>{
+    //             return item!=str
+    //         })
+    //         let url_p = arr.join('&');
+    //         res = url_arr[0]+'?'+url_p;
+    //     }
+    //     if(jump){
+    //         location.href = res;
+    //     }else{
+    //         return res;
+    //     }
     }
 }
 
