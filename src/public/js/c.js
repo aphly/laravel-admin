@@ -258,3 +258,13 @@ let mobileTouch = {
         );
     }
 }
+
+let _session = {
+    set(key,value){
+        sessionStorage.setItem(key,JSON.stringify(value));
+    },
+    get(key){
+        let value = sessionStorage.getItem(key);
+        return JSON.parse(value);
+    }
+}
