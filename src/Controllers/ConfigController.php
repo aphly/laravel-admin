@@ -3,37 +3,37 @@
 namespace Aphly\LaravelAdmin\Controllers;
 
 use Aphly\Laravel\Exceptions\ApiException;
-use Aphly\LaravelAdmin\Models\Setting;
+use Aphly\LaravelAdmin\Models\Config;
 use Aphly\LaravelAdmin\Models\Module;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 
-class SettingController extends Controller
+class ConfigController extends Controller
 {
-    public $index_url = '/admin/setting/index';
+    public $index_url = '/admin/config/index';
 
     public function index(Request $request)
     {
         $res['search']['name'] = $name = $request->query('name', false);
         $res['search']['string'] = http_build_query($request->query());
-        $res['list'] = Setting::when($name,
+        $res['list'] = Config::when($name,
                             function ($query, $name) {
                                 return $query->where('name', 'like', '%' . $name . '%');
                             })
                         ->orderBy('id', 'desc')
                         ->Paginate(config('admin.perPage'))->withQueryString();
-        return $this->makeView('laravel-admin::setting.index', ['res' => $res]);
+        return $this->makeView('laravel-admin::config.index', ['res' => $res]);
     }
 
     public function form(Request $request)
     {
-        $res['setting'] = Setting::where('id',$request->query('id',0))->firstOrNew();
+        $res['setting'] = Config::where('id',$request->query('id',0))->firstOrNew();
         $res['module'] = (new Module)->getByCache();
-        return $this->makeView('laravel-admin::setting.form',['res'=>$res]);
+        return $this->makeView('laravel-admin::config.form',['res'=>$res]);
     }
 
     public function save(Request $request){
-        (new Setting)->saveInput($request);
+        (new Config)->saveInput($request);
         throw new ApiException(['code'=>0,'msg'=>'success','data'=>['redirect'=>$this->index_url]]);
     }
 
@@ -43,7 +43,7 @@ class SettingController extends Controller
         $redirect = $query?$this->index_url.'?'.http_build_query($query):$this->index_url;
         $post = $request->input('delete');
         if(!empty($post)){
-            Setting::whereIn('id',$post)->delete();
+            Config::whereIn('id',$post)->delete();
             throw new ApiException(['code'=>0,'msg'=>'操作成功','data'=>['redirect'=>$redirect]]);
         }
     }

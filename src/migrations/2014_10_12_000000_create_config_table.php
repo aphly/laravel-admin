@@ -13,13 +13,12 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('admin_setting', function (Blueprint $table) {
+        Schema::create('admin_config', function (Blueprint $table) {
             $table->id();
-            $table->string('code',128)->index();
-            $table->string('key',128);
             $table->string('name',64);
+            $table->string('type',64)->index();
+            $table->string('key',64);
             $table->text('value');
-            $table->tinyInteger('is_json')->default(0);
             $table->unsignedInteger('module_id')->default(1)->index();
         });
     }
@@ -31,6 +30,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('admin_setting');
+        Schema::dropIfExists('admin_config');
     }
 };

@@ -1,5 +1,5 @@
 <div class="top-bar">
-    <h5 class="nav-title">参数管理</h5>
+    <h5 class="nav-title">配置管理 (需要更新缓存)</h5>
 </div>
 <style>
     .table_scroll .table_header li:nth-child(3),.table_scroll .table_tbody li:nth-child(3){flex: 0 0 300px;}
@@ -7,27 +7,27 @@
 </style>
 <div class="imain">
     <div class="itop ">
-        <form method="get" action="/admin/setting/index" class="select_form">
+        <form method="get" action="/admin/config/index" class="select_form">
         <div class="search_box ">
-            <input type="search" name="name" placeholder="参数名称" value="{{$res['search']['name']}}">
+            <input type="search" name="name" placeholder="配置名称" value="{{$res['search']['name']}}">
             <button class="" type="submit">搜索</button>
         </div>
         </form>
         <div class="">
-            <a class="badge badge-primary ajax_get show_all0_btn" data-href="/admin/setting/form">添加</a>
+            <a class="badge badge-primary ajax_get show_all0_btn" data-href="/admin/config/form">添加</a>
         </div>
     </div>
 
-    <form method="post"  @if($res['search']['string']) action="/admin/setting/del?{{$res['search']['string']}}" @else action="/admin/setting/del" @endif  class="del_form">
+    <form method="post"  @if($res['search']['string']) action="/admin/config/del?{{$res['search']['string']}}" @else action="/admin/config/del" @endif  class="del_form">
     @csrf
         <div class="table_scroll">
             <div class="table">
                 <ul class="table_header">
                     <li >ID</li>
                     <li >模块id</li>
-                    <li >参数Code</li>
-                    <li >Key</li>
-                    <li ></li>
+                    <li >name</li>
+                    <li >type</li>
+                    <li >key</li>
                     <li >操作</li>
                 </ul>
                 @if($res['list']->total())
@@ -36,10 +36,10 @@
                         <li><input type="checkbox" class="delete_box" name="delete[]" value="{{$v['id']}}">{{$v['id']}}</li>
                         <li><span class="module_id badge">{{$v['module_id']}}</span></li>
                         <li>{{ $v['name'] }}</li>
+                        <li>{{$v['type']}}</li>
                         <li>{{$v['key']}}</li>
-                        <li></li>
                         <li>
-                            <a class="badge badge-info ajax_get" data-href="/admin/setting/form?id={{$v['id']}}">编辑</a>
+                            <a class="badge badge-info ajax_get" data-href="/admin/config/form?id={{$v['id']}}">编辑</a>
                         </li>
                     </ul>
                     @endforeach

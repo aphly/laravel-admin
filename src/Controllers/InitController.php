@@ -34,7 +34,7 @@ class InitController extends Controller
                 $data[] =['id'=>5,'name' => '权限管理','url' =>'/admin/permission/index','pid'=>1,'is_leaf'=>1,'module_id'=>$this->module_id];
                 $data[] =['id'=>6,'name' => '菜单管理','url' =>'/admin/menu/index','pid'=>1,'is_leaf'=>1,'module_id'=>$this->module_id];
                 $data[] =['id'=>7,'name' => '字典管理','url' =>'/admin/dict/index','pid'=>1,'is_leaf'=>1,'module_id'=>$this->module_id];
-                $data[] =['id'=>8,'name' => '参数管理','url' =>'/admin/setting/index','pid'=>1,'is_leaf'=>1,'module_id'=>$this->module_id];
+                $data[] =['id'=>8,'name' => '配置管理','url' =>'/admin/config/index','pid'=>1,'is_leaf'=>1,'module_id'=>$this->module_id];
                 DB::table('admin_menu')->insert($data);
 
                 DB::table('admin_role')->truncate();

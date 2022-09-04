@@ -22,8 +22,12 @@ function alert_msg(res,redirect=false,time=2000){
 
 function after_alert_msg(redirect){
     $("#alert_msg").remove()
-    if(redirect && !_res.code && _res.data.redirect){
-        location.href = _res.data.redirect
+    if(redirect){
+        if(!_res.code && _res.data.redirect){
+            location.href = _res.data.redirect
+        }else{
+            location.reload()
+        }
     }
 }
 
@@ -268,3 +272,9 @@ let _session = {
         return JSON.parse(value);
     }
 }
+
+$(function () {
+    $("body").on('click','[data-stopPropagation]',function (e) {
+        e.stopPropagation();
+    });
+})

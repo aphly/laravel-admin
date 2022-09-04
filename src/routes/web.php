@@ -60,7 +60,7 @@ Route::middleware(['web'])->group(function () {
             Route::post('/menu/save', 'Aphly\LaravelAdmin\Controllers\MenuController@save');
 
             $route_arr = [
-                ['dict','\DictController'],['module','\ModuleController'],['setting','\SettingController']
+                ['dict','\DictController'],['module','\ModuleController'],['config','\ConfigController']
             ];
 
             Route::get('/module/install', 'Aphly\LaravelAdmin\Controllers\ModuleController@install');
