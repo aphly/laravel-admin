@@ -4,16 +4,16 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>{{config('admin.name')}}</title>
-    <link rel="stylesheet" href="{{ URL::asset('vendor/laravel-admin/css/bootstrap.min.css') }}">
-    <link rel="stylesheet" href="{{ URL::asset('vendor/laravel-admin/css/c.css') }}">
-    <link rel="stylesheet" href="{{ URL::asset('vendor/laravel-admin/css/iconfont.css') }}">
-    <script src='{{ URL::asset('vendor/laravel-admin/js/jquery.min.js') }}' type='text/javascript'></script>
-    <script src='{{ URL::asset('vendor/laravel-admin/js/c.js') }}' type='text/javascript'></script>
-    <script src='{{ URL::asset('vendor/laravel-admin/js/admin.js') }}' type='text/javascript'></script>
-    <script src='{{ URL::asset('vendor/laravel-admin/js/bootstrap-treeview.js') }}' type='text/javascript'></script>
-    <link rel="stylesheet" href="{{ URL::asset('vendor/laravel-admin/editor/style.css') }}">
-    <script src="{{ URL::asset('vendor/laravel-admin/editor/index.js') }}"></script>
-    <link rel="stylesheet" href="{{ URL::asset('vendor/laravel-admin/css/links.css') }}">
+    <link rel="stylesheet" href="{{ URL::asset('static/admin/css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ URL::asset('static/admin/css/c.css') }}">
+    <link rel="stylesheet" href="{{ URL::asset('static/admin/css/iconfont.css') }}">
+    <script src='{{ URL::asset('static/admin/js/jquery.min.js') }}' type='text/javascript'></script>
+    <script src='{{ URL::asset('static/admin/js/c.js') }}' type='text/javascript'></script>
+    <script src='{{ URL::asset('static/admin/js/admin.js') }}' type='text/javascript'></script>
+    <script src='{{ URL::asset('static/admin/js/bootstrap-treeview.js') }}' type='text/javascript'></script>
+    <link rel="stylesheet" href="{{ URL::asset('static/admin/editor/style.css') }}">
+    <script src="{{ URL::asset('static/admin/editor/index.js') }}"></script>
+    <link rel="stylesheet" href="{{ URL::asset('static/admin/css/links.css') }}">
 </head>
 <body>
 <style>

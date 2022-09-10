@@ -31,7 +31,7 @@ class AdminServiceProvider extends ServiceProvider
     {
         $this->publishes([
             __DIR__.'/config/admin.php' => config_path('admin.php'),
-            __DIR__.'/public' => public_path('vendor/laravel-admin')
+            __DIR__.'/public' => public_path('aphly/admin')
         ]);
         $this->loadMigrationsFrom(__DIR__.'/migrations');
         $this->loadViewsFrom(__DIR__.'/views', 'laravel-admin');

@@ -1,5 +1,5 @@
 @include('laravel-admin::common.header')
-<link rel="stylesheet" href="{{ URL::asset('vendor/laravel-admin/css/login.css') }}">
+<link rel="stylesheet" href="{{ URL::asset('static/admin/css/login.css') }}">
 <section class="login d-flex" >
     <div class="login1">
         <span>
