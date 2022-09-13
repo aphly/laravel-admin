@@ -1,7 +1,9 @@
 let _res;
 
-function processAjaxData(urlPath,title,state={}){
-    window.document.title = title;
+function processAjaxData(urlPath,title='',state={}){
+    if(title){
+        window.document.title = title;
+    }
     window.history.pushState(state,title,urlPath);
 }
 
