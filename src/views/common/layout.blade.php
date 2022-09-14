@@ -99,7 +99,7 @@
                 dataType: "html",
                 success: function(res){
                     $("#iload").html(res)
-                    processAjaxData(url)
+                    //processAjaxData(url)
                 },
                 complete:function (){
                     $('#loading').css('z-index',-1);
