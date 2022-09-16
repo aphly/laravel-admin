@@ -4,6 +4,7 @@ namespace Aphly\LaravelAdmin;
 
 use Aphly\Laravel\Providers\ServiceProvider;
 use Aphly\LaravelAdmin\Middleware\Common;
+use Aphly\LaravelAdmin\Middleware\Cross;
 use Aphly\LaravelAdmin\Middleware\ManagerAuth;
 use Aphly\LaravelAdmin\Middleware\Rbac;
 
@@ -39,6 +40,7 @@ class AdminServiceProvider extends ServiceProvider
         $this->addMiddlewareAlias('managerAuth', ManagerAuth::class);
         $this->addMiddlewareAlias('rbac', Rbac::class);
         $this->addMiddlewareAlias('common', Common::class);
+        $this->addMiddlewareAlias('cross', Cross::class);
     }
 
 

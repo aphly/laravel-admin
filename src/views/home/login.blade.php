@@ -14,7 +14,7 @@
             </div>
             <h3 class="" style="">
                 登录
-                <span style="font-size:16px">
+                <span style="font-size:16px;display: none;">
                     没有帐号?
                     <a href="">注册</a>
                 </span>
@@ -30,7 +30,7 @@
 
             <div class="d-flex justify-content-between">
                 <span></span>
-                <sapn><a href="">忘记密码</a></sapn>
+                <sapn style="display: none;"><a href="">忘记密码</a></sapn>
             </div>
 
             <div class="alert alert-warning d-none" id="msg"></div>
