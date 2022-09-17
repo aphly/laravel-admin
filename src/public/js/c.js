@@ -295,7 +295,6 @@ let getList = {
     timeout:200,
     timer:true,
     get() {
-        console.log('111');
         if (!this.isGet || this.page>this.last_page) {
           if(this.page>this.last_page){
             $(this.loading_div).html(this.loading_nothing);
@@ -312,7 +311,6 @@ let getList = {
             success:function (res) {
               window[_this.callback](res,_this);
               _this.page++;
-              _this.last_page= res.data.list.last_page;
             },
             complete:function () {
               _this.isGet = true;
