@@ -280,3 +280,56 @@ $(function () {
         e.stopPropagation();
     });
 })
+
+let getList = {
+    isGet: true,
+    page: 1,
+    last_page:1,
+    loading_div:'.loading',
+    data_div:'#list',
+    callback:'makeHtml',
+    url:'http://test2.com/zone?page=',
+    loading_nothing:'nothing',
+    loading_html:'loading',
+    loading_more:'more',
+    timeout:200,
+    timer:true,
+    get() {
+        console.log('111');
+        if (!this.isGet || this.page>this.last_page) {
+          if(this.page>this.last_page){
+            $(this.loading_div).html(this.loading_nothing);
+          }
+          return;
+        }
+        this.isGet = false;
+        let _this = this;
+        $(_this.loading_div).html(_this.loading_html);
+        clearTimeout(_this.timer);
+        _this.timer = setTimeout(function() {
+          $.ajax({
+            url:_this.url+_this.page,
+            success:function (res) {
+              window[_this.callback](res,_this);
+              _this.page++;
+              _this.last_page= res.data.list.last_page;
+            },
+            complete:function () {
+              _this.isGet = true;
+              $(_this.loading_div).html(_this.loading_more);
+            }
+          })
+        }, _this.timeout);
+    },
+    init(params){
+      for(let i in params){
+        this[i] = params[i];
+      }
+      let _this = this
+      $(window).scroll(function() {
+        if (($(window).height() + $(window).scrollTop() + 60) >= $(document).height()) {
+          _this.get()
+        }
+      });
+    }
+};
