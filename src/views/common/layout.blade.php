@@ -141,9 +141,7 @@
             }
         })
 
-        $("#iload").on('submit','.select_form',function (e){
-            e.preventDefault()
-            e.stopPropagation()
+        $("#iload").on('submit','.select_form',function (){
             const form = $(this)
             //console.log(form.serialize())
             let url = form.attr("action");
@@ -152,33 +150,36 @@
             }else{
                 iload(url+'?'+form.serialize());
             }
+            return false;
         })
 
-        $("#iload").on('submit','.save_form',function (e){
-            e.preventDefault()
-            e.stopPropagation()
+        $("#iload").on('submit','.save_form',function (){
+            let form_class = '.save_form';
             const form = $(this)
             if(form[0].checkValidity()===false){
             }else{
                 let url = form.attr("action");
                 let type = form.attr("method");
                 if(url && type){
-                    $('.save_form input.form-control').removeClass('is-valid').removeClass('is-invalid');
+                    $(form_class+' input.form-control').removeClass('is-valid').removeClass('is-invalid');
                     $.ajax({
                         type,url,data: form.serialize(),
                         dataType: "json",
+                        beforeSend:function () {
+                            $(form_class+' button[type="submit"]').attr('disabled',true);
+                        },
                         success: function(res){
-                            $('.save_form input.form-control').addClass('is-valid');
+                            $(form_class+' input.form-control').addClass('is-valid');
                             if(!res.code) {
                                 iload(res.data.redirect)
                                 alert_msg(res)
                             }else if(res.code===11000){
-                                for(var item in res.data){
+                                for(let item in res.data){
                                     let str = ''
                                     res.data[item].forEach((elem, index)=>{
                                         str = str+elem+'<br>'
                                     })
-                                    let obj = $('.save_form input[name="'+item+'"]');
+                                    let obj = $(form_class+' input[name="'+item+'"]');
                                     obj.removeClass('is-valid').addClass('is-invalid');
                                     obj.next('.invalid-feedback').html(str);
                                 }
@@ -187,6 +188,7 @@
                             }
                         },
                         complete:function(XMLHttpRequest,textStatus){
+                            $(form_class+' button[type="submit"]').removeAttr('disabled');
                             ajax_complete()
                         }
                     })
@@ -194,11 +196,11 @@
                     console.log('no action')
                 }
             }
+            return false;
         })
 
-        $("#iload").on('submit','.del_form',function (e){
-            e.preventDefault()
-            e.stopPropagation()
+        $("#iload").on('submit','.del_form',function (){
+            let form_class = '.del_form';
             let msg = "您真的确定要删除吗？";
             if (confirm(msg)!==true){
                return;
@@ -209,25 +211,27 @@
                 let url = form.attr("action");
                 let type = form.attr("method");
                 if(url && type){
-                    $('.save_form input.form-control').removeClass('is-valid').removeClass('is-invalid');
                     $.ajax({
                         type,url,data: form.serialize(),
                         dataType: "json",
+                        beforeSend:function () {
+                            $(form_class+' button[type="submit"]').attr('disabled',true);
+                        },
                         success: function(res){
-                            $('.save_form input.form-control').addClass('is-valid');
                             if(!res.code) {
                                 iload(res.data.redirect)
                             }
                             alert_msg(res)
                         },
                         complete:function(XMLHttpRequest,textStatus){
-                            //console.log(XMLHttpRequest,textStatus)
+                            $(form_class+' button[type="submit"]').removeAttr('disabled');
                         }
                     })
                 }else{
                     console.log('no action')
                 }
             }
+            return false;
         })
 
         $("#iload").on('click','a.ajax_get,a.page-link',function (e){
