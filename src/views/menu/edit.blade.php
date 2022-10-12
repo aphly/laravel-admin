@@ -5,7 +5,7 @@
     <form method="post" action="/admin/menu/{{$res['info']['id']}}/edit" class="save_form">
         @csrf
         <div class="">
-            <div class="form-group" id="status">
+            <div class="form-group">
                 <label for="">模块</label>
                 <select name="module_id" class="form-control" disabled="disabled">
                     @foreach($res['module'] as $key=>$val)
