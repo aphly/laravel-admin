@@ -331,3 +331,33 @@ let getList = {
       });
     }
 };
+
+function uploadfiles(_this,callback){
+    let formData = new FormData();
+    for (let i = 0; i < $(_this)[0].files.length; i++) {
+        formData.append("file[]", $(_this)[0].files[i]);
+    }
+    formData.append('_token', '{{csrf_token()}}');
+    let url = $(_this).data('url');
+    if(url){
+        $.ajax({
+            type:'post',url,
+            data: formData,
+            contentType: false,
+            processData: false,
+            dataType: "json",
+            before:function () {
+                $(_this).attr('disabled',true)
+            },
+            success: function(res){
+                alert_msg(res)
+                callback(res);
+            },
+            complete:function(XMLHttpRequest,textStatus){
+                $(_this).removeAttr('disabled')
+            }
+        })
+    }else{
+        console.log('no action'+url)
+    }
+}
