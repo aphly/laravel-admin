@@ -96,17 +96,21 @@ function fast_show_make_form(type) {
 }
 function fast_save() {
     let url = fast_save_url+'?id='+id
+    let btn_html = $(fast_form+' button[type="submit"]').html();
     $.ajax({
         url,
         dataType:'json',
         type:'post',
         data:$(fast_form+' form').serialize(),
+        beforeSend:function () {
+            $(fast_form+' button[type="submit"]').attr('disabled',true).html('<i class="btn_loading app-jiazai uni"></i>');
+        },
         success:function (res) {
             if(!res.code) {
                 alert_msg(res)
                 $("#iload").load(res.data.redirect);
             }else if(res.code===11000){
-                for(var item in res.data){
+                for(let item in res.data){
                     let str = ''
                     res.data[item].forEach((elem, index)=>{
                         str = str+elem+'<br>'
@@ -118,9 +122,13 @@ function fast_save() {
             }else{
                 alert_msg(res)
             }
+        },
+        complete:function(XMLHttpRequest,textStatus){
+            $(fast_form+' button[type="submit"]').removeAttr('disabled').html(btn_html);
         }
     })
 }
+
 function fast_del() {
     if(confirm('确认删除吗') && id){
         $.ajax({
