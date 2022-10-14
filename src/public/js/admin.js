@@ -10,7 +10,7 @@ function toMyTree(data,id=0) {
     });
     return new_array;
 }
-function selectData(data,select_ids=0) {
+function selectData(data,select_ids=false) {
     let new_array = []
     data.forEach((item,index) => {
         let color = item.status?'inherit':'#ddd';
