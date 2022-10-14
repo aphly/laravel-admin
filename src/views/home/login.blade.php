@@ -62,12 +62,13 @@ $(function (){
             let type = form.attr("method");
             if(url && type){
                 $(form_id+' input.form-control').removeClass('is-valid').removeClass('is-invalid');
+                let btn_html = $(form_id+' button[type="submit"]').html();
                 $.ajax({
                     type,url,
                     data: form.serialize(),
                     dataType: "json",
                     beforeSend:function () {
-                        $(form_id+' button[type="submit"]').attr('disabled',true);
+                        $(form_id+' button[type="submit"]').attr('disabled',true).html('<i class="btn_loading app-jiazai uni"></i>');
                     },
                     success: function(res){
                         $(form_id+' input.form-control').addClass('is-valid');
@@ -88,7 +89,7 @@ $(function (){
                         }
                     },
                     complete:function(XMLHttpRequest,textStatus){
-                        $(form_id+' button[type="submit"]').removeAttr('disabled');
+                        $(form_id+' button[type="submit"]').removeAttr('disabled').html(btn_html);
                     }
                 })
             }else{
