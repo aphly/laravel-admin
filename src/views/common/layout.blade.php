@@ -175,15 +175,7 @@
                                 iload(res.data.redirect)
                                 alert_msg(res)
                             }else if(res.code===11000){
-                                for(let item in res.data){
-                                    let str = ''
-                                    res.data[item].forEach((elem, index)=>{
-                                        str = str+elem+'<br>'
-                                    })
-                                    let obj = $(form_class+' input[name="'+item+'"]');
-                                    obj.removeClass('is-valid').addClass('is-invalid');
-                                    obj.next('.invalid-feedback').html(str);
-                                }
+                                form_err_11000(res,form_class);
                             }else{
                                 alert_msg(res)
                             }

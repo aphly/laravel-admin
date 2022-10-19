@@ -50,7 +50,9 @@ ul,li,p,dl,dd{padding: 0;margin: 0;}
 @keyframes btn_loading{0%{-webkit-transform:rotate(0deg);transform:rotate(0deg)}
      100%{-webkit-transform:rotate(359deg);transform:rotate(359deg)}
 }
-
+.code_img{display: flex;justify-content: space-between;}
+.code_img img{width: 100px;margin-left: 10px;border-radius: 4px;cursor: pointer;}
+.code_img input{width: calc(100% - 110px);}
 @media (min-width: 1500px) {
     .container {
         max-width: 1470px;

@@ -42,6 +42,22 @@ function _autosize(ele){
     }
 }
 
+function code_img(_this) {
+    $(_this).attr('src','/center/seccode?t='+new Date().getTime())
+}
+
+function form_err_11000(res,form_id) {
+    for(let item in res.data){
+        let str = ''
+        res.data[item].forEach((elem, index)=>{
+            str = str+elem+'<br>'
+        })
+        let obj = $(form_id+' input[name="'+item+'"]');
+        obj.removeClass('is-valid').addClass('is-invalid');
+        obj.closest('.form-group').find('.invalid-feedback').html(str);
+    }
+}
+
 var urlOption={
     '_set':function (name,val,jump=false) {
         //str

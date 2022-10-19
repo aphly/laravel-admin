@@ -110,15 +110,7 @@ function fast_save() {
                 alert_msg(res)
                 $("#iload").load(res.data.redirect);
             }else if(res.code===11000){
-                for(let item in res.data){
-                    let str = ''
-                    res.data[item].forEach((elem, index)=>{
-                        str = str+elem+'<br>'
-                    })
-                    let obj = $(fast_form+' input[name="'+item+'"]');
-                    obj.removeClass('is-valid').addClass('is-invalid');
-                    obj.next('.invalid-feedback').html(str);
-                }
+                form_err_11000(res,fast_form);
             }else{
                 alert_msg(res)
             }

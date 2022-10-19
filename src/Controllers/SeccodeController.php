@@ -29,8 +29,10 @@ class SeccodeController extends Controller
 
     public function check(Request $request)
     {
-        (new Seccode())->_check($request->code);
-        throw new ApiException(['code'=>0,'msg'=>'ok']);
+        if((new Seccode())->check($request->code)){
+            throw new ApiException(['code'=>0,'msg'=>'success']);
+        }
+        throw new ApiException(['code'=>1,'msg'=>'fail']);
     }
 
 }

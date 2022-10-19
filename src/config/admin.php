@@ -6,5 +6,7 @@ return [
     'email_status'=>true,
     'cross' => [
         'http://localhost'
-    ]
+    ],
+    'seccode_login'=>2, //0 1 2
+    'seccode_register'=>0, //0 1 2
 ];
