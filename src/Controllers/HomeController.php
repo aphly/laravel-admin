@@ -3,6 +3,7 @@
 namespace Aphly\LaravelAdmin\Controllers;
 
 use Aphly\Laravel\Exceptions\ApiException;
+use Aphly\Laravel\Libs\Seccode;
 use Aphly\LaravelAdmin\Models\FailedLogin;
 use Aphly\LaravelAdmin\Models\Role;
 use Aphly\LaravelAdmin\Requests\LoginRequest;
@@ -34,6 +35,11 @@ class HomeController extends Controller
     public function login(loginRequest $request)
     {
         if($request->isMethod('post')) {
+            if (config('admin.seccode_admin_login')==1) {
+                if (!((new Seccode())->check($request->input('code')))) {
+                    throw new ApiException(['code' => 11000, 'msg' => 'Incorrect Code', 'data' => ['code' => ['Incorrect Code']]]);
+                }
+            }
             $failedLogin =  new FailedLogin;
             $failedLogin->logincheck($request->ip());
             $credentials = $request->only('username', 'password');

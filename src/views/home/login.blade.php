@@ -28,6 +28,14 @@
                 <div class="invalid-feedback"></div>
             </div>
 
+            <div id="code_img" class="form-group @if(config('admin.seccode_admin_login')==1) @else none @endif">
+                <div class="code_img">
+                    <input type="text" name="code" class="form-control" value="" autocomplete="off" placeholder="验证码">
+                    <img src="/center/seccode" onclick="code_img(this)" >
+                </div>
+                <div class="invalid-feedback"></div>
+            </div>
+
             <div class="d-flex justify-content-between">
                 <span></span>
                 <span style="display: none;"><a href="">忘记密码</a></span>
