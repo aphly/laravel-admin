@@ -37,10 +37,10 @@ class AdminServiceProvider extends ServiceProvider
         $this->loadMigrationsFrom(__DIR__.'/migrations');
         $this->loadViewsFrom(__DIR__.'/views', 'laravel-admin');
         $this->loadRoutesFrom(__DIR__.'/routes/web.php');
-        $this->addMiddlewareAlias('managerAuth', ManagerAuth::class);
-        $this->addMiddlewareAlias('rbac', Rbac::class);
-        $this->addMiddlewareAlias('common', Common::class);
-        $this->addMiddlewareAlias('cross', Cross::class);
+        $this->addRouteMiddleware('managerAuth', ManagerAuth::class);
+        $this->addRouteMiddleware('rbac', Rbac::class);
+        $this->addMiddleware(Common::class);
+        $this->addRouteMiddleware('cross', Cross::class);
     }
 
 

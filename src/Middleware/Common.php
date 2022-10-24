@@ -2,22 +2,24 @@
 
 namespace Aphly\LaravelAdmin\Middleware;
 
+use Aphly\LaravelAdmin\Models\Banned;
 use Illuminate\Http\Request;
 use Closure;
-use Illuminate\Support\Facades\Cookie;
 
 class Common
 {
     public function handle(Request $request, Closure $next)
     {
-//        if($request->path()=='login' || $request->path()=='register' || $request->path()=='logout' || $request->path()=='forget'
-//            || $request->path()=='forget-password' || $request->is('admin/*') ){
-//        }else{
-//            if($request->url()){
-//                Cookie::queue('refer', $request->url(), 60);
-//            }
-//        }
-        return $next($request);
+        $banned = Banned::where('ip',$request->ip())->where('status',1)->first();
+        if(!empty($banned)){
+            if($request->url() == route('banned')){
+                return $next($request);
+            }else{
+                return redirect()->route('banned');
+            }
+        }else{
+            return $next($request);
+        }
     }
 
 }

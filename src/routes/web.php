@@ -12,9 +12,11 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+
 Route::prefix('center')->middleware(['web'])->group(function () {
     Route::get('/seccode', 'Aphly\LaravelAdmin\Controllers\SeccodeController@index');
     Route::get('/seccode/{code}', 'Aphly\LaravelAdmin\Controllers\SeccodeController@check');
+    Route::get('/banned', 'Aphly\LaravelAdmin\Controllers\BannedController@banned')->name('banned');
 });
 
 Route::get('/admin/init', 'Aphly\LaravelAdmin\Controllers\InitController@index');
@@ -60,7 +62,7 @@ Route::middleware(['web'])->group(function () {
             Route::post('/menu/save', 'Aphly\LaravelAdmin\Controllers\MenuController@save');
 
             $route_arr = [
-                ['dict','\DictController'],['module','\ModuleController'],['config','\ConfigController']
+                ['dict','\DictController'],['module','\ModuleController'],['config','\ConfigController'],['banned','\BannedController']
             ];
 
             Route::get('/module/install', 'Aphly\LaravelAdmin\Controllers\ModuleController@install');
