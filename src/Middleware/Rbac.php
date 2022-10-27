@@ -23,14 +23,14 @@ class Rbac
     }
 
     public function checkPermission( $controller ){
-
         if(Auth::guard('manager')->user()->super==1){
             return true;
         }
         if( in_array( $controller,$this->ignore_url ) ){
             return true;
         }
-        return in_array( $controller, (new Role)->getRolePermission());
+        list($class) = explode('@',$controller);
+        return in_array( $controller, (new Role)->getRolePermission()) || in_array( $class, (new Role)->getRolePermission());
     }
 
     public function getRolePermission_bf(){

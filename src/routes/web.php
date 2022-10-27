@@ -34,9 +34,9 @@ Route::middleware(['web'])->group(function () {
 
             Route::get('/manager/index', 'Aphly\LaravelAdmin\Controllers\ManagerController@index');
             Route::match(['get', 'post'],'/manager/add', 'Aphly\LaravelAdmin\Controllers\ManagerController@add');
-            Route::match(['get', 'post'],'/manager/{uuid}/edit', 'Aphly\LaravelAdmin\Controllers\ManagerController@edit')->where('uuid', '[0-9]+');
+            Route::match(['get', 'post'],'/manager/edit', 'Aphly\LaravelAdmin\Controllers\ManagerController@edit');
             Route::post('/manager/del', 'Aphly\LaravelAdmin\Controllers\ManagerController@del');
-            Route::match(['get', 'post'],'/manager/{uuid}/role', 'Aphly\LaravelAdmin\Controllers\ManagerController@role')->where('uuid', '[0-9]+');
+            Route::match(['get', 'post'],'/manager/role', 'Aphly\LaravelAdmin\Controllers\ManagerController@role');
 
             Route::get('/role/index', 'Aphly\LaravelAdmin\Controllers\RoleController@index');
             Route::match(['get', 'post'],'/role/add', 'Aphly\LaravelAdmin\Controllers\RoleController@add');

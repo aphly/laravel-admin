@@ -48,6 +48,7 @@
                 <div class="d-flex">
                     <div id="showmenu" class="uni app-px1 d-lg-none"></div>
                     <a href="/" class="portal" target="_blank">网站首页</a>
+                    <a href="javascript:void(0)"  class="portal " onclick="back()">返回</a>
                 </div>
                 <div class="d-flex">
                     <div class="dropdown">
@@ -88,11 +89,29 @@
 </section>
 
 <script>
+    var url_history = [];
     function ajax_complete() {
         $('.ajax_modal').modal('hide');
     }
+    function back(){
+        if(url_history.length>1){
+            url_history.pop()
+            let url = url_history[url_history.length-1]
+            $("#s_nav .dj").each(function () {
+                if($(this).data('href')==url){
+                    $(this).addClass('active')
+                }else{
+                    $(this).removeClass('active')
+                }
+            });
+            iload(url);
+        }
+    }
     function iload(url,data='') {
         if(url){
+            if(!in_array(url,url_history)){
+                url_history.push(url)
+            }
             $('#loading').css('z-index',100);
             $.ajax({
                 url,data,

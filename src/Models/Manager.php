@@ -26,10 +26,7 @@ class Manager extends Authenticatable
     }
 
     protected $fillable = [
-        'uuid',
-        'username','nickname','email','phone',
-        'password',
-        'token',
+        'uuid','username','nickname','email','phone','password','token',
         'token_expire','avatar','status','gender','super','status'
     ];
 

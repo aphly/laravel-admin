@@ -1,10 +1,10 @@
 
 <div class="top-bar">
-    <h5 class="nav-title">授权</h5>
+    <h5 class="nav-title">角色</h5>
 </div>
 <div class="imain">
     <div class="userinfo">
-        用户名：{{$res['info']['username']}}
+        用户名：{{$res['info']->username}}
     </div>
     <div class="role_permission max_width">
         <div class="min_width d-flex">
@@ -14,7 +14,7 @@
             </div>
             <div class="role">
                 <div class="role_title">已选中</div>
-                <form method="post" action="/admin/manager/{{$res['info']['uuid']}}/role" class="save_form">
+                <form method="post" action="/admin/manager/role?uuid={{$res['info']->uuid}}" class="save_form">
                     @csrf
                     <div class=" select_ids" id="select_ids"></div>
                     <button class="btn btn-primary" type="submit">保存</button>

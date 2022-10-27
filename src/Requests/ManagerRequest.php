@@ -14,7 +14,7 @@ class ManagerRequest extends FormRequest
             list($routeControllerName, $routeActionName) = explode('@',$str);
             if($routeActionName=='add'){
                 return [
-                    'username' => 'required|between:4,32|alpha_num|unique:manager',
+                    'username' => 'required|between:4,32|alpha_num|unique:admin_manager',
                     'nickname' => 'nullable|string',
                     'phone' => 'nullable|numeric|regex:/^1[0-9]{10}$/',
                     'email' => 'nullable|email:filter',
@@ -23,7 +23,7 @@ class ManagerRequest extends FormRequest
                 ];
             }else if($routeActionName=='edit'){
                 return [
-                    'password' => 'nullable|between:3,64|alpha_num',
+                    'password' => 'nullable|between:6,64|alpha_num',
                 ];
             }
         }

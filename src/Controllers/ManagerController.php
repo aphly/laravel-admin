@@ -5,12 +5,10 @@ namespace Aphly\LaravelAdmin\Controllers;
 use Aphly\Laravel\Exceptions\ApiException;
 use Aphly\Laravel\Libs\Helper;
 use Aphly\LaravelAdmin\Models\Manager;
-use Aphly\LaravelAdmin\Models\Permission;
 use Aphly\LaravelAdmin\Models\Role;
 use Aphly\LaravelAdmin\Requests\ManagerRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Validation\ValidationException;
 
 class ManagerController extends Controller
 {
@@ -39,40 +37,39 @@ class ManagerController extends Controller
     public function add(ManagerRequest $request)
     {
         if($request->isMethod('post')){
-            $post = $request->all();
-            $post['uuid'] = $post['token'] = Helper::uuid();
-            $post['token_expire'] = time();
-            $post['password'] = Hash::make($post['password']);
-            $manager = Manager::create($post);
-            if($manager->uuid){
+            $input = $request->all();
+            $input['uuid'] = $input['token'] = Helper::uuid();
+            $input['token_expire'] = time();
+            $input['password'] = Hash::make($input['password']);
+            $res['info'] = Manager::create($input);
+            if($res['info']->uuid){
                 throw new ApiException(['code'=>0,'msg'=>'添加成功','data'=>['redirect'=>$this->index_url]]);
             }else{
                 throw new ApiException(['code'=>1,'msg'=>'添加失败']);
             }
         }else{
-            $res['title']='';
-            return $this->makeView('laravel-admin::manager.add',['res'=>$res]);
+            $res['info'] = Manager::where('uuid',$request->query('uuid',0))->firstOrNew();
+            return $this->makeView('laravel-admin::manager.form',['res'=>$res]);
         }
     }
 
     public function edit(ManagerRequest $request)
     {
+        $res['info'] = Manager::where('uuid',$request->query('uuid',0))->firstOrNew();
         if($request->isMethod('post')) {
-            $manager = Manager::find($request->uuid);
-            $post = $request->all();
-            if(!empty($post['password'])){
-                $post['password'] = Hash::make($post['password']);
+            $input = $request->all();
+            if(!empty($input['password'])){
+                $input['password'] = Hash::make($input['password']);
             }else{
-                unset($post['password']);
+                unset($input['password']);
             }
-            if($manager->update($post)){
+            if($res['info']->update($input)){
                 throw new ApiException(['code'=>0,'msg'=>'修改成功','data'=>['redirect'=>$this->index_url]]);
             }else{
                 throw new ApiException(['code'=>1,'msg'=>'修改失败']);
             }
         }else{
-            $res['info'] = Manager::find($request->uuid);
-            return $this->makeView('laravel-admin::manager.edit',['res'=>$res]);
+            return $this->makeView('laravel-admin::manager.form',['res'=>$res]);
         }
     }
 
@@ -89,14 +86,13 @@ class ManagerController extends Controller
 
     public function role(Request $request)
     {
+        $res['info'] = Manager::find($request->query('uuid',0));
         if($request->isMethod('post')) {
-            $manager = Manager::find($request->uuid);
-            if($manager){
-                $manager->role()->sync($request->input('role_id'));
+            if($res['info']){
+                $res['info']->role()->sync($request->input('role_id'));
             }
             throw new ApiException(['code'=>0,'msg'=>'操作成功','data'=>['redirect'=>$this->index_url]]);
         }else{
-            $res['info'] = Manager::find($request->uuid);
             $res['user_role'] = $res['info']->role->toArray();
             $res['select_ids'] = array_column($res['user_role'], 'id');
             $res['role'] = Role::where('status',1)->orderBy('sort', 'desc')->get()->toArray();

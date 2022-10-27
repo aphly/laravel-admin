@@ -36,10 +36,10 @@
                 @if($res['list']->total())
                     @foreach($res['list'] as $v)
                     <ul class="table_tbody">
-                        <li><input type="checkbox" class="delete_box" name="delete[]" value="{{$v['uuid']}}">{{$v['uuid']}}</li>
-                        <li>{{$v['username']}}</li>
+                        <li><input type="checkbox" class="delete_box" name="delete[]" value="{{$v->uuid}}">{{$v->uuid}}</li>
+                        <li>{{$v->username}}</li>
                         <li>
-                            <img class="lazy user_avatar" @if($v['gender']==1) src="{{url('static/admin/img/man.png')}}" @else src="{{url('static/admin/img/woman.png')}}" @endif >
+                            <img class="lazy user_avatar" @if($v->gender==1) src="{{url('static/admin/img/man.png')}}" @else src="{{url('static/admin/img/woman.png')}}" @endif >
                         </li>
                         <li>
                             @foreach($v->role as $vv)
@@ -48,16 +48,16 @@
                         </li>
                         <li>
                             @if($dict['user_status'])
-                                @if($v['status'])
-                                    <span class="badge badge-success">{{$dict['user_status'][$v['status']]}}</span>
+                                @if($v->status)
+                                    <span class="badge badge-success">{{$dict['user_status'][$v->status]}}</span>
                                 @else
-                                    <span class="badge badge-secondary">{{$dict['user_status'][$v['status']]}}</span>
+                                    <span class="badge badge-secondary">{{$dict['user_status'][$v->status]}}</span>
                                 @endif
                             @endif
                         </li>
                         <li>
-                            <a class="badge badge-success ajax_get" data-href="/admin/manager/{{$v['uuid']}}/role">角色</a>
-                            <a class="badge badge-info ajax_get" data-href="/admin/manager/{{$v['uuid']}}/edit">编辑</a>
+                            <a class="badge badge-success ajax_get" data-href="/admin/manager/role?uuid={{$v->uuid}}">角色</a>
+                            <a class="badge badge-info ajax_get" data-href="/admin/manager/edit?uuid={{$v->uuid}}">编辑</a>
                         </li>
                     </ul>
                     @endforeach
