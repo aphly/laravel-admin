@@ -19,25 +19,15 @@ class RoleController extends Controller
     public function index(Request $request)
     {
         $res['title'] = '';
-        //$res['pid'] = $pid = $request->query('pid', 0);
         $res['search']['name'] = $name = $request->query('name',false);
         $res['search']['string'] = http_build_query($request->query());
         $res['list'] = Role::when($name,
                             function($query,$name) {
                                 return $query->where('name', 'like', '%'.$name.'%');
                             })
-                        //->where('pid',$pid)
                         ->orderBy('sort', 'desc')->orderBy('id', 'desc')
                         ->Paginate(config('admin.perPage'))->withQueryString();
-//        $res['parent'] = $this->parentInfo($pid);
-//        $res['role'] = Role::where('status',1)->orderBy('sort', 'desc')->get()->toArray();
         return $this->makeView('laravel-admin::role.index',['res'=>$res]);
-    }
-
-    public function parentInfo($pid)
-    {
-        $parent = Role::where('id', '=', $pid)->first();
-        return !is_null($parent) ? $parent->toArray() : [];
     }
 
     public function add(RoleRequest $request)
@@ -45,36 +35,33 @@ class RoleController extends Controller
         if($request->isMethod('post')) {
             $post = $request->all();
             $role = Role::create($post);
-            if($role->id){
-                throw new ApiException(['code'=>0,'msg'=>'添加成功','data'=>['redirect'=>$this->index_url($post)]]);
-            }else{
-                throw new ApiException(['code'=>1,'msg'=>'添加失败']);
-            }
+			$form_edit = $request->input('form_edit',0);
+			if($role->id){
+				throw new ApiException(['code'=>0,'msg'=>'添加成功','data'=>['redirect'=>$form_edit?$this->index_url($post):'/admin/role/show']]);
+			}else{
+				throw new ApiException(['code'=>1,'msg'=>'添加失败','data'=>[]]);
+			}
         }else{
             $res['title'] = '';
-            $res['pid'] = $pid =  $request->query('pid',0);
-            $res['parent'] = $this->parentInfo($pid);
-            return $this->makeView('laravel-admin::role.add',['res'=>$res]);
+			$res['info'] = Role::where('id',$request->query('id',0))->firstOrNew();
+            return $this->makeView('laravel-admin::role.form',['res'=>$res]);
         }
     }
 
     public function edit(RoleRequest $request)
     {
+		$res['info'] = Role::where('id',$request->query('id',0))->firstOrError();
         if($request->isMethod('post')) {
-            $role = Role::find($request->id);
             $post = $request->all();
-            if($role->update($post)){
-                throw new ApiException(['code'=>0,'msg'=>'修改成功','data'=>['redirect'=>$this->index_url($post)]]);
-            }else{
-                throw new ApiException(['code'=>1,'msg'=>'修改失败']);
-            }
+			$form_edit = $request->input('form_edit',0);
+            if($res['info']->update($post)){
+				throw new ApiException(['code'=>0,'msg'=>'修改成功','data'=>['redirect'=>$form_edit?$this->index_url($post):'/admin/role/show']]);
+			}else{
+				throw new ApiException(['code'=>1,'msg'=>'修改失败','data'=>[]]);
+			}
         }else{
-            $res['title'] = '';
-            $res['info'] = Role::find($request->id);
-//            $res['pid'] = $pid =  $request->query('pid',0);
-//            $res['parent'] = $this->parentInfo($pid);
             $res['module'] = (new Module)->getByCache();
-            return $this->makeView('laravel-admin::role.edit',['res'=>$res]);
+            return $this->makeView('laravel-admin::role.form',['res'=>$res]);
         }
     }
 
@@ -89,7 +76,7 @@ class RoleController extends Controller
                 Role::destroy($post);
                 throw new ApiException(['code'=>0,'msg'=>'操作成功','data'=>['redirect'=>$redirect]]);
             }else{
-                throw new ApiException(['code'=>1,'msg'=>'请先删除目录内的菜单','data'=>['redirect'=>$redirect]]);
+                throw new ApiException(['code'=>1,'msg'=>'请先删除目录内的角色','data'=>['redirect'=>$redirect]]);
             }
         }
     }

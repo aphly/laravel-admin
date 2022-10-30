@@ -14,7 +14,7 @@
         </div>
         </form>
         <div class="">
-            <a class="badge badge-primary ajax_get show_all0_btn" data-href="/admin/banned/form">添加</a>
+            <a class="badge badge-primary ajax_get show_all0_btn" data-href="/admin/banned/add">添加</a>
         </div>
     </div>
 
@@ -43,7 +43,7 @@
                                 @endif
                             </li>
                             <li>
-                                <a class="badge badge-info ajax_get" data-href="/admin/banned/form?id={{$v['id']}}">编辑</a>
+                                <a class="badge badge-info ajax_get" data-href="/admin/banned/edit?id={{$v['id']}}">编辑</a>
                             </li>
                         </ul>
                     @endforeach

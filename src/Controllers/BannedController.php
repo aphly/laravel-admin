@@ -24,6 +24,30 @@ class BannedController extends Controller
         return $this->makeView('laravel-admin::banned.index', ['res' => $res]);
     }
 
+	public function add(Request $request)
+	{
+		if($request->isMethod('post')){
+			$input = $request->all();
+			$input['uuid'] = $this->manager->uuid;
+			Banned::create($input);
+			throw new ApiException(['code'=>0,'msg'=>'success','data'=>['redirect'=>$this->index_url]]);
+		}else{
+			$res['info'] = Banned::where('id',$request->query('id',0))->firstOrNew();
+			return $this->makeView('laravel-admin::banned.form',['res'=>$res]);
+		}
+	}
+
+	public function edit(Request $request)
+	{
+		$res['info'] = Banned::where('id',$request->query('id',0))->firstOrError();
+		if($request->isMethod('post')){
+			$res['info']->update($request->all());
+			throw new ApiException(['code' => 0, 'msg' => 'success', 'data' => ['redirect' => $this->index_url]]);
+		}else{
+			return $this->makeView('laravel-admin::banned.form',['res'=>$res]);
+		}
+	}
+
     public function form(Request $request)
     {
         $res['info'] = Banned::where('id',$request->query('id',0))->firstOrNew();

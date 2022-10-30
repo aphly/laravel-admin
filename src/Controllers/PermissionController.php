@@ -27,55 +27,44 @@ class PermissionController extends Controller
                         //->where('pid',$pid)
                         ->orderBy('id', 'desc')
                         ->Paginate(config('admin.perPage'))->withQueryString();
-//        $res['parent'] = $this->parentInfo($pid);
-//        $res['permission'] = Permission::where('status',1)->orderBy('sort', 'desc')->get()->toArray();
         return $this->makeView('laravel-admin::permission.index',['res'=>$res]);
     }
 
-
-    public function parentInfo($pid)
-    {
-        $parent = Permission::where('id', '=', $pid)->first();
-        return !is_null($parent) ? $parent->toArray() : [];
-    }
 
     public function add(PermissionRequest $request)
     {
         if($request->isMethod('post')) {
             $post = $request->all();
-            $role = Permission::create($post);
-            if($role->id){
-                Cache::forget('role_permission');
-                throw new ApiException(['code'=>0,'msg'=>'添加成功','data'=>['redirect'=>$this->index_url($post)]]);
-            }else{
-                throw new ApiException(['code'=>1,'msg'=>'添加失败']);
-            }
+            $permission = Permission::create($post);
+			$form_edit = $request->input('form_edit',0);
+			if($permission->id){
+				Cache::forget('role_permission');
+				throw new ApiException(['code'=>0,'msg'=>'添加成功','data'=>['redirect'=>$form_edit?$this->index_url($post):'/admin/permission/show']]);
+			}else{
+				throw new ApiException(['code'=>1,'msg'=>'添加失败','data'=>[]]);
+			}
         }else{
             $res['title'] = '';
-            $res['pid'] = $pid =  $request->query('pid',0);
-            $res['parent'] = $this->parentInfo($pid);
-            return $this->makeView('laravel-admin::permission.add',['res'=>$res]);
+			$res['info'] = Permission::where('id',$request->query('id',0))->firstOrNew();
+            return $this->makeView('laravel-admin::permission.form',['res'=>$res]);
         }
     }
 
     public function edit(PermissionRequest $request)
     {
+		$res['info'] = Permission::where('id',$request->query('id',0))->firstOrError();
         if($request->isMethod('post')) {
-            $role = Permission::find($request->id);
             $post = $request->all();
-            if($role->update($post)){
-                Cache::forget('role_permission');
-                throw new ApiException(['code'=>0,'msg'=>'修改成功','data'=>['redirect'=>$this->index_url($post)]]);
-            }else{
-                throw new ApiException(['code'=>1,'msg'=>'修改失败']);
-            }
+			$form_edit = $request->input('form_edit',0);
+			if($res['info']->update($post)){
+				Cache::forget('role_permission');
+				throw new ApiException(['code'=>0,'msg'=>'修改成功','data'=>['redirect'=>$form_edit?$this->index_url($post):'/admin/permission/show']]);
+			}else{
+				throw new ApiException(['code'=>1,'msg'=>'修改失败','data'=>[]]);
+			}
         }else{
-            $res['title'] = '';
-            $res['info'] = Permission::find($request->id);
-//            $res['pid'] = $pid =  $request->query('pid',0);
-//            $res['parent'] = $this->parentInfo($pid);
             $res['module'] = (new Module)->getByCache();
-            return $this->makeView('laravel-admin::permission.edit',['res'=>$res]);
+            return $this->makeView('laravel-admin::permission.form',['res'=>$res]);
         }
     }
 

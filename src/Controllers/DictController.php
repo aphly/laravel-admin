@@ -27,6 +27,33 @@ class DictController extends Controller
         return $this->makeView('laravel-admin::dict.index', ['res' => $res]);
     }
 
+	public function add(Request $request)
+	{
+		if($request->isMethod('post')){
+			$this->save($request);
+		}else{
+			$res['info'] = Dict::where('id',$request->query('id',0))->firstOrNew();
+			$res['dictValue'] = [];
+			$res['module'] = (new Module)->getByCache();
+			return $this->makeView('laravel-admin::dict.form',['res'=>$res]);
+		}
+	}
+
+	public function edit(Request $request)
+	{
+		if($request->isMethod('post')){
+			$this->save($request);
+		}else{
+			$res['dictValue'] = [];
+			$res['info'] = Dict::where('id',$request->query('id',0))->firstOrError();
+			if($res['info']->id){
+				$res['dictValue'] = DictValue::where('dict_id',$res['info']->id)->orderBy('sort','desc')->get();
+			}
+			$res['module'] = (new Module)->getByCache();
+			return $this->makeView('laravel-admin::dict.form',['res'=>$res]);
+		}
+	}
+
     public function form(Request $request)
     {
         $res['dictValue'] = [];
@@ -38,7 +65,7 @@ class DictController extends Controller
         return $this->makeView('laravel-admin::dict.form',['res'=>$res]);
     }
 
-    public function save(Request $request){
+    public function save($request){
         $input = $request->all();
         $input['key'] = trim($input['key']);
         $dict = Dict::updateOrCreate(['id'=>$request->query('id',0)],$input);

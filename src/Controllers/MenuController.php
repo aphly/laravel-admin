@@ -27,47 +27,42 @@ class MenuController extends Controller
         return $this->makeView('laravel-admin::menu.index', ['res' => $res]);
     }
 
-    public function parentInfo($pid)
-    {
-        $parent = Menu::where('id', '=', $pid)->first();
-        return !is_null($parent) ? $parent->toArray() : [];
-    }
+
 
     public function add(MenuRequest $request)
     {
         if($request->isMethod('post')) {
             $post = $request->all();
-            $role = Menu::create($post);
-            if($role->id){
-                Cache::forget('role_menu');
-                throw new ApiException(['code'=>0,'msg'=>'添加成功','data'=>['redirect'=>$this->index_url($post)]]);
-            }else{
-                throw new ApiException(['code'=>1,'msg'=>'添加失败']);
-            }
+            $menu = Menu::create($post);
+			$form_edit = $request->input('form_edit',0);
+			if($menu->id){
+				Cache::forget('role_menu');
+				throw new ApiException(['code'=>0,'msg'=>'添加成功','data'=>['redirect'=>$form_edit?$this->index_url($post):'/admin/menu/show']]);
+			}else{
+				throw new ApiException(['code'=>1,'msg'=>'添加失败','data'=>[]]);
+			}
         }else{
             $res['title'] = '';
-            $res['pid'] = $pid =  $request->query('pid',0);
-            $res['parent'] = $this->parentInfo($pid);
-            return $this->makeView('laravel-admin::menu.add',['res'=>$res]);
+			$res['info'] = Menu::where('id',$request->query('id',0))->firstOrNew();
+            return $this->makeView('laravel-admin::menu.form',['res'=>$res]);
         }
     }
 
     public function edit(MenuRequest $request)
     {
+		$res['info'] = Menu::where('id',$request->query('id',0))->firstOrError();
         if($request->isMethod('post')) {
-            $role = Menu::find($request->id);
             $post = $request->all();
-            if($role->update($post)){
-                Cache::forget('role_menu');
-                throw new ApiException(['code'=>0,'msg'=>'修改成功','data'=>['redirect'=>$this->index_url($post)]]);
-            }else{
-                throw new ApiException(['code'=>1,'msg'=>'修改失败']);
-            }
+			$form_edit = $request->input('form_edit',0);
+			if($res['info']->update($post)){
+				Cache::forget('role_menu');
+				throw new ApiException(['code'=>0,'msg'=>'修改成功','data'=>['redirect'=>$form_edit?$this->index_url($post):'/admin/menu/show']]);
+			}else{
+				throw new ApiException(['code'=>1,'msg'=>'修改失败','data'=>[]]);
+			}
         }else{
-            $res['title'] = '';
-            $res['info'] = Menu::find($request->id);
             $res['module'] = (new Module)->getByCache();
-            return $this->makeView('laravel-admin::menu.edit',['res'=>$res]);
+            return $this->makeView('laravel-admin::menu.form',['res'=>$res]);
         }
     }
 

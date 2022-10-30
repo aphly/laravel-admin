@@ -3,7 +3,7 @@
     <h5 class="nav-title">IP</h5>
 </div>
 <div class="imain">
-    <form method="post" @if($res['info']->id) action="/admin/banned/save?id={{$res['info']->id}}" @else action="/admin/banned/save" @endif class="save_form">
+    <form method="post" @if($res['info']->id) action="/admin/banned/edit?id={{$res['info']->id}}" @else action="/admin/banned/add" @endif class="save_form">
         @csrf
         <div class="">
             <div class="form-group">

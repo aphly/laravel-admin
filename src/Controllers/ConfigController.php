@@ -25,10 +25,42 @@ class ConfigController extends Controller
         return $this->makeView('laravel-admin::config.index', ['res' => $res]);
     }
 
+	public function add(Request $request)
+	{
+		if($request->isMethod('post')){
+			$input = $request->all();
+			$input['type'] = trim($input['type']);
+			$input['key'] = trim($input['key']);
+			Config::create($input);
+			Cache::forget('admin_config');
+			throw new ApiException(['code'=>0,'msg'=>'success','data'=>['redirect'=>$this->index_url]]);
+		}else{
+			$res['info'] = Config::where('id',$request->query('id',0))->firstOrNew();
+			$res['module'] = (new Module)->getByCache();
+			return $this->makeView('laravel-admin::config.form',['res'=>$res]);
+		}
+	}
+
+	public function edit(Request $request)
+	{
+		$res['info'] = Config::where('id',$request->query('id',0))->firstOrError();
+		$res['module'] = (new Module)->getByCache();
+		if($request->isMethod('post')){
+			$input = $request->all();
+			$input['type'] = trim($input['type']);
+			$input['key'] = trim($input['key']);
+			$res['info']->update($input);
+			Cache::forget('admin_config');
+			throw new ApiException(['code' => 0, 'msg' => 'success', 'data' => ['redirect' => $this->index_url]]);
+		}else{
+			return $this->makeView('laravel-admin::config.form',['res'=>$res]);
+		}
+	}
+
     public function form(Request $request)
     {
         $res['setting'] = Config::where('id',$request->query('id',0))->firstOrNew();
-        $res['module'] = (new Module)->getByCache();
+
         return $this->makeView('laravel-admin::config.form',['res'=>$res]);
     }
 

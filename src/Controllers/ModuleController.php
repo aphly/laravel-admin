@@ -24,12 +24,47 @@ class ModuleController extends Controller
                         ->Paginate(config('admin.perPage'))->withQueryString();
         return $this->makeView('laravel-admin::module.index', ['res' => $res]);
     }
+	public function add(Request $request)
+	{
+		if($request->isMethod('post')){
+			$input = $request->all();
+			$input['key'] = trim($input['key']);
+			Module::create($input);
+			Cache::forget('module');
+			throw new ApiException(['code'=>0,'msg'=>'success','data'=>['redirect'=>$this->index_url]]);
+		}else{
+			$res['info'] = Module::where('id',$request->query('id',0))->firstOrNew();
+			return $this->makeView('laravel-admin::module.form',['res'=>$res]);
+		}
+	}
+
+	public function edit(Request $request)
+	{
+		$res['info'] = Module::where('id',$request->query('id',0))->firstOrError();
+		if($request->isMethod('post')){
+			$input = $request->all();
+			$input['key'] = trim($input['key']);
+			$res['info']->update($input);
+			Cache::forget('module');
+			throw new ApiException(['code' => 0, 'msg' => 'success', 'data' => ['redirect' => $this->index_url]]);
+		}else{
+			return $this->makeView('laravel-admin::module.form',['res'=>$res]);
+		}
+	}
 
     public function form(Request $request)
     {
         $res['module'] = Module::where('id',$request->query('id',0))->firstOrNew();
         return $this->makeView('laravel-admin::module.form',['res'=>$res]);
     }
+
+	public function save(Request $request){
+		$input = $request->all();
+		$input['key'] = trim($input['key']);
+		Module::updateOrCreate(['id'=>$request->query('id',0)],$input);
+		Cache::forget('module');
+		throw new ApiException(['code'=>0,'msg'=>'success','data'=>['redirect'=>$this->index_url]]);
+	}
 
     public function install(Request $request)
     {
@@ -49,14 +84,6 @@ class ModuleController extends Controller
             $info->save();
         }
         throw new ApiException(['code'=>0,'msg'=>'操作成功','data'=>['redirect'=>$this->index_url]]);
-    }
-
-    public function save(Request $request){
-        $input = $request->all();
-        $input['key'] = trim($input['key']);
-        Module::updateOrCreate(['id'=>$request->query('id',0)],$input);
-        Cache::forget('module');
-        throw new ApiException(['code'=>0,'msg'=>'success','data'=>['redirect'=>$this->index_url]]);
     }
 
     public function del(Request $request)

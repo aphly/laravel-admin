@@ -3,29 +3,29 @@
     <h5 class="nav-title">字典</h5>
 </div>
 <div class="imain">
-    <form method="post" @if($res['dict']->id) action="/admin/dict/save?id={{$res['dict']->id}}" @else action="/admin/dict/save" @endif class="save_form">
+    <form method="post" @if($res['info']->id) action="/admin/dict/edit?id={{$res['info']->id}}" @else action="/admin/dict/add" @endif class="save_form">
         @csrf
         <div class="">
             <div class="form-group">
                 <label for="">名称</label>
-                <input type="text" name="name" class="form-control " value="{{$res['dict']->name}}">
+                <input type="text" name="name" class="form-control " value="{{$res['info']->name}}">
                 <div class="invalid-feedback"></div>
             </div>
             <div class="form-group">
                 <label for="">key</label>
-                <input type="text" name="key" class="form-control " value="{{$res['dict']->key}}">
+                <input type="text" name="key" class="form-control " value="{{$res['info']->key}}">
                 <div class="invalid-feedback"></div>
             </div>
             <div class="form-group">
                 <label for="">排序</label>
-                <input type="number" name="sort" class="form-control " value="{{$res['dict']->sort??0}}">
+                <input type="number" name="sort" class="form-control " value="{{$res['info']->sort??0}}">
                 <div class="invalid-feedback"></div>
             </div>
             <div class="form-group" id="status">
                 <label for="">模块</label>
                 <select name="module_id" class="form-control">
                     @foreach($res['module'] as $key=>$val)
-                        <option value="{{$key}}" @if($key==$res['dict']->module_id) selected @endif>{{$val}}</option>
+                        <option value="{{$key}}" @if($key==$res['info']->module_id) selected @endif>{{$val}}</option>
                     @endforeach
                 </select>
                 <div class="invalid-feedback"></div>

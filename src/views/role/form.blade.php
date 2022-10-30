@@ -3,10 +3,11 @@
     <h5 class="nav-title">角色编辑</h5>
 </div>
 <div class="imain">
-    <form method="post" action="/admin/role/{{$res['info']['id']}}/edit" class="save_form">
+    <form method="post" @if($res['info']->id) action="/admin/role/edit?id={{$res['info']['id']}}" @else action="/admin/role/edit" @endif class="save_form">
         @csrf
+        <input type="hidden" name="form_edit" value="1">
         <div class="">
-            <div class="form-group" id="status">
+            <div class="form-group" >
                 <label for="">模块</label>
                 <select name="module_id" class="form-control" disabled="disabled">
                     @foreach($res['module'] as $key=>$val)
@@ -39,7 +40,7 @@
             </div>
             <div class="form-group">
                 <label for="">排序</label>
-                <input type="text" name="sort" class="form-control " value="{{$res['info']['sort']}}">
+                <input type="number" name="sort" class="form-control " value="{{$res['info']['sort']??0}}">
                 <div class="invalid-feedback"></div>
             </div>
             <button class="btn btn-primary" type="submit">保存</button>

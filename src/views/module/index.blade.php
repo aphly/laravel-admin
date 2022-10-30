@@ -14,7 +14,7 @@
         </div>
         </form>
         <div class="">
-            <a class="badge badge-primary ajax_get show_all0_btn" data-href="/admin/module/form">添加</a>
+            <a class="badge badge-primary ajax_get show_all0_btn" data-href="/admin/module/add">添加</a>
         </div>
     </div>
 
@@ -32,7 +32,7 @@
                 </ul>
                 @if($res['list']->total())
                     @foreach($res['list'] as $v)
-                        @if(class_exists($v['classname']))
+
                         <ul class="table_tbody">
                             <li><input type="checkbox" class="delete_box" name="delete[]" value="{{$v['id']}}">{{$v['id']}}</li>
                             <li>{{ $v['name'] }}</li>
@@ -46,18 +46,20 @@
                             </li>
                             <li>{{$v['sort']}}</li>
                             <li>
-                                <a class="badge badge-info ajax_get" data-href="/admin/module/form?id={{$v['id']}}">编辑</a>
+                                <a class="badge badge-info ajax_get" data-href="/admin/module/edit?id={{$v['id']}}">编辑</a>
                                 @if($v['id']==1)
                                 @else
-                                    @if($v['status']==1)
-                                        <a class="badge badge-primary ajax_post" data-href="/admin/module/install?id={{$v['id']}}&status=0">卸载</a>
-                                    @else
-                                        <a class="badge badge-primary ajax_post" data-href="/admin/module/install?id={{$v['id']}}&status=1">安装</a>
+                                    @if(class_exists($v['classname']))
+                                        @if($v['status']==1)
+                                            <a class="badge badge-primary ajax_post" data-href="/admin/module/install?id={{$v['id']}}&status=0">卸载</a>
+                                        @else
+                                            <a class="badge badge-primary ajax_post" data-href="/admin/module/install?id={{$v['id']}}&status=1">安装</a>
+                                        @endif
                                     @endif
                                 @endif
                             </li>
                         </ul>
-                        @endif
+
                     @endforeach
                     <ul class="table_bottom">
                         <li>

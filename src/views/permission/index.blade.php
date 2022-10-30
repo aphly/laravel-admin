@@ -57,7 +57,7 @@
 {{--                                @if(!$v['is_leaf'])--}}
 {{--                                    <a class="badge badge-primary ajax_get" data-href="/admin/permission/index?pid={{$v['id']}}">进入</a>--}}
 {{--                                @endif--}}
-                                <a class="badge badge-info ajax_get" data-href="/admin/permission/{{$v['id']}}/edit">编辑</a>
+                                <a class="badge badge-info ajax_get" data-href="/admin/permission/edit?id={{$v['id']}}">编辑</a>
                             </li>
                         </ul>
                     @endforeach

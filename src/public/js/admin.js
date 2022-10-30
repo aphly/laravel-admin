@@ -28,8 +28,8 @@ function selectData(data,select_ids=false) {
 //fast_show_start
 function fast_show_btn($role=false) {
     $(fast_form).hide();
-    if(id){
-        if(listById[id].is_leaf){
+    if(id || pid){
+        if(listById[pid].is_leaf){
             if($role){
                 $('#show_btn').html(`<div class="d-flex fast_form_btn justify-content-between">
                                         <div class="d-flex">
@@ -50,27 +50,30 @@ function fast_show_btn($role=false) {
 }
 function fast_show_make_form(type) {
     $(fast_form).show();
-    $(fast_form+' .module_id').hide()
+    $(fast_form+' .module_div').hide()
     for (let i in hide_id) {
         $(hide_id[i]).show();
     }
     if(type==='add'){
+        id = 0;
         $(fast_form+' select[name="is_leaf"]').removeAttr("disabled");
-        if(id){
-            for(let i in listById[id]) {
+        if(pid){
+            for(let i in listById[pid]) {
                 $(fast_form + ' input[name="' + i + '"]').val('');
                 $(fast_form + ' select[name="' + i + '"]').val(1);
                 $(fast_form + ' textarea[name="' + i + '"]').val('');
             }
-            $(fast_form+' input[name="pid"]').val(listById[id]['id']);
+            $(fast_form+' input[type="number"]').val(0);
+            $(fast_form+' input[name="pid"]').val(listById[pid]['id']);
             //$(fast_form+' .p_name').val(listById[id]['name']);
         }else{
             $(fast_form+' form')[0].reset();
             $(fast_form+' input[name="pid"]').val(0);
-            $(fast_form+' .module_id').show()
-            $(fast_form+' .module_id select').removeAttr("disabled");
+            $(fast_form+' .module_div').show()
+            $(fast_form+' .module_div select').removeAttr("disabled");
         }
     }else{
+        pid = 0;
         $(fast_form+' select[name="is_leaf"]').attr("disabled","disabled");
         if(id){
             for(let i in listById[id]){
@@ -83,8 +86,8 @@ function fast_show_make_form(type) {
                 // }
             }
             if(!listById[id]['pid']){
-                $(fast_form+' .module_id').show()
-                $(fast_form+' .module_id select').attr("disabled","disabled");
+                $(fast_form+' .module_div').show()
+                $(fast_form+' .module_div select').attr("disabled","disabled");
             }
             if(!listById[id]['is_leaf']) {
                 for (let i in hide_id) {
@@ -95,7 +98,12 @@ function fast_show_make_form(type) {
     }
 }
 function fast_save() {
-    let url = fast_save_url+'?id='+id
+    let url = '';
+    if(id){
+        url = fast_save_url+'/edit?id='+id
+    }else{
+        url = fast_save_url+'/add'
+    }
     let btn_html = $(fast_form+' button[type="submit"]').html();
     $.ajax({
         url,

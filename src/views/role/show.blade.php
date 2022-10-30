@@ -17,6 +17,15 @@
                         @csrf
                         <input type="hidden" name="pid" class="form-control" value="0" >
                         <div class="">
+                            <div class="form-group module_div" style="display: none;">
+                                <label for="">模块</label>
+                                <select name="module_id" class="form-control">
+                                    @foreach($res['module'] as $key=>$val)
+                                        <option value="{{$key}}">{{$val}}</option>
+                                    @endforeach
+                                </select>
+                                <div class="invalid-feedback"></div>
+                            </div>
                             <div class="form-group">
                                 <label for="">类型</label>
                                 <select name="is_leaf" id="is_leaf" class="form-control">
@@ -41,7 +50,7 @@
                             </div>
                             <div class="form-group">
                                 <label for="">排序</label>
-                                <input type="text" name="sort" class="form-control " value="0">
+                                <input type="number" name="sort" class="form-control " value="0">
                                 <div class="invalid-feedback"></div>
                             </div>
                         </div>
@@ -60,8 +69,8 @@
     var list = @json($res['list']);
     var listById = @json($res['listById']);
     var data = toTree(selectData(list,false))
-    var id = 0;
-    var fast_save_url = '/admin/role/save';
+    var id = 0,pid = 0;
+    var fast_save_url = '/admin/role';
     var fast_del_url = '/admin/role/del';
     var fast_del_url_return = '/admin/role/show';
     var _token = '{{csrf_token()}}';
@@ -75,11 +84,11 @@
             expandIcon:'uni app-arrow-right',
             data,
             onNodeSelected: function(event, data) {
-                id = data.id
+                id = pid = data.id
                 fast_show_btn(true)
             },
             onNodeUnselected: function(event, data) {
-                id = 0
+                id = pid = 0
                 fast_show_btn(true)
             },
         });
