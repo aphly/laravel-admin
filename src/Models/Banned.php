@@ -22,5 +22,15 @@ class Banned extends Model
         });
     }
 
-
+    public function isExist($ip)
+    {
+        $data = $this->getByCache();
+        if($data){
+           $ips = array_column($data,'ip');
+           if(in_array($ip,$ips)){
+               return true;
+           }
+        }
+        return false;
+    }
 }
