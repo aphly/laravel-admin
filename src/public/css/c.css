@@ -59,3 +59,8 @@ ul,li,p,dl,dd{padding: 0;margin: 0;}
     }
 }
 
+/*滚动条*/
+div::-webkit-scrollbar{width: 4px;height: 12px;}
+div::-webkit-scrollbar-track { background: #efefef; border-radius: 10px;}
+div::-webkit-scrollbar-thumb {background: #ccc;border-radius: 10px;}
+/*滚动条*/

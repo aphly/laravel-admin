@@ -8,7 +8,6 @@ use Aphly\LaravelAdmin\Middleware\Common;
 use Aphly\LaravelAdmin\Middleware\Cross;
 use Aphly\LaravelAdmin\Middleware\ManagerAuth;
 use Aphly\LaravelAdmin\Middleware\Rbac;
-use Illuminate\Database\Eloquent\Builder;
 
 class AdminServiceProvider extends ServiceProvider
 {
@@ -45,16 +44,7 @@ class AdminServiceProvider extends ServiceProvider
         $this->addRouteMiddleware('cross', Cross::class);
 		$this->addDontReport(ApiException::class);
 		//$this->addApiException([[ModelNotFoundException::class,ApiException::class]]);
-
-		Builder::macro('firstOrError', function () {
-			$info = $this->first();
-			if (!empty($info)) {
-				return $info;
-			}else{
-				throw new ApiException(['code'=>1,'msg'=>'error']);
-			}
-
-		});
+        $this->addBuilder();
     }
 
 
