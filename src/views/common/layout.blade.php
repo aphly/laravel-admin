@@ -60,19 +60,19 @@
                             </div>
                         </a>
                         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuLink">
-                            <a class="dropdown-item " href="#" style="display: none;">Action</a>
+                            <a class="dropdown-item layout_ajax_post" href="/admin/cache">清空缓存</a>
                             <div class="dropdown-divider"></div>
                             <a class="dropdown-item text-danger layout_ajax_post " href="/admin/logout">退出</a>
                         </div>
                     </div>
-                    <div class="dropdown">
+                    <div class="dropdown d-none">
                         <a style="display: block" href="#" role="button" data-target=”#dropdownsettingbox” id="dropdownsetting" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <div class="setting">
                                 <i class="uni app-xitong"></i>
                             </div>
                         </a>
                         <div class="dropdown-menu dropdown-menu-right" id="dropdownsettingbox" aria-labelledby="dropdownsetting">
-                            <a class="dropdown-item layout_ajax_post" href="/admin/cache">清空缓存</a>
+
                         </div>
                     </div>
                 </div>
