@@ -33,7 +33,9 @@ mysql5.7+<br>
 2、 `composer dump-autoload`<br>
 3、 `php artisan storage:link`<br>
 4、 后台不显示清下缓存<br>
-5、`php artisan view:cache`<br>
+5、`php artisan config:cache`<br>
+6、`php artisan route:cache`<br>
+7、`php artisan view:cache`<br>
 
 ![image](https://github.com/aphly/laravel-admin/blob/main/logo.png)
 因和谐原因，如果图片不显示，请修改本地hosts
