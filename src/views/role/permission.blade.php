@@ -25,34 +25,43 @@
 </div>
 
 <script>
-    var permission = @json($res['permission']);
-    var select_ids = @json($res['select_ids']);
-    var data = toTree(treeData(permission,select_ids))
-    $(function () {
-        var bTree =$('#tree').treeview({
-            levels: 3,
-            collapseIcon:'uni app-arrow-right-copy',
-            expandIcon:'uni app-arrow-right',
-            data,
-            multiSelect:true,
-            onNodeSelected: function(event, data) {
-                makeInput();
-            },
-            onNodeUnselected: function(event, data) {
-                makeInput();
-            },
-        });
-        var makeInput = function () {
-            let arr = bTree.treeview('getSelected');
-            let html = '';
-            for(let i in arr){
-                html += `<div data-nodeid="${arr[i].nodeId}"><input type="hidden" name="permission_id[]" value="${arr[i].id}">${arr[i].text} <span class="uni app-guanbi"></span></div> `
-            }
-            $("#select_ids").html(html);
+    var treeGlobal = {
+        permission : @json($res['permission']),
+        select_ids : @json($res['select_ids'])
+    }
+    treeGlobal.data = toTree(treeData(treeGlobal.permission,treeGlobal.select_ids));
+
+    function makeInput() {
+        let arr = mountTree.treeview('getSelected');
+        let html = '';
+        for(let i in arr){
+            html += `<div data-nodeid="${arr[i].nodeId}"><input type="hidden" name="permission_id[]" value="${arr[i].id}">${arr[i].text} <span class="uni app-guanbi"></span></div> `
         }
+        $("#select_ids").html(html);
+    }
+
+    var mountTree =$('#tree').treeview({
+        levels: 3,
+        collapseIcon:'uni app-arrow-right-copy',
+        expandIcon:'uni app-arrow-right',
+        data:treeGlobal.data,
+        multiSelect:true,
+        onNodeSelected: function(event, data) {
+            makeInput();
+        },
+        onNodeUnselected: function(event, data) {
+            makeInput();
+        },
+    });
+
+    function mount() {
         makeInput();
         $('#select_ids').on('click','div', function () {
-            bTree.treeview('unselectNode', [ $(this).data('nodeid'), { silent: false } ]);
+            mountTree.treeview('unselectNode', [ $(this).data('nodeid'), { silent: false } ]);
         });
+    }
+
+    $(function () {
+        mount()
     })
 </script>

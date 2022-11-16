@@ -65,31 +65,35 @@
    .fast_form_btn a.ajax_get { line-height: 34px;padding: 0 15px;}
 </style>
 <script>
-    var fast_form = '#fast_form';
-    var list = @json($res['list']);
-    var listById = @json($res['listById']);
-    var data = toTree(selectData(list,false))
-    var id = 0,pid = 0;
-    var fast_save_url = '/admin/role';
-    var fast_del_url = '/admin/role/del';
-    var fast_del_url_return = '/admin/role/show';
-    var _token = '{{csrf_token()}}';
-    var hide_id = ['#status']
+    var treeGlobal = {
+        fast_form : '#fast_form',
+        list : @json($res['list']),
+        listById:@json($res['listById']),
+        data:[],
+        id:0,
+        pid:0,
+        fast_save_url:'/admin/role',
+        fast_del_url:'/admin/role/del',
+        fast_del_url_return:'/admin/role/show',
+        _token:'{{csrf_token()}}',
+        hide_id:['#status']
+    }
+    treeGlobal.data = toTree(selectData(treeGlobal.list,false));
 
-    $(function () {
+    function mount() {
         fast_show_btn(true)
         $('#tree').treeview({
             levels: 3,
             collapseIcon:'uni app-arrow-right-copy',
             expandIcon:'uni app-arrow-right',
-            data,
+            data:treeGlobal.data,
             onNodeSelected: function(event, data) {
-                id = pid = data.id
-                fast_show_btn(true)
+                treeGlobal.id = treeGlobal.pid = data.id
+                fast_show_btn()
             },
             onNodeUnselected: function(event, data) {
-                id = pid = 0
-                fast_show_btn(true)
+                treeGlobal.id = treeGlobal.pid = 0
+                fast_show_btn()
             },
         });
         $('#show_btn').on('click','span',function () {
@@ -102,6 +106,9 @@
                 $('#status').hide();
             }
         })
+    }
+    $(function () {
+        mount()
     })
 
 </script>

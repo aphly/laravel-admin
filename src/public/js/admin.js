@@ -27,15 +27,15 @@ function selectData(data,select_ids=false) {
 
 //fast_show_start
 function fast_show_btn($role=false) {
-    $(fast_form).hide();
-    if(id || pid){
-        if(listById[pid].is_leaf){
+    $(treeGlobal.fast_form).hide();
+    if(treeGlobal.id || treeGlobal.pid){
+        if(treeGlobal.listById[treeGlobal.pid].is_leaf){
             if($role){
                 $('#show_btn').html(`<div class="d-flex fast_form_btn justify-content-between">
                                         <div class="d-flex">
                                             <span onclick="fast_show_make_form('edit')">编辑</span>
-                                            <a class="badge badge-success ajax_get" data-href="/admin/role/${id}/permission">授权</a>
-                                            <a class="badge badge-success ajax_get" data-href="/admin/role/${id}/menu">菜单</a>
+                                            <a class="badge badge-success ajax_get" data-href="/admin/role/${treeGlobal.id}/permission">授权</a>
+                                            <a class="badge badge-success ajax_get" data-href="/admin/role/${treeGlobal.id}/menu">菜单</a>
                                         </div> <div class="fast_del" onclick="fast_del()">删除</div>
                                     </div>`)
             }else{
@@ -49,49 +49,49 @@ function fast_show_btn($role=false) {
     }
 }
 function fast_show_make_form(type) {
-    $(fast_form).show();
-    $(fast_form+' .module_div').hide()
-    for (let i in hide_id) {
-        $(hide_id[i]).show();
+    $(treeGlobal.fast_form).show();
+    $(treeGlobal.fast_form+' .module_div').hide()
+    for (let i in treeGlobal.hide_id) {
+        $(treeGlobal.hide_id[i]).show();
     }
     if(type==='add'){
-        id = 0;
-        $(fast_form+' select[name="is_leaf"]').removeAttr("disabled");
-        if(pid){
-            for(let i in listById[pid]) {
-                $(fast_form + ' input[name="' + i + '"]').val('');
-                $(fast_form + ' select[name="' + i + '"]').val(1);
-                $(fast_form + ' textarea[name="' + i + '"]').val('');
+        treeGlobal.id = 0;
+        $(treeGlobal.fast_form+' select[name="is_leaf"]').removeAttr("disabled");
+        if(treeGlobal.pid){
+            for(let i in treeGlobal.listById[treeGlobal.pid]) {
+                $(treeGlobal.fast_form + ' input[name="' + i + '"]').val('');
+                $(treeGlobal.fast_form + ' select[name="' + i + '"]').val(1);
+                $(treeGlobal.fast_form + ' textarea[name="' + i + '"]').val('');
             }
-            $(fast_form+' input[type="number"]').val(0);
-            $(fast_form+' input[name="pid"]').val(listById[pid]['id']);
+            $(treeGlobal.fast_form+' input[type="number"]').val(0);
+            $(treeGlobal.fast_form+' input[name="pid"]').val(treeGlobal.listById[treeGlobal.pid]['id']);
             //$(fast_form+' .p_name').val(listById[id]['name']);
         }else{
-            $(fast_form+' form')[0].reset();
-            $(fast_form+' input[name="pid"]').val(0);
-            $(fast_form+' .module_div').show()
-            $(fast_form+' .module_div select').removeAttr("disabled");
+            $(treeGlobal.fast_form+' form')[0].reset();
+            $(treeGlobal.fast_form+' input[name="pid"]').val(0);
+            $(treeGlobal.fast_form+' .module_div').show()
+            $(treeGlobal.fast_form+' .module_div select').removeAttr("disabled");
         }
     }else{
-        pid = 0;
-        $(fast_form+' select[name="is_leaf"]').attr("disabled","disabled");
-        if(id){
-            for(let i in listById[id]){
-                $(fast_form+' input[name="'+i+'"]').val(listById[id][i]);
-                $(fast_form+' select[name="'+i+'"]').val(listById[id][i]);
-                $(fast_form+' textarea[name="'+i+'"]').val(listById[id][i]);
+        treeGlobal.pid = 0;
+        $(treeGlobal.fast_form+' select[name="is_leaf"]').attr("disabled","disabled");
+        if(treeGlobal.id){
+            for(let i in treeGlobal.listById[treeGlobal.id]){
+                $(treeGlobal.fast_form+' input[name="'+i+'"]').val(treeGlobal.listById[treeGlobal.id][i]);
+                $(treeGlobal.fast_form+' select[name="'+i+'"]').val(treeGlobal.listById[treeGlobal.id][i]);
+                $(treeGlobal.fast_form+' textarea[name="'+i+'"]').val(treeGlobal.listById[treeGlobal.id][i]);
                 // if(i=='pid'){
                 //     let pid = listById[id][i];
                 //     $(fast_form+' .p_name').val(listById[pid]['name']);
                 // }
             }
-            if(!listById[id]['pid']){
-                $(fast_form+' .module_div').show()
-                $(fast_form+' .module_div select').attr("disabled","disabled");
+            if(!treeGlobal.listById[treeGlobal.id]['pid']){
+                $(treeGlobal.fast_form+' .module_div').show()
+                $(treeGlobal.fast_form+' .module_div select').attr("disabled","disabled");
             }
-            if(!listById[id]['is_leaf']) {
-                for (let i in hide_id) {
-                    $(hide_id[i]).hide();
+            if(!treeGlobal.listById[treeGlobal.id]['is_leaf']) {
+                for (let i in treeGlobal.hide_id) {
+                    $(treeGlobal.hide_id[i]).hide();
                 }
             }
         }
@@ -99,47 +99,47 @@ function fast_show_make_form(type) {
 }
 function fast_save() {
     let url = '';
-    if(id){
-        url = fast_save_url+'/edit?id='+id
+    if(treeGlobal.id){
+        url = treeGlobal.fast_save_url+'/edit?id='+treeGlobal.id
     }else{
-        url = fast_save_url+'/add'
+        url = treeGlobal.fast_save_url+'/add'
     }
-    let btn_html = $(fast_form+' button[type="submit"]').html();
+    let btn_html = $(treeGlobal.fast_form+' button[type="submit"]').html();
     $.ajax({
         url,
         dataType:'json',
         type:'post',
-        data:$(fast_form+' form').serialize(),
+        data:$(treeGlobal.fast_form+' form').serialize(),
         beforeSend:function () {
-            $(fast_form+' button[type="submit"]').attr('disabled',true).html('<i class="btn_loading app-jiazai uni"></i>');
+            $(treeGlobal.fast_form+' button[type="submit"]').attr('disabled',true).html('<i class="btn_loading app-jiazai uni"></i>');
         },
         success:function (res) {
             if(!res.code) {
                 alert_msg(res)
                 $("#iload").load(res.data.redirect);
             }else if(res.code===11000){
-                form_err_11000(res,fast_form);
+                form_err_11000(res,treeGlobal.fast_form);
             }else{
                 alert_msg(res)
             }
         },
         complete:function(XMLHttpRequest,textStatus){
-            $(fast_form+' button[type="submit"]').removeAttr('disabled').html(btn_html);
+            $(treeGlobal.fast_form+' button[type="submit"]').removeAttr('disabled').html(btn_html);
         }
     })
 }
 
 function fast_del() {
-    if(confirm('确认删除吗') && id){
+    if(confirm('确认删除吗') && treeGlobal.id){
         $.ajax({
-            url:fast_del_url,
+            url:treeGlobal.fast_del_url,
             dataType:'json',
             type:'post',
-            data:{'delete[]':id,_token},
+            data:{'delete[]':treeGlobal.id,'_token':treeGlobal._token},
             success:function (res) {
                 alert_msg(res)
                 if(!res.code) {
-                    $("#iload").load(fast_del_url_return);
+                    $("#iload").load(treeGlobal.fast_del_url_return);
                 }
             }
         })

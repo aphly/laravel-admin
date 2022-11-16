@@ -15,7 +15,6 @@ class MenuController extends Controller
 
     public function index(Request $request)
     {
-        $res = ['title' => '我的'];
         $res['search']['name'] = $name = $request->query('name', false);
         $res['search']['string'] = http_build_query($request->query());
         $res['list'] = Menu::when($name,
@@ -26,8 +25,6 @@ class MenuController extends Controller
                         ->Paginate(config('admin.perPage'))->withQueryString();
         return $this->makeView('laravel-admin::menu.index', ['res' => $res]);
     }
-
-
 
     public function add(MenuRequest $request)
     {

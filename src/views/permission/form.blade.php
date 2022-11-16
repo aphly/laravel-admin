@@ -53,14 +53,19 @@
     </form>
 </div>
 <script>
-    $('#is_leaf').change(function () {
-        if($(this).val()==='1'){
-            $('#controller').show();
-            $('#status').show();
-        }else{
-            $('#controller').hide();
-            $('#status').hide();
-        }
+    function mount() {
+        $('#is_leaf').change(function () {
+            if ($(this).val() === '1') {
+                $('#controller').show();
+                $('#status').show();
+            } else {
+                $('#controller').hide();
+                $('#status').hide();
+            }
+        })
+    }
+    $(function () {
+        mount()
     })
 </script>
 

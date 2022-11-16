@@ -77,35 +77,44 @@
 </div>
 
 <script>
-    var fast_form = '#fast_form';
-    var list = @json($res['list']);
-    var listById = @json($res['listById']);
-    var data = toTree(selectData(list,false))
-    var id = 0,pid = 0;
-    var fast_save_url = '/admin/menu';
-    var fast_del_url = '/admin/menu/del';
-    var fast_del_url_return = '/admin/menu/show';
-    var _token = '{{csrf_token()}}';
-    var hide_id = []
-    $(function () {
+    var treeGlobal = {
+        fast_form : '#fast_form',
+        list : @json($res['list']),
+        listById:@json($res['listById']),
+        data:[],
+        id:0,
+        pid:0,
+        fast_save_url:'/admin/menu',
+        fast_del_url:'/admin/menu/del',
+        fast_del_url_return:'/admin/menu/show',
+        _token:'{{csrf_token()}}',
+        hide_id:[]
+    }
+    treeGlobal.data = toTree(selectData(treeGlobal.list,false));
+
+    function mount(){
         fast_show_btn()
         $('#tree').treeview({
             levels: 3,
             collapseIcon:'uni app-arrow-right-copy',
             expandIcon:'uni app-arrow-right',
-            data,
+            data:treeGlobal.data,
             onNodeSelected: function(event, data) {
-                id = pid = data.id
+                treeGlobal.id = treeGlobal.pid = data.id
                 fast_show_btn()
             },
             onNodeUnselected: function(event, data) {
-                id = pid = 0
+                treeGlobal.id = treeGlobal.pid = 0
                 fast_show_btn()
             },
         });
         $('#show_btn').on('click','span',function () {
             $(this).addClass('curr').siblings().removeClass('curr')
         })
+    }
+
+    $(function () {
+        mount()
     })
 
 </script>
