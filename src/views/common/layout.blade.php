@@ -248,6 +248,7 @@
         })
 
         $("#iload").on('click','a.ajax_get,a.page-link',function (e){
+            $('.modal-backdrop').remove()
             e.preventDefault();
             let ajax = $("#iload");
             ajax.html('');
