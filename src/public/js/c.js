@@ -377,3 +377,13 @@ function uploadfiles(_this,callback){
         console.log('no action'+url)
     }
 }
+
+function debounce(func, delay,...args) {
+    let timer;
+    return function() {
+        clearTimeout(timer);
+        timer = setTimeout(() => {
+            func.apply(this, args);
+        }, delay);
+    }
+}
