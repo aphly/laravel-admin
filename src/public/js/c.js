@@ -378,7 +378,7 @@ function uploadfiles(_this,callback){
     }
 }
 
-function debounce(func, delay,...args) {
+function debounce(func, delay=1000,...args) {
     let timer;
     return function() {
         clearTimeout(timer);
@@ -386,4 +386,12 @@ function debounce(func, delay,...args) {
             func.apply(this, args);
         }, delay);
     }
+}
+
+let debounce_timer;
+function debounce_fn(func,delay=1000,...args) {
+    clearTimeout(debounce_timer);
+    debounce_timer = setTimeout(() => {
+        func.apply(args);
+    }, delay);
 }
