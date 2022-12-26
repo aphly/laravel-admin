@@ -127,6 +127,18 @@
             })
         }
     }
+
+    function save_form_res(res,form_class) {
+        if(!res.code) {
+            iload(res.data.redirect)
+            alert_msg(res)
+        }else if(res.code===11000){
+            form_err_11000(res,form_class);
+        }else{
+            alert_msg(res)
+        }
+    }
+
     $(function (){
         iload('/admin/home/index');
         $('.layout_ajax_post').click(function (e) {
@@ -175,6 +187,7 @@
         $("#iload").on('submit','.save_form',function (){
             let form_class = '.save_form';
             const form = $(this)
+            const fn = form.data('fn') || 'save_form_res'
             if(form[0].checkValidity()===false){
             }else{
                 let url = form.attr("action");
@@ -189,15 +202,7 @@
                             $(form_class+' button[type="submit"]').attr('disabled',true).html('<i class="btn_loading app-jiazai uni"></i>');
                         },
                         success: function(res){
-                            $(form_class+' input.form-control').addClass('is-valid');
-                            if(!res.code) {
-                                iload(res.data.redirect)
-                                alert_msg(res)
-                            }else if(res.code===11000){
-                                form_err_11000(res,form_class);
-                            }else{
-                                alert_msg(res)
-                            }
+                            window[fn](res,form_class);
                         },
                         complete:function(XMLHttpRequest,textStatus){
                             $(form_class+' button[type="submit"]').removeAttr('disabled').html(btn_html);
