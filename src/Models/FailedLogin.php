@@ -12,56 +12,34 @@ class FailedLogin extends Model
     protected $table = 'admin_failed_login';
     protected $primaryKey = 'ip';
     protected $keyType = 'string';
-    public $timestamps = false;
+    //public $timestamps = false;
     public $incrementing = false;
     protected $fillable = [
-        'ip',
-        'count',
-        'lastupdate',
+        'ip','input',
     ];
 
     const LIMITTIMES=5;
+    static $failTimes=0;
 
-    function logincheck($ip) {
-        $currTime = time();
-        $login = self::find($ip);
-        if($login) {
-            if($currTime - $login['lastupdate'] > 900){
-                $login->count=0;
-                $login->lastupdate=$currTime;
-                $login->save();
-            }else{
-                if(self::LIMITTIMES<=$login['count']){
-                    throw new ApiException(['code'=>11001,'msg'=>'密码错误超过'.self::LIMITTIMES.'次数，请15分钟后再试']);
-                }
-            }
-        }else{
-            self::create([
-                'ip' => $ip,
-                'count' => 0,
-                'lastupdate' => $currTime,
-            ]);
+    function loginCheck($request) {
+        $ip = $request->ip();
+        $time = time();
+        $count = self::where('ip',$ip)->whereBetween('created_at',[$time-900,$time])->count();
+        if($count>=self::LIMITTIMES) {
+            self::$failTimes = $count;
+            throw new ApiException(['code'=>1,'msg'=>'密码错误超过'.self::LIMITTIMES.'次数，请15分钟后再试']);
         }
     }
 
-    function update_failed($ip){
-        $currTime = time();
-        $login = self::find($ip);
-        if($login) {
-            $login->count=$login->count+1;
-            $login->lastupdate = $currTime;
-            $login->save();
-            $times=max((self::LIMITTIMES - $login->count),0);
-        }else{
-            self::create([
-                'ip' => $ip,
-                'count' => 0,
-                'lastupdate' => $currTime,
-            ]);
-            $times=self::LIMITTIMES;
-        }
-        $msg = $times>0?'密码错误，还有'.$times.'次尝试机会':'密码错误，请等待15分钟再试';
-        throw new ApiException(['code'=>11002,'msg'=>$msg]);
+    function updateFailed($request){
+        $input = $request->only('username', 'password');
+        self::create([
+            'ip'=>$request->ip(),
+            'input'=>json_encode($input)
+        ]);
+        $hasTimes = self::LIMITTIMES-self::$failTimes;
+        $msg = $hasTimes>0?'密码错误，还有'.$hasTimes.'次尝试机会':'密码错误，请等待15分钟再试';
+        throw new ApiException(['code'=>2,'msg'=>$msg]);
     }
 
 }
