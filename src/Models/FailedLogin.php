@@ -25,8 +25,8 @@ class FailedLogin extends Model
         $ip = $request->ip();
         $time = time();
         $count = self::where('ip',$ip)->whereBetween('created_at',[$time-900,$time])->count();
+        self::$failTimes = $count;
         if($count>=self::LIMITTIMES) {
-            self::$failTimes = $count;
             throw new ApiException(['code'=>1,'msg'=>'密码错误超过'.self::LIMITTIMES.'次数，请15分钟后再试']);
         }
     }
@@ -37,7 +37,7 @@ class FailedLogin extends Model
             'ip'=>$request->ip(),
             'input'=>json_encode($input)
         ]);
-        $hasTimes = self::LIMITTIMES-self::$failTimes;
+        $hasTimes = self::LIMITTIMES-(self::$failTimes+1);
         $msg = $hasTimes>0?'密码错误，还有'.$hasTimes.'次尝试机会':'密码错误，请等待15分钟再试';
         throw new ApiException(['code'=>2,'msg'=>$msg]);
     }
