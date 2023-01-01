@@ -10,8 +10,8 @@ class FailedLogin extends Model
 {
     use HasFactory;
     protected $table = 'admin_failed_login';
-    protected $primaryKey = 'ip';
-    protected $keyType = 'string';
+    protected $primaryKey = 'id';
+    //protected $keyType = 'string';
     //public $timestamps = false;
     public $incrementing = false;
     protected $fillable = [

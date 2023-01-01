@@ -37,7 +37,7 @@ Route::middleware(['web'])->group(function () {
 			$route_arr = [
 				['manager','\ManagerController'],['role','\RoleController'],['permission','\PermissionController'],
 				['menu','\MenuController'],['banned','\BannedController'],['config','\ConfigController'],['module','\ModuleController'],
-				['dict','\DictController']
+				['dict','\DictController'],['failed_login','\FailedLoginController']
 			];
 
 			foreach ($route_arr as $val){

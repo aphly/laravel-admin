@@ -45,7 +45,11 @@ class HomeController extends Controller
             $credentials = $request->only('username', 'password');
             $credentials['status']=1;
             if (Auth::guard('manager')->attempt($credentials)) {
-                throw new ApiException(['code'=>0,'msg'=>'登录成功','data'=>['redirect'=>'/admin/index','manager'=>Auth::guard('manager')->user()->toArray()]]);
+                $manager = Auth::guard('manager')->user();
+                $manager->last_ip = $request->ip();
+                $manager->last_login = time();
+                $manager->save();
+                throw new ApiException(['code'=>0,'msg'=>'登录成功','data'=>['redirect'=>'/admin/index','manager'=>$manager->toArray()]]);
             }else{
                 $failedLogin->updateFailed($request);
             }

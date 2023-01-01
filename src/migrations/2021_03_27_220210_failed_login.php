@@ -14,7 +14,8 @@ return new class extends Migration
     public function up()
     {
         Schema::create('admin_failed_login', function (Blueprint $table) {
-            $table->string('ip',64)->primary();
+            $table->id();
+            $table->string('ip',64)->index();
             $table->string('input',255);
             $table->unsignedBigInteger('created_at');
             $table->unsignedBigInteger('updated_at');

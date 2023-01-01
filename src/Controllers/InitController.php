@@ -4,6 +4,7 @@ namespace Aphly\LaravelAdmin\Controllers;
 
 use Aphly\Laravel\Libs\Helper;
 use Aphly\LaravelAdmin\Models\Manager;
+use Aphly\LaravelAdmin\Models\Menu;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 
@@ -27,15 +28,22 @@ class InitController extends Controller
 
                 DB::table('admin_menu')->truncate();
                 $data=[];
-                $data[] =['id'=>1,'name' => '系统管理','url' =>'','pid'=>0,'is_leaf'=>0,'module_id'=>$this->module_id];
-                $data[] =['id'=>2,'name' => '模块管理','url' =>'/admin/module/index','pid'=>1,'is_leaf'=>1,'module_id'=>$this->module_id];
-                $data[] =['id'=>3,'name' => '系统用户','url' =>'/admin/manager/index','pid'=>1,'is_leaf'=>1,'module_id'=>$this->module_id];
-                $data[] =['id'=>4,'name' => '角色管理','url' =>'/admin/role/index','pid'=>1,'is_leaf'=>1,'module_id'=>$this->module_id];
-                $data[] =['id'=>5,'name' => '权限管理','url' =>'/admin/permission/index','pid'=>1,'is_leaf'=>1,'module_id'=>$this->module_id];
-                $data[] =['id'=>6,'name' => '菜单管理','url' =>'/admin/menu/index','pid'=>1,'is_leaf'=>1,'module_id'=>$this->module_id];
-                $data[] =['id'=>7,'name' => '字典管理','url' =>'/admin/dict/index','pid'=>1,'is_leaf'=>1,'module_id'=>$this->module_id];
-                $data[] =['id'=>8,'name' => '配置管理','url' =>'/admin/config/index','pid'=>1,'is_leaf'=>1,'module_id'=>$this->module_id];
-                $data[] =['id'=>9,'name' => '禁止访问','url' =>'/admin/banned/index','pid'=>1,'is_leaf'=>1,'module_id'=>$this->module_id];
+                $data[] =['id'=>1,'name' => '系统管理','url' =>'','pid'=>0,'is_leaf'=>0,'module_id'=>$this->module_id,'sort'=>0];
+                $data[] =['id'=>2,'name' => '模块管理','url' =>'/admin/module/index','pid'=>1,'is_leaf'=>1,'module_id'=>$this->module_id,'sort'=>100];
+                $data[] =['id'=>3,'name' => '管理员','url' =>'/admin/manager/index','pid'=>1,'is_leaf'=>1,'module_id'=>$this->module_id,'sort'=>99];
+
+                $data[] =['id'=>4,'name' => '管理权限','url' =>'','pid'=>1,'is_leaf'=>0,'module_id'=>$this->module_id,'sort'=>90];
+                $data[] =['id'=>5,'name' => '角色管理','url' =>'/admin/role/index','pid'=>4,'is_leaf'=>1,'module_id'=>$this->module_id,'sort'=>0];
+                $data[] =['id'=>6,'name' => '权限管理','url' =>'/admin/permission/index','pid'=>4,'is_leaf'=>1,'module_id'=>$this->module_id,'sort'=>0];
+                $data[] =['id'=>7,'name' => '菜单管理','url' =>'/admin/menu/index','pid'=>4,'is_leaf'=>1,'module_id'=>$this->module_id,'sort'=>0];
+
+                $data[] =['id'=>8,'name' => '其他设置','url' =>'','pid'=>1,'is_leaf'=>0,'module_id'=>$this->module_id,'sort'=>60];
+                $data[] =['id'=>9,'name' => '字典管理','url' =>'/admin/dict/index','pid'=>8,'is_leaf'=>1,'module_id'=>$this->module_id,'sort'=>0];
+                $data[] =['id'=>10,'name' => '配置管理','url' =>'/admin/config/index','pid'=>8,'is_leaf'=>1,'module_id'=>$this->module_id,'sort'=>0];
+                $data[] =['id'=>11,'name' => '禁止访问','url' =>'/admin/banned/index','pid'=>8,'is_leaf'=>1,'module_id'=>$this->module_id,'sort'=>0];
+
+                $data[] =['id'=>12,'name' => '运行记录','url' =>'','pid'=>1,'is_leaf'=>0,'module_id'=>$this->module_id,'sort'=>30];
+                $data[] =['id'=>13,'name' => '错误登录','url' =>'/admin/failed_login/index','pid'=>12,'is_leaf'=>1,'module_id'=>$this->module_id,'sort'=>0];
                 DB::table('admin_menu')->insert($data);
 
                 DB::table('admin_role')->truncate();
@@ -47,7 +55,7 @@ class InitController extends Controller
 
                 DB::table('admin_role_menu')->truncate();
                 $data=[];
-                for($i=1;$i<=9;$i++){
+                for($i=1;$i<=13;$i++){
                     $data[] =['role_id' => 2,'menu_id'=>$i];
                 }
                 DB::table('admin_role_menu')->insert($data);
