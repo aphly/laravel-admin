@@ -35,7 +35,9 @@ class FailedLogin extends Model
         $input = $request->only('username', 'password');
         self::create([
             'ip'=>$request->ip(),
-            'input'=>json_encode($input)
+            'input'=>json_encode($input),
+            'user_agent' => $request->header('user-agent'),
+            'accept_language' => $request->header('accept-language')
         ]);
         $hasTimes = self::LIMITTIMES-(self::$failTimes+1);
         $msg = $hasTimes>0?'密码错误，还有'.$hasTimes.'次尝试机会':'密码错误，请等待15分钟再试';

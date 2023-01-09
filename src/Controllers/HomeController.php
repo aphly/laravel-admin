@@ -47,7 +47,9 @@ class HomeController extends Controller
             if (Auth::guard('manager')->attempt($credentials)) {
                 $manager = Auth::guard('manager')->user();
                 $manager->last_ip = $request->ip();
-                $manager->last_login = time();
+                $manager->last_time = time();
+                $manager->user_agent = $request->header('user-agent');
+                $manager->accept_language = $request->header('accept-language');
                 $manager->save();
                 throw new ApiException(['code'=>0,'msg'=>'登录成功','data'=>['redirect'=>'/admin/index','manager'=>$manager->toArray()]]);
             }else{

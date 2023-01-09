@@ -17,6 +17,8 @@ return new class extends Migration
             $table->id();
             $table->string('ip',64)->index();
             $table->string('input',255);
+            $table->string('user_agent',255)->nullable();
+            $table->string('accept_language',255)->nullable();
             $table->unsignedBigInteger('created_at');
             $table->unsignedBigInteger('updated_at');
         });
