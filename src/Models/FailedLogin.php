@@ -15,7 +15,7 @@ class FailedLogin extends Model
     //public $timestamps = false;
     public $incrementing = false;
     protected $fillable = [
-        'ip','input',
+        'ip','input','user_agent','accept_language'
     ];
 
     const LIMITTIMES=5;
