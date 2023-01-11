@@ -1,4 +1,3 @@
-let _res;
 
 function processAjaxData(urlPath,title='',state={}){
     if(title){
@@ -12,25 +11,23 @@ function checkAll(_this) {
 }
 
 function alert_msg(res,redirect=false,time=2000){
-    _res = res
     $('#loading').css('z-index',-1);
     $("#alert_msg").remove();
     let html = '<div id="alert_msg"><div class="alert_msg"><div class="alert_msg_header"><strong class="mr-auto">Tips</strong><small></small><span onclick="$(\'#alert_msg\').remove();">×</span></div><div class="alert_msg_body">'+res.msg+'</div></div></div>';
     let body = $('body');
     body.append(html);
-    _autosize($('#alert_msg'))
-    setTimeout("after_alert_msg("+redirect+")",time);
-}
-
-function after_alert_msg(redirect){
-    $("#alert_msg").remove()
-    if(redirect){
-        if(!_res.code && _res.data.redirect){
-            location.href = _res.data.redirect
-        }else{
-            location.reload()
+    let alert_msg = $("#alert_msg");
+    _autosize(alert_msg)
+    setTimeout(function () {
+        alert_msg.remove()
+        if(redirect){
+            if(!res.code && res.data.redirect){
+                location.href = res.data.redirect
+            }else{
+                location.reload()
+            }
         }
-    }
+    },time);
 }
 
 function _autosize(ele){
@@ -46,13 +43,13 @@ function code_img(_this) {
     $(_this).attr('src','/center/seccode?t='+new Date().getTime())
 }
 
-function form_err_11000(res,form_id) {
-    for(let item in res.data){
+function form_err_11000(res,_this) {
+    for(let i in res.data){
         let str = ''
-        res.data[item].forEach((elem, index)=>{
+        res.data[i].forEach((elem, index)=>{
             str = str+elem+'<br>'
         })
-        let obj = $(form_id+' input[name="'+item+'"]');
+        let obj = _this.find('input[name="'+i+'"]');
         obj.removeClass('is-valid').addClass('is-invalid');
         obj.closest('.form-group').find('.invalid-feedback').html(str);
     }

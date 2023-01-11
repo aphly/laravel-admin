@@ -128,12 +128,12 @@
         }
     }
 
-    function save_form_res(res,form_class) {
+    function save_form_res(res,_this) {
         if(!res.code) {
             iload(res.data.redirect)
             alert_msg(res)
         }else if(res.code===11000){
-            form_err_11000(res,form_class);
+            form_err_11000(res,_this);
         }else{
             alert_msg(res)
         }
@@ -186,23 +186,23 @@
 
         $("#iload").on('submit','.save_form',function (){
             let form_class = '.save_form';
-            const form = $(this)
-            const fn = form.data('fn') || 'save_form_res'
-            if(form[0].checkValidity()===false){
+            const _this = $(this)
+            const fn = _this.data('fn') || 'save_form_res'
+            if(_this[0].checkValidity()===false){
             }else{
-                let url = form.attr("action");
-                let type = form.attr("method");
+                let url = _this.attr("action");
+                let type = _this.attr("method");
                 if(url && type){
                     $(form_class+' input.form-control').removeClass('is-valid').removeClass('is-invalid');
                     let btn_html = $(form_class+' button[type="submit"]').html();
                     $.ajax({
-                        type,url,data: form.serialize(),
+                        type,url,data: _this.serialize(),
                         dataType: "json",
                         beforeSend:function () {
                             $(form_class+' button[type="submit"]').attr('disabled',true).html('<i class="btn_loading app-jiazai uni"></i>');
                         },
                         success: function(res){
-                            window[fn](res,form_class);
+                            window[fn](res,_this);
                         },
                         complete:function(XMLHttpRequest,textStatus){
                             $(form_class+' button[type="submit"]').removeAttr('disabled').html(btn_html);
@@ -311,23 +311,26 @@
         $('#showmenu').removeClass('app-px').addClass('app-px1')
     }
 
-    var aphly_viewerjs = document.getElementById('aphly_viewerjs');
+    var aphly_viewerjs = document.querySelectorAll('.aphly_viewer_js');
     if(aphly_viewerjs){
-        var aphly_viewer = new Viewer(aphly_viewerjs,{
-            url: 'data-original',
-            toolbar:false,
-            title:false,
-            rotatable:false,
-            scalable:false,
-            keyboard:false,
-            filter(image) {
-                if(image.className.indexOf("aphly_viewer") != -1){
-                    return true;
-                }else{
-                    return false;
+        aphly_viewerjs.forEach(function (item,index) {
+            new Viewer(item,{
+                url: 'data-original',
+                toolbar:false,
+                title:false,
+                rotatable:false,
+                scalable:false,
+                keyboard:false,
+                filter(image) {
+                    if(image.className.indexOf("aphly_viewer") !== -1){
+                        return true;
+                    }else{
+                        return false;
+                    }
                 }
-            },
-        });
+            });
+        })
+
     }
 </script>
 @include('laravel-admin::common.footer')
