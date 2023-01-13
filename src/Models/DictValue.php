@@ -11,7 +11,7 @@ class DictValue extends Model
     protected $table = 'admin_dict_value';
     public $timestamps = false;
     protected $fillable = [
-        'name','dict_id','value','fixed','sort'
+        'name','dict_id','value','sort'
     ];
 
 

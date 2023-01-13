@@ -87,7 +87,7 @@ class DictController extends Controller
                 $update_arr[$key]['id'] = intval($key);
                 $update_arr[$key]['dict_id'] = $dict->id;
             }
-            DictValue::upsert($update_arr,['id'],['dict_id','name','value','fixed','sort']);
+            DictValue::upsert($update_arr,['id'],['dict_id','name','value','sort']);
         }
         Cache::forget('dict');
         throw new ApiException(['code'=>0,'msg'=>'success','data'=>['redirect'=>$this->index_url]]);
