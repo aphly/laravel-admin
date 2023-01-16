@@ -14,7 +14,7 @@ ul,li,p,dl,dd{padding: 0;margin: 0;}
 }
 
 #alert_msg{position:fixed;z-index: 999999;}
-#alert_msg .alert_msg{box-shadow: 0 0 15px rgba(0,0,0,0.3);min-width:200px;max-width:100%;font-size:14px;border-radius:4px;background-color: rgba(255,255,255);border: 1px solid #f1f1f1;}
+#alert_msg .alert_msg{box-shadow: 0 0 15px rgba(0,0,0,0.3);min-width:200px;max-width:100%;font-size:14px;border-radius:4px;background-color: rgb(255,255,255);border: 1px solid #f1f1f1;}
 #alert_msg .alert_msg_header{padding:4px 10px;color:#6c757d;border-bottom:1px solid rgba(0,0,0,.05);display:flex;line-height:21px}
 #alert_msg .alert_msg_header span{cursor:pointer;font-size:20px;font-weight:700;color:#000;position:relative;top:0px;text-shadow:0 1px 0 #fff;opacity:.5}
 #alert_msg .alert_msg_body{padding:10px;}
