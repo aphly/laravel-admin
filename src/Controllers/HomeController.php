@@ -43,7 +43,7 @@ class HomeController extends Controller
             $failedLogin =  new FailedLogin;
             $failedLogin->loginCheck($request);
             $credentials = $request->only('username', 'password');
-            $credentials['status']=1;
+            //$credentials['status']=1;
             if (Auth::guard('manager')->attempt($credentials)) {
                 $manager = Auth::guard('manager')->user();
                 $manager->last_ip = $request->ip();
@@ -75,5 +75,15 @@ class HomeController extends Controller
         throw new ApiException(['code'=>0,'msg'=>'缓存已清空','data'=>['redirect'=>'/admin/index']]);
     }
 
+    public function notActive()
+    {
+        $res['title'] = '';
+        return $this->makeView('laravel-admin::home.not_active',['res'=>$res]);
+    }
 
+    public function blocked()
+    {
+        $res['title'] = '';
+        return $this->makeView('laravel-admin::home.blocked',['res'=>$res]);
+    }
 }

@@ -15,4 +15,10 @@ return [
     'seccode_register'=>1, //0 1
     'seccode_forget'=>1, //0 1
     'seccode_admin_login'=>0, //0 1
+
+    'wechat' => [
+        'client_id' => 'appid',
+        'client_secret' => 'appSecret',
+        'redirect' => 'http://xxxxxx.proxy.qqbrowser.cc/oauth/callback/driver/wechat',
+    ]
 ];

@@ -21,7 +21,8 @@
     "extra": {
         "laravel": {
             "providers": [
-		        "Aphly\\LaravelAdmin\\AdminServiceProvider"
+		        "Aphly\\LaravelAdmin\\AdminServiceProvider",
+                "Aphly\\LaravelAdmin\\Providers\\Socialite\\WechatServiceProvider"
             ]
         }
     }
