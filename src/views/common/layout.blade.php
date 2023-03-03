@@ -185,27 +185,26 @@
         })
 
         $("#iload").on('submit','.save_form',function (){
-            let form_class = '.save_form';
-            const _this = $(this)
-            const fn = _this.data('fn') || 'save_form_res'
-            if(_this[0].checkValidity()===false){
+            const that = $(this)
+            const fn = that.data('fn') || 'save_form_res'
+            if(that[0].checkValidity()===false){
             }else{
-                let url = _this.attr("action");
-                let type = _this.attr("method");
+                let url = that.attr("action");
+                let type = that.attr("method");
                 if(url && type){
-                    $(form_class+' input.form-control').removeClass('is-valid').removeClass('is-invalid');
-                    let btn_html = $(form_class+' button[type="submit"]').html();
+                    that.find('input.form-control').removeClass('is-valid').removeClass('is-invalid');
+                    let btn_html = that.find('button[type="submit"]').html();
                     $.ajax({
-                        type,url,data: _this.serialize(),
+                        type,url,data: that.serialize(),
                         dataType: "json",
                         beforeSend:function () {
-                            $(form_class+' button[type="submit"]').attr('disabled',true).html('<i class="btn_loading app-jiazai uni"></i>');
+                            that.find('button[type="submit"]').attr('disabled',true).html('<i class="btn_loading app-jiazai uni"></i>');
                         },
                         success: function(res){
-                            window[fn](res,_this);
+                            window[fn](res,that);
                         },
                         complete:function(XMLHttpRequest,textStatus){
-                            $(form_class+' button[type="submit"]').removeAttr('disabled').html(btn_html);
+                            that.find('button[type="submit"]').removeAttr('disabled').html(btn_html);
                             ajax_complete()
                         }
                     })
@@ -217,7 +216,6 @@
         })
 
         $("#iload").on('submit','.del_form',function (){
-            let form_class = '.del_form';
             let msg = "您真的确定要删除吗？";
             if (confirm(msg)!==true){
                 return false;
@@ -227,13 +225,13 @@
             }else{
                 let url = form.attr("action");
                 let type = form.attr("method");
-                let btn_html = $(form_class+' button[type="submit"]').html();
+                let btn_html = form.find('button[type="submit"]').html();
                 if(url && type){
                     $.ajax({
                         type,url,data: form.serialize(),
                         dataType: "json",
                         beforeSend:function () {
-                            $(form_class+' button[type="submit"]').attr('disabled',true).html('<i class="btn_loading app-jiazai uni"></i>');
+                            form.find('button[type="submit"]').attr('disabled',true).html('<i class="btn_loading app-jiazai uni"></i>');
                         },
                         success: function(res){
                             if(!res.code) {
@@ -242,7 +240,7 @@
                             alert_msg(res)
                         },
                         complete:function(XMLHttpRequest,textStatus){
-                            $(form_class+' button[type="submit"]').removeAttr('disabled').html(btn_html);
+                            form.find('button[type="submit"]').removeAttr('disabled').html(btn_html);
                         }
                     })
                 }else{
