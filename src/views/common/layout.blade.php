@@ -215,6 +215,14 @@
             return false;
         })
 
+        $("#iload").on('click','.xls_download',function (e){
+            e.preventDefault();
+            let url = $(this).attr('data-href');
+            let form = $("<form></form>").attr("action", url).attr("method", "post");
+            form.append('@csrf');
+            form.appendTo('body').submit().remove();
+        })
+
         $("#iload").on('submit','.del_form',function (){
             let msg = "您真的确定要删除吗？";
             if (confirm(msg)!==true){

@@ -2,6 +2,7 @@
 
 namespace Aphly\LaravelAdmin\Controllers;
 
+use Aphly\LaravelAdmin\Models\Dict;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\View;
@@ -21,6 +22,7 @@ class Controller extends \Aphly\Laravel\Controllers\Controller
             }else{
                 View::share("manager",[]);
             }
+            View::share("dict",(new Dict)->getByKey());
             return $next($request);
         });
         parent::__construct();
