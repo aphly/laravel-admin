@@ -23,6 +23,7 @@ class Controller extends \Aphly\Laravel\Controllers\Controller
                 View::share("manager",[]);
             }
             View::share("dict",(new Dict)->getByKey());
+            date_default_timezone_set('Asia/Shanghai');
             return $next($request);
         });
         parent::__construct();
