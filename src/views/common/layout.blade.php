@@ -139,6 +139,10 @@
         }
     }
 
+    function save_form_file_res(res, that) {
+        alert_msg(res)
+    }
+
     $(function (){
         iload('/admin/home/index');
         $('.layout_ajax_post').click(function (e) {
@@ -221,6 +225,40 @@
             let form = $("<form></form>").attr("action", url).attr("method", "post");
             form.append('@csrf');
             form.appendTo('body').submit().remove();
+        })
+
+        $("#iload").on('submit','.save_form_file',function (){
+            const that = $(this)
+            let formData = new FormData(that[0]);
+            let url = that.attr("action");
+            let type = that.attr("method");
+            const fn = that.data('fn') || 'save_form_file_res'
+            if(that[0].checkValidity()===false){
+            }else {
+                if (url && type) {
+                    that.find('input.form-control').removeClass('is-valid').removeClass('is-invalid');
+                    let btn_html = that.find('button[type="submit"]').html();
+                    $.ajax({
+                        type, url,
+                        data: formData,
+                        contentType: false,
+                        processData: false,
+                        dataType: "json",
+                        beforeSend: function () {
+                            that.find('button[type="submit"]').attr('disabled', true).html('<i class="btn_loading app-jiazai uni"></i>');
+                        },
+                        success: function (res) {
+                            window[fn](res, that);
+                        },
+                        complete: function (XMLHttpRequest, textStatus) {
+                            that.find('button[type="submit"]').removeAttr('disabled').html(btn_html);
+                        }
+                    })
+                } else {
+                    console.log('no action' + url + type)
+                }
+            }
+            return false;
         })
 
         $("#iload").on('submit','.del_form',function (){
