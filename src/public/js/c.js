@@ -399,3 +399,88 @@ function urlencode(str) {
     return encodeURIComponent(str).replace(/!/g, '%21').replace(/'/g, '%27').replace(/\(/g, '%28').
     replace(/\)/g, '%29').replace(/\*/g, '%2A').replace(/%20/g, '+');
 }
+
+class img_js {
+    constructor(imgFileList=[]) {
+        this.imgFileList=imgFileList;
+    }
+    handle(files,callback,op={
+        max_size:0.5,quality:0.8,scale_d:0.6,max_w:1000,max_h:1700
+    }){
+        let _this = this
+        for( let i in files){
+            let pettern = /^image/;
+            if (pettern.test(files[i].type)) {
+                let fr = new FileReader(),
+                    img = document.createElement("img");
+                fr.readAsDataURL(files[i]);
+                fr.onload = function (res) {
+                    img.src = this.result;
+                    if (files[i].size > 1024*1024*op.max_size) {
+                        _this._handle(this.result, function (base64) {
+                            _this.imgFileList[i] = _this.dataURLtoFile(base64, files[i].name)
+                        },op)
+                    } else {
+                        _this.imgFileList[i] = files[i];
+                    }
+                    callback(img);
+                }
+            }
+        }
+    }
+    _handle(path,callback,op){
+        let _this = this
+        let img = new Image();
+        img.src = path;
+        img.onload = function() {
+            let c_w,c_h;
+            let arr = _this.get_wh(this.width,this.height,op)
+            c_w = arr[0]
+            c_h = arr[1]
+            let canvas = document.createElement('canvas');
+            let ctx = canvas.getContext('2d');
+            let anw = document.createAttribute("width");
+            anw.nodeValue = c_w;
+            let anh = document.createAttribute("height");
+            anh.nodeValue = c_h;
+            canvas.setAttributeNode(anw);
+            canvas.setAttributeNode(anh);
+            ctx.drawImage(this, 0, 0, c_w, c_h);
+            if (!(op.quality && op.quality <= 1 && op.quality > 0)) {
+                op.quality=1;
+            }
+            let base64 = canvas.toDataURL('image/jpeg', op.quality);
+            callback(base64);
+        }
+    }
+    get_wh(i_w,i_h,op) {
+        let scale = i_w / i_h;
+        let c_w,c_h;
+        if(scale>op.scale_d){
+            if(i_w>op.max_w){
+                c_w = op.max_w;
+                c_h = parseInt(c_w / scale)
+            }else{
+                c_w = i_w
+                c_h = i_h
+            }
+        }else{
+            if(i_h>op.max_h){
+                c_h = op.max_h
+                c_w = parseInt(c_h * scale)
+            }else{
+                c_w = i_w
+                c_h = i_h
+            }
+        }
+        return [c_w,c_h];
+    }
+    dataURLtoFile(dataUrl, fileName){
+        let arr = dataUrl.split(','), mime = arr[0].match(/:(.*?);/)[1],
+            bstr = atob(arr[1]), n = bstr.length, u8arr = new Uint8Array(n);
+        while(n--){
+            u8arr[n] = bstr.charCodeAt(n);
+        }
+        return new File([u8arr], fileName, {type:mime});
+    }
+}
