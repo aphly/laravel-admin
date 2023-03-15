@@ -148,7 +148,7 @@ function fast_del() {
 //fast_show_end
 
 function attr_addDiv() {
-    let id = randomId(8);
+    let id = randomStr(8);
     let html = `<li class="d-flex" data-id="${id}">
                         <div class="attr1"><input type="text" name="json[${id}][name]"></div>
                         <div class="attr2"><input type="text" name="json[${id}][value]"></div>

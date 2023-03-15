@@ -55,111 +55,6 @@ function form_err_11000(res,_this) {
     }
 }
 
-var urlOption={
-    '_set':function (name,val,jump=false) {
-        //str
-        let url = ''
-        let thisURL = String(document.location);
-        let url_arr = thisURL.split('?');
-        if(url_arr[1]){
-            if(url_arr[1].indexOf(name+'=') !== -1){
-                let url_arr_p = url_arr[1].split('&');
-                let arr = [];
-                url_arr_p.forEach(i=>{
-                    if(i.indexOf(name+'=') !== -1){
-                        arr.push(name+'='+val)
-                    }else{
-                        arr.push(i)
-                    }
-                })
-                let url_p = arr.join('&');
-                url = url_arr[0]+'?'+url_p;
-            }else{
-                url = url_arr[0]+'?'+url_arr[1]+'&'+name+'='+val;
-            }
-        }else{
-            url = url_arr[0]+'?'+name+'='+val;
-        }
-        if(jump){
-            location.href = url;
-        }else{
-            return url;
-        }
-    },
-    // '__set':function (str,jump=false) {
-    //     //arr
-    //     let res = ''
-    //     let thisURL = String(document.location);
-    //     let url_arr = thisURL.split('?');
-    //     if(url_arr[1]){
-    //         let url_arr_p = url_arr[1].split('&');
-    //         url_arr_p.push(str);
-    //         let arr = [...new Set(url_arr_p)];
-    //         let url_p = arr.join('&');
-    //         res = url_arr[0]+'?'+url_p;
-    //     }else{
-    //         res = url_arr[0]+'?'+str;
-    //     }
-    //     if(jump){
-    //         location.href = res;
-    //     }else{
-    //         return res;
-    //     }
-    // },
-    '_get':function (name) {
-        let reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
-        let r = window.location.search.substr(1).match(reg);
-        if(r!=null)return  unescape(r[2]); return null;
-    },
-    '_del':function (name,jump=false) {
-        //str
-        let url = ''
-        let thisURL = String(document.location);
-        let url_arr = thisURL.split('?');
-        if(url_arr[1]){
-            if(url_arr[1].indexOf(name+'=') !== -1){
-                let url_arr_p = url_arr[1].split('&');
-                let arr = [];
-                url_arr_p.forEach(i=>{
-                    if(i.indexOf(name+'=') !== -1){
-                    }else{
-                        arr.push(i)
-                    }
-                })
-                let url_p = arr.join('&');
-                url = url_arr[0]+'?'+url_p;
-            }else{
-                url = url_arr[0]+'?'+url_arr[1];
-            }
-        }else{
-            url = url_arr[0];
-        }
-        if(jump){
-            location.href = url;
-        }else{
-            return url;
-        }
-    // },
-    // '__del':function (str,jump=false) {
-    //     let res = ''
-    //     let thisURL = String(document.location);
-    //     let url_arr = thisURL.split('?');
-    //     if(url_arr[1]){
-    //         let url_arr_p = url_arr[1].split('&');
-    //         let arr =  url_arr_p.filter(item=>{
-    //             return item!=str
-    //         })
-    //         let url_p = arr.join('&');
-    //         res = url_arr[0]+'?'+url_p;
-    //     }
-    //     if(jump){
-    //         location.href = res;
-    //     }else{
-    //         return res;
-    //     }
-    }
-}
-
 function toTree(data) {
     let result = []
     if(!Array.isArray(data)) {
@@ -207,7 +102,7 @@ function in_array(search,array){
     return false;
 }
 
-function randomId(n,all=false) {
+function randomStr(n,all=false) {
     let str;
     if(all){
         str = ['0','1','2','3','4','5','6','7','8','9','A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z'];
@@ -220,6 +115,12 @@ function randomId(n,all=false) {
         res += str[id];
     }
     return res;
+}
+
+function urlencode(str) {
+    str = (str + '').toString();
+    return encodeURIComponent(str).replace(/!/g, '%21').replace(/'/g, '%27').replace(/\(/g, '%28').
+    replace(/\)/g, '%29').replace(/\*/g, '%2A').replace(/%20/g, '+');
 }
 
 window.onload = function() {
@@ -238,6 +139,76 @@ window.onload = function() {
             }, 400);
         })
     })
+    $("body").on('click','[data-stopPropagation]',function (e) {
+        e.stopPropagation();
+    });
+}
+
+let urlOption={
+    '_set':function (name,val,jump=false) {
+        //str
+        let url = ''
+        let thisURL = String(document.location);
+        let url_arr = thisURL.split('?');
+        if(url_arr[1]){
+            if(url_arr[1].indexOf(name+'=') !== -1){
+                let url_arr_p = url_arr[1].split('&');
+                let arr = [];
+                url_arr_p.forEach(i=>{
+                    if(i.indexOf(name+'=') !== -1){
+                        arr.push(name+'='+val)
+                    }else{
+                        arr.push(i)
+                    }
+                })
+                let url_p = arr.join('&');
+                url = url_arr[0]+'?'+url_p;
+            }else{
+                url = url_arr[0]+'?'+url_arr[1]+'&'+name+'='+val;
+            }
+        }else{
+            url = url_arr[0]+'?'+name+'='+val;
+        }
+        if(jump){
+            location.href = url;
+        }else{
+            return url;
+        }
+    },
+    '_get':function (name) {
+        let reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
+        let r = window.location.search.substr(1).match(reg);
+        if(r!=null)return  unescape(r[2]); return null;
+    },
+    '_del':function (name,jump=false) {
+        //str
+        let url = ''
+        let thisURL = String(document.location);
+        let url_arr = thisURL.split('?');
+        if(url_arr[1]){
+            if(url_arr[1].indexOf(name+'=') !== -1){
+                let url_arr_p = url_arr[1].split('&');
+                let arr = [];
+                url_arr_p.forEach(i=>{
+                    if(i.indexOf(name+'=') !== -1){
+                    }else{
+                        arr.push(i)
+                    }
+                })
+                let url_p = arr.join('&');
+                url = url_arr[0]+'?'+url_p;
+            }else{
+                url = url_arr[0]+'?'+url_arr[1];
+            }
+        }else{
+            url = url_arr[0];
+        }
+        if(jump){
+            location.href = url;
+        }else{
+            return url;
+        }
+    }
 }
 
 let mobileTouch = {
@@ -287,12 +258,6 @@ let _session = {
         return JSON.parse(value);
     }
 }
-
-$(function () {
-    $("body").on('click','[data-stopPropagation]',function (e) {
-        e.stopPropagation();
-    });
-})
 
 let getList = {
     isGet: true,
@@ -345,36 +310,6 @@ let getList = {
     }
 };
 
-function uploadfiles(_this,callback){
-    let formData = new FormData();
-    for (let i = 0; i < $(_this)[0].files.length; i++) {
-        formData.append("file[]", $(_this)[0].files[i]);
-    }
-    formData.append('_token', '{{csrf_token()}}');
-    let url = $(_this).data('url');
-    if(url){
-        $.ajax({
-            type:'post',url,
-            data: formData,
-            contentType: false,
-            processData: false,
-            dataType: "json",
-            before:function () {
-                $(_this).attr('disabled',true)
-            },
-            success: function(res){
-                alert_msg(res)
-                callback(res);
-            },
-            complete:function(XMLHttpRequest,textStatus){
-                $(_this).removeAttr('disabled')
-            }
-        })
-    }else{
-        console.log('no action'+url)
-    }
-}
-
 function debounce(func, delay=1000,...args) {
     let timer;
     return function() {
@@ -391,13 +326,6 @@ function debounce_fn(func,delay=1000,...args) {
     debounce_timer = setTimeout(() => {
         func.apply(args);
     }, delay);
-}
-
-
-function urlencode(str) {
-    str = (str + '').toString();
-    return encodeURIComponent(str).replace(/!/g, '%21').replace(/'/g, '%27').replace(/\(/g, '%28').
-    replace(/\)/g, '%29').replace(/\*/g, '%2A').replace(/%20/g, '+');
 }
 
 class img_js {

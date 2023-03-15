@@ -67,7 +67,7 @@
 </style>
 <script>
     function dict_addDiv() {
-        let id = randomId(8);
+        let id = randomStr(8);
         let html = `<li class="d-flex" data-id="${id}">
                         <div class="filter1"><input type="text" name="value[${id}][name]"></div>
                         <div class="filter2"><input type="text" name="value[${id}][value]"></div>
