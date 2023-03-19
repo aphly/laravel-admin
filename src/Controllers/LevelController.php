@@ -3,8 +3,8 @@
 namespace Aphly\LaravelAdmin\Controllers;
 
 use Aphly\Laravel\Exceptions\ApiException;
-use Aphly\LaravelAdmin\Models\Level;
-use Aphly\LaravelAdmin\Models\LevelPath;
+use Aphly\Laravel\Models\Level;
+use Aphly\Laravel\Models\LevelPath;
 use Illuminate\Http\Request;
 
 class LevelController extends Controller

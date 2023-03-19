@@ -3,8 +3,8 @@
 namespace Aphly\LaravelAdmin\Controllers;
 
 use Aphly\Laravel\Exceptions\ApiException;
-use Aphly\LaravelAdmin\Models\Menu;
-use Aphly\LaravelAdmin\Models\Module;
+use Aphly\Laravel\Models\Menu;
+use Aphly\Laravel\Models\Module;
 use Aphly\LaravelAdmin\Requests\MenuRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;

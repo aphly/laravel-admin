@@ -3,7 +3,7 @@
 namespace Aphly\LaravelAdmin\Controllers;
 
 use Aphly\Laravel\Exceptions\ApiException;
-use Aphly\LaravelAdmin\Models\Banned;
+use Aphly\Laravel\Models\Banned;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 

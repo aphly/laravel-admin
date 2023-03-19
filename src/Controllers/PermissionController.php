@@ -3,9 +3,8 @@
 namespace Aphly\LaravelAdmin\Controllers;
 
 use Aphly\Laravel\Exceptions\ApiException;
-use Aphly\Laravel\Libs\Helper;
-use Aphly\LaravelAdmin\Models\Module;
-use Aphly\LaravelAdmin\Models\Permission;
+use Aphly\Laravel\Models\Module;
+use Aphly\Laravel\Models\Permission;
 use Aphly\LaravelAdmin\Requests\PermissionRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;

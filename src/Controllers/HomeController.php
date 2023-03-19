@@ -4,8 +4,8 @@ namespace Aphly\LaravelAdmin\Controllers;
 
 use Aphly\Laravel\Exceptions\ApiException;
 use Aphly\Laravel\Libs\Seccode;
-use Aphly\LaravelAdmin\Models\FailedLogin;
-use Aphly\LaravelAdmin\Models\Role;
+use Aphly\Laravel\Models\FailedLogin;
+use Aphly\Laravel\Models\Role;
 use Aphly\LaravelAdmin\Requests\LoginRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -23,7 +23,7 @@ class HomeController extends Controller
         $res['menu_tree'] = Helper::getTree($res['menu'],true);
         //Helper::getTreeByid($res['menu_tree'],$this->menu_id,$res['menu_tree']);
         $res['user'] = Auth::guard('manager')->user();
-        return $this->makeView('laravel-admin::common.layout',['res'=>$res]);
+        return $this->makeView('laravel::admin.layout',['res'=>$res]);
     }
 
     public function index()

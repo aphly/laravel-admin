@@ -3,9 +3,8 @@
 namespace Aphly\LaravelAdmin\Controllers;
 
 use Aphly\Laravel\Exceptions\ApiException;
-use Aphly\LaravelAdmin\Models\FailedLogin;
+use Aphly\Laravel\Models\FailedLogin;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Cache;
 
 class FailedLoginController extends Controller
 {

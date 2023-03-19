@@ -13,18 +13,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::prefix('center')->middleware(['web'])->group(function () {
-    Route::get('/seccode', 'Aphly\LaravelAdmin\Controllers\SeccodeController@index');
-    Route::get('/seccode/{code}', 'Aphly\LaravelAdmin\Controllers\SeccodeController@check');
-    Route::get('/banned', 'Aphly\LaravelAdmin\Controllers\BannedController@banned')->name('banned');
-});
-
 Route::get('/admin/init', 'Aphly\LaravelAdmin\Controllers\InitController@index');
 
 Route::middleware(['web'])->group(function () {
-    //oauth
-    Route::get('oauth/{driver}/callback', 'Aphly\LaravelAdmin\Controllers\OAuthController@handleProviderCallback');
-    Route::get('oauth/{driver}', 'Aphly\LaravelAdmin\Controllers\OAuthController@redirectToProvider');
 
     Route::prefix('admin')->group(function () {
         Route::get('/blocked', 'Aphly\LaravelAdmin\Controllers\HomeController@blocked')->name('adminBlocked');

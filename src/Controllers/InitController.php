@@ -3,8 +3,7 @@
 namespace Aphly\LaravelAdmin\Controllers;
 
 use Aphly\Laravel\Libs\Helper;
-use Aphly\LaravelAdmin\Models\Manager;
-use Aphly\LaravelAdmin\Models\Menu;
+use Aphly\Laravel\Models\Manager;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 

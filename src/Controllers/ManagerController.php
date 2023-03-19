@@ -4,8 +4,8 @@ namespace Aphly\LaravelAdmin\Controllers;
 
 use Aphly\Laravel\Exceptions\ApiException;
 use Aphly\Laravel\Libs\Helper;
-use Aphly\LaravelAdmin\Models\Manager;
-use Aphly\LaravelAdmin\Models\Role;
+use Aphly\Laravel\Models\Manager;
+use Aphly\Laravel\Models\Role;
 use Aphly\LaravelAdmin\Requests\ManagerRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;

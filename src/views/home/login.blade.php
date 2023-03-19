@@ -1,5 +1,5 @@
-@include('laravel-admin::common.header')
-<link rel="stylesheet" href="{{ URL::asset('static/admin/css/login.css') }}">
+@include('laravel::admin.header')
+<link rel="stylesheet" href="{{ URL::asset('static/base/css/login.css') }}">
 <section class="login d-flex" >
     <div class="login1">
         <span>
@@ -28,7 +28,7 @@
                 <div class="invalid-feedback"></div>
             </div>
 
-            <div id="code_img" class="form-group @if(config('admin.seccode_admin_login')==1) @else none @endif">
+            <div id="code_img" class="form-group @if(config('base.seccode_admin_login')==1) @else none @endif">
                 <div class="code_img">
                     <input type="text" name="code" class="form-control" value="" autocomplete="off" placeholder="验证码">
                     <img src="/center/seccode" onclick="code_img(this)" >
@@ -100,4 +100,4 @@ $(function (){
     })
 });
 </script>
-@include('laravel-admin::common.footer')
+@include('laravel::admin.footer')

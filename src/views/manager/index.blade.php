@@ -39,7 +39,7 @@
                         <li><input type="checkbox" class="delete_box" name="delete[]" value="{{$v->uuid}}">{{$v->uuid}}</li>
                         <li>{{$v->username}}</li>
                         <li>
-                            <img class="lazy user_avatar" @if($v->gender==1) src="{{url('static/admin/img/man.png')}}" @else src="{{url('static/admin/img/woman.png')}}" @endif >
+                            <img class="lazy user_avatar" @if($v->gender==1) src="{{url('static/base/img/man.png')}}" @else src="{{url('static/base/img/woman.png')}}" @endif >
                         </li>
                         <li>
                             @foreach($v->role as $vv)
@@ -67,7 +67,7 @@
                             <button class="badge badge-danger del" type="submit">删除</button>
                         </li>
                         <li>
-                            {{$res['list']->links('laravel-admin::common.pagination')}}
+                            {{$res['list']->links('laravel::admin.pagination')}}
                         </li>
                     </ul>
                 @endif

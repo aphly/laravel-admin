@@ -1,4 +1,4 @@
-@include('laravel-admin::common.header')
+@include('laravel::admin.header')
 
 <div class=" container">
     <div class="d-flex justify-content-center" style="margin-top: 20%;">
@@ -8,4 +8,4 @@
     </div>
 </div>
 
-@include('laravel-admin::common.footer')
+@include('laravel::admin.footer')

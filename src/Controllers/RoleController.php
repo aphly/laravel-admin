@@ -3,11 +3,10 @@
 namespace Aphly\LaravelAdmin\Controllers;
 
 use Aphly\Laravel\Exceptions\ApiException;
-use Aphly\Laravel\Libs\Helper;
-use Aphly\LaravelAdmin\Models\Menu;
-use Aphly\LaravelAdmin\Models\Module;
-use Aphly\LaravelAdmin\Models\Permission;
-use Aphly\LaravelAdmin\Models\Role;
+use Aphly\Laravel\Models\Menu;
+use Aphly\Laravel\Models\Module;
+use Aphly\Laravel\Models\Permission;
+use Aphly\Laravel\Models\Role;
 use Aphly\LaravelAdmin\Requests\RoleRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
