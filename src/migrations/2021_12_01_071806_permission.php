@@ -21,7 +21,8 @@ return new class extends Migration
             $table->integer('sort', 0)->unsigned()->default(0)->nullable()->index();
             $table->tinyInteger('status')->unsigned()->default(1)->comment('1:开启; 0:关闭')->index();
             $table->tinyInteger('is_leaf')->unsigned()->default(1)->index();
-            $table->unsignedInteger('module_id')->default(1)->index();
+            $table->unsignedBigInteger('level_id')->index();
+            $table->unsignedBigInteger('module_id')->index();
             //$table->engine = 'InnoDB';
         });
     }

@@ -16,11 +16,15 @@ return new class extends Migration
         Schema::create('admin_role', function (Blueprint $table) {
             $table->id();
             $table->string('name', 32)->nullable();
-            $table->bigInteger('pid', 0)->unsigned()->default(0)->index();
             $table->tinyInteger('status')->unsigned()->default(1)->comment('1:开启; 0:关闭')->index();
-            $table->tinyInteger('is_leaf')->unsigned()->default(1)->index();
-            $table->integer('sort', 0)->unsigned()->default(0)->nullable()->index();
-            $table->unsignedInteger('module_id')->default(1)->index();
+            $table->unsignedInteger('sort', 0)->default(0)->nullable()->index();
+            $table->unsignedBigInteger('level_id')->index();
+            $table->unsignedTinyInteger('add')->default(1)->comment('1:开启; 2:关闭');
+            $table->unsignedTinyInteger('del')->default(1)->comment('1:开启; 2:关闭');
+            $table->unsignedTinyInteger('show')->default(1)->comment('1:开启; 2:关闭');
+            $table->unsignedTinyInteger('edit')->default(1)->comment('1:开启; 2:关闭');
+            $table->unsignedTinyInteger('data')->default(1)->comment('1:自己; 2:本级以下')->index();
+            $table->unsignedBigInteger('module_id')->index();
             //$table->engine = 'InnoDB';
         });
     }

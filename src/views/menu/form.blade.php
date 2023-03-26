@@ -30,7 +30,16 @@
             </div>
             <div class="form-group">
                 <label for="">链接地址</label>
-                <input type="text" name="url" class="form-control " value="{{$res['info']['url']}}">
+                <select name="url" class="form-control" >
+                    <option value="" >无</option>
+                    @foreach($res['rbacRoutes'] as $key=>$val)
+                        <optgroup label="{{$key}}">
+                            @foreach($val as $v)
+                            <option value="{{$v['uri']}}" @if($res['info']->url==$v['uri']) selected @endif>{{$v['uri']}}</option>
+                            @endforeach
+                        </optgroup>
+                    @endforeach
+                </select>
                 <div class="invalid-feedback"></div>
             </div>
             <div class="form-group">

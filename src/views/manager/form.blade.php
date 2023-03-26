@@ -7,7 +7,7 @@
         <div class="">
             @if($res['info']->uuid)
             <div class="form-group">
-                <label for="">UUID : {{$res['info']->uuid}}</label>
+                <label for="">uuid : {{$res['info']->uuid}}</label>
                 <div class="invalid-feedback"></div>
             </div>
             @endif

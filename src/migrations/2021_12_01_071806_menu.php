@@ -22,7 +22,8 @@ return new class extends Migration
             $table->unsignedInteger('sort', 0)->default(0)->nullable()->index();
             $table->string('icon', 32)->nullable();
             $table->tinyInteger('is_leaf')->unsigned()->default(1)->index();
-            $table->unsignedInteger('module_id')->default(1)->index();
+            $table->unsignedBigInteger('level_id')->index();
+            $table->unsignedBigInteger('module_id')->index();
             //$table->engine = 'InnoDB';
         });
     }

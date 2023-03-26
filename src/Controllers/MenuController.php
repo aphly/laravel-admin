@@ -41,6 +41,7 @@ class MenuController extends Controller
         }else{
             $res['title'] = '';
 			$res['info'] = Menu::where('id',$request->query('id',0))->firstOrNew();
+            $res['rbacRoutes'] = $this->rbacRoutes();
             return $this->makeView('laravel-admin::menu.form',['res'=>$res]);
         }
     }
@@ -59,6 +60,8 @@ class MenuController extends Controller
 			}
         }else{
             $res['module'] = (new Module)->getByCache();
+            $res['rbacRoutes'] = $this->rbacRoutes();
+            //dd($res['rbacRoutes']);
             return $this->makeView('laravel-admin::menu.form',['res'=>$res]);
         }
     }
@@ -85,6 +88,7 @@ class MenuController extends Controller
         $res['list'] = $data->toArray();
         $res['listById'] = $data->keyBy('id')->toArray();
         $res['module'] = (new Module)->getByCache();
+        $res['rbacRoutes'] = $this->rbacRoutes();
         return $this->makeView('laravel-admin::menu.show',['res'=>$res]);
     }
 

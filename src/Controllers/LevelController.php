@@ -29,7 +29,7 @@ class LevelController extends Controller
             ->orderBy('c1.sort','desc')
             ->Paginate(config('admin.perPage'))->withQueryString();
         //$res['fast_save'] = Level::where('status',1)->orderBy('sort', 'desc')->get()->toArray();
-        return $this->makeView('laravel-admin-pro::level.index',['res'=>$res]);
+        return $this->makeView('laravel-admin::level.index',['res'=>$res]);
     }
 
     public function form(Request $request)
@@ -38,7 +38,7 @@ class LevelController extends Controller
         if(!empty($res['info']) && $res['info']->pid){
             $res['parent_info'] = Level::where('id',$res['info']->pid)->first();
         }
-        return $this->makeView('laravel-admin-pro::level.form',['res'=>$res]);
+        return $this->makeView('laravel-admin::level.form',['res'=>$res]);
     }
 
     public function show()
@@ -46,7 +46,7 @@ class LevelController extends Controller
         $data = Level::orderBy('sort', 'desc')->get();
         $res['list'] = $data->toArray();
         $res['listById'] = $data->keyBy('id')->toArray();
-        return $this->makeView('laravel-admin-pro::level.show',['res'=>$res]);
+        return $this->makeView('laravel-admin::level.show',['res'=>$res]);
     }
 
     public function save(Request $request){
@@ -76,7 +76,7 @@ class LevelController extends Controller
 			}
 		}else{
 			$res['info'] = Level::where('id',$request->query('id',0))->firstOrNew();
-			return $this->makeView('laravel-admin-pro::level.form',['res'=>$res]);
+			return $this->makeView('laravel-admin::level.form',['res'=>$res]);
 		}
 	}
 
@@ -92,7 +92,7 @@ class LevelController extends Controller
 				throw new ApiException(['code'=>1,'msg'=>'修改失败','data'=>[]]);
 			}
 		}else{
-			return $this->makeView('laravel-admin-pro::level.form',['res'=>$res]);
+			return $this->makeView('laravel-admin::level.form',['res'=>$res]);
 		}
 	}
 

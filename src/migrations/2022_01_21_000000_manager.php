@@ -15,6 +15,7 @@ return new class extends Migration
     {
         Schema::create('admin_manager', function (Blueprint $table) {
             $table->unsignedBigInteger('uuid')->primary();
+            $table->unsignedBigInteger('level_id')->index();
             $table->string('username',32)->unique();
             $table->string('nickname',32)->nullable();
             $table->string('email',128)->nullable();
@@ -30,7 +31,6 @@ return new class extends Migration
             $table->string('note',255)->nullable();
             $table->string('user_agent',255)->nullable();
             $table->string('accept_language',255)->nullable();
-            $table->tinyInteger('super')->default(0);
             $table->unsignedBigInteger('created_at');
             $table->unsignedBigInteger('updated_at');
         });

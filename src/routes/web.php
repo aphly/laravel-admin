@@ -18,14 +18,16 @@ Route::get('/admin/init', 'Aphly\LaravelAdmin\Controllers\InitController@index')
 Route::middleware(['web'])->group(function () {
 
     Route::prefix('admin')->group(function () {
-        Route::get('/blocked', 'Aphly\LaravelAdmin\Controllers\HomeController@blocked')->name('adminBlocked');
-        Route::get('/not_active', 'Aphly\LaravelAdmin\Controllers\HomeController@notActive')->name('adminNotActive');
+        Route::get('/blocked', 'Aphly\LaravelAdmin\Controllers\LoginController@blocked')->name('adminBlocked');
+        Route::get('/not_active', 'Aphly\LaravelAdmin\Controllers\LoginController@notActive')->name('adminNotActive');
 
         Route::middleware(['managerAuth'])->group(function () {
-            Route::match(['get', 'post'], '/login', 'Aphly\LaravelAdmin\Controllers\HomeController@login')->name('adminLogin');
-            Route::get('/index', 'Aphly\LaravelAdmin\Controllers\HomeController@layout');
-            Route::get('/logout', 'Aphly\LaravelAdmin\Controllers\HomeController@logout');
+            Route::match(['get', 'post'], '/login', 'Aphly\LaravelAdmin\Controllers\LoginController@index')->name('adminLogin');
+            Route::get('/logout', 'Aphly\LaravelAdmin\Controllers\LoginController@logout');
+            Route::get('/role', 'Aphly\LaravelAdmin\Controllers\LoginController@role');
+            Route::get('/choose_role', 'Aphly\LaravelAdmin\Controllers\LoginController@chooseRole');
 
+            Route::get('/index', 'Aphly\LaravelAdmin\Controllers\HomeController@layout');
             Route::middleware(['rbac'])->group(function () {
                 Route::get('/cache', 'Aphly\LaravelAdmin\Controllers\HomeController@cache');
 
@@ -34,7 +36,7 @@ Route::middleware(['web'])->group(function () {
                 $route_arr = [
                     ['manager', '\ManagerController'], ['role', '\RoleController'], ['permission', '\PermissionController'],
                     ['menu', '\MenuController'], ['banned', '\BannedController'], ['config', '\ConfigController'], ['module', '\ModuleController'],
-                    ['dict', '\DictController'], ['failed_login', '\FailedLoginController']
+                    ['dict', '\DictController'], ['failed_login', '\FailedLoginController'], ['level', '\LevelController']
                 ];
 
                 foreach ($route_arr as $val) {
@@ -54,6 +56,7 @@ Route::middleware(['web'])->group(function () {
                 Route::get('/menu/show', 'Aphly\LaravelAdmin\Controllers\MenuController@show');
 
                 Route::get('/module/install', 'Aphly\LaravelAdmin\Controllers\ModuleController@install');
+                Route::get('/level/show', 'Aphly\LaravelAdmin\Controllers\LevelController@show');
             });
         });
     });

@@ -13,10 +13,10 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('admin_user_role', function (Blueprint $table) {
+        Schema::create('admin_manager_role', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('uuid');
-            $table->bigInteger('role_id')->unsigned();
+            $table->unsignedBigInteger('role_id');
             $table->index('uuid');
             $table->index('role_id');
             //$table->timestamps();
@@ -31,6 +31,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('admin_user_role');
+        Schema::dropIfExists('admin_manager_role');
     }
 };
