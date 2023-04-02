@@ -18,6 +18,7 @@ return new class extends Migration
             $table->unsignedBigInteger('level_id')->index();
             $table->unsignedInteger('level');
             $table->primary(['path_id','level_id']);
+            $table->engine = 'InnoDB';
         });
     }
 

@@ -34,14 +34,13 @@ class MenuController extends Controller
 			$form_edit = $request->input('form_edit',0);
 			if($menu->id){
 				Cache::forget('role_menu');
-				throw new ApiException(['code'=>0,'msg'=>'添加成功','data'=>['redirect'=>$form_edit?$this->index_url($post):'/admin/menu/show']]);
+				throw new ApiException(['code'=>0,'msg'=>'添加成功','data'=>['redirect'=>$form_edit?$this->index_url:'/admin/menu/tree']]);
 			}else{
 				throw new ApiException(['code'=>1,'msg'=>'添加失败','data'=>[]]);
 			}
         }else{
             $res['title'] = '';
 			$res['info'] = Menu::where('id',$request->query('id',0))->firstOrNew();
-            $res['rbacRoutes'] = $this->rbacRoutes();
             return $this->makeView('laravel-admin::menu.form',['res'=>$res]);
         }
     }
@@ -54,14 +53,13 @@ class MenuController extends Controller
 			$form_edit = $request->input('form_edit',0);
 			if($res['info']->update($post)){
 				Cache::forget('role_menu');
-				throw new ApiException(['code'=>0,'msg'=>'修改成功','data'=>['redirect'=>$form_edit?$this->index_url($post):'/admin/menu/show']]);
+				throw new ApiException(['code'=>0,'msg'=>'修改成功','data'=>['redirect'=>$form_edit?$this->index_url:'/admin/menu/tree']]);
 			}else{
 				throw new ApiException(['code'=>1,'msg'=>'修改失败','data'=>[]]);
 			}
         }else{
             $res['module'] = (new Module)->getByCache();
-            $res['rbacRoutes'] = $this->rbacRoutes();
-            //dd($res['rbacRoutes']);
+            $res['allRoutes'] = $this->getRoutes();
             return $this->makeView('laravel-admin::menu.form',['res'=>$res]);
         }
     }
@@ -82,14 +80,14 @@ class MenuController extends Controller
         }
     }
 
-    public function show()
+    public function tree()
     {
         $data = Menu::orderBy('sort', 'desc')->get();
         $res['list'] = $data->toArray();
         $res['listById'] = $data->keyBy('id')->toArray();
         $res['module'] = (new Module)->getByCache();
-        $res['rbacRoutes'] = $this->rbacRoutes();
-        return $this->makeView('laravel-admin::menu.show',['res'=>$res]);
+        $res['allRoutes'] = $this->getRoutes();
+        return $this->makeView('laravel-admin::menu.tree',['res'=>$res]);
     }
 
     public function save(Request $request)
@@ -103,7 +101,7 @@ class MenuController extends Controller
             }
         }
         Menu::updateOrCreate(['id'=>$request->query('id',0),'pid'=>$pid],$input);
-        throw new ApiException(['code'=>0,'msg'=>'成功','data'=>['redirect'=>'/admin/menu/show']]);
+        throw new ApiException(['code'=>0,'msg'=>'成功','data'=>['redirect'=>'/admin/menu/tree']]);
     }
 
 }

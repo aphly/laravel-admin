@@ -3,6 +3,7 @@
 namespace Aphly\LaravelAdmin\Controllers;
 
 use Aphly\Laravel\Exceptions\ApiException;
+use Aphly\Laravel\Models\Permission;
 use Aphly\Laravel\Models\Role;
 use Aphly\Laravel\Models\RoleMenu;
 use Illuminate\Support\Facades\Auth;

@@ -32,34 +32,12 @@ class LevelController extends Controller
         return $this->makeView('laravel-admin::level.index',['res'=>$res]);
     }
 
-    public function form(Request $request)
-    {
-        $res['info'] = Level::where('id',$request->query('id',0))->firstOrNew();
-        if(!empty($res['info']) && $res['info']->pid){
-            $res['parent_info'] = Level::where('id',$res['info']->pid)->first();
-        }
-        return $this->makeView('laravel-admin::level.form',['res'=>$res]);
-    }
-
-    public function show()
+    public function tree()
     {
         $data = Level::orderBy('sort', 'desc')->get();
         $res['list'] = $data->toArray();
         $res['listById'] = $data->keyBy('id')->toArray();
-        return $this->makeView('laravel-admin::level.show',['res'=>$res]);
-    }
-
-    public function save(Request $request){
-        $id = $request->query('id',0);
-        $form_edit = $request->input('form_edit',0);
-        if($form_edit && $id){
-            Level::updateOrCreate(['id'=>$id],$request->all());
-        }else{
-            $level = Level::updateOrCreate(['id'=>$id,'pid'=>$request->input('pid',0)],$request->all());
-            (new LevelPath)->add($level->id,$level->pid);
-            $this->index_url = '/common_admin/level/show';
-        }
-        throw new ApiException(['code'=>0,'msg'=>'success','data'=>['redirect'=>$this->index_url]]);
+        return $this->makeView('laravel-admin::level.tree',['res'=>$res]);
     }
 
 	public function add(Request $request)
@@ -70,7 +48,7 @@ class LevelController extends Controller
 			$form_edit = $request->input('form_edit',0);
 			if($res['info']->id){
 				(new LevelPath)->add($res['info']->id,$res['info']->pid);
-				throw new ApiException(['code'=>0,'msg'=>'添加成功','data'=>['redirect'=>$form_edit?$this->index_url($post):'/admin/level/show']]);
+				throw new ApiException(['code'=>0,'msg'=>'添加成功','data'=>['redirect'=>$form_edit?$this->index_url:'/admin/level/tree']]);
 			}else{
 				throw new ApiException(['code'=>1,'msg'=>'添加失败','data'=>[]]);
 			}
@@ -87,7 +65,7 @@ class LevelController extends Controller
 			$post = $request->all();
 			$form_edit = $request->input('form_edit',0);
 			if($res['info']->update($post)){
-				throw new ApiException(['code'=>0,'msg'=>'修改成功','data'=>['redirect'=>$form_edit?$this->index_url($post):'/common_admin/level/show']]);
+				throw new ApiException(['code'=>0,'msg'=>'修改成功','data'=>['redirect'=>$form_edit?$this->index_url:'/admin/level/tree']]);
 			}else{
 				throw new ApiException(['code'=>1,'msg'=>'修改失败','data'=>[]]);
 			}

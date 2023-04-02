@@ -15,12 +15,10 @@ return new class extends Migration
     {
         Schema::create('admin_manager_role', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('uuid');
-            $table->unsignedBigInteger('role_id');
-            $table->index('uuid');
-            $table->index('role_id');
+            $table->unsignedBigInteger('uuid')->index();
+            $table->unsignedBigInteger('role_id')->index();
             //$table->timestamps();
-            //$table->engine = 'InnoDB';
+            $table->engine = 'InnoDB';
         });
     }
 

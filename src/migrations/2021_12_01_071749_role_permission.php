@@ -15,11 +15,9 @@ return new class extends Migration
     {
         Schema::create('admin_role_permission', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('role_id')->unsigned();
-            $table->bigInteger('permission_id')->unsigned();
-            $table->index('role_id');
-            $table->index('permission_id');
-            //$table->engine = 'InnoDB';
+            $table->unsignedBigInteger('role_id')->index();
+            $table->unsignedBigInteger('permission_id')->index();
+            $table->engine = 'InnoDB';
         });
     }
 

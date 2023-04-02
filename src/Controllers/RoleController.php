@@ -17,7 +17,6 @@ class RoleController extends Controller
 
     public function index(Request $request)
     {
-        $res['title'] = '';
         $res['search']['name'] = $name = $request->query('name',false);
         $res['search']['string'] = http_build_query($request->query());
         $res['list'] = Role::when($name,
@@ -36,13 +35,14 @@ class RoleController extends Controller
             $role = Role::create($post);
 			$form_edit = $request->input('form_edit',0);
 			if($role->id){
-				throw new ApiException(['code'=>0,'msg'=>'添加成功','data'=>['redirect'=>$form_edit?$this->index_url($post):'/admin/role/show']]);
+				throw new ApiException(['code'=>0,'msg'=>'添加成功','data'=>['redirect'=>$form_edit?$this->index_url:'/admin/role/tree']]);
 			}else{
 				throw new ApiException(['code'=>1,'msg'=>'添加失败','data'=>[]]);
 			}
         }else{
             $res['title'] = '';
 			$res['info'] = Role::where('id',$request->query('id',0))->firstOrNew();
+            $res['module'] = (new Module)->getByCache();
             return $this->makeView('laravel-admin::role.form',['res'=>$res]);
         }
     }
@@ -54,7 +54,7 @@ class RoleController extends Controller
             $post = $request->all();
 			$form_edit = $request->input('form_edit',0);
             if($res['info']->update($post)){
-				throw new ApiException(['code'=>0,'msg'=>'修改成功','data'=>['redirect'=>$form_edit?$this->index_url($post):'/admin/role/show']]);
+				throw new ApiException(['code'=>0,'msg'=>'修改成功','data'=>['redirect'=>$form_edit?$this->index_url:'/admin/role/tree']]);
 			}else{
 				throw new ApiException(['code'=>1,'msg'=>'修改失败','data'=>[]]);
 			}
@@ -80,15 +80,6 @@ class RoleController extends Controller
         }
     }
 
-    public function show()
-    {
-        $data = Role::orderBy('sort', 'desc')->get();
-        $res['list'] = $data->toArray();
-        $res['listById'] = $data->keyBy('id')->toArray();
-        $res['module'] = (new Module)->getByCache();
-        return $this->makeView('laravel-admin::role.show',['res'=>$res]);
-    }
-
     public function save(Request $request)
     {
         $input = $request->all();
@@ -103,41 +94,33 @@ class RoleController extends Controller
         throw new ApiException(['code'=>0,'msg'=>'成功','data'=>['redirect'=>'/admin/role/show']]);
     }
 
+    public function menu(Request $request)
+    {
+        $res['info'] = Role::where('id',$request->query('id',0))->firstOrError();
+        if($request->isMethod('post')) {
+            $res['info']->menu()->sync($request->input('menu_id'));
+            Cache::forget('role_menu');
+            throw new ApiException(['code'=>0,'msg'=>'操作成功','data'=>['redirect'=>$this->index_url]]);
+        }else{
+            $res['role_menu'] = $res['info']->menu->toArray();
+            $res['select_ids'] = array_column($res['role_menu'], 'id');
+            $res['list'] = Menu::where('status',1)->orderBy('sort', 'desc')->get()->toArray();
+            return $this->makeView('laravel-admin::role.menu',['res'=>$res]);
+        }
+    }
+
     public function permission(Request $request)
     {
+        $res['info'] = Role::where('id',$request->query('id',0))->firstOrError();
         if($request->isMethod('post')) {
-            $role = Role::find($request->id);
-            if($role){
-                $role->permission()->sync($request->input('permission_id'));
-            }
+            $res['info']->permission()->sync($request->input('permission_id'));
             Cache::forget('role_permission');
             throw new ApiException(['code'=>0,'msg'=>'操作成功','data'=>['redirect'=>$this->index_url]]);
         }else{
-            $res['title'] = '';
-            $res['info'] = Role::find($request->id);
             $res['role_permission'] = $res['info']->permission->toArray();
             $res['select_ids'] = array_column($res['role_permission'], 'id');
             $res['permission'] = Permission::where('status',1)->orderBy('sort', 'desc')->get()->toArray();
             return $this->makeView('laravel-admin::role.permission',['res'=>$res]);
-        }
-    }
-
-    public function menu(Request $request)
-    {
-        if($request->isMethod('post')) {
-            $role = Role::find($request->id);
-            if($role){
-                $role->menu()->sync($request->input('menu_id'));
-            }
-            Cache::forget('role_menu');
-            throw new ApiException(['code'=>0,'msg'=>'操作成功','data'=>['redirect'=>$this->index_url]]);
-        }else{
-            $res['title'] = '';
-            $res['info'] = Role::find($request->id);
-            $res['role_menu'] = $res['info']->menu->toArray();
-            $res['select_ids'] = array_column($res['role_menu'], 'id');
-            $res['menu'] = Menu::where('status',1)->orderBy('sort', 'desc')->get()->toArray();
-            return $this->makeView('laravel-admin::role.menu',['res'=>$res]);
         }
     }
 }

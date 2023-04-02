@@ -21,6 +21,7 @@ return new class extends Migration
             $table->string('accept_language',255)->nullable();
             $table->unsignedBigInteger('created_at');
             $table->unsignedBigInteger('updated_at');
+            $table->engine = 'InnoDB';
         });
     }
 

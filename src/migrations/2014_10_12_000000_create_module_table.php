@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('classname',255);
             $table->tinyInteger('status')->nullable()->default(1)->index();
             $table->integer('sort')->nullable()->default(0)->index();
+            $table->engine = 'InnoDB';
         });
     }
 

@@ -13,7 +13,7 @@
         </div>
         </form>
         <div class="">
-            <a class="badge badge-primary ajax_get show_all0_btn" data-href="/admin/level/show">浏览</a>
+            <a class="badge badge-primary ajax_get tree_div_btn" data-href="/admin/level/tree">树形</a>
         </div>
     </div>
 
@@ -38,7 +38,7 @@
                         </li>
                         <li>
                             @if($dict['status'])
-                                @if($v->status)
+                                @if($v->status==1)
                                     <span class="badge badge-success">{{$dict['status'][$v->status]}}</span>
                                 @else
                                     <span class="badge badge-secondary">{{$dict['status'][$v->status]}}</span>
@@ -46,7 +46,7 @@
                             @endif
                         </li>
                         <li>
-                            <a class="badge badge-info ajax_get" data-href="/admin/level/form?id={{$v['id']}}">编辑</a>
+                            <a class="badge badge-info ajax_get" data-href="/admin/level/edit?id={{$v['id']}}">编辑</a>
                         </li>
                     </ul>
                     @endforeach

@@ -15,11 +15,10 @@ return new class extends Migration
     {
         Schema::create('admin_role_menu', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('role_id')->unsigned();
-            $table->bigInteger('menu_id')->unsigned();
-            $table->index('role_id');
-            $table->index('menu_id');
-            //$table->engine = 'InnoDB';
+            $table->unsignedBigInteger('role_id')->index();
+            $table->unsignedBigInteger('menu_id')->index();
+            $table->unsignedTinyInteger('undetermined')->default(0);
+            $table->engine = 'InnoDB';
         });
     }
 

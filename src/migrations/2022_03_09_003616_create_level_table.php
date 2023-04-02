@@ -17,9 +17,10 @@ return new class extends Migration
             $table->id();
             $table->string('name',64);
             $table->unsignedBigInteger('pid')->index();
-            $table->integer('sort')->unsigned()->index()->nullable();
-            $table->tinyInteger('is_leaf')->default(1)->index();
+            $table->unsignedInteger('sort')->index()->default(1);
+            $table->tinyInteger('type')->default(1)->index();
             $table->tinyInteger('status')->index();
+            $table->engine = 'InnoDB';
         });
     }
 

@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('path',255);
             $table->unsignedBigInteger('created_at');
             $table->unsignedBigInteger('updated_at');
+            $table->engine = 'InnoDB';
         });
     }
 

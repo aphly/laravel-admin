@@ -20,6 +20,7 @@ return new class extends Migration
             $table->tinyInteger('status')->nullable()->default(1)->index();
             $table->unsignedBigInteger('created_at');
             $table->unsignedBigInteger('updated_at');
+            $table->engine = 'InnoDB';
         });
     }
 

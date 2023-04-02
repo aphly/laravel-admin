@@ -14,9 +14,8 @@
             </div>
         </form>
         <div class="">
-            <a class="badge badge-primary ajax_get show_all0_btn" data-href="/admin/permission/show">浏览</a>
-            <a href="javascript:void(0);" data-toggle="modal" data-target="#fast_add" class="badge badge-info fast_add d-none">新增</a></div>
-{{--        <div class="d-none"><a data-href="/admin/permission/add?pid={{$res['pid']}}" class="badge badge-info ajax_get add">新增</a></div>--}}
+            <a class="badge badge-primary ajax_get tree_div_btn" data-href="/admin/permission/tree">树形</a>
+        </div>
     </div>
 
     <form method="post" @if($res['search']['string']) action="/admin/permission/del?{{$res['search']['string']}}" @else action="/admin/permission/del" @endif  class="del_form">
@@ -27,7 +26,7 @@
                     <li >ID</li>
                     <li >模块id</li>
                     <li >名称</li>
-                    <li >控制器</li>
+                    <li >路由</li>
                     <li >状态</li>
                     <li >操作</li>
                 </ul>
@@ -38,10 +37,10 @@
                             <li><span class="module_id badge">{{$v['module_id']}}</span></li>
                             <li>{{$v['name']}}</li>
                             <li>
-                                @if($v['is_leaf'])
-                                {{$v['controller']}}
+                                @if($v['type']==2)
+                                    {{$v['route']}}
                                 @else
-                                    -
+                                    目录
                                 @endif
                             </li>
                             <li>
@@ -54,9 +53,6 @@
                                 @endif
                             </li>
                             <li>
-{{--                                @if(!$v['is_leaf'])--}}
-{{--                                    <a class="badge badge-primary ajax_get" data-href="/admin/permission/index?pid={{$v['id']}}">进入</a>--}}
-{{--                                @endif--}}
                                 <a class="badge badge-info ajax_get" data-href="/admin/permission/edit?id={{$v['id']}}">编辑</a>
                             </li>
                         </ul>

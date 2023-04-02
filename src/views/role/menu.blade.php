@@ -27,25 +27,6 @@
 
 </style>
 <script>
-    var treeGlobal = {
-        menu : @json($res['menu']),
-        select_ids : @json($res['select_ids'])
-    }
-    treeGlobal.data = toTree(roleData(treeGlobal.menu,treeGlobal.select_ids));
-
-    function roleData(data,select_ids=0) {
-        let new_array = []
-        data.forEach((item,index) => {
-            if(select_ids){
-                let selected=in_array(item.id,select_ids)?true:false;
-                new_array.push({id:item.id,text:item.name,pid:item.pid,state:{selected}})
-            }else{
-                new_array.push({id:item.id,text:item.name,pid:item.pid})
-            }
-            delete item.nodes;
-        });
-        return new_array;
-    }
 
     function makeInput() {
         let arr = mountTree.treeview('getSelected');
@@ -56,28 +37,42 @@
         $("#select_ids").html(html);
     }
 
-    var mountTree =$('#tree').treeview({
-        levels: 3,
-        collapseIcon:'uni app-arrow-right-copy',
-        expandIcon:'uni app-arrow-right',
-        data:treeGlobal.data,
-        multiSelect:true,
-        onNodeSelected: function(event, data) {
-            makeInput();
-        },
-        onNodeUnselected: function(event, data) {
-            makeInput();
-        },
-    });
-
-    function mount() {
-        makeInput();
-        $('#select_ids').on('click','div', function () {
-            mountTree.treeview('unselectNode', [ $(this).data('nodeid'), { silent: false } ]);
-        });
-    }
-
+    var my_tree = new MyTree({
+        root:0,
+        tree_form : '#tree_form',
+        list : @json($res['list']),
+        select_ids : @json($res['select_ids']),
+        select:{},
+        type:'add',
+        tree_save_url:'/admin/permission',
+        tree_del_url:'/admin/permission/del',
+        tree_del_url_return:'/admin/permission/tree',
+        _token:'{{csrf_token()}}'
+    })
     $(function () {
+        function mount(){
+            my_tree.tree_btn()
+            let treeData = my_tree.treeFormat(my_tree.op.list,my_tree.op.select_ids)
+            $('#tree').jstree({
+                "core": {
+                    "themes":{
+                        "dots": false,
+                        "icons":false
+                    },
+                    "data": treeData
+                },
+                "checkbox" : {
+                    "keep_selected_style" : false
+                },
+                "plugins": ["checkbox","themes"]
+            }).on('select_node.jstree', function(el,_data) {
+            }).on("changed.jstree", function(el,data) {
+                my_tree.op.select = my_tree.getSelectObj(data)
+            })
+        }
         mount()
+        $('#tree_form').on('click','.submit',function () {
+            my_tree.tree_save()
+        })
     })
 </script>

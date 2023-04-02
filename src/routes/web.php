@@ -29,9 +29,8 @@ Route::middleware(['web'])->group(function () {
 
             Route::get('/index', 'Aphly\LaravelAdmin\Controllers\HomeController@layout');
             Route::middleware(['rbac'])->group(function () {
-                Route::get('/cache', 'Aphly\LaravelAdmin\Controllers\HomeController@cache');
-
                 Route::get('/home/index', 'Aphly\LaravelAdmin\Controllers\HomeController@index');
+                Route::get('/cache', 'Aphly\LaravelAdmin\Controllers\HomeController@cache');
 
                 $route_arr = [
                     ['manager', '\ManagerController'], ['role', '\RoleController'], ['permission', '\PermissionController'],
@@ -48,15 +47,15 @@ Route::middleware(['web'])->group(function () {
 
                 Route::match(['get', 'post'], '/manager/role', 'Aphly\LaravelAdmin\Controllers\ManagerController@role');
 
-                Route::match(['get', 'post'], '/role/{id}/permission', 'Aphly\LaravelAdmin\Controllers\RoleController@permission')->where('id', '[0-9]+');
-                Route::match(['get', 'post'], '/role/{id}/menu', 'Aphly\LaravelAdmin\Controllers\RoleController@menu')->where('id', '[0-9]+');
+                Route::match(['get', 'post'], '/role/permission', 'Aphly\LaravelAdmin\Controllers\RoleController@permission');
+                Route::match(['get', 'post'], '/role/menu', 'Aphly\LaravelAdmin\Controllers\RoleController@menu');
 
-                Route::get('/role/show', 'Aphly\LaravelAdmin\Controllers\RoleController@show');
-                Route::get('/permission/show', 'Aphly\LaravelAdmin\Controllers\PermissionController@show');
-                Route::get('/menu/show', 'Aphly\LaravelAdmin\Controllers\MenuController@show');
+                Route::get('/role/tree', 'Aphly\LaravelAdmin\Controllers\RoleController@tree');
+                Route::get('/permission/tree', 'Aphly\LaravelAdmin\Controllers\PermissionController@tree');
+                Route::get('/menu/tree', 'Aphly\LaravelAdmin\Controllers\MenuController@tree');
+                Route::get('/level/tree', 'Aphly\LaravelAdmin\Controllers\LevelController@tree');
 
                 Route::get('/module/install', 'Aphly\LaravelAdmin\Controllers\ModuleController@install');
-                Route::get('/level/show', 'Aphly\LaravelAdmin\Controllers\LevelController@show');
             });
         });
     });

@@ -3,23 +3,17 @@
 </div>
 
 <div class="imain">
-    <form method="post" @if($res['info']->id) action="/admin/level/save?id={{$res['info']->id}}" @else action="/admin/level/save" @endif class="save_form">
+    <form method="post" @if($res['info']->id) action="/admin/level/edit?id={{$res['info']->id}}" @else action="/admin/level/add" @endif class="save_form">
         @csrf
         <div class="">
             <input type="hidden" name="form_edit" class="form-control" value="1">
-            @if(!empty($res['parent_info']))
-            <div class="form-group">
-                <label for="">父级</label>
-                <input type="text" class="form-control" value="{{$res['parent_info']->name}}" disabled>
-            </div>
-            @endif
             <div class="form-group">
                 <label for="">类型</label>
-                <select name="is_leaf" id="is_leaf" class="form-control" disabled>
-                    @if($res['info']->is_leaf)
-                        <option value="1">子级</option>
+                <select name="type" class="form-control" >
+                    @if($res['info']->type==1)
+                        <option value="1">目录</option>
                     @else
-                        <option value="0">目录</option>
+                        <option value="2">层级</option>
                     @endif
                 </select>
                 <div class="invalid-feedback"></div>

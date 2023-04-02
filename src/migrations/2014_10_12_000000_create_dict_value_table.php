@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('name',64)->nullable();
             $table->string('value',255)->nullable();
             $table->integer('sort')->nullable()->index();
+            $table->engine = 'InnoDB';
         });
     }
 
