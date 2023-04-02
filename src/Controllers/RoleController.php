@@ -7,6 +7,7 @@ use Aphly\Laravel\Models\Menu;
 use Aphly\Laravel\Models\Module;
 use Aphly\Laravel\Models\Permission;
 use Aphly\Laravel\Models\Role;
+use Aphly\Laravel\Models\RoleMenu;
 use Aphly\LaravelAdmin\Requests\RoleRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
@@ -98,12 +99,24 @@ class RoleController extends Controller
     {
         $res['info'] = Role::where('id',$request->query('id',0))->firstOrError();
         if($request->isMethod('post')) {
-            $res['info']->menu()->sync($request->input('menu_id'));
+            $input = $request->input('menu_id');
+            $arr = [];
+            foreach ($input as $key=>$val){
+                foreach ($val as $v){
+                    if($key=='determined'){
+                        $arr[] = ['role_id'=>$res['info']->id,'menu_id'=>$v,'undetermined'=>0];
+                    }else{
+                        $arr[] = ['role_id'=>$res['info']->id,'menu_id'=>$v,'undetermined'=>1];
+                    }
+                }
+            }
+            RoleMenu::where('role_id',$res['info']->id)->delete();
+            RoleMenu::insert($arr);
             Cache::forget('role_menu');
             throw new ApiException(['code'=>0,'msg'=>'操作成功','data'=>['redirect'=>$this->index_url]]);
         }else{
-            $res['role_menu'] = $res['info']->menu->toArray();
-            $res['select_ids'] = array_column($res['role_menu'], 'id');
+            $res['role_menu'] = RoleMenu::where(['role_id'=>$res['info']->id,'undetermined'=>0])->get()->toArray();
+            $res['select_ids'] = array_column($res['role_menu'], 'menu_id');
             $res['list'] = Menu::where('status',1)->orderBy('sort', 'desc')->get()->toArray();
             return $this->makeView('laravel-admin::role.menu',['res'=>$res]);
         }
