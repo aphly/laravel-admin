@@ -48,7 +48,7 @@
                         </li>
                         <li>
                             @if($dict['user_status'])
-                                @if($v->status)
+                                @if($v->status==1)
                                     <span class="badge badge-success">{{$dict['user_status'][$v->status]}}</span>
                                 @else
                                     <span class="badge badge-secondary">{{$dict['user_status'][$v->status]}}</span>

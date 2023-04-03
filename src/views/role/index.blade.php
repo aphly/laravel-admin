@@ -10,7 +10,7 @@
             </div>
         </form>
         <div class="">
-            <a data-href="/admin/role/add" class="badge badge-info ajax_get ">新增</a>
+            <a data-href="/admin/role/add" class="badge badge-info ajax_get admin_right_btn">新增</a>
         </div>
     </div>
 

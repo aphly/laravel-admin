@@ -94,7 +94,7 @@ class RoleController extends Controller
             }
         }
         Role::updateOrCreate(['id'=>$request->query('id',0),'pid'=>$pid],$input);
-        throw new ApiException(['code'=>0,'msg'=>'成功','data'=>['redirect'=>'/admin/role/show']]);
+        throw new ApiException(['code'=>0,'msg'=>'成功','data'=>['redirect'=>'/admin/role/tree']]);
     }
 
     public function menu(Request $request)

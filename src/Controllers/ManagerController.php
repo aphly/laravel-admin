@@ -28,6 +28,7 @@ class ManagerController extends Controller
                             function($query,$status) {
                                 return $query->where('status', '=', $status);
                             })
+                        ->dataPerm()
                         ->with('role')
                         ->orderBy('uuid', 'desc')
                         ->Paginate(config('admin.perPage'))->withQueryString();
