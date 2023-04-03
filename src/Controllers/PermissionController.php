@@ -36,7 +36,7 @@ class PermissionController extends Controller
             $permission = Permission::create($post);
             $form_edit = $request->input('form_edit',0);
             if($permission->id){
-                Cache::forget('role_permission');
+                //Cache::forget('role_permission');
                 throw new ApiException(['code'=>0,'msg'=>'添加成功','data'=>['redirect'=>$form_edit?$this->index_url:'/admin/permission/tree']]);
             }else{
                 throw new ApiException(['code'=>1,'msg'=>'添加失败','data'=>[]]);
@@ -56,7 +56,7 @@ class PermissionController extends Controller
             $post = $request->all();
             $form_edit = $request->input('form_edit',0);
             if($res['info']->update($post)){
-                Cache::forget('role_permission');
+               //Cache::forget('role_permission');
                 throw new ApiException(['code'=>0,'msg'=>'修改成功','data'=>['redirect'=>$form_edit?$this->index_url:'/admin/permission/tree']]);
             }else{
                 throw new ApiException(['code'=>1,'msg'=>'修改失败','data'=>[]]);
@@ -86,9 +86,7 @@ class PermissionController extends Controller
 
     public function tree()
     {
-        $data = Permission::orderBy('sort', 'desc')->get();
-        $res['list'] = $data->toArray();
-        $res['listById'] = $data->keyBy('id')->toArray();
+        $res['list'] = Permission::orderBy('sort', 'desc')->get()->keyBy('id')->toArray();
         $res['module'] = (new Module)->getByCache();
         $res['rbacRoutes'] = $this->getRoutes('rbac');
         return $this->makeView('laravel-admin::permission.tree',['res'=>$res]);

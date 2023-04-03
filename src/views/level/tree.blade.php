@@ -58,7 +58,6 @@
         root:0,
         tree_form : '#tree_form',
         list : @json($res['list']),
-        listById : @json($res['listById']),
         select:{},
         type:'add',
         tree_save_url:'/admin/level',

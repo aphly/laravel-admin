@@ -27,6 +27,15 @@
                 <div class="invalid-feedback"></div>
             </div>
             <div class="form-group" >
+                <label for="">数据权限</label>
+                <select name="data_perm" class="form-control">
+                    @foreach($dict['data_perm'] as $key=>$val)
+                        <option value="{{$key}}" @if($res['info']['data_perm']==$key) selected @endif>{{$val}}</option>
+                    @endforeach
+                </select>
+                <div class="invalid-feedback"></div>
+            </div>
+            <div class="form-group" >
                 <label for="">状态</label>
                 <select name="status" class="form-control">
                     @foreach($dict['status'] as $key=>$val)

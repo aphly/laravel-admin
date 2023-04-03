@@ -34,9 +34,7 @@ class LevelController extends Controller
 
     public function tree()
     {
-        $data = Level::orderBy('sort', 'desc')->get();
-        $res['list'] = $data->toArray();
-        $res['listById'] = $data->keyBy('id')->toArray();
+        $res['list'] = Level::orderBy('sort', 'desc')->get()->keyBy('id')->toArray();
         return $this->makeView('laravel-admin::level.tree',['res'=>$res]);
     }
 

@@ -77,12 +77,10 @@
 </div>
 
 <script>
-
     var my_tree = new MyTree({
         root:0,
         tree_form : '#tree_form',
         list : @json($res['list']),
-        listById : @json($res['listById']),
         select:{},
         type:'add',
         tree_save_url:'/admin/permission',
@@ -92,7 +90,6 @@
     })
     $(function () {
         function mount(){
-
             my_tree.tree_btn()
             let treeData = my_tree.treeFormat(my_tree.op.list)
             $('#tree').jstree({
@@ -128,5 +125,4 @@
             my_tree.tree_save()
         })
     })
-
 </script>

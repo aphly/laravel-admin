@@ -16,8 +16,7 @@
                     <button class="btn btn-primary" type="submit">保存</button>
                 </form>
             </div>
-            <div class="role">
-            </div>
+
         </div>
     </div>
 
@@ -40,15 +39,8 @@
 
     var my_tree = new MyTree({
         root:0,
-        tree_form : '#tree_form',
         list : @json($res['list']),
-        select_ids : @json($res['select_ids']),
-        select:{},
-        type:'add',
-        tree_save_url:'/admin/permission',
-        tree_del_url:'/admin/permission/del',
-        tree_del_url_return:'/admin/permission/tree',
-        _token:'{{csrf_token()}}'
+        select_ids : @json($res['select_ids'])
     })
     $(function () {
         function mount(){
@@ -73,8 +65,5 @@
             })
         }
         mount()
-        $('#tree_form').on('click','.submit',function () {
-            my_tree.tree_save()
-        })
     })
 </script>

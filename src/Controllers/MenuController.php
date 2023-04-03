@@ -33,7 +33,7 @@ class MenuController extends Controller
             $menu = Menu::create($post);
 			$form_edit = $request->input('form_edit',0);
 			if($menu->id){
-				Cache::forget('role_menu');
+				//Cache::forget('role_menu');
 				throw new ApiException(['code'=>0,'msg'=>'添加成功','data'=>['redirect'=>$form_edit?$this->index_url:'/admin/menu/tree']]);
 			}else{
 				throw new ApiException(['code'=>1,'msg'=>'添加失败','data'=>[]]);
@@ -52,7 +52,7 @@ class MenuController extends Controller
             $post = $request->all();
 			$form_edit = $request->input('form_edit',0);
 			if($res['info']->update($post)){
-				Cache::forget('role_menu');
+				//Cache::forget('role_menu');
 				throw new ApiException(['code'=>0,'msg'=>'修改成功','data'=>['redirect'=>$form_edit?$this->index_url:'/admin/menu/tree']]);
 			}else{
 				throw new ApiException(['code'=>1,'msg'=>'修改失败','data'=>[]]);
@@ -82,9 +82,7 @@ class MenuController extends Controller
 
     public function tree()
     {
-        $data = Menu::orderBy('sort', 'desc')->get();
-        $res['list'] = $data->toArray();
-        $res['listById'] = $data->keyBy('id')->toArray();
+        $res['list'] = Menu::orderBy('sort', 'desc')->get()->keyBy('id')->toArray();
         $res['module'] = (new Module)->getByCache();
         $res['allRoutes'] = $this->getRoutes();
         return $this->makeView('laravel-admin::menu.tree',['res'=>$res]);

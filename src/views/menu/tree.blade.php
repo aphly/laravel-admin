@@ -74,7 +74,6 @@
         root:0,
         tree_form : '#tree_form',
         list : @json($res['list']),
-        listById : @json($res['listById']),
         select:{},
         type:'add',
         tree_save_url:'/admin/menu',
@@ -114,7 +113,7 @@
         })
         $('#tree_btn').on('click','.tree_edit',function () {
             let id = $(this).data('id');
-            make_menu_type(my_tree.op.listById[id]['type'])
+            make_menu_type(my_tree.op.list[id]['type'])
             my_tree.tree_form_edit(id)
         })
         $('#tree_form').on('change','#type',function () {

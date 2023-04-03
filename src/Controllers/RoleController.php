@@ -3,11 +3,13 @@
 namespace Aphly\LaravelAdmin\Controllers;
 
 use Aphly\Laravel\Exceptions\ApiException;
+use Aphly\Laravel\Models\Level;
 use Aphly\Laravel\Models\Menu;
 use Aphly\Laravel\Models\Module;
 use Aphly\Laravel\Models\Permission;
 use Aphly\Laravel\Models\Role;
 use Aphly\Laravel\Models\RoleMenu;
+use Aphly\Laravel\Models\RolePermission;
 use Aphly\LaravelAdmin\Requests\RoleRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
@@ -112,7 +114,7 @@ class RoleController extends Controller
             }
             RoleMenu::where('role_id',$res['info']->id)->delete();
             RoleMenu::insert($arr);
-            Cache::forget('role_menu');
+            //Cache::forget('role_menu');
             throw new ApiException(['code'=>0,'msg'=>'操作成功','data'=>['redirect'=>$this->index_url]]);
         }else{
             $res['role_menu'] = RoleMenu::where(['role_id'=>$res['info']->id,'undetermined'=>0])->get()->toArray();
@@ -127,12 +129,12 @@ class RoleController extends Controller
         $res['info'] = Role::where('id',$request->query('id',0))->firstOrError();
         if($request->isMethod('post')) {
             $res['info']->permission()->sync($request->input('permission_id'));
-            Cache::forget('role_permission');
+            //Cache::forget('role_permission');
             throw new ApiException(['code'=>0,'msg'=>'操作成功','data'=>['redirect'=>$this->index_url]]);
         }else{
-            $res['role_permission'] = $res['info']->permission->toArray();
-            $res['select_ids'] = array_column($res['role_permission'], 'id');
-            $res['permission'] = Permission::where('status',1)->orderBy('sort', 'desc')->get()->toArray();
+            $res['role_permission'] = RolePermission::where(['role_id'=>$res['info']->id])->get()->toArray();
+            $res['select_ids'] = array_column($res['role_permission'], 'permission_id');
+            $res['list'] = Permission::where('status',1)->orderBy('sort', 'desc')->get()->toArray();
             return $this->makeView('laravel-admin::role.permission',['res'=>$res]);
         }
     }
