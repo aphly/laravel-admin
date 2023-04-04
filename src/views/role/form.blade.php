@@ -26,6 +26,13 @@
                 <input type="text" name="desc" class="form-control " value="{{$res['info']['desc']}}">
                 <div class="invalid-feedback"></div>
             </div>
+            <div>
+                <label for="">层级</label>
+                <input type="hidden" id="level_id"  name="level_id" class="form-control " value="{{$res['info']['level_id']}}">
+                <input type="text" id="level_name" class="form-control " value="{{$res['levelList'][$res['info']['level_id']]['name']??''}}">
+                <div id="tree"></div>
+                <div class="invalid-feedback"></div>
+            </div>
             <div class="form-group" >
                 <label for="">数据权限</label>
                 <select name="data_perm" class="form-control">
@@ -53,3 +60,35 @@
         </div>
     </form>
 </div>
+<script>
+    var my_tree = new MyTree({
+        root:0,
+        list : @json($res['levelList']),
+        select:{}
+    })
+    $(function () {
+        function mount(){
+            let treeData = my_tree.treeFormat(my_tree.op.list,[{{$res['info']['level_id']}}])
+            $('#tree').jstree({
+                "core": {
+                    "themes":{
+                        "dots": false,
+                        "icons":false
+                    },
+                    "data": treeData
+                },
+                "plugins": ["themes"]
+            }).on('select_node.jstree', function(el,_data) {
+            }).on("changed.jstree", function(el,data) {
+                my_tree.op.select = my_tree.getSelectObj(data)
+                $('#level_id').val(my_tree.op.select[0].data.id)
+                $('#level_name').val(my_tree.op.select[0].text)
+            })
+        }
+        mount()
+        $('#tree_btn').on('click','.tree_del',function () {
+            my_tree.tree_del($(this).data('id'))
+        })
+
+    })
+</script>

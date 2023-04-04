@@ -28,6 +28,7 @@ class RoleController extends Controller
                             })
                         ->orderBy('sort', 'desc')->orderBy('id', 'desc')
                         ->Paginate(config('admin.perPage'))->withQueryString();
+        $res['levelList'] = Level::orderBy('sort', 'desc')->get()->keyBy('id')->toArray();
         return $this->makeView('laravel-admin::role.index',['res'=>$res]);
     }
 
@@ -46,6 +47,7 @@ class RoleController extends Controller
             $res['title'] = '';
 			$res['info'] = Role::where('id',$request->query('id',0))->firstOrNew();
             $res['module'] = (new Module)->getByCache();
+            $res['levelList'] = Level::orderBy('sort', 'desc')->get()->keyBy('id')->toArray();
             return $this->makeView('laravel-admin::role.form',['res'=>$res]);
         }
     }
@@ -63,6 +65,7 @@ class RoleController extends Controller
 			}
         }else{
             $res['module'] = (new Module)->getByCache();
+            $res['levelList'] = Level::orderBy('sort', 'desc')->get()->keyBy('id')->toArray();
             return $this->makeView('laravel-admin::role.form',['res'=>$res]);
         }
     }
