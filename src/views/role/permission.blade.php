@@ -13,7 +13,9 @@
                 <form method="post" action="/admin/role/permission?id={{$res['info']['id']}}" class="save_form">
                     @csrf
                     <div class=" select_ids" id="select_ids"></div>
-                    <button class="btn btn-primary" type="submit">保存</button>
+                    <div class="d-flex flex-row-reverse">
+                        <button style="margin-right: 20px;" class="btn btn-primary" type="submit">保存</button>
+                    </div>
                 </form>
             </div>
         </div>

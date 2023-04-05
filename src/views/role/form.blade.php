@@ -29,8 +29,12 @@
             <div>
                 <label for="">层级</label>
                 <input type="hidden" id="level_id"  name="level_id" class="form-control " value="{{$res['info']['level_id']}}">
-                <input type="text" id="level_name" class="form-control " value="{{$res['levelList'][$res['info']['level_id']]['name']??''}}">
-                <div id="tree"></div>
+                <input type="text" id="level_name" onclick="tree_box(this)" readonly class="form-control tree_box_pre" value="{{$res['levelList'][$res['info']['level_id']]['name']??''}}">
+                <div class="tree_box">
+                    <div class="tree_p">
+                        <div id="tree" ></div>
+                    </div>
+                </div>
                 <div class="invalid-feedback"></div>
             </div>
             <div class="form-group" >
@@ -60,6 +64,9 @@
         </div>
     </form>
 </div>
+<style>
+
+</style>
 <script>
     var my_tree = new MyTree({
         root:0,
@@ -83,12 +90,12 @@
                 my_tree.op.select = my_tree.getSelectObj(data)
                 $('#level_id').val(my_tree.op.select[0].data.id)
                 $('#level_name').val(my_tree.op.select[0].text)
+                $('.tree_box').hide();
             })
         }
         mount()
-        $('#tree_btn').on('click','.tree_del',function () {
-            my_tree.tree_del($(this).data('id'))
-        })
-
     })
+    function tree_box(_this) {
+        $('.tree_box').toggle();
+    }
 </script>

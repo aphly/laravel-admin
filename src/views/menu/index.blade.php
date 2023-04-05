@@ -4,7 +4,6 @@
     </h5>
 </div>
 <style>
-    .table_scroll .table_header li:nth-child(4),.table_scroll .table_tbody li:nth-child(4){flex: 0 0 500px;}
 </style>
 <div class="imain">
     <div class="itop ">
@@ -28,7 +27,7 @@
                     <li >模块id</li>
                     <li >名称 </li>
                     <li >类型 </li>
-                    <li >链接地址</li>
+                    <li >路由</li>
                     <li >状态</li>
                     <li >操作</li>
                 </ul>
@@ -39,10 +38,18 @@
                             <li><span class="module_id badge">{{$v['module_id']}}</span></li>
                             <li>{{$v['name']}} </li>
                             <li>
-                                {{$v['url']}}
+                                @if($dict['menu_type'])
+                                    @if($v->type==1)
+                                        <span class="alert alert-primary my_alert">{{$dict['menu_type'][$v->type]}}</span>
+                                    @elseif($v->type==2)
+                                        <span class="alert alert-secondary my_alert">{{$dict['menu_type'][$v->type]}}</span>
+                                    @elseif($v->type==3)
+                                        <span class="alert alert-success my_alert">{{$dict['menu_type'][$v->type]}}</span>
+                                    @endif
+                                @endif
                             </li>
                             <li>
-                                {{$v['url']}}
+                                {{$v['route']}}
                             </li>
                             <li>
                                 @if($dict['status'])

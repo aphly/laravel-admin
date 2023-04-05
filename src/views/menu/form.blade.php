@@ -23,9 +23,9 @@
             <div class="form-group">
                 <label for="">类型</label>
                 <select name="type" class="form-control" id="type">
-                    <option value="1" @if($res['info']['type']==1) @else selected @endif>目录</option>
-                    <option value="2" @if($res['info']['type']==2) selected @endif>菜单</option>
-                    <option value="3" @if($res['info']['type']==3) selected @endif>按钮</option>
+                    @foreach($dict['menu_type'] as $key=>$val)
+                        <option value="{{$key}}" @if($res['info']['type']==$key) selected @endif>{{$val}}</option>
+                    @endforeach
                 </select>
                 <div class="invalid-feedback"></div>
             </div>

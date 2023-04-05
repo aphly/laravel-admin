@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('admin_manager', function (Blueprint $table) {
             $table->unsignedBigInteger('uuid')->primary();
-            $table->unsignedBigInteger('level_id')->index();
+            $table->unsignedBigInteger('level_id')->default(0)->index();
             $table->string('username',32)->unique();
             $table->string('nickname',32)->nullable();
             $table->string('email',128)->nullable();

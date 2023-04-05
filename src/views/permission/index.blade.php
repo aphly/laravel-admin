@@ -3,7 +3,6 @@
     </h5>
 </div>
 <style>
-    .table_scroll .table_header li:nth-child(4),.table_scroll .table_tbody li:nth-child(4){flex: 0 0 500px;}
 </style>
 <div class="imain">
     <div class="itop ">
@@ -26,6 +25,7 @@
                     <li >ID</li>
                     <li >模块id</li>
                     <li >名称</li>
+                    <li >类型</li>
                     <li >路由</li>
                     <li >状态</li>
                     <li >操作</li>
@@ -38,17 +38,20 @@
                             <li>{{$v['name']}}</li>
                             <li>
                                 @if($v['type']==2)
-                                    {{$v['route']}}
+                                    <span class="alert alert-secondary my_alert">权限</span>
                                 @else
-                                    目录
+                                    <span class="alert alert-primary my_alert">目录</span>
                                 @endif
+                            </li>
+                            <li>
+                                {{$v['route']}}
                             </li>
                             <li>
                                 @if($dict['status'])
                                     @if($v['status']==1)
-                                        <span class="badge badge-success">{{$dict['status'][$v['status']]}}</span>
+                                        <span class="badge badge-success my_badge">{{$dict['status'][$v['status']]}}</span>
                                     @else
-                                        <span class="badge badge-secondary">{{$dict['status'][$v['status']]}}</span>
+                                        <span class="badge badge-secondary my_badge">{{$dict['status'][$v['status']]}}</span>
                                     @endif
                                 @endif
                             </li>

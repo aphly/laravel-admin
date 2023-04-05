@@ -28,8 +28,8 @@ class InitController extends Controller
 
                 DB::table('admin_role')->truncate();
                 $data=[];
-                $data[] =['id'=>1,'name' => '超级管理员','level_id' => 1,'data' => 3,'module_id'=>$this->module_id];
-                $data[] =['id'=>2,'name' => '管理员','level_id' => 2,'data' => 3,'module_id'=>$this->module_id];
+                $data[] =['id'=>1,'name' => '超级管理员','level_id' => 1,'data_perm' => 3,'module_id'=>$this->module_id];
+                $data[] =['id'=>2,'name' => '管理员','level_id' => 2,'data_perm' => 3,'module_id'=>$this->module_id];
                 DB::table('admin_role')->insert($data);
 
                 DB::table('admin_manager')->truncate();
@@ -85,6 +85,7 @@ class InitController extends Controller
                 $data[] =['name' => '用户性别','key'=>'user_gender','module_id'=>$this->module_id];
                 $data[] =['name' => '是否','key'=>'yes_no','module_id'=>$this->module_id];
                 $data[] =['name' => '数据权限','key'=>'data_perm','module_id'=>$this->module_id];
+                $data[] =['name' => '菜单类型','key'=>'menu_type','module_id'=>$this->module_id];
                 DB::table('admin_dict')->insert($data);
 
                 $data=[];
@@ -99,6 +100,9 @@ class InitController extends Controller
                 $data[] =['dict_id' => 5,'name'=>'自己','value'=>'1'];
                 $data[] =['dict_id' => 5,'name'=>'本部门','value'=>'2'];
                 $data[] =['dict_id' => 5,'name'=>'本部门及下属部门','value'=>'3'];
+                $data[] =['dict_id' => 6,'name'=>'目录','value'=>'1'];
+                $data[] =['dict_id' => 6,'name'=>'菜单','value'=>'2'];
+                $data[] =['dict_id' => 6,'name'=>'按钮','value'=>'3'];
                 DB::table('admin_dict_value')->insert($data);
 
                 $data=[];

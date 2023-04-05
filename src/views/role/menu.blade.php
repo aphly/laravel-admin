@@ -7,13 +7,15 @@
     </div>
     <div class="role_permission max_width">
         <div class="min_width d-flex">
-            <div class="permission_menu">
+            <div class="permission_menu" >
                 <div class="role_title">菜单列表</div>
                 <div id="tree" class="treeview"></div>
                 <form method="post" action="/admin/role/menu?id={{$res['info']['id']}}" class="save_form">
                     @csrf
                     <div class="select_ids d-flex flex-wrap" id="select_ids"></div>
-                    <button class="btn btn-primary" type="submit">保存</button>
+                    <div class="d-flex flex-row-reverse">
+                        <button style="margin-right: 20px;" class="btn btn-primary" type="submit">保存</button>
+                    </div>
                 </form>
             </div>
 

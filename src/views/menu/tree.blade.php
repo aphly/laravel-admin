@@ -34,9 +34,9 @@
                             <div class="form-group">
                                 <label for="">类型</label>
                                 <select name="type" class="form-control" id="type">
-                                    <option value="1">目录</option>
-                                    <option value="2">菜单</option>
-                                    <option value="3">按钮</option>
+                                    @foreach($dict['menu_type'] as $key=>$val)
+                                        <option value="{{$key}}" >{{$val}}</option>
+                                    @endforeach
                                 </select>
                                 <div class="invalid-feedback"></div>
                             </div>

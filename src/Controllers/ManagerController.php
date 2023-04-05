@@ -5,6 +5,7 @@ namespace Aphly\LaravelAdmin\Controllers;
 use Aphly\Laravel\Exceptions\ApiException;
 use Aphly\Laravel\Libs\Helper;
 use Aphly\Laravel\Models\Manager;
+use Aphly\Laravel\Models\ManagerRole;
 use Aphly\Laravel\Models\Role;
 use Aphly\LaravelAdmin\Requests\ManagerRequest;
 use Illuminate\Http\Request;
@@ -97,9 +98,9 @@ class ManagerController extends Controller
             }
             throw new ApiException(['code'=>0,'msg'=>'操作成功','data'=>['redirect'=>$this->index_url]]);
         }else{
-            $res['user_role'] = $res['info']->role->toArray();
-            $res['select_ids'] = array_column($res['user_role'], 'id');
-            $res['role'] = Role::where('status',1)->orderBy('sort', 'desc')->get()->toArray();
+            $res['manager_role'] = ManagerRole::where('uuid',$res['info']->uuid)->with('role')->get()->toArray();
+            $res['select_ids'] = array_column($res['manager_role'], 'id');
+            $res['roleList'] = Role::where('status',1)->orderBy('sort', 'desc')->get()->keyBy('id')->toArray();
             return $this->makeView('laravel-admin::manager.role',['res'=>$res]);
         }
     }
