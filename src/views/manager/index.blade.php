@@ -3,7 +3,7 @@
 </div>
 <style>
     .table_scroll .table_header li:nth-child(4),.table_scroll .table_tbody li:nth-child(4){flex: 0 0 300px;}
-    .manager_role{background: #2878a7; color: #fff; border-radius: 4px; padding: 0 2px;}
+    .manager_role{background: #2878a7; color: #fff; border-radius: 4px; padding: 2px 4px;font-size: 12px;}
 </style>
 <div class="imain">
     <div class="itop ">
@@ -56,8 +56,8 @@
                             @endif
                         </li>
                         <li>
-                            <a class="badge badge-success ajax_get" data-href="/admin/manager/role?uuid={{$v->uuid}}">角色</a>
                             <a class="badge badge-info ajax_get" data-href="/admin/manager/edit?uuid={{$v->uuid}}">编辑</a>
+                            <a class="badge badge-success ajax_get" data-href="/admin/manager/role?uuid={{$v->uuid}}">角色</a>
                         </li>
                     </ul>
                     @endforeach
