@@ -3,8 +3,10 @@
 namespace Aphly\LaravelAdmin\Controllers;
 
 use Aphly\Laravel\Exceptions\ApiException;
+use Aphly\Laravel\Models\Role;
 use Aphly\Laravel\Models\UploadFile;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class UploadFileController extends Controller
 {
@@ -15,10 +17,13 @@ class UploadFileController extends Controller
         $res['title'] = '';
         $res['search']['uuid'] = $uuid = $request->query('uuid', false);
         $res['search']['string'] = http_build_query($request->query());
+        $manager = Auth::guard('manager')->user();
+        $level_ids = (new Role)->hasLevelIds(session('role_id'));
         $res['list'] = UploadFile::when($uuid,
                             function ($query, $uuid) {
                                 return $query->where('uuid', $uuid);
                             })
+                        ->dataPerm($manager->uuid,$level_ids)
                         ->orderBy('id','desc')
                         ->Paginate(config('admin.perPage'))->withQueryString();
         return $this->makeView('laravel-admin::upload_file.index', ['res' => $res]);
