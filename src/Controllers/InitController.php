@@ -121,7 +121,7 @@ class InitController extends Controller
                 for($i=1;$i<=56;$i++){
                     $data[] =['role_id' => 1,'menu_id'=>$i];
                 }
-                for($i=1;$i<=56;$i++){
+                for($i=31;$i<=56;$i++){
                     $data[] =['role_id' => 2,'menu_id'=>$i];
                 }
                 DB::table('admin_role_menu')->insert($data);
@@ -135,9 +135,6 @@ class InitController extends Controller
                 $data=[];
                 for($i=1;$i<=1;$i++){
                     $data[] =['role_id' => 1,'permission_id'=>$i];
-                }
-                for($i=1;$i<=1;$i++){
-                    $data[] =['role_id' => 2,'permission_id'=>$i];
                 }
                 DB::table('admin_role_permission')->insert($data);
 
