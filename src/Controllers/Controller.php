@@ -41,7 +41,7 @@ class Controller extends AdminController
                     'function'=>$controller_arr[1]??'',
                     'perm'=>$controller,
                     "name" => !empty($route->action["as"]) ?   $route->action["as"] : '',
-                    "url" => '/'.$route->uri,
+                    "url" => $route->uri,
                     "method" => implode(',',$route->methods)
                 ];
             }

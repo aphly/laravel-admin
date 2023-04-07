@@ -82,23 +82,26 @@
         _token:'{{csrf_token()}}'
     })
     $(function () {
-        function mount(){
+        function mount() {
             my_tree.tree_btn()
             let treeData = my_tree.treeFormat(my_tree.op.list)
             $('#tree').jstree({
                 "core": {
-                    "themes":{
+                    "themes": {
                         "dots": false,
-                        "icons":false
+                        "icons": false
                     },
                     "data": treeData
                 },
-                "checkbox" : {
-                    "keep_selected_style" : false
+                "checkbox": {
+                    "keep_selected_style": false
                 },
-                "plugins": ["themes"]
-            }).on('select_node.jstree', function(el,_data) {
-            }).on("changed.jstree", function(el,data) {
+                "state": {
+                    "opened":true,
+                },
+                "plugins": ["themes","state"]
+            }).on('select_node.jstree', function (el, _data) {
+            }).on("changed.jstree", function (el, data) {
                 my_tree.op.select = my_tree.getSelectObj(data)
                 my_tree.tree_btn()
             })

@@ -42,6 +42,12 @@ class LevelController extends Controller
 	{
 		if($request->isMethod('post')) {
 			$post = $request->all();
+            if($post['pid']){
+                $parent = Level::where('id',$post['pid'])->first();
+                if(!empty($parent) && $parent->status==2){
+                    $post['status'] = $parent->status;
+                }
+            }
 			$res['info'] = Level::create($post);
 			$form_edit = $request->input('form_edit',0);
 			if($res['info']->id){
@@ -63,6 +69,9 @@ class LevelController extends Controller
 			$post = $request->all();
 			$form_edit = $request->input('form_edit',0);
 			if($res['info']->update($post)){
+                if($post['status']==2){
+                    $res['info']->closeChildStatus($res['info']->id);
+                }
 				throw new ApiException(['code'=>0,'msg'=>'修改成功','data'=>['redirect'=>$form_edit?$this->index_url:'/admin/level/tree']]);
 			}else{
 				throw new ApiException(['code'=>1,'msg'=>'修改失败','data'=>[]]);

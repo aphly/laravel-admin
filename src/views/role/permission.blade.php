@@ -50,7 +50,8 @@
                     "data": treeData
                 },
                 "checkbox" : {
-                    "keep_selected_style" : false
+                    "keep_selected_style" : false,
+                    "three_state": false
                 },
                 "plugins": ["checkbox","themes"]
             }).on('select_node.jstree', function(el,_data) {

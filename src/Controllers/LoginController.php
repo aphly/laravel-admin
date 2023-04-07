@@ -14,7 +14,6 @@ use Illuminate\Support\Facades\Cookie;
 
 class LoginController extends Controller
 {
-    //public $menu_id=1;
 
     public function index(loginRequest $request)
     {

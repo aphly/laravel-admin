@@ -61,35 +61,34 @@
 </section>
 <script>
 $(function (){
-    let form_id = '#login';
-    $(form_id).submit(function (){
-        const form = $(this)
-        if(form[0].checkValidity()===false){
+    $('#login').submit(function (){
+        const that = $(this)
+        if(that[0].checkValidity()===false){
         }else{
-            let url = form.attr("action");
-            let type = form.attr("method");
+            let url = that.attr("action");
+            let type = that.attr("method");
             if(url && type){
-                $(form_id+' input.form-control').removeClass('is-valid').removeClass('is-invalid');
-                let btn_html = $(form_id+' button[type="submit"]').html();
+                that.find('input.form-control').removeClass('is-valid').removeClass('is-invalid');
+                let btn_html = that.find('button[type="submit"]').html();
                 $.ajax({
                     type,url,
-                    data: form.serialize(),
+                    data: that.serialize(),
                     dataType: "json",
                     beforeSend:function () {
-                        $(form_id+' button[type="submit"]').attr('disabled',true).html('<i class="btn_loading app-jiazai uni"></i>');
+                        that.find('button[type="submit"]').attr('disabled',true).html('<i class="btn_loading app-jiazai uni"></i>');
                     },
                     success: function(res){
-                        $(form_id+' input.form-control').addClass('is-valid');
+                        that.find('input.form-control').addClass('is-valid');
                         if(!res.code) {
                             location.href = res.data.redirect
                         }else if(res.code===11000){
-                            form_err_11000(res,form_id);
+                            form_err_11000(res,that);
                         }else{
                             $("#msg").text(res.msg).removeClass('d-none');
                         }
                     },
                     complete:function(XMLHttpRequest,textStatus){
-                        $(form_id+' button[type="submit"]').removeAttr('disabled').html(btn_html);
+                        that.find('button[type="submit"]').removeAttr('disabled').html(btn_html);
                     }
                 })
             }else{

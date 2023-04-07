@@ -7,7 +7,6 @@ use Aphly\Laravel\Models\Menu;
 use Aphly\Laravel\Models\Module;
 use Aphly\LaravelAdmin\Requests\MenuRequest;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Cache;
 
 class MenuController extends Controller
 {
@@ -30,10 +29,15 @@ class MenuController extends Controller
     {
         if($request->isMethod('post')) {
             $post = $request->all();
+            if($post['pid']){
+                $parent = Menu::where('id',$post['pid'])->first();
+                if(!empty($parent) && $parent->status==2){
+                    $post['status'] = $parent->status;
+                }
+            }
             $menu = Menu::create($post);
 			$form_edit = $request->input('form_edit',0);
 			if($menu->id){
-				//Cache::forget('role_menu');
 				throw new ApiException(['code'=>0,'msg'=>'添加成功','data'=>['redirect'=>$form_edit?$this->index_url:'/admin/menu/tree']]);
 			}else{
 				throw new ApiException(['code'=>1,'msg'=>'添加失败','data'=>[]]);
@@ -52,7 +56,9 @@ class MenuController extends Controller
             $post = $request->all();
 			$form_edit = $request->input('form_edit',0);
 			if($res['info']->update($post)){
-				//Cache::forget('role_menu');
+                if($post['status']==2){
+                    $res['info']->closeChildStatus($res['info']->id);
+                }
 				throw new ApiException(['code'=>0,'msg'=>'修改成功','data'=>['redirect'=>$form_edit?$this->index_url:'/admin/menu/tree']]);
 			}else{
 				throw new ApiException(['code'=>1,'msg'=>'修改失败','data'=>[]]);

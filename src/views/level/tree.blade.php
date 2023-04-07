@@ -80,7 +80,10 @@
                 "checkbox" : {
                     "keep_selected_style" : false
                 },
-                "plugins": ["themes"]
+                "state": {
+                    "opened":true,
+                },
+                "plugins": ["themes","state"]
             }).on('select_node.jstree', function(el,_data) {
             }).on("changed.jstree", function(el,data) {
                 my_tree.op.select = my_tree.getSelectObj(data)

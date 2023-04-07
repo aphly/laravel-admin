@@ -35,12 +35,22 @@ Route::middleware(['web'])->group(function () {
                 $route_arr = [
                     ['manager', '\ManagerController'], ['role', '\RoleController'], ['permission', '\PermissionController'],
                     ['menu', '\MenuController'], ['banned', '\BannedController'], ['config', '\ConfigController'], ['module', '\ModuleController'],
-                    ['dict', '\DictController'], ['failed_login', '\FailedLoginController'], ['level', '\LevelController']
+                    ['dict', '\DictController'],  ['level', '\LevelController']
                 ];
 
                 foreach ($route_arr as $val) {
                     Route::get('/' . $val[0] . '/index', 'Aphly\LaravelAdmin\Controllers' . $val[1] . '@index');
                     Route::match(['get', 'post'], '/' . $val[0] . '/add', 'Aphly\LaravelAdmin\Controllers' . $val[1] . '@add');
+                    Route::match(['get', 'post'], '/' . $val[0] . '/edit', 'Aphly\LaravelAdmin\Controllers' . $val[1] . '@edit');
+                    Route::post('/' . $val[0] . '/del', 'Aphly\LaravelAdmin\Controllers' . $val[1] . '@del');
+                }
+
+                $route_arr = [
+                    ['failed_login', '\FailedLoginController'],['upload_file', '\UploadFileController'],
+                ];
+
+                foreach ($route_arr as $val) {
+                    Route::get('/' . $val[0] . '/index', 'Aphly\LaravelAdmin\Controllers' . $val[1] . '@index');
                     Route::match(['get', 'post'], '/' . $val[0] . '/edit', 'Aphly\LaravelAdmin\Controllers' . $val[1] . '@edit');
                     Route::post('/' . $val[0] . '/del', 'Aphly\LaravelAdmin\Controllers' . $val[1] . '@del');
                 }

@@ -17,7 +17,6 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('role_id')->index();
             $table->unsignedBigInteger('menu_id')->index();
-            $table->unsignedTinyInteger('undetermined')->default(0);
             $table->engine = 'InnoDB';
         });
     }

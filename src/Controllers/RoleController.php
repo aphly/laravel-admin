@@ -104,23 +104,10 @@ class RoleController extends Controller
     {
         $res['info'] = Role::where('id',$request->query('id',0))->firstOrError();
         if($request->isMethod('post')) {
-            $input = $request->input('menu_id');
-            $arr = [];
-            foreach ($input as $key=>$val){
-                foreach ($val as $v){
-                    if($key=='determined'){
-                        $arr[] = ['role_id'=>$res['info']->id,'menu_id'=>$v,'undetermined'=>0];
-                    }else{
-                        $arr[] = ['role_id'=>$res['info']->id,'menu_id'=>$v,'undetermined'=>1];
-                    }
-                }
-            }
-            RoleMenu::where('role_id',$res['info']->id)->delete();
-            RoleMenu::insert($arr);
-            //Cache::forget('role_menu');
+            $res['info']->menu()->sync($request->input('menu_id'));
             throw new ApiException(['code'=>0,'msg'=>'操作成功','data'=>['redirect'=>$this->index_url]]);
         }else{
-            $res['role_menu'] = RoleMenu::where(['role_id'=>$res['info']->id,'undetermined'=>0])->get()->toArray();
+            $res['role_menu'] = RoleMenu::where(['role_id'=>$res['info']->id])->get()->toArray();
             $res['select_ids'] = array_column($res['role_menu'], 'menu_id');
             $res['list'] = Menu::where('status',1)->orderBy('sort', 'desc')->get()->toArray();
             return $this->makeView('laravel-admin::role.menu',['res'=>$res]);
@@ -132,7 +119,6 @@ class RoleController extends Controller
         $res['info'] = Role::where('id',$request->query('id',0))->firstOrError();
         if($request->isMethod('post')) {
             $res['info']->permission()->sync($request->input('permission_id'));
-            //Cache::forget('role_permission');
             throw new ApiException(['code'=>0,'msg'=>'操作成功','data'=>['redirect'=>$this->index_url]]);
         }else{
             $res['role_permission'] = RolePermission::where(['role_id'=>$res['info']->id])->get()->toArray();

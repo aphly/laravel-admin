@@ -28,13 +28,10 @@
 </style>
 <script>
 
-    function makeInput(arr1,arr2) {
+    function makeInput(arr) {
         let html = '';
-        for(let i in arr1){
-            html += `<input type="hidden" name="menu_id[determined][]" value="${arr1[i]}">`
-        }
-        for(let i in arr2){
-            html += `<input type="hidden" name="menu_id[undetermined][]" value="${arr2[i]}">`
+        for(let i in arr){
+            html += `<input type="hidden" name="menu_id[]" value="${arr[i]}">`
         }
         $("#select_ids").html(html);
     }
@@ -56,14 +53,15 @@
                     "data": treeData
                 },
                 "checkbox" : {
-                    "keep_selected_style" : false
+                    "keep_selected_style" : false,
+                    "three_state": false
                 },
                 "plugins": ["checkbox","themes"]
             }).on('select_node.jstree', function(el,_data) {
             }).on("changed.jstree", function(el,data) {
                 let ids = my_tree.getSelectIds(data)
-                let undetermined = data.instance.get_undetermined();
-                makeInput(ids,undetermined)
+                //let undetermined = data.instance.get_undetermined();
+                makeInput(ids)
             })
         }
         mount()

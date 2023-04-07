@@ -3,38 +3,37 @@
 namespace Aphly\LaravelAdmin\Controllers;
 
 use Aphly\Laravel\Exceptions\ApiException;
-use Aphly\Laravel\Models\FailedLogin;
+use Aphly\Laravel\Models\UploadFile;
 use Illuminate\Http\Request;
 
-class FailedLoginController extends Controller
+class UploadFileController extends Controller
 {
-    public $index_url = '/admin/failed_login/index';
+    public $index_url = '/admin/upload_file/index';
 
     public function index(Request $request)
     {
         $res['title'] = '';
-        $res['search']['ip'] = $ip = $request->query('ip', false);
+        $res['search']['uuid'] = $uuid = $request->query('uuid', false);
         $res['search']['string'] = http_build_query($request->query());
-        $res['list'] = FailedLogin::when($ip,
-                            function ($query, $ip) {
-                                return $query->where('ip', 'like', '%' . $ip . '%');
+        $res['list'] = UploadFile::when($uuid,
+                            function ($query, $uuid) {
+                                return $query->where('uuid', $uuid);
                             })
                         ->orderBy('id','desc')
                         ->Paginate(config('admin.perPage'))->withQueryString();
-        return $this->makeView('laravel-admin::failed_login.index', ['res' => $res]);
+        return $this->makeView('laravel-admin::upload_file.index', ['res' => $res]);
     }
 
 	public function edit(Request $request)
 	{
-		$res['info'] = FailedLogin::where('id',$request->query('id',0))->firstOrError();
+		$res['info'] = UploadFile::where('id',$request->query('id',0))->firstOrError();
 		if($request->isMethod('post')){
 			$res['info']->update($request->all());
 			throw new ApiException(['code' => 0, 'msg' => 'success', 'data' => ['redirect' => $this->index_url]]);
 		}else{
-			return $this->makeView('laravel-admin::failed_login.form',['res'=>$res]);
+			return $this->makeView('laravel-admin::upload_file.form',['res'=>$res]);
 		}
 	}
-
 
     public function del(Request $request)
     {
@@ -42,7 +41,7 @@ class FailedLoginController extends Controller
         $redirect = $query?$this->index_url.'?'.http_build_query($query):$this->index_url;
         $post = $request->input('delete');
         if(!empty($post)){
-            FailedLogin::whereIn('id',$post)->delete();
+            UploadFile::whereIn('id',$post)->delete();
             throw new ApiException(['code'=>0,'msg'=>'操作成功','data'=>['redirect'=>$redirect]]);
         }
     }
