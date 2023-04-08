@@ -18,6 +18,7 @@ return new class extends Migration
             $table->unsignedBigInteger('uuid')->index();
             $table->unsignedBigInteger('level_id')->index();
             $table->string('path',255);
+            $table->string('file_type',16);
             $table->unsignedBigInteger('created_at');
             $table->unsignedBigInteger('updated_at');
             $table->engine = 'InnoDB';

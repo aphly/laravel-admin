@@ -21,6 +21,11 @@
                 <input type="text" name="path" class="form-control " value="{{$res['info']->path}}">
                 <div class="invalid-feedback"></div>
             </div>
+            <div class="form-group">
+                <label for="">file_type</label>
+                <input type="text" name="file_type" class="form-control " value="{{$res['info']->file_type}}">
+                <div class="invalid-feedback"></div>
+            </div>
             <button class="btn btn-primary" type="submit">保存</button>
         </div>
     </form>

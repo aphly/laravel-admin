@@ -2,9 +2,9 @@
 
 <div class=" container">
     <div class="d-flex justify-content-center" style="margin-top: 20%;">
-        <div style="font-size: 20px;">
+        <div style="">
             @if($res['roleData']->count())
-                <ul>
+                <ul class="role_choose">
                 @foreach($res['roleData'] as $val)
                     <li><a href="/admin/choose_role?role_id={{$val->role_id}}">{{$val->name}}</a></li>
                 @endforeach
@@ -15,5 +15,7 @@
         </div>
     </div>
 </div>
-
+<style>
+    .role_choose li{padding:5px 10px;font-size:16px;text-align:center;border:1px solid #007bff;border-radius:4px;margin-bottom:10px}
+</style>
 @include('laravel::admin.footer')

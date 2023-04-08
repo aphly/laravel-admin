@@ -113,15 +113,16 @@ class InitController extends Controller
                 $data[] =['id'=>54,'name' => '文件增加','route' =>'admin/upload_file/add','pid'=>53,'type'=>3,'module_id'=>$this->module_id,'sort'=>0];
                 $data[] =['id'=>55,'name' => '文件修改','route' =>'admin/upload_file/edit','pid'=>53,'type'=>3,'module_id'=>$this->module_id,'sort'=>0];
                 $data[] =['id'=>56,'name' => '文件删除','route' =>'admin/upload_file/del','pid'=>53,'type'=>3,'module_id'=>$this->module_id,'sort'=>0];
+                $data[] =['id'=>57,'name' => '文件下载','route' =>'admin/upload_file/download','pid'=>53,'type'=>3,'module_id'=>$this->module_id,'sort'=>0];
 
                 DB::table('admin_menu')->insert($data);
 
                 DB::table('admin_role_menu')->truncate();
                 $data=[];
-                for($i=1;$i<=56;$i++){
+                for($i=1;$i<=57;$i++){
                     $data[] =['role_id' => 1,'menu_id'=>$i];
                 }
-                for($i=31;$i<=56;$i++){
+                for($i=31;$i<=57;$i++){
                     $data[] =['role_id' => 2,'menu_id'=>$i];
                 }
                 DB::table('admin_role_menu')->insert($data);

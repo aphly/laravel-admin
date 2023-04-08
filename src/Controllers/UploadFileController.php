@@ -3,6 +3,7 @@
 namespace Aphly\LaravelAdmin\Controllers;
 
 use Aphly\Laravel\Exceptions\ApiException;
+use Aphly\Laravel\Models\Manager;
 use Aphly\Laravel\Models\Role;
 use Aphly\Laravel\Models\UploadFile;
 use Illuminate\Http\Request;
@@ -51,4 +52,16 @@ class UploadFileController extends Controller
         }
     }
 
+    public function download(Request $request)
+    {
+        $level_ids = (new Role)->hasLevelIds(session('role_id'));
+        $info = self::where('id',$request->query('id',0))->dataPerm(Manager::_uuid(),$level_ids)->first();
+        if(!empty($info)){
+            $file_url = storage_path('app/private/'.$info->path);
+            header('Content-Type: application/octet-stream');
+            header("Content-Transfer-Encoding: Binary");
+            header("Content-disposition: attachment; filename=\"" . basename($file_url) . "\"");
+            readfile($file_url);
+        }
+    }
 }

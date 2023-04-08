@@ -57,8 +57,8 @@
             }).on('select_node.jstree', function(el,_data) {
             }).on("changed.jstree", function(el,data) {
                 let ids = my_tree.getSelectIds(data)
-                let undetermined = data.instance.get_undetermined();
-                makeInput(ids,undetermined)
+                //let undetermined = data.instance.get_undetermined();
+                makeInput(ids)
             })
         }
         mount()
