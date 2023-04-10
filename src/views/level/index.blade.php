@@ -2,7 +2,7 @@
     <h5 class="nav-title">level</h5>
 </div>
 <style>
-    .table_scroll .table_header li:nth-child(2),.table_scroll .table_tbody li:nth-child(2){flex: 0 0 300px;}
+    .table_scroll .table_header li:nth-child(3),.table_scroll .table_tbody li:nth-child(3){flex: 0 0 300px;}
 </style>
 <div class="imain">
     <div class="itop ">
@@ -23,6 +23,7 @@
             <div class="table">
                 <ul class="table_header">
                     <li >ID</li>
+                    <li >模块id</li>
                     <li >name</li>
                     <li >sort</li>
                     <li >状态</li>
@@ -32,7 +33,8 @@
                     @foreach($res['list'] as $v)
                     <ul class="table_tbody">
                         <li><input type="checkbox" class="delete_box" name="delete[]" value="{{$v['id']}}">{{$v['id']}}</li>
-                        <li>{!! $v['name'] !!}</li>
+                        <li><span class="module_id badge">{{$v['module_id']}}</span></li>
+                        <li>{{$v['name']}}</li>
                         <li>
                             {{$v['sort']}}
                         </li>

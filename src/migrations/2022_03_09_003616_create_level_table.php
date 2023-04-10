@@ -18,8 +18,9 @@ return new class extends Migration
             $table->string('name',64);
             $table->unsignedBigInteger('pid')->index();
             $table->unsignedInteger('sort')->index()->default(1);
-            $table->tinyInteger('type')->default(1)->index();
+            $table->tinyInteger('type')->default(1);
             $table->tinyInteger('status')->index();
+            $table->unsignedBigInteger('module_id')->index();
             $table->engine = 'InnoDB';
         });
     }

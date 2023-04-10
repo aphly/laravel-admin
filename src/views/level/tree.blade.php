@@ -17,11 +17,19 @@
                         @csrf
                         <input type="hidden" name="pid" class="form-control" value="0" >
                         <div class="">
+                            <div class="form-group module_div">
+                                <label for="">模块</label>
+                                <select name="module_id" class="form-control">
+                                    @foreach($res['module'] as $key=>$val)
+                                        <option value="{{$key}}">{{$val}}</option>
+                                    @endforeach
+                                </select>
+                                <div class="invalid-feedback"></div>
+                            </div>
                             <div class="form-group">
                                 <label for="">类型</label>
                                 <select name="type" class="form-control">
-                                    <option value="1">目录</option>
-                                    <option value="2">层级</option>
+                                    <option value="1">层级</option>
                                 </select>
                                 <div class="invalid-feedback"></div>
                             </div>

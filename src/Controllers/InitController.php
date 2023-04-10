@@ -20,9 +20,8 @@ class InitController extends Controller
             if(empty($user)){
                 DB::table('admin_level')->truncate();
                 $data=[];
-                $data[] =['id'=>1,'name' => '系统平台','pid'=>0,'type'=>1,'status'=>1];
-                $data[] =['id'=>2,'name' => '管理中心','pid'=>1,'type'=>2,'status'=>1];
-                $data[] =['id'=>3,'name' => '公司','pid'=>1,'type'=>2,'status'=>1];
+                $data[] =['id'=>1,'name' => '系统平台','pid'=>0,'type'=>1,'status'=>1,'module_id'=>$this->module_id];
+                $data[] =['id'=>2,'name' => '管理中心','pid'=>1,'type'=>1,'status'=>1,'module_id'=>$this->module_id];
                 DB::table('admin_level')->insert($data);
                 (new LevelPath)->rebuild();
 
@@ -30,6 +29,7 @@ class InitController extends Controller
                 $data=[];
                 $data[] =['id'=>1,'name' => '超级管理员','level_id' => 1,'data_perm' => 3,'module_id'=>$this->module_id];
                 $data[] =['id'=>2,'name' => '管理员','level_id' => 2,'data_perm' => 3,'module_id'=>$this->module_id];
+                $data[] =['id'=>3,'name' => '初始角色','level_id' => 2,'data_perm' => 1,'module_id'=>$this->module_id];
                 DB::table('admin_role')->insert($data);
 
                 DB::table('admin_manager')->truncate();
@@ -43,10 +43,10 @@ class InitController extends Controller
 
                 DB::table('admin_menu')->truncate();
                 $data=[];
-                $data[] =['id'=>1,'name' => '后台首页','route' =>'admin/home/index','pid'=>0,'type'=>2,'module_id'=>$this->module_id,'sort'=>0];
+                $data[] =['id'=>1,'name' => '首页','route' =>'admin/home/index','pid'=>0,'type'=>2,'module_id'=>$this->module_id,'sort'=>10000];
                 $data[] =['id'=>2,'name' => '系统管理','route' =>'','pid'=>0,'type'=>1,'module_id'=>$this->module_id,'sort'=>0];
 
-                $data[] =['id'=>3,'name' => '用户权限','route' =>'','pid'=>2,'type'=>1,'module_id'=>$this->module_id,'sort'=>90];
+                $data[] =['id'=>3,'name' => '用户权限','route' =>'','pid'=>2,'type'=>1,'module_id'=>$this->module_id,'sort'=>60];
 
                 $data[] =['id'=>4,'name' => '层级管理','route' =>'admin/level/index','pid'=>3,'type'=>2,'module_id'=>$this->module_id,'sort'=>100];
                 $data[] =['id'=>5,'name' => '层级增加','route' =>'admin/level/add','pid'=>4,'type'=>3,'module_id'=>$this->module_id,'sort'=>0];
@@ -80,7 +80,7 @@ class InitController extends Controller
                 $data[] =['id'=>29,'name' => '权限删除','route' =>'admin/permission/del','pid'=>26,'type'=>3,'module_id'=>$this->module_id,'sort'=>0];
                 $data[] =['id'=>30,'name' => '权限树形','route' =>'admin/permission/tree','pid'=>26,'type'=>3,'module_id'=>$this->module_id,'sort'=>0];
 
-                $data[] =['id'=>31,'name' => '基础设置','route' =>'','pid'=>2,'type'=>1,'module_id'=>$this->module_id,'sort'=>60];
+                $data[] =['id'=>31,'name' => '基础设置','route' =>'','pid'=>2,'type'=>1,'module_id'=>$this->module_id,'sort'=>90];
 
                 $data[] =['id'=>32,'name' => '模块管理','route' =>'admin/module/index','pid'=>31,'type'=>2,'module_id'=>$this->module_id,'sort'=>101];
                 $data[] =['id'=>33,'name' => '模块增加','route' =>'admin/module/add','pid'=>32,'type'=>3,'module_id'=>$this->module_id,'sort'=>0];
@@ -124,6 +124,9 @@ class InitController extends Controller
                 }
                 for($i=31;$i<=57;$i++){
                     $data[] =['role_id' => 2,'menu_id'=>$i];
+                }
+                for($i=1;$i<=1;$i++){
+                    $data[] =['role_id' => 3,'menu_id'=>$i];
                 }
                 DB::table('admin_role_menu')->insert($data);
 
@@ -173,10 +176,11 @@ class InitController extends Controller
 
                 $data=[];
                 $data[] =['id'=>1,'name' => 'admin-mod','key' => 'admin','status'=>1,'sort'=>0,'classname'=>'-'];
-                $data[] =['id'=>2,'name' => 'common-mod','key' => 'common','status'=>0,'sort'=>0,'classname'=>'\Aphly\LaravelCommon\Controllers\Admin\InstallController'];
-                $data[] =['id'=>4,'name' => 'payment-mod','key' => 'payment','status'=>0,'sort'=>0,'classname'=>'\Aphly\LaravelPayment\Controllers\Admin\InstallController'];
-                $data[] =['id'=>101,'name' => 'novel-mod','key' => 'novel','status'=>0,'sort'=>0,'classname'=>'\Aphly\LaravelNovel\Controllers\Admin\InstallController'];
-                $data[] =['id'=>102,'name' => 'shop-mod','key' => 'shop','status'=>0,'sort'=>0,'classname'=>'\Aphly\LaravelShop\Controllers\Admin\InstallController'];
+                $data[] =['id'=>2,'name' => 'common-mod','key' => 'common','status'=>0,'sort'=>0,'classname'=>'\Aphly\LaravelCommon\Models\module'];
+                $data[] =['id'=>4,'name' => 'payment-mod','key' => 'payment','status'=>0,'sort'=>0,'classname'=>'\Aphly\LaravelPayment\Models\module'];
+                $data[] =['id'=>101,'name' => 'novel-mod','key' => 'novel','status'=>0,'sort'=>0,'classname'=>'\Aphly\LaravelNovel\Models\module'];
+                $data[] =['id'=>102,'name' => 'shop-mod','key' => 'shop','status'=>0,'sort'=>0,'classname'=>'\Aphly\LaravelShop\Models\module'];
+                $data[] =['id'=>103,'name' => 'company-mod','key' => 'company','status'=>0,'sort'=>0,'classname'=>'\Aphly\LaravelCompany\Models\module'];
                 DB::table('admin_module')->insert($data);
 
                 return '初始化成功！超级管理员帐户:'.$post['username'].' 密码:'.$password.' 登录地址：admin/login';

@@ -8,13 +8,18 @@
         <div class="">
             <input type="hidden" name="form_edit" class="form-control" value="1">
             <div class="form-group">
+                <label for="">模块</label>
+                <select name="module_id" class="form-control">
+                    @foreach($res['module'] as $key=>$val)
+                        <option value="{{$key}}" @if($key==$res['info']->module_id) selected @endif>{{$val}}</option>
+                    @endforeach
+                </select>
+                <div class="invalid-feedback"></div>
+            </div>
+            <div class="form-group">
                 <label for="">类型</label>
                 <select name="type" class="form-control" >
-                    @if($res['info']->type==1)
-                        <option value="1">目录</option>
-                    @else
-                        <option value="2">层级</option>
-                    @endif
+                    <option value="1">层级</option>
                 </select>
                 <div class="invalid-feedback"></div>
             </div>

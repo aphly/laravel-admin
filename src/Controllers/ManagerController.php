@@ -43,12 +43,15 @@ class ManagerController extends Controller
     public function add(ManagerRequest $request)
     {
         if($request->isMethod('post')){
+            $regRole = Role::where('id',Role::reg_id)->firstOrError();
             $input = $request->all();
             $input['uuid'] = $input['token'] = Helper::uuid();
             $input['token_expire'] = time();
+            $input['level_id'] = $regRole->level_id;
             $input['password'] = Hash::make($input['password']);
             $res['info'] = Manager::create($input);
             if($res['info']->uuid){
+                ManagerRole::create(['uuid'=>$res['info']->uuid,'role_id'=>$regRole->id]);
                 throw new ApiException(['code'=>0,'msg'=>'添加成功','data'=>['redirect'=>$this->index_url]]);
             }else{
                 throw new ApiException(['code'=>1,'msg'=>'添加失败']);

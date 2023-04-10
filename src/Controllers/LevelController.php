@@ -5,6 +5,7 @@ namespace Aphly\LaravelAdmin\Controllers;
 use Aphly\Laravel\Exceptions\ApiException;
 use Aphly\Laravel\Models\Level;
 use Aphly\Laravel\Models\LevelPath;
+use Aphly\Laravel\Models\Module;
 use Illuminate\Http\Request;
 
 class LevelController extends Controller
@@ -23,8 +24,8 @@ class LevelController extends Controller
                 })
             ->groupBy('level_id')
             ->selectRaw('any_value(c1.`id`) AS id,any_value(admin_level_path.`level_id`) AS level_id,
-                GROUP_CONCAT(c2.`name` ORDER BY admin_level_path.level SEPARATOR \'&nbsp;&nbsp;&gt;&nbsp;&nbsp;\') AS name,
-                any_value(c1.`status`) AS status,
+                GROUP_CONCAT(c2.`name` ORDER BY admin_level_path.level SEPARATOR \' > \') AS name,
+                any_value(c1.`status`) AS status,any_value(c1.`module_id`) AS module_id,
                 any_value(c1.`sort`) AS sort')
             ->orderBy('c1.sort','desc')
             ->Paginate(config('admin.perPage'))->withQueryString();
@@ -35,6 +36,7 @@ class LevelController extends Controller
     public function tree()
     {
         $res['list'] = Level::orderBy('sort', 'desc')->get()->keyBy('id')->toArray();
+        $res['module'] = (new Module)->getByCache();
         return $this->makeView('laravel-admin::level.tree',['res'=>$res]);
     }
 
@@ -77,6 +79,7 @@ class LevelController extends Controller
 				throw new ApiException(['code'=>1,'msg'=>'修改失败','data'=>[]]);
 			}
 		}else{
+            $res['module'] = (new Module)->getByCache();
 			return $this->makeView('laravel-admin::level.form',['res'=>$res]);
 		}
 	}
@@ -109,7 +112,7 @@ class LevelController extends Controller
             ->where('c1.status', 1)
             ->groupBy('level_id')
             ->selectRaw('any_value(c1.`id`) AS id,any_value(admin_level_path.`level_id`) AS level_id,
-                GROUP_CONCAT(c2.`name` ORDER BY admin_level_path.level SEPARATOR \'&nbsp;&nbsp;&gt;&nbsp;&nbsp;\') AS name,
+                GROUP_CONCAT(c2.`name` ORDER BY admin_level_path.level SEPARATOR \' > \') AS name,
                 any_value(c1.`status`) AS status,
                 any_value(c1.`sort`) AS sort')
             ->get()->toArray();
