@@ -13,9 +13,9 @@ class FailedLoginController extends Controller
     public function index(Request $request)
     {
         $res['title'] = '';
-        $res['search']['ip'] = $ip = $request->query('ip', false);
+        $res['search']['ip'] =  $request->query('ip', false);
         $res['search']['string'] = http_build_query($request->query());
-        $res['list'] = FailedLogin::when($ip,
+        $res['list'] = FailedLogin::when($res['search']['ip'],
                             function ($query, $ip) {
                                 return $query->where('ip', 'like', '%' . $ip . '%');
                             })

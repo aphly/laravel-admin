@@ -14,11 +14,11 @@ class LevelController extends Controller
 
     public function index(Request $request)
     {
-        $res['search']['name'] = $name = $request->query('name',false);
+        $res['search']['name'] = $request->query('name',false);
         $res['search']['string'] = http_build_query($request->query());
         $res['list'] = LevelPath::leftJoin('admin_level as c1','c1.id','=','admin_level_path.level_id')
             ->leftJoin('admin_level as c2','c2.id','=','admin_level_path.path_id')
-            ->when($name,
+            ->when($res['search']['name'],
                 function($query,$name) {
                     return $query->where('c1.name', 'like', '%'.$name.'%');
                 })
@@ -29,7 +29,6 @@ class LevelController extends Controller
                 any_value(c1.`sort`) AS sort')
             ->orderBy('c1.sort','desc')
             ->Paginate(config('admin.perPage'))->withQueryString();
-        //$res['fast_save'] = Level::where('status',1)->orderBy('sort', 'desc')->get()->toArray();
         return $this->makeView('laravel-admin::level.index',['res'=>$res]);
     }
 

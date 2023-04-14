@@ -15,14 +15,12 @@ class PermissionController extends Controller
     public function index(Request $request)
     {
         $res['title'] = '';
-        //$res['pid'] = $pid = $request->query('pid',0);
-        $res['search']['name'] = $name = $request->query('name',false);
+        $res['search']['name'] = $request->query('name',false);
         $res['search']['string'] = http_build_query($request->query());
-        $res['list'] = Permission::when($name,
+        $res['list'] = Permission::when($res['search']['name'],
             function($query,$name) {
                 return $query->where('name', 'like', '%'.$name.'%');
             })
-            //->where('pid',$pid)
             ->orderBy('id', 'desc')
             ->Paginate(config('admin.perPage'))->withQueryString();
         return $this->makeView('laravel-admin::permission.index',['res'=>$res]);

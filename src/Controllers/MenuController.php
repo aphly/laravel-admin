@@ -14,9 +14,9 @@ class MenuController extends Controller
 
     public function index(Request $request)
     {
-        $res['search']['name'] = $name = $request->query('name', false);
+        $res['search']['name'] = $request->query('name', false);
         $res['search']['string'] = http_build_query($request->query());
-        $res['list'] = Menu::when($name,
+        $res['list'] = Menu::when($res['search']['name'],
                             function ($query, $name) {
                                 return $query->where('name', 'like', '%' . $name . '%');
                             })

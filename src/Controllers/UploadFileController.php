@@ -16,11 +16,11 @@ class UploadFileController extends Controller
     public function index(Request $request)
     {
         $res['title'] = '';
-        $res['search']['uuid'] = $uuid = $request->query('uuid', false);
+        $res['search']['uuid'] = $request->query('uuid', false);
         $res['search']['string'] = http_build_query($request->query());
         $manager = Auth::guard('manager')->user();
         $level_ids = (new Role)->hasLevelIds(session('role_id'));
-        $res['list'] = UploadFile::when($uuid,
+        $res['list'] = UploadFile::when($res['search']['uuid'],
                             function ($query, $uuid) {
                                 return $query->where('uuid', $uuid);
                             })

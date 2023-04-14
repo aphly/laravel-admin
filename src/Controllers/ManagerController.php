@@ -20,16 +20,16 @@ class ManagerController extends Controller
     public function index(Request $request)
     {
         $res['title']='';
-        $res['search']['username'] = $username = $request->query('username',false);
-        $res['search']['status'] = $status = $request->query('status',false);
+        $res['search']['username'] = $request->query('username',false);
+        $res['search']['status'] = $request->query('status',false);
         $res['search']['string'] = http_build_query($request->query());
         $manager = Auth::guard('manager')->user();
         $level_ids = (new Role)->hasLevelIds(session('role_id'));
-        $res['list'] = Manager::when($username,
+        $res['list'] = Manager::when($res['search']['username'],
                             function($query,$username) {
                                 return $query->where('username', 'like', '%'.$username.'%');
                             })
-                        ->when($status,
+                        ->when($res['search']['status'],
                             function($query,$status) {
                                 return $query->where('status', '=', $status);
                             })
