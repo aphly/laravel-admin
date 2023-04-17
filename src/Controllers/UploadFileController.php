@@ -4,10 +4,8 @@ namespace Aphly\LaravelAdmin\Controllers;
 
 use Aphly\Laravel\Exceptions\ApiException;
 use Aphly\Laravel\Models\Manager;
-use Aphly\Laravel\Models\Role;
 use Aphly\Laravel\Models\UploadFile;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 
 class UploadFileController extends Controller
 {
@@ -18,13 +16,11 @@ class UploadFileController extends Controller
         $res['title'] = '';
         $res['search']['uuid'] = $request->query('uuid', false);
         $res['search']['string'] = http_build_query($request->query());
-        $manager = Auth::guard('manager')->user();
-        $level_ids = (new Role)->hasLevelIds(session('role_id'));
         $res['list'] = UploadFile::when($res['search']['uuid'],
                             function ($query, $uuid) {
                                 return $query->where('uuid', $uuid);
                             })
-                        ->dataPerm($manager->uuid,$level_ids)
+                        ->dataPerm(Manager::_uuid(),$this->roleLevelIds)
                         ->orderBy('id','desc')
                         ->Paginate(config('admin.perPage'))->withQueryString();
         return $this->makeView('laravel-admin::upload_file.index', ['res' => $res]);
@@ -54,8 +50,7 @@ class UploadFileController extends Controller
 
     public function download(Request $request)
     {
-        $level_ids = (new Role)->hasLevelIds(session('role_id'));
-        $info = self::where('id',$request->query('id',0))->dataPerm(Manager::_uuid(),$level_ids)->first();
+        $info = self::where('id',$request->query('id',0))->dataPerm(Manager::_uuid(),$this->roleLevelIds)->first();
         if(!empty($info)){
             $file_url = storage_path('app/private/'.$info->path);
             header('Content-Type: application/octet-stream');

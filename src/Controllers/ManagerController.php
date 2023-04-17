@@ -10,7 +10,6 @@ use Aphly\Laravel\Models\ManagerRole;
 use Aphly\Laravel\Models\Role;
 use Aphly\LaravelAdmin\Requests\ManagerRequest;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
 class ManagerController extends Controller
@@ -23,8 +22,6 @@ class ManagerController extends Controller
         $res['search']['username'] = $request->query('username',false);
         $res['search']['status'] = $request->query('status',false);
         $res['search']['string'] = http_build_query($request->query());
-        $manager = Auth::guard('manager')->user();
-        $level_ids = (new Role)->hasLevelIds(session('role_id'));
         $res['list'] = Manager::when($res['search']['username'],
                             function($query,$username) {
                                 return $query->where('username', 'like', '%'.$username.'%');
@@ -33,7 +30,7 @@ class ManagerController extends Controller
                             function($query,$status) {
                                 return $query->where('status', '=', $status);
                             })
-                        ->dataPerm($manager->uuid,$level_ids)
+                        ->dataPerm(Manager::_uuid(),$this->roleLevelIds)
                         ->with('role')
                         ->orderBy('uuid', 'desc')
                         ->Paginate(config('admin.perPage'))->withQueryString();

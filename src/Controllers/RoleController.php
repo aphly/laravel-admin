@@ -12,7 +12,6 @@ use Aphly\Laravel\Models\RoleMenu;
 use Aphly\Laravel\Models\RolePermission;
 use Aphly\LaravelAdmin\Requests\RoleRequest;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Cache;
 
 class RoleController extends Controller
 {
