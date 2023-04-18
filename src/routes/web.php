@@ -67,7 +67,6 @@ Route::middleware(['web'])->group(function () {
 
                 Route::get('module/install', 'Aphly\LaravelAdmin\Controllers\ModuleController@install');
 
-                Route::get('upload_file/download', 'Aphly\LaravelAdmin\Controllers\UploadFileController@download');
             });
         });
     });

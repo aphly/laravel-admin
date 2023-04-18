@@ -48,15 +48,4 @@ class UploadFileController extends Controller
         }
     }
 
-    public function download(Request $request)
-    {
-        $info = self::where('id',$request->query('id',0))->dataPerm(Manager::_uuid(),$this->roleLevelIds)->first();
-        if(!empty($info)){
-            $file_url = storage_path('app/private/'.$info->path);
-            header('Content-Type: application/octet-stream');
-            header("Content-Transfer-Encoding: Binary");
-            header("Content-disposition: attachment; filename=\"" . basename($file_url) . "\"");
-            readfile($file_url);
-        }
-    }
 }
