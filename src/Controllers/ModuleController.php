@@ -70,14 +70,16 @@ class ModuleController extends Controller
     {
         $info = Module::where('id',$request->query('id',0))->first();
         if(!empty($info)){
-            $status = $request->query('status',0);
-            if($status){
-                (new $info->classname)->install($info->id);
-            }else{
-                (new $info->classname)->uninstall($info->id);
+            if(class_exists($info->classname)){
+                $status = $request->query('status',0);
+                if($status){
+                    (new $info->classname)->install($info->id);
+                }else{
+                    (new $info->classname)->uninstall($info->id);
+                }
+                $info->status=$status;
+                $info->save();
             }
-            $info->status=$status;
-            $info->save();
         }
         throw new ApiException(['code'=>0,'msg'=>'操作成功','data'=>['redirect'=>$this->index_url]]);
     }
