@@ -25,6 +25,7 @@ class RoleController extends Controller
                             function($query,$name) {
                                 return $query->where('name', 'like', '%'.$name.'%');
                             })
+                        ->with('module')
                         ->orderBy('sort', 'desc')->orderBy('id', 'desc')
                         ->Paginate(config('admin.perPage'))->withQueryString();
         $res['levelList'] = Level::orderBy('sort', 'desc')->get()->keyBy('id')->toArray();

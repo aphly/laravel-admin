@@ -23,7 +23,7 @@
             <div class="table">
                 <ul class="table_header">
                     <li >ID</li>
-                    <li >模块id</li>
+                    <li >模块</li>
                     <li >name</li>
                     <li >sort</li>
                     <li >状态</li>
@@ -33,7 +33,7 @@
                     @foreach($res['list'] as $v)
                     <ul class="table_tbody">
                         <li><input type="checkbox" class="delete_box" name="delete[]" value="{{$v['id']}}">{{$v['id']}}</li>
-                        <li><span class="module_id badge">{{$v['module_id']}}</span></li>
+                        <li><span class="module_id badge">{{$v->module->name}}</span></li>
                         <li>{{$v['name']}}</li>
                         <li>
                             {{$v['sort']}}

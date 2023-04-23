@@ -27,6 +27,7 @@ class LevelController extends Controller
                 GROUP_CONCAT(c2.`name` ORDER BY admin_level_path.level SEPARATOR \' > \') AS name,
                 any_value(c1.`status`) AS status,any_value(c1.`module_id`) AS module_id,
                 any_value(c1.`sort`) AS sort')
+            ->with('module')
             ->orderBy('c1.sort','desc')
             ->Paginate(config('admin.perPage'))->withQueryString();
         return $this->makeView('laravel-admin::level.index',['res'=>$res]);

@@ -23,7 +23,7 @@
             <div class="table">
                 <ul class="table_header">
                     <li >ID</li>
-                    <li >模块id</li>
+                    <li >模块</li>
                     <li >名称</li>
                     <li >类型</li>
                     <li >路由</li>
@@ -34,7 +34,7 @@
                     @foreach($res['list'] as $v)
                         <ul class="table_tbody">
                             <li><input type="checkbox" class="delete_box" name="delete[]" value="{{$v['id']}}">{{$v['id']}}</li>
-                            <li><span class="module_id badge">{{$v['module_id']}}</span></li>
+                            <li><span class="module_id badge">{{$v->module->name}}</span></li>
                             <li>{{$v['name']}}</li>
                             <li>
                                 @if($v['type']==2)
