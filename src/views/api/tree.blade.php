@@ -1,6 +1,6 @@
 
 <div class="top-bar">
-    <h5 class="nav-title">接口</h5>
+    <h5 class="nav-title">{!! $res['breadcrumb'] !!}</h5>
 </div>
 
 <div class="imain">

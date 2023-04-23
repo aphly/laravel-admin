@@ -3,6 +3,7 @@
 namespace Aphly\LaravelAdmin\Controllers;
 
 use Aphly\Laravel\Exceptions\ApiException;
+use Aphly\Laravel\Models\Breadcrumb;
 use Aphly\Laravel\Models\Dict;
 use Aphly\Laravel\Models\DictValue;
 use Aphly\Laravel\Models\Module;
@@ -13,9 +14,13 @@ class DictController extends Controller
 {
     public $index_url = '/admin/dict/index';
 
+    private $currArr = ['name'=>'字典','key'=>'dict'];
+
     public function index(Request $request)
     {
-        $res['title'] = '';
+        $res['breadcrumb'] = Breadcrumb::render([
+            ['name'=>$this->currArr['name'].'管理','href'=>$this->index_url]
+        ]);
         $res['search']['name'] =  $request->query('name', false);
         $res['search']['string'] = http_build_query($request->query());
         $res['list'] = Dict::when($res['search']['name'],
@@ -36,6 +41,10 @@ class DictController extends Controller
 			$res['info'] = Dict::where('id',$request->query('id',0))->firstOrNew();
 			$res['dictValue'] = [];
 			$res['module'] = (new Module)->getByCache();
+            $res['breadcrumb'] = Breadcrumb::render([
+                ['name'=>$this->currArr['name'].'管理','href'=>$this->index_url],
+                ['name'=>'新增','href'=>'/admin/'.$this->currArr['key'].'/add']
+            ]);
 			return $this->makeView('laravel-admin::dict.form',['res'=>$res]);
 		}
 	}
@@ -47,10 +56,12 @@ class DictController extends Controller
 		}else{
 			$res['dictValue'] = [];
 			$res['info'] = Dict::where('id',$request->query('id',0))->firstOrError();
-			if($res['info']->id){
-				$res['dictValue'] = DictValue::where('dict_id',$res['info']->id)->orderBy('sort','desc')->get();
-			}
-			$res['module'] = (new Module)->getByCache();
+            $res['dictValue'] = DictValue::where('dict_id',$res['info']->id)->orderBy('sort','desc')->get();
+            $res['module'] = (new Module)->getByCache();
+            $res['breadcrumb'] = Breadcrumb::render([
+                ['name'=>$this->currArr['name'].'管理','href'=>$this->index_url],
+                ['name'=>'编辑','href'=>'/admin/'.$this->currArr['key'].'/edit?id='.$res['info']->id]
+            ]);
 			return $this->makeView('laravel-admin::dict.form',['res'=>$res]);
 		}
 	}

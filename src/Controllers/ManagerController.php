@@ -4,6 +4,7 @@ namespace Aphly\LaravelAdmin\Controllers;
 
 use Aphly\Laravel\Exceptions\ApiException;
 use Aphly\Laravel\Libs\Helper;
+use Aphly\Laravel\Models\Breadcrumb;
 use Aphly\Laravel\Models\LevelPath;
 use Aphly\Laravel\Models\Manager;
 use Aphly\Laravel\Models\ManagerRole;
@@ -15,6 +16,8 @@ use Illuminate\Support\Facades\Hash;
 class ManagerController extends Controller
 {
     public $index_url='/admin/manager/index';
+
+    private $currArr = ['name'=>'用户','key'=>'manager'];
 
     public function index(Request $request)
     {
@@ -34,6 +37,9 @@ class ManagerController extends Controller
                         ->with('role')
                         ->orderBy('uuid', 'desc')
                         ->Paginate(config('admin.perPage'))->withQueryString();
+        $res['breadcrumb'] = Breadcrumb::render([
+            ['name'=>$this->currArr['name'].'管理','href'=>$this->index_url]
+        ]);
         return $this->makeView('laravel-admin::manager.index',['res'=>$res]);
     }
 
@@ -55,13 +61,17 @@ class ManagerController extends Controller
             }
         }else{
             $res['info'] = Manager::where('uuid',$request->query('uuid',0))->firstOrNew();
+            $res['breadcrumb'] = Breadcrumb::render([
+                ['name'=>$this->currArr['name'].'管理','href'=>$this->index_url],
+                ['name'=>'新增','href'=>'/admin/'.$this->currArr['key'].'/add']
+            ]);
             return $this->makeView('laravel-admin::manager.form',['res'=>$res]);
         }
     }
 
     public function edit(ManagerRequest $request)
     {
-        $res['info'] = Manager::where('uuid',$request->query('uuid',0))->firstOrNew();
+        $res['info'] = Manager::where('uuid',$request->query('uuid',0))->firstOrError();
         if($request->isMethod('post')) {
             $input = $request->all();
             if(!empty($input['password'])){
@@ -75,6 +85,10 @@ class ManagerController extends Controller
                 throw new ApiException(['code'=>1,'msg'=>'修改失败']);
             }
         }else{
+            $res['breadcrumb'] = Breadcrumb::render([
+                ['name'=>$this->currArr['name'].'管理','href'=>$this->index_url],
+                ['name'=>'编辑','href'=>'/admin/'.$this->currArr['key'].'/edit?uuid='.$res['info']->uuid]
+            ]);
             return $this->makeView('laravel-admin::manager.form',['res'=>$res]);
         }
     }
@@ -111,6 +125,10 @@ class ManagerController extends Controller
             $res['role_level'] = LevelPath::leftJoin('admin_level','admin_level.id','=','admin_level_path.path_id')->whereIn('admin_level_path.level_id',$level_ids)
                 ->groupBy('admin_level_path.level_id')->selectRaw('any_value(admin_level_path.`level_id`) AS level_id,GROUP_CONCAT(admin_level.`name` ORDER BY admin_level_path.level SEPARATOR  \'>\') as name')
                 ->get()->keyBy('level_id')->toArray();
+            $res['breadcrumb'] = Breadcrumb::render([
+                ['name'=>$this->currArr['name'].'管理','href'=>$this->index_url],
+                ['name'=>'角色','href'=>'/admin/'.$this->currArr['key'].'/role?uuid='.$res['info']->uuid]
+            ]);
             return $this->makeView('laravel-admin::manager.role',['res'=>$res]);
         }
     }

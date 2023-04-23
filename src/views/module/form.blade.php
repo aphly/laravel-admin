@@ -1,6 +1,6 @@
 
 <div class="top-bar">
-    <h5 class="nav-title">模块</h5>
+    <h5 class="nav-title">{!! $res['breadcrumb'] !!}</h5>
 </div>
 <div class="imain">
     <form method="post" @if($res['info']->id) action="/admin/module/edit?id={{$res['info']->id}}" @else action="/admin/module/add" @endif class="save_form">

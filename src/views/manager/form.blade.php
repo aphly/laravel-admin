@@ -1,5 +1,5 @@
 <div class="top-bar">
-    <h5 class="nav-title">用户管理</h5>
+    <h5 class="nav-title">{!! $res['breadcrumb'] !!}</h5>
 </div>
 <div class="imain">
     <form method="post" @if($res['info']->uuid) action="/admin/manager/edit?uuid={{$res['info']->uuid}}" @else action="/admin/manager/add" @endif class="save_form">

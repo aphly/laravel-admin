@@ -1,6 +1,6 @@
 
 <div class="top-bar">
-    <h5 class="nav-title">角色</h5>
+    <h5 class="nav-title">{!! $res['breadcrumb'] !!}</h5>
 </div>
 <style>
     .role_id{padding:10px 20px;}

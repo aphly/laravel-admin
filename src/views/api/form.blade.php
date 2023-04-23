@@ -1,5 +1,5 @@
 <div class="top-bar">
-    <h5 class="nav-title">接口编辑
+    <h5 class="nav-title">{!! $res['breadcrumb'] !!}
     </h5>
 </div>
 <div class="imain">
@@ -36,7 +36,7 @@
                     @foreach($res['rbacRoutes'] as $key=>$val)
                         <optgroup label="{{$key}}">
                             @foreach($val as $v)
-                                <option value="{{$v['url']}}" @if($res['info']->route==$v['url']) selected @endif>{{$v['route']}}</option>
+                                <option value="{{$v['url']}}" @if($res['info']->route==$v['url']) selected @endif>{{$v['url']}}</option>
                             @endforeach
                         </optgroup>
                     @endforeach

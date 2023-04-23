@@ -4,12 +4,15 @@ namespace Aphly\LaravelAdmin\Controllers;
 
 use Aphly\Laravel\Exceptions\ApiException;
 use Aphly\Laravel\Models\Banned;
+use Aphly\Laravel\Models\Breadcrumb;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 
 class BannedController extends Controller
 {
     public $index_url = '/admin/banned/index';
+
+    private $currArr = ['name'=>'禁止访问','key'=>'banned'];
 
     public function index(Request $request)
     {
@@ -21,6 +24,9 @@ class BannedController extends Controller
                                 return $query->where('ip', 'like', '%' . $ip . '%');
                             })
                         ->Paginate(config('admin.perPage'))->withQueryString();
+        $res['breadcrumb'] = Breadcrumb::render([
+            ['name'=>$this->currArr['name'].'管理','href'=>$this->index_url]
+        ]);
         return $this->makeView('laravel-admin::banned.index', ['res' => $res]);
     }
 
@@ -33,6 +39,10 @@ class BannedController extends Controller
 			throw new ApiException(['code'=>0,'msg'=>'success','data'=>['redirect'=>$this->index_url]]);
 		}else{
 			$res['info'] = Banned::where('id',$request->query('id',0))->firstOrNew();
+            $res['breadcrumb'] = Breadcrumb::render([
+                ['name'=>$this->currArr['name'].'管理','href'=>$this->index_url],
+                ['name'=>'新增','href'=>'/admin/'.$this->currArr['key'].'/add']
+            ]);
 			return $this->makeView('laravel-admin::banned.form',['res'=>$res]);
 		}
 	}
@@ -44,6 +54,10 @@ class BannedController extends Controller
 			$res['info']->update($request->all());
 			throw new ApiException(['code' => 0, 'msg' => 'success', 'data' => ['redirect' => $this->index_url]]);
 		}else{
+            $res['breadcrumb'] = Breadcrumb::render([
+                ['name'=>$this->currArr['name'].'管理','href'=>$this->index_url],
+                ['name'=>'编辑','href'=>'/admin/'.$this->currArr['key'].'/edit?id='.$res['info']->id]
+            ]);
 			return $this->makeView('laravel-admin::banned.form',['res'=>$res]);
 		}
 	}

@@ -3,6 +3,7 @@
 namespace Aphly\LaravelAdmin\Controllers;
 
 use Aphly\Laravel\Exceptions\ApiException;
+use Aphly\Laravel\Models\Breadcrumb;
 use Aphly\Laravel\Models\Level;
 use Aphly\Laravel\Models\LevelPath;
 use Aphly\Laravel\Models\Module;
@@ -11,6 +12,8 @@ use Illuminate\Http\Request;
 class LevelController extends Controller
 {
     public $index_url='/admin/level/index';
+
+    private $currArr = ['name'=>'层级','key'=>'level'];
 
     public function index(Request $request)
     {
@@ -30,6 +33,9 @@ class LevelController extends Controller
             ->with('module')
             ->orderBy('c1.sort','desc')
             ->Paginate(config('admin.perPage'))->withQueryString();
+        $res['breadcrumb'] = Breadcrumb::render([
+            ['name'=>$this->currArr['name'].'管理','href'=>$this->index_url]
+        ]);
         return $this->makeView('laravel-admin::level.index',['res'=>$res]);
     }
 
@@ -37,6 +43,10 @@ class LevelController extends Controller
     {
         $res['list'] = Level::orderBy('sort', 'desc')->get()->keyBy('id')->toArray();
         $res['module'] = (new Module)->getByCache();
+        $res['breadcrumb'] = Breadcrumb::render([
+            ['name'=>$this->currArr['name'].'管理','href'=>$this->index_url],
+            ['name'=>'树','href'=>'/admin/'.$this->currArr['key'].'/tree']
+        ]);
         return $this->makeView('laravel-admin::level.tree',['res'=>$res]);
     }
 
@@ -80,6 +90,10 @@ class LevelController extends Controller
 			}
 		}else{
             $res['module'] = (new Module)->getByCache();
+            $res['breadcrumb'] = Breadcrumb::render([
+                ['name'=>$this->currArr['name'].'管理','href'=>$this->index_url],
+                ['name'=>'编辑','href'=>'/admin/'.$this->currArr['key'].'/edit?id='.$res['info']->id]
+            ]);
 			return $this->makeView('laravel-admin::level.form',['res'=>$res]);
 		}
 	}

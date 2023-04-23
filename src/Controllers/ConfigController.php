@@ -3,6 +3,7 @@
 namespace Aphly\LaravelAdmin\Controllers;
 
 use Aphly\Laravel\Exceptions\ApiException;
+use Aphly\Laravel\Models\Breadcrumb;
 use Aphly\Laravel\Models\Config;
 use Aphly\Laravel\Models\Module;
 use Illuminate\Http\Request;
@@ -11,6 +12,8 @@ use Illuminate\Support\Facades\Cache;
 class ConfigController extends Controller
 {
     public $index_url = '/admin/config/index';
+
+    private $currArr = ['name'=>'配置','key'=>'config'];
 
     public function index(Request $request)
     {
@@ -23,6 +26,9 @@ class ConfigController extends Controller
                         ->with('module')
                         ->orderBy('id', 'desc')
                         ->Paginate(config('admin.perPage'))->withQueryString();
+        $res['breadcrumb'] = Breadcrumb::render([
+            ['name'=>$this->currArr['name'].'管理','href'=>$this->index_url]
+        ]);
         return $this->makeView('laravel-admin::config.index', ['res' => $res]);
     }
 
@@ -38,6 +44,10 @@ class ConfigController extends Controller
 		}else{
 			$res['info'] = Config::where('id',$request->query('id',0))->firstOrNew();
 			$res['module'] = (new Module)->getByCache();
+            $res['breadcrumb'] = Breadcrumb::render([
+                ['name'=>$this->currArr['name'].'管理','href'=>$this->index_url],
+                ['name'=>'新增','href'=>'/admin/'.$this->currArr['key'].'/add']
+            ]);
 			return $this->makeView('laravel-admin::config.form',['res'=>$res]);
 		}
 	}
@@ -54,6 +64,10 @@ class ConfigController extends Controller
 			Cache::forget('admin_config');
 			throw new ApiException(['code' => 0, 'msg' => 'success', 'data' => ['redirect' => $this->index_url]]);
 		}else{
+            $res['breadcrumb'] = Breadcrumb::render([
+                ['name'=>$this->currArr['name'].'管理','href'=>$this->index_url],
+                ['name'=>'编辑','href'=>'/admin/'.$this->currArr['key'].'/edit?id='.$res['info']->id]
+            ]);
 			return $this->makeView('laravel-admin::config.form',['res'=>$res]);
 		}
 	}

@@ -3,6 +3,7 @@
 namespace Aphly\LaravelAdmin\Controllers;
 
 use Aphly\Laravel\Exceptions\ApiException;
+use Aphly\Laravel\Models\Breadcrumb;
 use Aphly\Laravel\Models\Module;
 use Aphly\Laravel\Models\Api;
 use Illuminate\Http\Request;
@@ -10,6 +11,8 @@ use Illuminate\Http\Request;
 class ApiController extends Controller
 {
     private $index_url='/admin/api/index';
+
+    private $currArr = ['name'=>'接口','key'=>'api'];
 
     public function index(Request $request)
     {
@@ -23,6 +26,9 @@ class ApiController extends Controller
             ->with('module')
             ->orderBy('id', 'desc')
             ->Paginate(config('admin.perPage'))->withQueryString();
+        $res['breadcrumb'] = Breadcrumb::render([
+            ['name'=>$this->currArr['name'].'管理','href'=>$this->index_url]
+        ]);
         return $this->makeView('laravel-admin::api.index',['res'=>$res]);
     }
 
@@ -46,7 +52,10 @@ class ApiController extends Controller
                 throw new ApiException(['code'=>1,'msg'=>'添加失败','data'=>[]]);
             }
         }else{
-            $res['title'] = '';
+            $res['breadcrumb'] = Breadcrumb::render([
+                ['name'=>$this->currArr['name'].'管理','href'=>$this->index_url],
+                ['name'=>'新增','href'=>'/admin/'.$this->currArr['key'].'/add']
+            ]);
             $res['info'] = Api::where('id',$request->query('id',0))->firstOrNew();
             $res['rbacRoutes'] = $this->getRoutes('rbac');
             return $this->makeView('laravel-admin::api.form',['res'=>$res]);
@@ -70,6 +79,10 @@ class ApiController extends Controller
         }else{
             $res['module'] = (new Module)->getByCache();
             $res['rbacRoutes'] = $this->getRoutes('rbac');
+            $res['breadcrumb'] = Breadcrumb::render([
+                ['name'=>$this->currArr['name'].'管理','href'=>$this->index_url],
+                ['name'=>'编辑','href'=>'/admin/'.$this->currArr['key'].'/edit?id='.$res['info']->id]
+            ]);
             return $this->makeView('laravel-admin::api.form',['res'=>$res]);
         }
     }
@@ -95,6 +108,10 @@ class ApiController extends Controller
         $res['list'] = Api::orderBy('sort', 'desc')->get()->keyBy('id')->toArray();
         $res['module'] = (new Module)->getByCache();
         $res['rbacRoutes'] = $this->getRoutes('rbac');
+        $res['breadcrumb'] = Breadcrumb::render([
+            ['name'=>$this->currArr['name'].'管理','href'=>$this->index_url],
+            ['name'=>'树','href'=>'/admin/'.$this->currArr['key'].'/tree']
+        ]);
         return $this->makeView('laravel-admin::api.tree',['res'=>$res]);
     }
 

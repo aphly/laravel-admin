@@ -3,6 +3,7 @@
 namespace Aphly\LaravelAdmin\Controllers;
 
 use Aphly\Laravel\Exceptions\ApiException;
+use Aphly\Laravel\Models\Breadcrumb;
 use Aphly\Laravel\Models\Menu;
 use Aphly\Laravel\Models\Module;
 use Aphly\LaravelAdmin\Requests\MenuRequest;
@@ -11,6 +12,8 @@ use Illuminate\Http\Request;
 class MenuController extends Controller
 {
     public $index_url = '/admin/menu/index';
+
+    private $currArr = ['name'=>'菜单','key'=>'menu'];
 
     public function index(Request $request)
     {
@@ -23,6 +26,9 @@ class MenuController extends Controller
                         ->with('module')
                         ->orderBy('id', 'desc')
                         ->Paginate(config('admin.perPage'))->withQueryString();
+        $res['breadcrumb'] = Breadcrumb::render([
+            ['name'=>$this->currArr['name'].'管理','href'=>$this->index_url]
+        ]);
         return $this->makeView('laravel-admin::menu.index', ['res' => $res]);
     }
 
@@ -44,7 +50,10 @@ class MenuController extends Controller
 				throw new ApiException(['code'=>1,'msg'=>'添加失败','data'=>[]]);
 			}
         }else{
-            $res['title'] = '';
+            $res['breadcrumb'] = Breadcrumb::render([
+                ['name'=>$this->currArr['name'].'管理','href'=>$this->index_url],
+                ['name'=>'新增','href'=>'/admin/'.$this->currArr['key'].'/add']
+            ]);
 			$res['info'] = Menu::where('id',$request->query('id',0))->firstOrNew();
             return $this->makeView('laravel-admin::menu.form',['res'=>$res]);
         }
@@ -60,11 +69,15 @@ class MenuController extends Controller
                 if($post['status']==2){
                     $res['info']->closeChildStatus($res['info']->id);
                 }
-				throw new ApiException(['code'=>0,'msg'=>'修改成功','data'=>['redirect'=>$form_edit?$this->index_url:'/admin/menu/tree']]);
+				throw new ApiException(['code'=>0,'msg'=>'修改成功','data'=>['redirect'=>$form_edit?$this->index_url:'/admin/'.$this->currArr['key'].'/tree']]);
 			}else{
 				throw new ApiException(['code'=>1,'msg'=>'修改失败','data'=>[]]);
 			}
         }else{
+            $res['breadcrumb'] = Breadcrumb::render([
+                ['name'=>$this->currArr['name'].'管理','href'=>$this->index_url],
+                ['name'=>'编辑','href'=>'/admin/'.$this->currArr['key'].'/edit?id='.$res['info']->id]
+            ]);
             $res['module'] = (new Module)->getByCache();
             $res['allRoutes'] = $this->getRoutes();
             return $this->makeView('laravel-admin::menu.form',['res'=>$res]);
@@ -92,6 +105,10 @@ class MenuController extends Controller
         $res['list'] = Menu::orderBy('sort', 'desc')->get()->keyBy('id')->toArray();
         $res['module'] = (new Module)->getByCache();
         $res['allRoutes'] = $this->getRoutes();
+        $res['breadcrumb'] = Breadcrumb::render([
+            ['name'=>$this->currArr['name'].'管理','href'=>$this->index_url],
+            ['name'=>'树','href'=>'/admin/'.$this->currArr['key'].'/tree']
+        ]);
         return $this->makeView('laravel-admin::menu.tree',['res'=>$res]);
     }
 
@@ -106,7 +123,7 @@ class MenuController extends Controller
             }
         }
         Menu::updateOrCreate(['id'=>$request->query('id',0),'pid'=>$pid],$input);
-        throw new ApiException(['code'=>0,'msg'=>'成功','data'=>['redirect'=>'/admin/menu/tree']]);
+        throw new ApiException(['code'=>0,'msg'=>'成功','data'=>['redirect'=>'/admin/'.$this->currArr['key'].'/tree']]);
     }
 
 }

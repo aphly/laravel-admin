@@ -1,7 +1,6 @@
 
 <div class="top-bar">
-    <h5 class="nav-title">菜单管理
-    </h5>
+    <h5 class="nav-title">{!! $res['breadcrumb'] !!}</h5>
 </div>
 <style>
 </style>

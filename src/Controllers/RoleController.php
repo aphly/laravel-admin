@@ -3,6 +3,7 @@
 namespace Aphly\LaravelAdmin\Controllers;
 
 use Aphly\Laravel\Exceptions\ApiException;
+use Aphly\Laravel\Models\Breadcrumb;
 use Aphly\Laravel\Models\Level;
 use Aphly\Laravel\Models\Menu;
 use Aphly\Laravel\Models\Module;
@@ -17,6 +18,8 @@ class RoleController extends Controller
 {
     public $index_url='/admin/role/index';
 
+    private $currArr = ['name'=>'角色','key'=>'role'];
+
     public function index(Request $request)
     {
         $res['search']['name'] = $request->query('name',false);
@@ -29,6 +32,9 @@ class RoleController extends Controller
                         ->orderBy('sort', 'desc')->orderBy('id', 'desc')
                         ->Paginate(config('admin.perPage'))->withQueryString();
         $res['levelList'] = Level::orderBy('sort', 'desc')->get()->keyBy('id')->toArray();
+        $res['breadcrumb'] = Breadcrumb::render([
+            ['name'=>$this->currArr['name'].'管理','href'=>$this->index_url]
+        ]);
         return $this->makeView('laravel-admin::role.index',['res'=>$res]);
     }
 
@@ -44,10 +50,13 @@ class RoleController extends Controller
 				throw new ApiException(['code'=>1,'msg'=>'添加失败','data'=>[]]);
 			}
         }else{
-            $res['title'] = '';
 			$res['info'] = Role::where('id',$request->query('id',0))->firstOrNew();
             $res['module'] = (new Module)->getByCache();
             $res['levelList'] = Level::orderBy('sort', 'desc')->get()->keyBy('id')->toArray();
+            $res['breadcrumb'] = Breadcrumb::render([
+                ['name'=>$this->currArr['name'].'管理','href'=>$this->index_url],
+                ['name'=>'新增','href'=>'/admin/'.$this->currArr['key'].'/add']
+            ]);
             return $this->makeView('laravel-admin::role.form',['res'=>$res]);
         }
     }
@@ -66,6 +75,10 @@ class RoleController extends Controller
         }else{
             $res['module'] = (new Module)->getByCache();
             $res['levelList'] = Level::orderBy('sort', 'desc')->get()->keyBy('id')->toArray();
+            $res['breadcrumb'] = Breadcrumb::render([
+                ['name'=>$this->currArr['name'].'管理','href'=>$this->index_url],
+                ['name'=>'编辑','href'=>'/admin/'.$this->currArr['key'].'/edit?id='.$res['info']->id]
+            ]);
             return $this->makeView('laravel-admin::role.form',['res'=>$res]);
         }
     }
@@ -110,6 +123,10 @@ class RoleController extends Controller
             $res['role_menu'] = RoleMenu::where(['role_id'=>$res['info']->id])->get()->toArray();
             $res['select_ids'] = array_column($res['role_menu'], 'menu_id');
             $res['list'] = Menu::where('status',1)->orderBy('sort', 'desc')->get()->toArray();
+            $res['breadcrumb'] = Breadcrumb::render([
+                ['name'=>$this->currArr['name'].'管理','href'=>$this->index_url],
+                ['name'=>'菜单','href'=>'/admin/'.$this->currArr['key'].'/menu?id='.$res['info']->id]
+            ]);
             return $this->makeView('laravel-admin::role.menu',['res'=>$res]);
         }
     }
@@ -124,6 +141,10 @@ class RoleController extends Controller
             $res['role_api'] = RoleApi::where(['role_id'=>$res['info']->id])->get()->toArray();
             $res['select_ids'] = array_column($res['role_api'], 'api_id');
             $res['list'] = Api::where('status',1)->orderBy('sort', 'desc')->get()->toArray();
+            $res['breadcrumb'] = Breadcrumb::render([
+                ['name'=>$this->currArr['name'].'管理','href'=>$this->index_url],
+                ['name'=>'接口','href'=>'/admin/'.$this->currArr['key'].'/api?id='.$res['info']->id]
+            ]);
             return $this->makeView('laravel-admin::role.api',['res'=>$res]);
         }
     }

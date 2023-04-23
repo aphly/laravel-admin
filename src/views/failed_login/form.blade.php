@@ -1,6 +1,6 @@
 
 <div class="top-bar">
-    <h5 class="nav-title">错误登录</h5>
+    <h5 class="nav-title">{!! $res['breadcrumb'] !!}</h5>
 </div>
 <div class="imain">
     <form method="post" @if($res['info']->id) action="/admin/failed_login/edit?id={{$res['info']->id}}" @else action="/admin/failed_login/add" @endif class="save_form">

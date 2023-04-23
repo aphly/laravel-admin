@@ -3,12 +3,15 @@
 namespace Aphly\LaravelAdmin\Controllers;
 
 use Aphly\Laravel\Exceptions\ApiException;
+use Aphly\Laravel\Models\Breadcrumb;
 use Aphly\Laravel\Models\FailedLogin;
 use Illuminate\Http\Request;
 
 class FailedLoginController extends Controller
 {
     public $index_url = '/admin/failed_login/index';
+
+    private $currArr = ['name'=>'错误登录','key'=>'failed_login'];
 
     public function index(Request $request)
     {
@@ -21,6 +24,9 @@ class FailedLoginController extends Controller
                             })
                         ->orderBy('id','desc')
                         ->Paginate(config('admin.perPage'))->withQueryString();
+        $res['breadcrumb'] = Breadcrumb::render([
+            ['name'=>$this->currArr['name'],'href'=>$this->index_url]
+        ]);
         return $this->makeView('laravel-admin::failed_login.index', ['res' => $res]);
     }
 
@@ -31,6 +37,10 @@ class FailedLoginController extends Controller
 			$res['info']->update($request->all());
 			throw new ApiException(['code' => 0, 'msg' => 'success', 'data' => ['redirect' => $this->index_url]]);
 		}else{
+            $res['breadcrumb'] = Breadcrumb::render([
+                ['name'=>$this->currArr['name'],'href'=>$this->index_url],
+                ['name'=>'编辑','href'=>'/admin/'.$this->currArr['key'].'/edit?id='.$res['info']->id]
+            ]);
 			return $this->makeView('laravel-admin::failed_login.form',['res'=>$res]);
 		}
 	}

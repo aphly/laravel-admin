@@ -1,5 +1,5 @@
 <div class="top-bar">
-    <h5 class="nav-title">菜单编辑</h5>
+    <h5 class="nav-title">{!! $res['breadcrumb'] !!}</h5>
 </div>
 <div class="imain">
     <form method="post" id="menu_form" @if($res['info']->id) action="/admin/menu/edit?id={{$res['info']['id']}}" @else action="/admin/menu/add" @endif class="save_form">
