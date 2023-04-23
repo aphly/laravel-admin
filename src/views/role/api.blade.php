@@ -1,5 +1,5 @@
 <div class="top-bar">
-    <h5 class="nav-title">角色权限</h5>
+    <h5 class="nav-title">角色接口</h5>
 </div>
 <div class="imain">
     <div class="userinfo">
@@ -8,9 +8,9 @@
     <div class="role_permission max_width">
         <div class="min_width d-flex">
             <div class="permission_menu">
-                <div class="role_title">权限列表</div>
+                <div class="role_title">接口列表</div>
                 <div id="tree" class="treeview"></div>
-                <form method="post" action="/admin/role/permission?id={{$res['info']['id']}}" class="save_form">
+                <form method="post" action="/admin/role/api?id={{$res['info']['id']}}" class="save_form">
                     @csrf
                     <div class=" select_ids" id="select_ids"></div>
                     <div class="d-flex flex-row-reverse">
@@ -28,7 +28,7 @@
     function makeInput(arr1) {
         let html = '';
         for(let i in arr1){
-            html += `<input type="hidden" name="permission_id[]" value="${arr1[i]}">`
+            html += `<input type="hidden" name="api_id[]" value="${arr1[i]}">`
         }
         $("#select_ids").html(html);
     }

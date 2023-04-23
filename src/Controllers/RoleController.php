@@ -6,10 +6,10 @@ use Aphly\Laravel\Exceptions\ApiException;
 use Aphly\Laravel\Models\Level;
 use Aphly\Laravel\Models\Menu;
 use Aphly\Laravel\Models\Module;
-use Aphly\Laravel\Models\Permission;
+use Aphly\Laravel\Models\Api;
 use Aphly\Laravel\Models\Role;
 use Aphly\Laravel\Models\RoleMenu;
-use Aphly\Laravel\Models\RolePermission;
+use Aphly\Laravel\Models\RoleApi;
 use Aphly\LaravelAdmin\Requests\RoleRequest;
 use Illuminate\Http\Request;
 
@@ -113,17 +113,17 @@ class RoleController extends Controller
         }
     }
 
-    public function permission(Request $request)
+    public function api(Request $request)
     {
         $res['info'] = Role::where('id',$request->query('id',0))->firstOrError();
         if($request->isMethod('post')) {
-            $res['info']->permission()->sync($request->input('permission_id'));
+            $res['info']->api()->sync($request->input('api_id'));
             throw new ApiException(['code'=>0,'msg'=>'操作成功','data'=>['redirect'=>$this->index_url]]);
         }else{
-            $res['role_permission'] = RolePermission::where(['role_id'=>$res['info']->id])->get()->toArray();
-            $res['select_ids'] = array_column($res['role_permission'], 'permission_id');
-            $res['list'] = Permission::where('status',1)->orderBy('sort', 'desc')->get()->toArray();
-            return $this->makeView('laravel-admin::role.permission',['res'=>$res]);
+            $res['role_api'] = RoleApi::where(['role_id'=>$res['info']->id])->get()->toArray();
+            $res['select_ids'] = array_column($res['role_api'], 'api_id');
+            $res['list'] = Api::where('status',1)->orderBy('sort', 'desc')->get()->toArray();
+            return $this->makeView('laravel-admin::role.api',['res'=>$res]);
         }
     }
 }

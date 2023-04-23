@@ -47,7 +47,7 @@
                             <li>
                                 <a class="badge badge-info ajax_get" data-href="/admin/role/edit?id={{$v['id']}}">编辑</a>
                                 <a class="badge badge-success ajax_get" data-href="/admin/role/menu?id={{$v['id']}}">菜单</a>
-                                <a class="badge badge-success ajax_get" data-href="/admin/role/permission?id={{$v['id']}}">授权</a>
+                                <a class="badge badge-success ajax_get" data-href="/admin/role/api?id={{$v['id']}}">接口</a>
                             </li>
                         </ul>
                     @endforeach

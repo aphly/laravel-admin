@@ -1,23 +1,23 @@
 <div class="top-bar">
-    <h5 class="nav-title">权限管理
+    <h5 class="nav-title">接口管理
     </h5>
 </div>
 <style>
 </style>
 <div class="imain">
     <div class="itop ">
-        <form method="get" action="/admin/permission/index" class="select_form">
+        <form method="get" action="/admin/api/index" class="select_form">
             <div class="search_box ">
                 <input type="search" name="name" placeholder="权限名" value="{{$res['search']['name']}}">
                 <button class="" type="submit">搜索</button>
             </div>
         </form>
         <div class="">
-            <a class="badge badge-primary ajax_get tree_div_btn" data-href="/admin/permission/tree">树形</a>
+            <a class="badge badge-primary ajax_get tree_div_btn" data-href="/admin/api/tree">树形</a>
         </div>
     </div>
 
-    <form method="post" @if($res['search']['string']) action="/admin/permission/del?{{$res['search']['string']}}" @else action="/admin/permission/del" @endif  class="del_form">
+    <form method="post" @if($res['search']['string']) action="/admin/api/del?{{$res['search']['string']}}" @else action="/admin/api/del" @endif  class="del_form">
         @csrf
         <div class="table_scroll">
             <div class="table">
@@ -56,7 +56,7 @@
                                 @endif
                             </li>
                             <li>
-                                <a class="badge badge-info ajax_get" data-href="/admin/permission/edit?id={{$v['id']}}">编辑</a>
+                                <a class="badge badge-info ajax_get" data-href="/admin/api/edit?id={{$v['id']}}">编辑</a>
                             </li>
                         </ul>
                     @endforeach
@@ -86,7 +86,7 @@
 {{--                </button>--}}
 {{--            </div>--}}
 {{--            <div class="modal-body">--}}
-{{--                <form method="post" action="/admin/permission/add" data-action="/admin/permission/add" id="fast_form" class="save_form">--}}
+{{--                <form method="post" action="/admin/api/add" data-action="/admin/api/add" id="fast_form" class="save_form">--}}
 {{--                    @csrf--}}
 {{--                    <div class="">--}}
 {{--                        <div class="form-group" style="position: relative;">--}}

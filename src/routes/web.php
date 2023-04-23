@@ -33,7 +33,7 @@ Route::middleware(['web'])->group(function () {
                 Route::get('cache', 'Aphly\LaravelAdmin\Controllers\HomeController@cache');
 
                 $route_arr = [
-                    ['manager', '\ManagerController'], ['role', '\RoleController'], ['permission', '\PermissionController'],
+                    ['manager', '\ManagerController'], ['role', '\RoleController'], ['api', '\ApiController'],
                     ['menu', '\MenuController'], ['banned', '\BannedController'], ['config', '\ConfigController'], ['module', '\ModuleController'],
                     ['dict', '\DictController'],  ['level', '\LevelController']
                 ];
@@ -57,11 +57,11 @@ Route::middleware(['web'])->group(function () {
 
                 Route::match(['get', 'post'], 'manager/role', 'Aphly\LaravelAdmin\Controllers\ManagerController@role');
 
-                Route::match(['get', 'post'], 'role/permission', 'Aphly\LaravelAdmin\Controllers\RoleController@permission');
+                Route::match(['get', 'post'], 'role/api', 'Aphly\LaravelAdmin\Controllers\RoleController@api');
                 Route::match(['get', 'post'], 'role/menu', 'Aphly\LaravelAdmin\Controllers\RoleController@menu');
 
                 Route::get('role/tree', 'Aphly\LaravelAdmin\Controllers\RoleController@tree');
-                Route::get('permission/tree', 'Aphly\LaravelAdmin\Controllers\PermissionController@tree');
+                Route::get('api/tree', 'Aphly\LaravelAdmin\Controllers\ApiController@tree');
                 Route::get('menu/tree', 'Aphly\LaravelAdmin\Controllers\MenuController@tree');
                 Route::get('level/tree', 'Aphly\LaravelAdmin\Controllers\LevelController@tree');
 

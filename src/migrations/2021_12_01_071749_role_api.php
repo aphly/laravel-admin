@@ -13,10 +13,10 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('admin_role_permission', function (Blueprint $table) {
+        Schema::create('admin_role_api', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('role_id')->index();
-            $table->unsignedBigInteger('permission_id')->index();
+            $table->unsignedBigInteger('api_id')->index();
             $table->engine = 'InnoDB';
         });
     }
@@ -28,6 +28,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('admin_role_permission');
+        Schema::dropIfExists('admin_role_api');
     }
 };

@@ -1,13 +1,13 @@
 
 <div class="top-bar">
-    <h5 class="nav-title">权限</h5>
+    <h5 class="nav-title">接口</h5>
 </div>
 
 <div class="imain">
     <div class="tree_div max_width">
         <div class="min_width d-flex justify-content-between">
             <div class="show_all">
-                <div class="show_title">权限列表</div>
+                <div class="show_title">接口列表</div>
                 <div id="tree" class="treeview"></div>
             </div>
             <div class="show_op" >
@@ -30,7 +30,7 @@
                                 <label for="">类型</label>
                                 <select name="type" class="form-control">
                                     <option value="1">目录</option>
-                                    <option value="2">权限</option>
+                                    <option value="2">接口</option>
                                 </select>
                                 <div class="invalid-feedback"></div>
                             </div>
@@ -83,9 +83,9 @@
         list : @json($res['list']),
         select:{},
         type:'add',
-        tree_save_url:'/admin/permission',
-        tree_del_url:'/admin/permission/del',
-        tree_del_url_return:'/admin/permission/tree',
+        tree_save_url:'/admin/api',
+        tree_del_url:'/admin/api/del',
+        tree_del_url_return:'/admin/api/tree',
         _token:'{{csrf_token()}}'
     })
     $(function () {

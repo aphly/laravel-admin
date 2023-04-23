@@ -29,7 +29,7 @@ class InitController extends Controller
                 $data=[];
                 $data[] =['id'=>1,'name' => '超级管理员','level_id' => 1,'data_perm' => 3,'module_id'=>$this->module_id];
                 $data[] =['id'=>2,'name' => '管理员','level_id' => 2,'data_perm' => 3,'module_id'=>$this->module_id];
-                $data[] =['id'=>3,'name' => '初始角色','level_id' => 2,'data_perm' => 1,'module_id'=>$this->module_id];
+                $data[] =['id'=>3,'name' => '默认角色','level_id' => 2,'data_perm' => 1,'module_id'=>$this->module_id];
                 DB::table('admin_role')->insert($data);
 
                 DB::table('admin_manager')->truncate();
@@ -46,7 +46,7 @@ class InitController extends Controller
                 $data[] =['id'=>1,'name' => '首页','route' =>'admin/home/index','pid'=>0,'type'=>2,'module_id'=>$this->module_id,'sort'=>10000];
                 $data[] =['id'=>2,'name' => '系统管理','route' =>'','pid'=>0,'type'=>1,'module_id'=>$this->module_id,'sort'=>0];
 
-                $data[] =['id'=>3,'name' => '用户权限','route' =>'','pid'=>2,'type'=>1,'module_id'=>$this->module_id,'sort'=>60];
+                $data[] =['id'=>3,'name' => '权限管理','route' =>'','pid'=>2,'type'=>1,'module_id'=>$this->module_id,'sort'=>60];
 
                 $data[] =['id'=>4,'name' => '层级管理','route' =>'admin/level/index','pid'=>3,'type'=>2,'module_id'=>$this->module_id,'sort'=>100];
                 $data[] =['id'=>5,'name' => '层级增加','route' =>'admin/level/add','pid'=>4,'type'=>3,'module_id'=>$this->module_id,'sort'=>0];
@@ -64,7 +64,7 @@ class InitController extends Controller
                 $data[] =['id'=>15,'name' => '角色增加','route' =>'admin/role/add','pid'=>14,'type'=>3,'module_id'=>$this->module_id,'sort'=>0];
                 $data[] =['id'=>16,'name' => '角色修改','route' =>'admin/role/edit','pid'=>14,'type'=>3,'module_id'=>$this->module_id,'sort'=>0];
                 $data[] =['id'=>17,'name' => '角色删除','route' =>'admin/role/del','pid'=>14,'type'=>3,'module_id'=>$this->module_id,'sort'=>0];
-                $data[] =['id'=>18,'name' => '角色权限','route' =>'admin/role/permission','pid'=>14,'type'=>3,'module_id'=>$this->module_id,'sort'=>0];
+                $data[] =['id'=>18,'name' => '角色接口','route' =>'admin/role/api','pid'=>14,'type'=>3,'module_id'=>$this->module_id,'sort'=>0];
                 $data[] =['id'=>19,'name' => '角色菜单','route' =>'admin/role/menu','pid'=>14,'type'=>3,'module_id'=>$this->module_id,'sort'=>0];
                 $data[] =['id'=>20,'name' => '角色树形','route' =>'admin/role/tree','pid'=>14,'type'=>3,'module_id'=>$this->module_id,'sort'=>0];
 
@@ -74,11 +74,11 @@ class InitController extends Controller
                 $data[] =['id'=>24,'name' => '菜单删除','route' =>'admin/menu/del','pid'=>21,'type'=>3,'module_id'=>$this->module_id,'sort'=>0];
                 $data[] =['id'=>25,'name' => '菜单树形','route' =>'admin/menu/tree','pid'=>21,'type'=>3,'module_id'=>$this->module_id,'sort'=>0];
 
-                $data[] =['id'=>26,'name' => '权限管理','route' =>'admin/permission/index','pid'=>3,'type'=>2,'module_id'=>$this->module_id,'sort'=>0];
-                $data[] =['id'=>27,'name' => '权限增加','route' =>'admin/permission/add','pid'=>26,'type'=>3,'module_id'=>$this->module_id,'sort'=>0];
-                $data[] =['id'=>28,'name' => '权限修改','route' =>'admin/permission/edit','pid'=>26,'type'=>3,'module_id'=>$this->module_id,'sort'=>0];
-                $data[] =['id'=>29,'name' => '权限删除','route' =>'admin/permission/del','pid'=>26,'type'=>3,'module_id'=>$this->module_id,'sort'=>0];
-                $data[] =['id'=>30,'name' => '权限树形','route' =>'admin/permission/tree','pid'=>26,'type'=>3,'module_id'=>$this->module_id,'sort'=>0];
+                $data[] =['id'=>26,'name' => '接口管理','route' =>'admin/api/index','pid'=>3,'type'=>2,'module_id'=>$this->module_id,'sort'=>0];
+                $data[] =['id'=>27,'name' => '接口增加','route' =>'admin/api/add','pid'=>26,'type'=>3,'module_id'=>$this->module_id,'sort'=>0];
+                $data[] =['id'=>28,'name' => '接口修改','route' =>'admin/api/edit','pid'=>26,'type'=>3,'module_id'=>$this->module_id,'sort'=>0];
+                $data[] =['id'=>29,'name' => '接口删除','route' =>'admin/api/del','pid'=>26,'type'=>3,'module_id'=>$this->module_id,'sort'=>0];
+                $data[] =['id'=>30,'name' => '接口树形','route' =>'admin/api/tree','pid'=>26,'type'=>3,'module_id'=>$this->module_id,'sort'=>0];
 
                 $data[] =['id'=>31,'name' => '基础设置','route' =>'','pid'=>2,'type'=>1,'module_id'=>$this->module_id,'sort'=>90];
 
@@ -114,14 +114,16 @@ class InitController extends Controller
                 $data[] =['id'=>55,'name' => '文件修改','route' =>'admin/upload_file/edit','pid'=>53,'type'=>3,'module_id'=>$this->module_id,'sort'=>0];
                 $data[] =['id'=>56,'name' => '文件删除','route' =>'admin/upload_file/del','pid'=>53,'type'=>3,'module_id'=>$this->module_id,'sort'=>0];
 
+                $data[] =['id'=>57,'name' => '清除缓存','route' =>'admin/cache','pid'=>0,'type'=>3,'module_id'=>$this->module_id,'sort'=>0];
+
                 DB::table('admin_menu')->insert($data);
 
                 DB::table('admin_role_menu')->truncate();
                 $data=[];
-                for($i=1;$i<=56;$i++){
+                for($i=1;$i<=57;$i++){
                     $data[] =['role_id' => 1,'menu_id'=>$i];
                 }
-                for($i=31;$i<=56;$i++){
+                for($i=31;$i<=57;$i++){
                     $data[] =['role_id' => 2,'menu_id'=>$i];
                 }
                 for($i=1;$i<=1;$i++){
@@ -129,17 +131,17 @@ class InitController extends Controller
                 }
                 DB::table('admin_role_menu')->insert($data);
 
-                DB::table('admin_permission')->truncate();
-                $data=[];
-                $data[] =['id'=>1,'name' => '清除缓存','route' =>'admin/cache','pid'=>0,'type'=>2,'module_id'=>$this->module_id,'sort'=>0];
-                DB::table('admin_permission')->insert($data);
+//                DB::table('admin_api')->truncate();
+//                $data=[];
+//                $data[] =['id'=>1,'name' => '清除缓存','route' =>'admin/cache','pid'=>0,'type'=>2,'module_id'=>$this->module_id,'sort'=>0];
+//                DB::table('admin_api')->insert($data);
 
-                DB::table('admin_role_permission')->truncate();
-                $data=[];
-                for($i=1;$i<=1;$i++){
-                    $data[] =['role_id' => 1,'permission_id'=>$i];
-                }
-                DB::table('admin_role_permission')->insert($data);
+//                DB::table('admin_role_api')->truncate();
+//                $data=[];
+//                for($i=1;$i<=1;$i++){
+//                    $data[] =['role_id' => 1,'api_id'=>$i];
+//                }
+//                DB::table('admin_role_api')->insert($data);
 
                 DB::table('admin_manager_role')->truncate();
                 $data=[];

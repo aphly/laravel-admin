@@ -1,9 +1,9 @@
 <div class="top-bar">
-    <h5 class="nav-title">权限编辑
+    <h5 class="nav-title">接口编辑
     </h5>
 </div>
 <div class="imain">
-    <form method="post" @if($res['info']->id) action="/admin/permission/edit?id={{$res['info']->id}}" @else action="/admin/permission/add" @endif  class="save_form">
+    <form method="post" @if($res['info']->id) action="/admin/api/edit?id={{$res['info']->id}}" @else action="/admin/api/add" @endif  class="save_form">
         @csrf
         <div class="">
             <input type="hidden" name="form_edit" value="1">
@@ -20,7 +20,7 @@
                 <label for="">类型</label>
                 <select name="type" id="is_leaf" class="form-control">
                     <option value="1" @if($res['info']['type']==1) @else selected @endif>目录</option>
-                    <option value="2" @if($res['info']['type']==2) selected @endif>权限</option>
+                    <option value="2" @if($res['info']['type']==2) selected @endif>接口</option>
                 </select>
                 <div class="invalid-feedback"></div>
             </div>
