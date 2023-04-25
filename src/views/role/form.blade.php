@@ -29,7 +29,7 @@
             <div>
                 <label for="">层级</label>
                 <input type="hidden" id="level_id"  name="level_id" class="form-control " value="{{$res['info']['level_id']}}">
-                <input type="text" id="level_name" onclick="tree_box(this)" readonly class="form-control tree_box_pre" value="{{$res['levelList'][$res['info']['level_id']]['name']??''}}">
+                <input type="text" id="level_name" onclick="$('.tree_box').toggle();" readonly class="form-control tree_box_pre" value="{{$res['levelList'][$res['info']['level_id']]['name']??''}}">
                 <div class="tree_box">
                     <div class="tree_p">
                         <div id="tree" ></div>
@@ -95,7 +95,5 @@
         }
         mount()
     })
-    function tree_box(_this) {
-        $('.tree_box').toggle();
-    }
+
 </script>
