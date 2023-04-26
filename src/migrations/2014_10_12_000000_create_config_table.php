@@ -16,10 +16,10 @@ return new class extends Migration
         Schema::create('admin_config', function (Blueprint $table) {
             $table->id();
             $table->string('name',64);
-            $table->string('type',64)->index();
+            $table->string('type',64);
             $table->string('key',64);
             $table->text('value');
-            $table->unsignedBigInteger('module_id')->index();
+            $table->unsignedBigInteger('module_id');
             $table->engine = 'InnoDB';
         });
     }

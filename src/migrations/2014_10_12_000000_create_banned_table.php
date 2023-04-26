@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->string('ip',64)->index();
             $table->unsignedBigInteger('uuid')->index();
-            $table->tinyInteger('status')->nullable()->default(1)->index();
+            $table->tinyInteger('status')->nullable()->default(1);
             $table->unsignedBigInteger('created_at');
             $table->unsignedBigInteger('updated_at');
             $table->engine = 'InnoDB';

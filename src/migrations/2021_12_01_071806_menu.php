@@ -17,12 +17,12 @@ return new class extends Migration
             $table->id();
             $table->string('name', 32)->nullable();
             $table->string('route', 255)->nullable();
-            $table->bigInteger('pid', 0)->unsigned()->default(0)->index();
-            $table->unsignedTinyInteger('status')->default(1)->comment('1:开启; 0:关闭')->index();
-            $table->unsignedInteger('sort', 0)->default(0)->nullable()->index();
+            $table->bigInteger('pid', 0)->unsigned()->default(0);
+            $table->unsignedTinyInteger('status')->default(1)->comment('1:开启; 0:关闭');
+            $table->unsignedInteger('sort', 0)->default(0)->nullable();
             $table->string('icon', 32)->nullable();
-            $table->unsignedTinyInteger('type')->default(1)->comment(' 1:目录,2:菜单,3:按钮,4:外链;')->index();
-            $table->unsignedBigInteger('module_id')->index();
+            $table->unsignedTinyInteger('type')->default(1)->comment(' 1:目录,2:菜单,3:按钮,4:外链;');
+            $table->unsignedBigInteger('module_id');
             $table->engine = 'InnoDB';
         });
     }

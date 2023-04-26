@@ -18,7 +18,7 @@ return new class extends Migration
             $table->unsignedInteger('dict_id')->index();
             $table->string('name',64)->nullable();
             $table->string('value',255)->nullable();
-            $table->integer('sort')->nullable()->index();
+            $table->integer('sort')->nullable();
             $table->engine = 'InnoDB';
         });
     }

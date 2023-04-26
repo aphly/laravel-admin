@@ -18,8 +18,8 @@ return new class extends Migration
             $table->string('name',64);
             $table->string('key',64)->index();
             $table->string('classname',255);
-            $table->tinyInteger('status')->nullable()->default(1)->index();
-            $table->integer('sort')->nullable()->default(0)->index();
+            $table->tinyInteger('status')->nullable()->default(1);
+            $table->integer('sort')->nullable()->default(0);
             $table->engine = 'InnoDB';
         });
     }

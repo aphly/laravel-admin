@@ -16,11 +16,11 @@ return new class extends Migration
         Schema::create('admin_level', function (Blueprint $table) {
             $table->id();
             $table->string('name',64);
-            $table->unsignedBigInteger('pid')->index();
+            $table->unsignedBigInteger('pid');
             $table->unsignedInteger('sort')->index()->default(1);
             $table->tinyInteger('type')->default(1);
-            $table->tinyInteger('status')->index();
-            $table->unsignedBigInteger('module_id')->index();
+            $table->tinyInteger('status');
+            $table->unsignedBigInteger('module_id');
             $table->engine = 'InnoDB';
         });
     }

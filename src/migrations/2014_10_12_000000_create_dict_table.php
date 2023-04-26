@@ -17,8 +17,8 @@ return new class extends Migration
             $table->id();
             $table->string('name',64);
             $table->string('key',64)->index();
-            $table->integer('sort')->nullable()->index();
-            $table->unsignedBigInteger('module_id')->index();
+            $table->integer('sort')->nullable();
+            $table->unsignedBigInteger('module_id');
             $table->engine = 'InnoDB';
         });
     }
