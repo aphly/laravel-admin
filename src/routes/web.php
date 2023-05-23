@@ -64,6 +64,7 @@ Route::middleware(['web'])->group(function () {
                 Route::get('api/tree', 'Aphly\LaravelAdmin\Controllers\ApiController@tree');
                 Route::get('menu/tree', 'Aphly\LaravelAdmin\Controllers\MenuController@tree');
                 Route::get('level/tree', 'Aphly\LaravelAdmin\Controllers\LevelController@tree');
+                Route::get('level/rebuild', 'Aphly\LaravelAdmin\Controllers\LevelController@rebuild');
 
                 Route::get('module/install', 'Aphly\LaravelAdmin\Controllers\ModuleController@install');
 

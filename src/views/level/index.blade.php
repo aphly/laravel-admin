@@ -33,7 +33,7 @@
                     @foreach($res['list'] as $v)
                     <ul class="table_tbody">
                         <li><input type="checkbox" class="delete_box" name="delete[]" value="{{$v['id']}}">{{$v['id']}}</li>
-                        <li><span class="module_id badge">{{$v->module->name}}</span></li>
+                        <li><span class="module_id badge">{{$v->module->name??''}}</span></li>
                         <li>{{$v['name']}}</li>
                         <li>
                             {{$v['sort']}}
@@ -43,7 +43,7 @@
                                 @if($v->status==1)
                                     <span class="badge badge-success">{{$dict['status'][$v->status]}}</span>
                                 @else
-                                    <span class="badge badge-secondary">{{$dict['status'][$v->status]}}</span>
+                                    <span class="badge badge-secondary">{{$v->status!=null?$dict['status'][$v->status]:''}}</span>
                                 @endif
                             @endif
                         </li>
