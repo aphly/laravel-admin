@@ -3,7 +3,6 @@
 namespace Aphly\LaravelAdmin\Controllers;
 
 use Aphly\Laravel\Exceptions\ApiException;
-use Aphly\Laravel\Models\LevelPath;
 use Aphly\Laravel\Models\RoleMenu;
 use Illuminate\Support\Facades\Auth;
 use Aphly\Laravel\Libs\Helper;
@@ -35,7 +34,6 @@ class HomeController extends Controller
     public function cache()
     {
         Cache::flush();
-        (new LevelPath)->rebuild();
         throw new ApiException(['code'=>0,'msg'=>'缓存已清空','data'=>['redirect'=>'/admin/index']]);
     }
 

@@ -36,7 +36,12 @@ class LevelController extends Controller
         $res['breadcrumb'] = Breadcrumb::render([
             ['name'=>$this->currArr['name'].'管理','href'=>$this->index_url]
         ]);
-        return $this->makeView('laravel-admin::level.index',['res'=>$res]);
+        try{
+            return $this->makeView('laravel-admin::level.index',['res'=>$res]);
+        }catch (\Exception $e){
+            (new LevelPath)->rebuild();
+            throw new ApiException(['code'=>1,'msg'=>'请重新加载']);
+        }
     }
 
     public function tree()
