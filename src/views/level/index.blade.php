@@ -13,6 +13,7 @@
         </div>
         </form>
         <div class="">
+            <a class="badge badge-primary ajax_post tree_div_btn" data-href="/admin/level/rebuild">重建层级</a>
             <a class="badge badge-primary ajax_get tree_div_btn" data-href="/admin/level/tree">树形</a>
         </div>
     </div>
