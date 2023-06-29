@@ -44,7 +44,7 @@ class InitController extends Controller
                 DB::table('admin_menu')->truncate();
                 $data=[];
                 $data[] =['id'=>1,'name' => '清除缓存','route' =>'admin/cache','pid'=>0,'uuid'=>$manager->uuid,'type'=>3,'module_id'=>$this->module_id,'sort'=>0];
-                $data[] =['id'=>2,'name' => '首页','route' =>'admin/home/index','pid'=>0,'uuid'=>$manager->uuid,'type'=>2,'module_id'=>$this->module_id,'sort'=>10000];
+
                 $data[] =['id'=>3,'name' => '系统管理','route' =>'','pid'=>0,'type'=>1,'uuid'=>$manager->uuid,'module_id'=>$this->module_id,'sort'=>0];
 
                 $data[] =['id'=>4,'name' => '权限管理','route' =>'','pid'=>3,'uuid'=>$manager->uuid,'type'=>1,'module_id'=>$this->module_id,'sort'=>60];
@@ -122,14 +122,27 @@ class InitController extends Controller
                 $data[] =['id'=>62,'name' => '公告删除','route' =>'admin/notice/del','pid'=>59,'uuid'=>$manager->uuid,'type'=>3,'module_id'=>$this->module_id,'sort'=>0];
                 $data[] =['id'=>63,'name' => '公告图片','route' =>'admin/notice/img','pid'=>59,'uuid'=>$manager->uuid,'type'=>3,'module_id'=>$this->module_id,'sort'=>0];
 
+                $data[] =['id'=>2,'name' => '首页','route' =>'admin/home/index','pid'=>0,'uuid'=>$manager->uuid,'type'=>1,'module_id'=>$this->module_id,'sort'=>10000];
+
+                $data[] =['id'=>64,'name' => '公告','route' =>'admin/notice/index','pid'=>2,'uuid'=>$manager->uuid,'type'=>2,'module_id'=>$this->module_id,'sort'=>0];
+                $data[] =['id'=>65,'name' => '公告详情','route' =>'admin/notice/detail','pid'=>64,'uuid'=>$manager->uuid,'type'=>3,'module_id'=>$this->module_id,'sort'=>0];
+
+                $data[] =['id'=>66,'name' => '消息','route' =>'admin/msg/index','pid'=>2,'uuid'=>$manager->uuid,'type'=>2,'module_id'=>$this->module_id,'sort'=>0];
+                $data[] =['id'=>67,'name' => '消息详情','route' =>'admin/msg/detail','pid'=>66,'uuid'=>$manager->uuid,'type'=>3,'module_id'=>$this->module_id,'sort'=>0];
+
+                $data[] =['id'=>68,'name' => '工单','route' =>'admin/work_order/index','pid'=>2,'uuid'=>$manager->uuid,'type'=>2,'module_id'=>$this->module_id,'sort'=>0];
+                $data[] =['id'=>69,'name' => '工单提交','route' =>'admin/work_order/add','pid'=>68,'uuid'=>$manager->uuid,'type'=>3,'module_id'=>$this->module_id,'sort'=>0];
+                $data[] =['id'=>70,'name' => '工单编辑','route' =>'admin/work_order/edit','pid'=>68,'uuid'=>$manager->uuid,'type'=>3,'module_id'=>$this->module_id,'sort'=>0];
+                $data[] =['id'=>71,'name' => '工单删除','route' =>'admin/work_order/del','pid'=>68,'uuid'=>$manager->uuid,'type'=>3,'module_id'=>$this->module_id,'sort'=>0];
+
                 DB::table('admin_menu')->insert($data);
 
                 DB::table('admin_role_menu')->truncate();
                 $data=[];
-                for($i=1;$i<=63;$i++){
+                for($i=1;$i<=71;$i++){
                     $data[] =['role_id' => 1,'menu_id'=>$i];
                 }
-                for($i=31;$i<=63;$i++){
+                for($i=31;$i<=71;$i++){
                     $data[] =['role_id' => 2,'menu_id'=>$i];
                 }
                 for($i=1;$i<=1;$i++){
