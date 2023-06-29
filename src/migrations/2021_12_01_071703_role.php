@@ -15,6 +15,7 @@ return new class extends Migration
     {
         Schema::create('admin_role', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('uuid')->default(0)->index();
             $table->string('name', 32)->nullable();
             $table->string('desc', 255)->nullable();
             $table->tinyInteger('status')->unsigned()->default(1)->comment('1:开启; 0:关闭');

@@ -15,6 +15,7 @@ return new class extends Migration
     {
         Schema::create('admin_api', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('uuid')->default(0)->index();
             $table->string('name', 32)->nullable();
             $table->string('route', 255)->nullable();
             $table->bigInteger('pid', 0)->unsigned()->default(0);

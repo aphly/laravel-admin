@@ -37,6 +37,7 @@ class ApiController extends Controller
     {
         if($request->isMethod('post')) {
             $post = $request->all();
+            $post['uuid'] = $this->manager->uuid;
             if($post['pid']){
                 $parent = Api::where('id',$post['pid'])->first();
                 if(!empty($parent) && $parent->status==2){

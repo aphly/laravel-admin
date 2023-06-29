@@ -15,6 +15,7 @@ return new class extends Migration
     {
         Schema::create('admin_level', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('uuid')->default(0)->index();
             $table->string('name',64);
             $table->unsignedBigInteger('pid');
             $table->unsignedInteger('sort')->index()->default(1);

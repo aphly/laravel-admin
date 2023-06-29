@@ -60,6 +60,7 @@ class LevelController extends Controller
 	{
 		if($request->isMethod('post')) {
 			$post = $request->all();
+            $post['uuid'] = $this->manager->uuid;
             if($post['pid']){
                 $parent = Level::where('id',$post['pid'])->first();
                 if(!empty($parent) && $parent->status==2){

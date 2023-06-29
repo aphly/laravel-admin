@@ -35,7 +35,7 @@ Route::middleware(['web'])->group(function () {
                 $route_arr = [
                     ['manager', '\ManagerController'], ['role', '\RoleController'], ['api', '\ApiController'],
                     ['menu', '\MenuController'], ['banned', '\BannedController'], ['config', '\ConfigController'], ['module', '\ModuleController'],
-                    ['dict', '\DictController'],  ['level', '\LevelController']
+                    ['dict', '\DictController'],  ['level', '\LevelController'],  ['notice', '\NoticeController']
                 ];
 
                 foreach ($route_arr as $val) {
@@ -65,6 +65,8 @@ Route::middleware(['web'])->group(function () {
                 Route::get('menu/tree', 'Aphly\LaravelAdmin\Controllers\MenuController@tree');
                 Route::get('level/tree', 'Aphly\LaravelAdmin\Controllers\LevelController@tree');
                 Route::get('level/rebuild', 'Aphly\LaravelAdmin\Controllers\LevelController@rebuild');
+
+                Route::match(['post'],'notice/img', 'Aphly\LaravelAdmin\Controllers\NoticeController@uploadImg');
 
                 Route::get('module/install', 'Aphly\LaravelAdmin\Controllers\ModuleController@install');
 

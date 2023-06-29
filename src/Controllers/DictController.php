@@ -36,6 +36,7 @@ class DictController extends Controller
 	public function add(Request $request)
 	{
 		if($request->isMethod('post')){
+
 			$this->save($request);
 		}else{
 			$res['info'] = Dict::where('id',$request->query('id',0))->firstOrNew();
@@ -80,6 +81,7 @@ class DictController extends Controller
     public function save($request){
         $input = $request->all();
         $input['key'] = trim($input['key']);
+        $input['uuid'] = $this->manager->uuid;
         $dict = Dict::updateOrCreate(['id'=>$request->query('id',0)],$input);
         if($dict->id){
             $dictValue = DictValue::where('dict_id',$dict->id)->pluck('id')->toArray();

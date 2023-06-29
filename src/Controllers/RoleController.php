@@ -42,6 +42,7 @@ class RoleController extends Controller
     {
         if($request->isMethod('post')) {
             $post = $request->all();
+            $post['uuid'] = $this->manager->uuid;
             $role = Role::create($post);
 			$form_edit = $request->input('form_edit',0);
 			if($role->id){

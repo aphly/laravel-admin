@@ -36,6 +36,7 @@ class ConfigController extends Controller
 	{
 		if($request->isMethod('post')){
 			$input = $request->all();
+            $input['uuid'] = $this->manager->uuid;
 			$input['type'] = trim($input['type']);
 			$input['key'] = trim($input['key']);
 			Config::create($input);

@@ -8,6 +8,7 @@ mysql5.7+<br>
 安装<br>
 `composer require aphly/laravel-admin` <br>
 `php artisan vendor:publish --provider="Aphly\LaravelAdmin\AdminServiceProvider"` <br>
+`php artisan migrate` <br>
 
 1、config/auth.php<br>
 数组guards中 添加<br> 
