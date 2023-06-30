@@ -43,7 +43,7 @@
 
             <div class="alert alert-warning d-none" id="msg"></div>
             <div class="login_btn">
-                <button class="btn btn-primary " type="submit">登录</button>
+                <button class="btn btn-my_primary " type="submit">登录</button>
             </div>
 
         </form>

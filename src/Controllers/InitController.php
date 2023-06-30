@@ -124,25 +124,35 @@ class InitController extends Controller
 
                 $data[] =['id'=>2,'name' => '首页','route' =>'admin/home/index','pid'=>0,'uuid'=>$manager->uuid,'type'=>1,'module_id'=>$this->module_id,'sort'=>10000];
 
-                $data[] =['id'=>64,'name' => '公告','route' =>'admin/notice/index','pid'=>2,'uuid'=>$manager->uuid,'type'=>2,'module_id'=>$this->module_id,'sort'=>0];
-                $data[] =['id'=>65,'name' => '公告详情','route' =>'admin/notice/detail','pid'=>64,'uuid'=>$manager->uuid,'type'=>3,'module_id'=>$this->module_id,'sort'=>0];
+                $data[] =['id'=>64,'name' => '公告','route' =>'admin_client/notice/index','pid'=>2,'uuid'=>$manager->uuid,'type'=>2,'module_id'=>$this->module_id,'sort'=>0];
+                $data[] =['id'=>65,'name' => '公告详情','route' =>'admin_client/notice/detail','pid'=>64,'uuid'=>$manager->uuid,'type'=>3,'module_id'=>$this->module_id,'sort'=>0];
 
-                $data[] =['id'=>66,'name' => '消息','route' =>'admin/msg/index','pid'=>2,'uuid'=>$manager->uuid,'type'=>2,'module_id'=>$this->module_id,'sort'=>0];
-                $data[] =['id'=>67,'name' => '消息详情','route' =>'admin/msg/detail','pid'=>66,'uuid'=>$manager->uuid,'type'=>3,'module_id'=>$this->module_id,'sort'=>0];
+                $data[] =['id'=>66,'name' => '消息','route' =>'admin_client/msg/index','pid'=>2,'uuid'=>$manager->uuid,'type'=>2,'module_id'=>$this->module_id,'sort'=>0];
+                $data[] =['id'=>67,'name' => '消息详情','route' =>'admin_client/msg/detail','pid'=>66,'uuid'=>$manager->uuid,'type'=>3,'module_id'=>$this->module_id,'sort'=>0];
 
-                $data[] =['id'=>68,'name' => '工单','route' =>'admin/work_order/index','pid'=>2,'uuid'=>$manager->uuid,'type'=>2,'module_id'=>$this->module_id,'sort'=>0];
-                $data[] =['id'=>69,'name' => '工单提交','route' =>'admin/work_order/add','pid'=>68,'uuid'=>$manager->uuid,'type'=>3,'module_id'=>$this->module_id,'sort'=>0];
-                $data[] =['id'=>70,'name' => '工单编辑','route' =>'admin/work_order/edit','pid'=>68,'uuid'=>$manager->uuid,'type'=>3,'module_id'=>$this->module_id,'sort'=>0];
-                $data[] =['id'=>71,'name' => '工单删除','route' =>'admin/work_order/del','pid'=>68,'uuid'=>$manager->uuid,'type'=>3,'module_id'=>$this->module_id,'sort'=>0];
+                $data[] =['id'=>68,'name' => '消息管理','route' =>'admin/msg/index','pid'=>47,'uuid'=>$manager->uuid,'type'=>2,'module_id'=>$this->module_id,'sort'=>0];
+                $data[] =['id'=>69,'name' => '消息增加','route' =>'admin/msg/add','pid'=>68,'uuid'=>$manager->uuid,'type'=>3,'module_id'=>$this->module_id,'sort'=>0];
+                $data[] =['id'=>70,'name' => '消息修改','route' =>'admin/msg/edit','pid'=>68,'uuid'=>$manager->uuid,'type'=>3,'module_id'=>$this->module_id,'sort'=>0];
+                $data[] =['id'=>71,'name' => '消息删除','route' =>'admin/msg/del','pid'=>68,'uuid'=>$manager->uuid,'type'=>3,'module_id'=>$this->module_id,'sort'=>0];
+                $data[] =['id'=>72,'name' => '消息图片','route' =>'admin/msg/img','pid'=>68,'uuid'=>$manager->uuid,'type'=>3,'module_id'=>$this->module_id,'sort'=>0];
+
+                $data[] =['id'=>73,'name' => '工单管理','route' =>'admin/work_order/index','pid'=>47,'uuid'=>$manager->uuid,'type'=>2,'module_id'=>$this->module_id,'sort'=>0];
+                $data[] =['id'=>74,'name' => '工单回复','route' =>'admin/work_order/edit','pid'=>73,'uuid'=>$manager->uuid,'type'=>3,'module_id'=>$this->module_id,'sort'=>0];
+                $data[] =['id'=>75,'name' => '工单删除','route' =>'admin/work_order/del','pid'=>73,'uuid'=>$manager->uuid,'type'=>3,'module_id'=>$this->module_id,'sort'=>0];
+
+                $data[] =['id'=>76,'name' => '工单','route' =>'admin_client/work_order/index','pid'=>2,'uuid'=>$manager->uuid,'type'=>2,'module_id'=>$this->module_id,'sort'=>0];
+                $data[] =['id'=>77,'name' => '工单提交','route' =>'admin_client/work_order/add','pid'=>76,'uuid'=>$manager->uuid,'type'=>3,'module_id'=>$this->module_id,'sort'=>0];
+                $data[] =['id'=>78,'name' => '工单查看','route' =>'admin_client/work_order/edit','pid'=>76,'uuid'=>$manager->uuid,'type'=>3,'module_id'=>$this->module_id,'sort'=>0];
+                $data[] =['id'=>79,'name' => '工单删除','route' =>'admin_client/work_order/del','pid'=>76,'uuid'=>$manager->uuid,'type'=>3,'module_id'=>$this->module_id,'sort'=>0];
 
                 DB::table('admin_menu')->insert($data);
 
                 DB::table('admin_role_menu')->truncate();
                 $data=[];
-                for($i=1;$i<=71;$i++){
+                for($i=1;$i<=79;$i++){
                     $data[] =['role_id' => 1,'menu_id'=>$i];
                 }
-                for($i=31;$i<=71;$i++){
+                for($i=31;$i<=79;$i++){
                     $data[] =['role_id' => 2,'menu_id'=>$i];
                 }
                 for($i=1;$i<=1;$i++){

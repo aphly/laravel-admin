@@ -17,6 +17,14 @@ Route::get('admin/init', 'Aphly\LaravelAdmin\Controllers\InitController@index');
 
 Route::middleware(['web'])->group(function () {
 
+    Route::prefix('admin_client')->group(function () {
+        Route::get('notice/index', 'Aphly\LaravelAdmin\Controllers\Client\NoticeController@index');
+        Route::get('notice/detail', 'Aphly\LaravelAdmin\Controllers\Client\NoticeController@detail');
+
+        Route::get('msg/index', 'Aphly\LaravelAdmin\Controllers\Client\MsgController@index');
+        Route::get('msg/detail', 'Aphly\LaravelAdmin\Controllers\Client\MsgController@detail');
+    });
+
     Route::prefix('admin')->group(function () {
         Route::get('blocked', 'Aphly\LaravelAdmin\Controllers\LoginController@blocked')->name('adminBlocked');
         Route::get('not_active', 'Aphly\LaravelAdmin\Controllers\LoginController@notActive')->name('adminNotActive');
@@ -35,7 +43,7 @@ Route::middleware(['web'])->group(function () {
                 $route_arr = [
                     ['manager', '\ManagerController'], ['role', '\RoleController'], ['api', '\ApiController'],
                     ['menu', '\MenuController'], ['banned', '\BannedController'], ['config', '\ConfigController'], ['module', '\ModuleController'],
-                    ['dict', '\DictController'],  ['level', '\LevelController'],  ['notice', '\NoticeController']
+                    ['dict', '\DictController'],  ['level', '\LevelController'],  ['notice', '\NoticeController'],  ['msg', '\MsgController']
                 ];
 
                 foreach ($route_arr as $val) {
@@ -67,6 +75,7 @@ Route::middleware(['web'])->group(function () {
                 Route::get('level/rebuild', 'Aphly\LaravelAdmin\Controllers\LevelController@rebuild');
 
                 Route::match(['post'],'notice/img', 'Aphly\LaravelAdmin\Controllers\NoticeController@uploadImg');
+                Route::match(['post'],'msg/img', 'Aphly\LaravelAdmin\Controllers\MsgController@uploadImg');
 
                 Route::get('module/install', 'Aphly\LaravelAdmin\Controllers\ModuleController@install');
 

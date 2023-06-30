@@ -2,19 +2,17 @@
     <h5 class="nav-title">{!! $res['breadcrumb'] !!}</h5>
 </div>
 <style>
-    .table_scroll .table_header li:nth-child(2),.table_scroll .table_tbody li:nth-child(2){flex: 0 0 300px;}
+    .table_scroll .table_header li:nth-child(2),.table_scroll .table_tbody li:nth-child(2){flex: 0 0 280px;}
+    .table_scroll .table_header li:nth-child(3),.table_scroll .table_tbody li:nth-child(3){flex: 0 0 180px;}
 </style>
 <div class="imain">
     <div class="itop ">
-        <form method="get" action="/admin/notice/index" class="select_form">
+        <form method="get" action="/admin_client/notice/index" class="select_form">
         <div class="search_box ">
             <input type="search" name="title" placeholder="标题" value="{{$res['search']['title']}}">
             <button class="" type="submit">搜索</button>
         </div>
         </form>
-        <div class="">
-            <a class="badge badge-primary ajax_get show_all0_btn" data-href="/admin/notice/add">添加</a>
-        </div>
     </div>
 
     <form method="post"  @if($res['search']['string']) action="/admin/notice/del?{{$res['search']['string']}}" @else action="/admin/notice/del" @endif  class="del_form">
@@ -24,7 +22,7 @@
                 <ul class="table_header">
                     <li >ID</li>
                     <li >标题</li>
-                    <li >状态</li>
+                    <li >日期</li>
                     <li >操作</li>
                 </ul>
                 @if($res['list']->total())
@@ -32,17 +30,9 @@
                     <ul class="table_tbody">
                         <li><input type="checkbox" class="delete_box" name="delete[]" value="{{$v['id']}}">{{$v['id']}}</li>
                         <li class="wenzi">{{$v['title']}}</li>
+                        <li class="wenzi">{{$v['created_at']}}</li>
                         <li>
-                            @if($dict['status'])
-                                @if($v['status']==1)
-                                    <span class="badge badge-success">{{$dict['status'][$v['status']]}}</span>
-                                @else
-                                    <span class="badge badge-secondary">{{$dict['status'][$v['status']]}}</span>
-                                @endif
-                            @endif
-                        </li>
-                        <li>
-                            <a class="badge badge-info ajax_get" data-href="/admin/notice/edit?id={{$v['id']}}">编辑</a>
+                            <a class="badge badge-info ajax_get" data-href="/admin_client/notice/detail?id={{$v['id']}}">查看</a>
                         </li>
                     </ul>
                     @endforeach
