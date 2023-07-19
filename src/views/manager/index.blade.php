@@ -11,6 +11,7 @@
         <div class="search_box ">
             <input type="search" name="username" placeholder="用户名" value="{{$res['search']['username']}}">
             <select name="status" >
+                <option value="" @if($res['search']['status']==='') selected @endif>全部</option>
                 @foreach($dict['user_status'] as $key=>$val)
                     <option value="{{$key}}" @if($res['search']['status']==$key) selected @endif>{{$val}}</option>
                 @endforeach

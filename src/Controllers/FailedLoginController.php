@@ -16,11 +16,13 @@ class FailedLoginController extends Controller
     public function index(Request $request)
     {
         $res['title'] = '';
-        $res['search']['ip'] =  $request->query('ip', false);
+        $res['search']['ip'] =  $request->query('ip', '');
         $res['search']['string'] = http_build_query($request->query());
-        $res['list'] = FailedLogin::when($res['search']['ip'],
-                            function ($query, $ip) {
-                                return $query->where('ip', 'like', '%' . $ip . '%');
+        $res['list'] = FailedLogin::when($res['search'],
+                            function ($query, $search) {
+                                if($search['ip']!==''){
+                                    $query->where('ip', 'like', '%' .$search['ip'] . '%');
+                                }
                             })
                         ->orderBy('id','desc')
                         ->Paginate(config('admin.perPage'))->withQueryString();

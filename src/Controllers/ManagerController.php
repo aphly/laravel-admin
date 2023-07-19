@@ -22,16 +22,17 @@ class ManagerController extends Controller
     public function index(Request $request)
     {
         $res['title']='';
-        $res['search']['username'] = $request->query('username',false);
-        $res['search']['status'] = $request->query('status',false);
+        $res['search']['username'] = $request->query('username','');
+        $res['search']['status'] = $request->query('status','');
         $res['search']['string'] = http_build_query($request->query());
-        $res['list'] = Manager::when($res['search']['username'],
-                            function($query,$username) {
-                                return $query->where('username', 'like', '%'.$username.'%');
-                            })
-                        ->when($res['search']['status'],
-                            function($query,$status) {
-                                return $query->where('status', '=', $status);
+        $res['list'] = Manager::when($res['search'],
+                            function($query,$search) {
+                                if($search['username']!==''){
+                                    $query->where('username', 'like', '%'.$search['username'].'%');
+                                }
+                                if($search['status']!==''){
+                                    $query->where('status',$search['status']);
+                                }
                             })
                         ->dataPerm(Manager::_uuid(),$this->roleLevelIds)
                         ->with('role')

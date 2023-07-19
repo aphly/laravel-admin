@@ -19,11 +19,13 @@ class ModuleController extends Controller
         $res['breadcrumb'] = Breadcrumb::render([
             ['name'=>$this->currArr['name'].'管理','href'=>$this->index_url]
         ]);
-        $res['search']['name'] = $request->query('name', false);
+        $res['search']['name'] = $request->query('name', '');
         $res['search']['string'] = http_build_query($request->query());
-        $res['list'] = Module::when($res['search']['name'],
-                            function ($query, $name) {
-                                return $query->where('name', 'like', '%' . $name . '%');
+        $res['list'] = Module::when($res['search'],
+                            function ($query, $search) {
+                                if($search['name']!==''){
+                                    $query->where('name', 'like', '%' . $search['name'] . '%');
+                                }
                             })
                         ->orderBy('sort', 'desc')
                         ->Paginate(config('admin.perPage'))->withQueryString();
@@ -84,15 +86,19 @@ class ModuleController extends Controller
     {
         $info = Module::where('id',$request->query('id',0))->first();
         if(!empty($info)){
-            if(class_exists($info->classname)){
-                $status = $request->query('status',0);
-                if($status){
-                    (new $info->classname)->install($info->id);
-                }else{
-                    (new $info->classname)->uninstall($info->id);
+            try{
+                if(class_exists($info->classname)){
+                    $status = $request->query('status',0);
+                    if($status){
+                        (new $info->classname)->install($info->id);
+                    }else{
+                        (new $info->classname)->uninstall($info->id);
+                    }
+                    $info->status=$status;
+                    $info->save();
                 }
-                $info->status=$status;
-                $info->save();
+            }catch (\Exception $e){
+                throw new ApiException(['code'=>0,'msg'=>'error','data'=>['redirect'=>$this->index_url]]);
             }
         }
         throw new ApiException(['code'=>0,'msg'=>'操作成功','data'=>['redirect'=>$this->index_url]]);

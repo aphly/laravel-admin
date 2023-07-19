@@ -17,11 +17,13 @@ class ConfigController extends Controller
 
     public function index(Request $request)
     {
-        $res['search']['name'] = $request->query('name', false);
+        $res['search']['name'] = $request->query('name', '');
         $res['search']['string'] = http_build_query($request->query());
-        $res['list'] = Config::when($res['search']['name'],
-                            function ($query, $name) {
-                                return $query->where('name', 'like', '%' . $name . '%');
+        $res['list'] = Config::when($res['search'],
+                            function ($query, $search) {
+                                if($search['name']!==''){
+                                    $query->where('name', 'like', '%' . $search['name'] . '%');
+                                }
                             })
                         ->with('module')
                         ->orderBy('id', 'desc')

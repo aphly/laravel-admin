@@ -22,11 +22,13 @@ class MsgController extends Controller
 
     public function index(Request $request)
     {
-        $res['search']['uuid'] = $request->query('uuid', false);
+        $res['search']['uuid'] = $request->query('uuid', '');
         $res['search']['string'] = http_build_query($request->query());
-        $res['list'] = Msg::when($res['search']['uuid'],
-                            function ($query, $uuid) {
-                                return $query->where('to_uuid', $uuid);
+        $res['list'] = Msg::when($res['search'],
+                            function ($query, $search) {
+                                if($search['uuid']!==''){
+                                    $query->where('to_uuid', $search['uuid']);
+                                }
                             })
                         ->with('user')->with('msgDetail')
                         ->orderBy('id', 'desc')

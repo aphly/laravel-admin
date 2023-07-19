@@ -21,11 +21,13 @@ class DictController extends Controller
         $res['breadcrumb'] = Breadcrumb::render([
             ['name'=>$this->currArr['name'].'管理','href'=>$this->index_url]
         ]);
-        $res['search']['name'] =  $request->query('name', false);
+        $res['search']['name'] =  $request->query('name', '');
         $res['search']['string'] = http_build_query($request->query());
-        $res['list'] = Dict::when($res['search']['name'],
-                            function ($query, $name) {
-                                return $query->where('name', 'like', '%' . $name . '%');
+        $res['list'] = Dict::when($res['search'],
+                            function ($query, $search) {
+                                if($search['name']!==''){
+                                    $query->where('name', 'like', '%' . $search['name'] . '%');
+                                }
                             })
                         ->with('module')
                         ->orderBy('id', 'desc')

@@ -22,12 +22,14 @@ class RoleController extends Controller
 
     public function index(Request $request)
     {
-        $res['search']['name'] = $request->query('name',false);
+        $res['search']['name'] = $request->query('name','');
         $res['search']['string'] = http_build_query($request->query());
-        $res['list'] = Role::when($res['search']['name'],
-                            function($query,$name) {
-                                return $query->where('name', 'like', '%'.$name.'%');
-                            })
+        $res['list'] = Role::when($res['search'],
+                        function ($query, $search) {
+                            if($search['name']!==''){
+                                $query->where('name', 'like', '%' . $search['name'] . '%');
+                            }
+                        })
                         ->with('module')
                         ->orderBy('sort', 'desc')->orderBy('id', 'desc')
                         ->Paginate(config('admin.perPage'))->withQueryString();

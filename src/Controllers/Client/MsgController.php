@@ -17,11 +17,13 @@ class MsgController extends Controller
 
     public function index(Request $request)
     {
-        $res['search']['viewed'] = $request->query('viewed', false);
+        $res['search']['viewed'] = $request->query('viewed', '');
         $res['search']['string'] = http_build_query($request->query());
-        $res['list'] = Msg::when($res['search']['viewed'],
-                            function ($query, $viewed) {
-                                return $query->where('viewed', $viewed);
+        $res['list'] = Msg::when($res['search'],
+                            function ($query, $search) {
+                                if($search['viewed']!==''){
+                                    $query->where('viewed', $search['viewed']);
+                                }
                             })
                         ->with('msgDetail')->where('status',1)->where('to_uuid',Manager::_uuid())
                         ->orderBy('id', 'desc')

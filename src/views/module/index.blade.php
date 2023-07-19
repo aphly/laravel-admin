@@ -49,12 +49,10 @@
                                 <a class="badge badge-info ajax_get" data-href="/admin/module/edit?id={{$v['id']}}">编辑</a>
                                 @if($v['id']==1)
                                 @else
-                                    @if(class_exists($v['classname']))
-                                        @if($v['status']==1)
-                                            <a class="badge badge-primary ajax_post" data-load="true" data-href="/admin/module/install?id={{$v['id']}}&status=0">卸载</a>
-                                        @else
-                                            <a class="badge badge-primary ajax_post" data-load="true" data-href="/admin/module/install?id={{$v['id']}}&status=1">安装</a>
-                                        @endif
+                                    @if($v['status']==1)
+                                        <a class="badge badge-primary ajax_post" data-load="true" data-href="/admin/module/install?id={{$v['id']}}&status=0">卸载</a>
+                                    @else
+                                        <a class="badge badge-primary ajax_post" data-load="true" data-href="/admin/module/install?id={{$v['id']}}&status=1">安装</a>
                                     @endif
                                 @endif
                             </li>

@@ -17,11 +17,13 @@ class UploadFileController extends Controller
     public function index(Request $request)
     {
         $res['title'] = '';
-        $res['search']['uuid'] = $request->query('uuid', false);
+        $res['search']['uuid'] = $request->query('uuid', '');
         $res['search']['string'] = http_build_query($request->query());
-        $res['list'] = UploadFile::when($res['search']['uuid'],
-                            function ($query, $uuid) {
-                                return $query->where('uuid', $uuid);
+        $res['list'] = UploadFile::when($res['search'],
+                            function ($query, $search) {
+                                if($search['uuid']!==''){
+                                    $query->where('uuid', $search['uuid']);
+                                }
                             })
                         ->dataPerm(Manager::_uuid(),$this->roleLevelIds)
                         ->orderBy('id','desc')

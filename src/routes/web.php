@@ -42,7 +42,7 @@ Route::middleware(['web'])->group(function () {
 
                 $route_arr = [
                     ['manager', '\ManagerController'], ['role', '\RoleController'], ['api', '\ApiController'],
-                    ['menu', '\MenuController'], ['banned', '\BannedController'], ['config', '\ConfigController'], ['module', '\ModuleController'],
+                    ['menu', '\MenuController'],  ['config', '\ConfigController'], ['module', '\ModuleController'],
                     ['dict', '\DictController'],  ['level', '\LevelController'],  ['notice', '\NoticeController'],  ['msg', '\MsgController']
                 ];
 

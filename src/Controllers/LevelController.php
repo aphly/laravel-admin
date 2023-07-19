@@ -17,13 +17,15 @@ class LevelController extends Controller
 
     public function index(Request $request)
     {
-        $res['search']['name'] = $request->query('name',false);
+        $res['search']['name'] = $request->query('name','');
         $res['search']['string'] = http_build_query($request->query());
         $res['list'] = LevelPath::leftJoin('admin_level as c1','c1.id','=','admin_level_path.level_id')
             ->leftJoin('admin_level as c2','c2.id','=','admin_level_path.path_id')
-            ->when($res['search']['name'],
-                function($query,$name) {
-                    return $query->where('c1.name', 'like', '%'.$name.'%');
+            ->when($res['search'],
+                function($query,$search) {
+                    if($search['name']!==''){
+                        $query->where('c1.name', 'like', '%'.$search['name'].'%');
+                    }
                 })
             ->groupBy('level_id')
             ->selectRaw('any_value(c1.`id`) AS id,any_value(admin_level_path.`level_id`) AS level_id,
