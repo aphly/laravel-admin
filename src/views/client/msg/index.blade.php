@@ -9,7 +9,7 @@
         <form method="get" action="/admin_client/msg/index" class="select_form">
         <div class="search_box ">
             <select name="viewed" >
-                <option value="0" >全部</option>
+                <option value="" >全部</option>
                 @foreach($dict['yes_no'] as $key=>$val)
                     <option value="{{$key}}" @if($res['search']['viewed']==$key) selected @endif>{{$val}}</option>
                 @endforeach

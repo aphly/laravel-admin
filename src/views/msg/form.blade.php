@@ -45,7 +45,7 @@
                 <label for="">是否查看</label>
                 <select name="viewed" class="form-control">
                     @foreach($dict['yes_no'] as $key=>$val)
-                        <option value="{{$key}}" @if($key==$res['info']->viewed || ($key==2 && !$res['info']->viewed)) selected @endif>{{$val}}</option>
+                        <option value="{{$key}}" @if($key==$res['info']->viewed || (!$key && !$res['info']->viewed)) selected @endif>{{$val}}</option>
                     @endforeach
                 </select>
                 <div class="invalid-feedback"></div>
