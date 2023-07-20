@@ -106,6 +106,10 @@ class InitController extends Controller
                 $data[] =['id'=>49,'name' => '错误修改','route' =>'admin/failed_login/edit','pid'=>48,'uuid'=>$manager->uuid,'type'=>3,'module_id'=>$this->module_id,'sort'=>0];
                 $data[] =['id'=>50,'name' => '错误删除','route' =>'admin/failed_login/del','pid'=>48,'uuid'=>$manager->uuid,'type'=>3,'module_id'=>$this->module_id,'sort'=>0];
 
+                $data[] =['id'=>51,'name' => '统计管理','route' =>'admin/statistics/index','pid'=>47,'uuid'=>$manager->uuid,'type'=>2,'module_id'=>$this->module_id,'sort'=>0];
+                $data[] =['id'=>52,'name' => '统计详情','route' =>'admin/statistics/detail','pid'=>51,'uuid'=>$manager->uuid,'type'=>3,'module_id'=>$this->module_id,'sort'=>0];
+                $data[] =['id'=>53,'name' => '统计删除','route' =>'admin/statistics/del','pid'=>51,'uuid'=>$manager->uuid,'type'=>3,'module_id'=>$this->module_id,'sort'=>0];
+
                 $data[] =['id'=>55,'name' => '文件管理','route' =>'admin/upload_file/index','pid'=>47,'uuid'=>$manager->uuid,'type'=>2,'module_id'=>$this->module_id,'sort'=>0];
                 $data[] =['id'=>56,'name' => '文件增加','route' =>'admin/upload_file/add','pid'=>55,'uuid'=>$manager->uuid,'type'=>3,'module_id'=>$this->module_id,'sort'=>0];
                 $data[] =['id'=>57,'name' => '文件修改','route' =>'admin/upload_file/edit','pid'=>55,'uuid'=>$manager->uuid,'type'=>3,'module_id'=>$this->module_id,'sort'=>0];

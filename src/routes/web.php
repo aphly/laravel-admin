@@ -79,6 +79,9 @@ Route::middleware(['web'])->group(function () {
 
                 Route::get('module/install', 'Aphly\LaravelAdmin\Controllers\ModuleController@install');
 
+                Route::get('statistics/index', 'Aphly\LaravelAdmin\Controllers\StatisticsController@index');
+                Route::get('statistics/detail', 'Aphly\LaravelAdmin\Controllers\StatisticsController@detail');
+                Route::post('statistics/del', 'Aphly\LaravelAdmin\Controllers\StatisticsController@del');
             });
         });
     });
