@@ -106,10 +106,6 @@ class InitController extends Controller
                 $data[] =['id'=>49,'name' => '错误修改','route' =>'admin/failed_login/edit','pid'=>48,'uuid'=>$manager->uuid,'type'=>3,'module_id'=>$this->module_id,'sort'=>0];
                 $data[] =['id'=>50,'name' => '错误删除','route' =>'admin/failed_login/del','pid'=>48,'uuid'=>$manager->uuid,'type'=>3,'module_id'=>$this->module_id,'sort'=>0];
 
-                $data[] =['id'=>51,'name' => '统计管理','route' =>'admin/statistics/index','pid'=>47,'uuid'=>$manager->uuid,'type'=>2,'module_id'=>$this->module_id,'sort'=>0];
-                $data[] =['id'=>52,'name' => '统计详情','route' =>'admin/statistics/detail','pid'=>51,'uuid'=>$manager->uuid,'type'=>3,'module_id'=>$this->module_id,'sort'=>0];
-                $data[] =['id'=>53,'name' => '统计删除','route' =>'admin/statistics/del','pid'=>51,'uuid'=>$manager->uuid,'type'=>3,'module_id'=>$this->module_id,'sort'=>0];
-
                 $data[] =['id'=>55,'name' => '文件管理','route' =>'admin/upload_file/index','pid'=>47,'uuid'=>$manager->uuid,'type'=>2,'module_id'=>$this->module_id,'sort'=>0];
                 $data[] =['id'=>56,'name' => '文件增加','route' =>'admin/upload_file/add','pid'=>55,'uuid'=>$manager->uuid,'type'=>3,'module_id'=>$this->module_id,'sort'=>0];
                 $data[] =['id'=>57,'name' => '文件修改','route' =>'admin/upload_file/edit','pid'=>55,'uuid'=>$manager->uuid,'type'=>3,'module_id'=>$this->module_id,'sort'=>0];
@@ -206,7 +202,9 @@ class InitController extends Controller
                 $data=[];
                 $data[] =['id'=>1,'name' => 'admin-mod','key' => 'admin','status'=>1,'sort'=>0,'classname'=>'-'];
                 $data[] =['id'=>2,'name' => 'common-mod','key' => 'common','status'=>0,'sort'=>0,'classname'=>'\Aphly\LaravelCommon\Models\Module'];
+                $data[] =['id'=>3,'name' => 'statistics-mod','key' => 'statistics','status'=>0,'sort'=>0,'classname'=>'\Aphly\LaravelStatistics\Models\Module'];
                 $data[] =['id'=>4,'name' => 'payment-mod','key' => 'payment','status'=>0,'sort'=>0,'classname'=>'\Aphly\LaravelPayment\Models\Module'];
+
                 $data[] =['id'=>101,'name' => 'novel-mod','key' => 'novel','status'=>0,'sort'=>0,'classname'=>'\Aphly\LaravelNovel\Models\Module'];
                 $data[] =['id'=>102,'name' => 'shop-mod','key' => 'shop','status'=>0,'sort'=>0,'classname'=>'\Aphly\LaravelShop\Models\Module'];
                 $data[] =['id'=>103,'name' => 'company-mod','key' => 'company','status'=>0,'sort'=>0,'classname'=>'\Aphly\LaravelCompany\Models\Module'];

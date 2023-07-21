@@ -22,13 +22,9 @@ mysql5.7+<br>
 'model' => Aphly\Laravel\Models\Manager::class
 ]`
 
-2、`www.xxxx.com/admin/init` 初始化 管理员帐户:admin 密码:admin
+2、`www.xxxx.com/admin/init` 初始化
 
 3、初始化完成后，将配置文件 config/admin.php  init设置为false
 
 4、`www.xxxx.com/admin/login` 后台登录地址
 
-
-
-![image](https://github.com/aphly/laravel-admin/blob/main/logo.png)
-因和谐原因，如果图片不显示，请修改本地hosts
