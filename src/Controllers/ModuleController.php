@@ -98,7 +98,7 @@ class ModuleController extends Controller
                     $info->save();
                 }
             }catch (\Exception $e){
-                throw new ApiException(['code'=>0,'msg'=>'error','data'=>['redirect'=>$this->index_url]]);
+                throw new ApiException(['code'=>0,'msg'=>$e->getMessage(),'data'=>['redirect'=>$this->index_url]]);
             }
         }
         throw new ApiException(['code'=>0,'msg'=>'操作成功','data'=>['redirect'=>$this->index_url]]);
