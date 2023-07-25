@@ -86,19 +86,19 @@ class ModuleController extends Controller
     {
         $info = Module::where('id',$request->query('id',0))->first();
         if(!empty($info)){
-            try{
-                if(class_exists($info->classname)){
-                    $status = $request->query('status',0);
+            if(class_exists($info->classname)){
+                $status = $request->query('status',0);
+                try{
                     if($status){
                         (new $info->classname)->install($info->id);
                     }else{
                         (new $info->classname)->uninstall($info->id);
                     }
-                    $info->status=$status;
-                    $info->save();
+                }catch (\Exception $e){
+                    throw new ApiException(['code'=>0,'msg'=>$e->getMessage(),'data'=>['redirect'=>$this->index_url]]);
                 }
-            }catch (\Exception $e){
-                throw new ApiException(['code'=>0,'msg'=>$e->getMessage(),'data'=>['redirect'=>$this->index_url]]);
+                $info->status=$status;
+                $info->save();
             }
         }
         throw new ApiException(['code'=>0,'msg'=>'操作成功','data'=>['redirect'=>$this->index_url]]);
