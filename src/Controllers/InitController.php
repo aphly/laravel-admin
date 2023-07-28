@@ -204,6 +204,7 @@ class InitController extends Controller
                 $data[] =['id'=>2,'name' => 'common-mod','key' => 'common','status'=>0,'sort'=>0,'classname'=>'\Aphly\LaravelCommon\Models\Module'];
                 $data[] =['id'=>3,'name' => 'statistics-mod','key' => 'statistics','status'=>0,'sort'=>0,'classname'=>'\Aphly\LaravelStatistics\Models\Module'];
                 $data[] =['id'=>4,'name' => 'payment-mod','key' => 'payment','status'=>0,'sort'=>0,'classname'=>'\Aphly\LaravelPayment\Models\Module'];
+                $data[] =['id'=>5,'name' => 'email-mod','key' => 'email','status'=>0,'sort'=>0,'classname'=>'\Aphly\LaravelEmail\Models\Module'];
 
                 $data[] =['id'=>101,'name' => 'novel-mod','key' => 'novel','status'=>0,'sort'=>0,'classname'=>'\Aphly\LaravelNovel\Models\Module'];
                 $data[] =['id'=>102,'name' => 'shop-mod','key' => 'shop','status'=>0,'sort'=>0,'classname'=>'\Aphly\LaravelShop\Models\Module'];
