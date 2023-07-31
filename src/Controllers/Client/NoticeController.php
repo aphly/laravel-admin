@@ -40,7 +40,7 @@ class NoticeController extends Controller
         $res['info'] = Notice::where('id',$request->query('id',0))->firstOrError();
         $res['breadcrumb'] = Breadcrumb::render([
             ['name'=>$this->currArr['name'],'href'=>$this->index_url],
-            ['name'=>'详情','href'=>'/admin_cm/'.$this->currArr['key'].'/detail?id='.$res['info']->id]
+            ['name'=>'详情','href'=>'/admin_client/'.$this->currArr['key'].'/detail?id='.$res['info']->id]
         ]);
         return $this->makeView('laravel-admin::client.notice.detail',['res'=>$res]);
     }
