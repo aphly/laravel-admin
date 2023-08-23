@@ -10,6 +10,11 @@ mysql5.7+<br>
 `php artisan vendor:publish --provider="Aphly\LaravelAdmin\AdminServiceProvider"` <br>
 `php artisan migrate` <br>
 
+需要oss 请自行添加<br>
+`"require": {
+"aliyuncs/oss-sdk-php": "~2.4"
+}`<br>
+
 1、config/auth.php<br>
 数组guards中 添加<br> 
 `'manager' => [
