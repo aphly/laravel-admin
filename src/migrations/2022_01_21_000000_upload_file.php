@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('path',255);
             $table->string('file_type',16);
             $table->unsignedInteger('file_size');
+            $table->tinyInteger('remote')->default(0);
             $table->unsignedBigInteger('created_at');
             $table->unsignedBigInteger('updated_at');
             $table->engine = 'InnoDB';
