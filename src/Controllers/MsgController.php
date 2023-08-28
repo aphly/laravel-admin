@@ -116,12 +116,12 @@ class MsgController extends Controller
         if($file){
             $UploadFile = (new UploadFile($this->imgSize));
             try{
-                $image = $UploadFile->upload($file,'public/editor_temp/msg');
+                $image = $UploadFile->upload($file,'public/editor_temp/msg','local');
             }catch(ApiException $e){
                 $err = ["errno"=>$e->code,"message"=>$e->msg];
                 return $err;
             }
-            $res = ["errno"=>0,"data"=>["url"=>$UploadFile->getPath($image,'local')]];
+            $res = ["errno"=>0,"data"=>["url"=>$UploadFile->getPath($image)]];
         }else{
             $res = ["errno"=>1,"data"=>[]];
         }
