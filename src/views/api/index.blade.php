@@ -13,7 +13,7 @@
             </div>
         </form>
         <div class="">
-            <a class="badge badge-primary ajax_get tree_div_btn" data-href="/admin/api/tree">树形</a>
+            <a class="badge badge-primary ajax_html tree_div_btn" data-href="/admin/api/tree">树形</a>
         </div>
     </div>
 
@@ -56,7 +56,7 @@
                                 @endif
                             </li>
                             <li>
-                                <a class="badge badge-info ajax_get" data-href="/admin/api/edit?id={{$v['id']}}">编辑</a>
+                                <a class="badge badge-info ajax_html" data-href="/admin/api/edit?id={{$v['id']}}">编辑</a>
                             </li>
                         </ul>
                     @endforeach

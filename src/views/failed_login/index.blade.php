@@ -39,7 +39,7 @@
                                 {{ $v['created_at'] }}
                             </li>
                             <li>
-                                <a class="badge badge-info ajax_get" data-href="/admin/failed_login/edit?id={{$v['id']}}">编辑</a>
+                                <a class="badge badge-info ajax_html" data-href="/admin/failed_login/edit?id={{$v['id']}}">编辑</a>
                             </li>
                         </ul>
                     @endforeach

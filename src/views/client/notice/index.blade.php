@@ -32,7 +32,7 @@
                         <li class="wenzi">{{$v['title']}}</li>
                         <li class="wenzi">{{$v['created_at']}}</li>
                         <li>
-                            <a class="badge badge-info ajax_get" data-href="/admin_client/notice/detail?id={{$v['id']}}">查看</a>
+                            <a class="badge badge-info ajax_html" data-href="/admin_client/notice/detail?id={{$v['id']}}">查看</a>
                         </li>
                     </ul>
                     @endforeach

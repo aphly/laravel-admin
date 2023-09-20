@@ -10,7 +10,7 @@
             </div>
         </form>
         <div class="">
-            <a data-href="/admin/role/add" class="badge badge-info ajax_get admin_right_btn">新增</a>
+            <a data-href="/admin/role/add" class="badge badge-info ajax_html admin_right_btn">新增</a>
         </div>
     </div>
 
@@ -45,9 +45,9 @@
                                 @endif
                             </li>
                             <li>
-                                <a class="badge badge-info ajax_get" data-href="/admin/role/edit?id={{$v['id']}}">编辑</a>
-                                <a class="badge badge-success ajax_get" data-href="/admin/role/menu?id={{$v['id']}}">菜单</a>
-                                <a class="badge badge-success ajax_get" data-href="/admin/role/api?id={{$v['id']}}">接口</a>
+                                <a class="badge badge-info ajax_html" data-href="/admin/role/edit?id={{$v['id']}}">编辑</a>
+                                <a class="badge badge-success ajax_html" data-href="/admin/role/menu?id={{$v['id']}}">菜单</a>
+                                <a class="badge badge-success ajax_html" data-href="/admin/role/api?id={{$v['id']}}">接口</a>
                             </li>
                         </ul>
                     @endforeach
