@@ -50,9 +50,9 @@
                                 @if($v['id']==1)
                                 @else
                                     @if($v['status']==1)
-                                        <a class="badge badge-danger ajax_request" data-load="true" data-href="/admin/module/install?id={{$v['id']}}&status=0">卸载</a>
+                                        <a class="badge badge-danger ajax_request" data-href="/admin/module/install?id={{$v['id']}}&status=0">卸载</a>
                                     @else
-                                        <a class="badge badge-primary ajax_request" data-load="true" data-href="/admin/module/install?id={{$v['id']}}&status=1">安装</a>
+                                        <a class="badge badge-primary ajax_request" data-href="/admin/module/install?id={{$v['id']}}&status=1">安装</a>
                                     @endif
                                 @endif
                             </li>
