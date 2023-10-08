@@ -10,7 +10,6 @@ use Aphly\Laravel\Models\ManagerRole;
 use Aphly\LaravelAdmin\Requests\LoginRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Cookie;
 
 class LoginController extends Controller
 {
@@ -48,7 +47,7 @@ class LoginController extends Controller
     public function logout(Request $request)
     {
         Auth::guard('manager')->logout();
-        Cookie::queue(Cookie::forget('role_id'));
+        session()->forget('role_id');
         throw new ApiException(['code'=>0,'msg'=>'成功退出','data'=>['redirect'=>'/admin/login']]);
     }
 
