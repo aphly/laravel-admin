@@ -14,7 +14,7 @@
         </div>
         </form>
         <div class="">
-            <a class="badge badge-primary ajax_html show_all0_btn" data-href="/admin/module/add">添加</a>
+            <a class="badge badge-primary ajax_html show_all0_btn d-none" data-href="/admin/module/add">添加</a>
         </div>
     </div>
 
@@ -25,18 +25,28 @@
                 <ul class="table_header">
                     <li >ID</li>
                     <li >模块名称</li>
-                    <li >key</li>
                     <li >状态</li>
                     <li >排序</li>
                     <li >操作</li>
                 </ul>
+                @if($res['unimport'])
+                    @foreach($res['unimport'] as $v)
+                    <ul class="table_tbody">
+                        <li ></li>
+                        <li >{{str_replace('Aphly\Laravel','',$v)}}</li>
+                        <li ><span class="badge badge-warning">未导入</span></li>
+                        <li >0</li>
+                        <li >
+                            <a class="badge badge-primary ajax_request" data-href="/admin/module/import?class={{$v}}">导入</a>
+                        </li>
+                    </ul>
+                    @endforeach
+                @endif
                 @if($res['list']->total())
                     @foreach($res['list'] as $v)
-
                         <ul class="table_tbody">
                             <li><input type="checkbox" class="delete_box" name="delete[]" value="{{$v['id']}}">{{$v['id']}}</li>
                             <li>{{ $v['name'] }}</li>
-                            <li>{{ $v['key'] }}</li>
                             <li>
                                 @if($v['status'])
                                     <span class="badge badge-success">已安装</span>
@@ -47,17 +57,13 @@
                             <li>{{$v['sort']}}</li>
                             <li>
                                 <a class="badge badge-info ajax_html" data-href="/admin/module/edit?id={{$v['id']}}">编辑</a>
-                                @if($v['id']==1)
+                                @if($v['status']==1)
+                                    <a class="badge badge-danger ajax_request" data-href="/admin/module/install?id={{$v['id']}}&status=0">卸载</a>
                                 @else
-                                    @if($v['status']==1)
-                                        <a class="badge badge-danger ajax_request" data-href="/admin/module/install?id={{$v['id']}}&status=0">卸载</a>
-                                    @else
-                                        <a class="badge badge-primary ajax_request" data-href="/admin/module/install?id={{$v['id']}}&status=1">安装</a>
-                                    @endif
+                                    <a class="badge badge-primary ajax_request" data-href="/admin/module/install?id={{$v['id']}}&status=1">安装</a>
                                 @endif
                             </li>
                         </ul>
-
                     @endforeach
                     <ul class="table_bottom">
                         <li>
@@ -71,7 +77,6 @@
                 @endif
             </div>
         </div>
-
     </form>
 </div>
 

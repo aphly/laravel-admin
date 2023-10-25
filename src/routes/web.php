@@ -78,7 +78,7 @@ Route::middleware(['web'])->group(function () {
                 Route::match(['post'],'msg/img', 'Aphly\LaravelAdmin\Controllers\MsgController@uploadImg');
 
                 Route::get('module/install', 'Aphly\LaravelAdmin\Controllers\ModuleController@install');
-
+                Route::get('module/import', 'Aphly\LaravelAdmin\Controllers\ModuleController@import');
 
             });
         });

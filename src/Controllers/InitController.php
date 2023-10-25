@@ -199,17 +199,17 @@ class InitController extends Controller
                 $data[] =['dict_id' => 6,'name'=>'按钮','value'=>'3'];
                 DB::table('admin_dict_value')->insert($data);
 
-                $data=[];
-                $data[] =['id'=>1,'name' => 'admin-mod','key' => 'admin','status'=>1,'sort'=>0,'classname'=>'-'];
-                $data[] =['id'=>2,'name' => 'common-mod','key' => 'common','status'=>0,'sort'=>0,'classname'=>'\Aphly\LaravelCommon\Models\Module'];
-                $data[] =['id'=>3,'name' => 'statistics-mod','key' => 'statistics','status'=>0,'sort'=>0,'classname'=>'\Aphly\LaravelStatistics\Models\Module'];
-                $data[] =['id'=>4,'name' => 'payment-mod','key' => 'payment','status'=>0,'sort'=>0,'classname'=>'\Aphly\LaravelPayment\Models\Module'];
-                $data[] =['id'=>5,'name' => 'email-mod','key' => 'email','status'=>0,'sort'=>0,'classname'=>'\Aphly\LaravelEmail\Models\Module'];
-
-                $data[] =['id'=>101,'name' => 'novel-mod','key' => 'novel','status'=>0,'sort'=>0,'classname'=>'\Aphly\LaravelNovel\Models\Module'];
-                $data[] =['id'=>102,'name' => 'shop-mod','key' => 'shop','status'=>0,'sort'=>0,'classname'=>'\Aphly\LaravelShop\Models\Module'];
-                $data[] =['id'=>103,'name' => 'company-mod','key' => 'company','status'=>0,'sort'=>0,'classname'=>'\Aphly\LaravelCompany\Models\Module'];
-                DB::table('admin_module')->insert($data);
+//                $data=[];
+//                $data[] =['id'=>1,'name' => 'admin-mod','key' => 'admin','status'=>1,'sort'=>0,'classname'=>'-'];
+//                $data[] =['id'=>2,'name' => 'common-mod','key' => 'common','status'=>0,'sort'=>0,'classname'=>'\Aphly\LaravelCommon\Models\Module'];
+//                $data[] =['id'=>3,'name' => 'statistics-mod','key' => 'statistics','status'=>0,'sort'=>0,'classname'=>'\Aphly\LaravelStatistics\Models\Module'];
+//                $data[] =['id'=>4,'name' => 'payment-mod','key' => 'payment','status'=>0,'sort'=>0,'classname'=>'\Aphly\LaravelPayment\Models\Module'];
+//                $data[] =['id'=>5,'name' => 'email-mod','key' => 'email','status'=>0,'sort'=>0,'classname'=>'\Aphly\LaravelEmail\Models\Module'];
+//
+//                $data[] =['id'=>101,'name' => 'novel-mod','key' => 'novel','status'=>0,'sort'=>0,'classname'=>'\Aphly\LaravelNovel\Models\Module'];
+//                $data[] =['id'=>102,'name' => 'shop-mod','key' => 'shop','status'=>0,'sort'=>0,'classname'=>'\Aphly\LaravelShop\Models\Module'];
+//                $data[] =['id'=>103,'name' => 'company-mod','key' => 'company','status'=>0,'sort'=>0,'classname'=>'\Aphly\LaravelCompany\Models\Module'];
+//                DB::table('admin_module')->insert($data);
 
                 return '初始化成功！超级管理员帐户:'.$post['username'].' 密码:'.$password.' 登录地址：admin/login';
             }else{

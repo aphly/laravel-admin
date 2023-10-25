@@ -14,6 +14,18 @@ class ModuleController extends Controller
 
     private $currArr = ['name'=>'模块','key'=>'module'];
 
+    function getAphly(){
+        $aphly = [];
+        $providers = config('app.providers');
+        foreach($providers as $provider){
+            if(preg_match('/^Aphly\\\\/',$provider) && !preg_match('/^Aphly\\\\Laravel\\\\/',$provider) && !preg_match('/^Aphly\\\\LaravelAdmin\\\\/',$provider)){
+                $r = strrchr($provider, '\\');
+                $aphly[] = str_replace($r,'',$provider);
+            }
+        }
+        return $aphly;
+    }
+
     public function index(Request $request)
     {
         $res['breadcrumb'] = Breadcrumb::render([
@@ -29,6 +41,14 @@ class ModuleController extends Controller
                             })
                         ->orderBy('sort', 'desc')
                         ->Paginate(config('admin.perPage'))->withQueryString();
+        $aphly = $this->getAphly();
+        $module = Module::get()->pluck('classname')->all();
+        $res['unimport'] = [];
+        foreach ($aphly as $val){
+            if(!in_array($val,$module)){
+                $res['unimport'][] = $val;
+            }
+        }
         return $this->makeView('laravel-admin::module.index', ['res' => $res]);
     }
 
@@ -49,6 +69,21 @@ class ModuleController extends Controller
 			return $this->makeView('laravel-admin::module.form',['res'=>$res]);
 		}
 	}
+
+    public function import(Request $request)
+    {
+        $input = $request->all();
+        if(!empty($input['class'])){
+            Module::create([
+                'name'=>str_replace('Aphly\Laravel','',$input['class']),
+                'classname'=>$input['class'],
+                'status'=>0,
+            ]);
+            Cache::forget('module');
+            throw new ApiException(['code'=>0,'msg'=>'success','data'=>['redirect'=>$this->index_url]]);
+        }
+        throw new ApiException(['code'=>1,'msg'=>'fail','data'=>['redirect'=>$this->index_url]]);
+    }
 
 	public function edit(Request $request)
 	{
@@ -86,13 +121,14 @@ class ModuleController extends Controller
     {
         $info = Module::where('id',$request->query('id',0))->first();
         if(!empty($info)){
-            if(class_exists($info->classname)){
+            $classname = '\\'.$info->classname.'\Models\Module';
+            if(class_exists($classname)){
                 $status = $request->query('status',0);
                 try{
                     if($status){
-                        (new $info->classname)->install($info->id);
+                        (new $classname)->install($info->id);
                     }else{
-                        (new $info->classname)->uninstall($info->id);
+                        (new $classname)->uninstall($info->id);
                     }
                 }catch (\Exception $e){
                     throw new ApiException(['code'=>0,'msg'=>$e->getMessage(),'data'=>['redirect'=>$this->index_url]]);

@@ -13,11 +13,6 @@
                 <div class="invalid-feedback"></div>
             </div>
             <div class="form-group">
-                <label for="">Key</label>
-                <input type="text" name="key" class="form-control " value="{{$res['info']->key}}">
-                <div class="invalid-feedback"></div>
-            </div>
-            <div class="form-group">
                 <label for="">Classname</label>
                 <input type="text" name="classname" class="form-control " value="{{$res['info']->classname}}">
                 <div class="invalid-feedback"></div>

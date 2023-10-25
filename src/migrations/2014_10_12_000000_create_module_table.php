@@ -16,7 +16,6 @@ return new class extends Migration
         Schema::create('admin_module', function (Blueprint $table) {
             $table->id();
             $table->string('name',64);
-            $table->string('key',64)->index();
             $table->string('classname',255);
             $table->tinyInteger('status')->nullable()->default(1);
             $table->integer('sort')->nullable()->default(0);
