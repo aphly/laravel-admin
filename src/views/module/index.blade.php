@@ -35,7 +35,7 @@
                         <li ></li>
                         <li >{{str_replace('Aphly\Laravel','',$v)}}</li>
                         <li ><span class="badge badge-warning">未导入</span></li>
-                        <li >0</li>
+                        <li ></li>
                         <li >
                             <a class="badge badge-primary ajax_request" data-href="/admin/module/import?class={{$v}}">导入</a>
                         </li>
