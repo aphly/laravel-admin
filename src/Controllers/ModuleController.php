@@ -90,7 +90,6 @@ class ModuleController extends Controller
 		$res['info'] = Module::where('id',$request->query('id',0))->firstOrError();
 		if($request->isMethod('post')){
 			$input = $request->all();
-			$input['key'] = trim($input['key']);
 			$res['info']->update($input);
 			Cache::forget('module');
 			throw new ApiException(['code' => 0, 'msg' => 'success', 'data' => ['redirect' => $this->index_url]]);
