@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Hash;
 class InitController extends Controller
 {
     public $level_id = 1;
-    public $module_id = 1;
+    public $module_id = 0;
 
     public function index()
     {
