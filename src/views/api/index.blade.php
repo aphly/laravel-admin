@@ -34,7 +34,7 @@
                     @foreach($res['list'] as $v)
                         <ul class="table_tbody">
                             <li><input type="checkbox" class="delete_box" name="delete[]" value="{{$v['id']}}">{{$v['id']}}</li>
-                            <li><span class="module_id badge">{{$v->module->name}}</span></li>
+                            <li><span class="module_id badge">{{$v->module->name??'-'}}</span></li>
                             <li>{{$v['name']}}</li>
                             <li>
                                 @if($v['type']==2)

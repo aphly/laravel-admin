@@ -10,6 +10,7 @@
             <div class="form-group">
                 <label for="">模块</label>
                 <select name="module_id" class="form-control">
+                    <option value="0" @if(!$res['info']->module_id) selected @endif>-</option>
                     @foreach($res['module'] as $key=>$val)
                         <option value="{{$key}}" @if($key==$res['info']->module_id) selected @endif>{{$val}}</option>
                     @endforeach

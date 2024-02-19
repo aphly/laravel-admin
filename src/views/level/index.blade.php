@@ -8,7 +8,7 @@
     <div class="itop ">
         <form method="get" action="/admin/level/index" class="select_form">
         <div class="search_box ">
-            <input type="search" name="name" placeholder="category name" value="{{$res['search']['name']}}">
+            <input type="search" name="name" placeholder="name" value="{{$res['search']['name']}}">
             <button class="" type="submit">搜索</button>
         </div>
         </form>

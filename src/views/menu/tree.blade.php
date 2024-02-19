@@ -20,6 +20,7 @@
                             <div class="form-group module_div">
                                 <label for="">模块</label>
                                 <select name="module_id" class="form-control">
+                                    <option value="0">-</option>
                                     @foreach($res['module'] as $key=>$val)
                                         <option value="{{$key}}">{{$val}}</option>
                                     @endforeach
