@@ -2,7 +2,7 @@
 
 namespace Aphly\LaravelAdmin\Controllers;
 
-use Aphly\Laravel\Controllers\AdminController;
+use Aphly\Laravel\Controllers\Admin\Controller as AdminController;
 use Illuminate\Support\Facades\Route;
 
 class Controller extends AdminController

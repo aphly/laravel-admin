@@ -13,10 +13,11 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('admin_module', function (Blueprint $table) {
+        Schema::create('admin_comm', function (Blueprint $table) {
             $table->id();
             $table->string('name',64);
-            $table->string('classname',255);
+            $table->string('host',128);
+            $table->string('auth_key',128);
             $table->tinyInteger('status')->nullable()->default(1);
             $table->integer('sort')->nullable()->default(0);
             $table->engine = 'InnoDB';
@@ -30,6 +31,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('admin_module');
+        Schema::dropIfExists('admin_comm');
     }
 };
