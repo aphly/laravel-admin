@@ -45,7 +45,7 @@
                                 <a class="badge badge-info ajax_html d-none" data-href="/admin/module/edit?id={{$v['id']}}">编辑</a>
                                 @if($v['id']!=1)
                                     @if($v['status']==1)
-                                        <a class="badge badge-danger ajax_request" data-load="/admin/comm/module?id={{$res['info']->id}}" data-href="{{$res['info']->host}}/comm/module/uninstall?id={{$v['id']}}&comm_id={{$res['info']->id}}&sign={{$res['sign']}}">卸载</a>
+                                        <a class="badge badge-danger ajax_request" data-confirm="true" data-load="/admin/comm/module?id={{$res['info']->id}}" data-href="{{$res['info']->host}}/comm/module/uninstall?id={{$v['id']}}&comm_id={{$res['info']->id}}&sign={{$res['sign']}}">卸载</a>
                                     @else
                                         <a class="badge badge-primary ajax_request" data-load="/admin/comm/module?id={{$res['info']->id}}" data-href="{{$res['info']->host}}/comm/module/install?id={{$v['id']}}&comm_id={{$res['info']->id}}&sign={{$res['sign']}}">安装</a>
                                     @endif
