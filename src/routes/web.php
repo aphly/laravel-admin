@@ -31,7 +31,6 @@ Route::middleware(['web'])->group(function () {
 
             Route::middleware(['rbac'])->group(function () {
                 Route::get('home/index', 'Aphly\LaravelAdmin\Controllers\HomeController@index');
-                Route::get('cache', 'Aphly\LaravelAdmin\Controllers\HomeController@cache');
 
                 $route_arr = [
                     ['manager', '\ManagerController'], ['role', '\RoleController'], ['api', '\ApiController'],
