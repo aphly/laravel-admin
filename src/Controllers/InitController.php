@@ -64,6 +64,7 @@ class InitController extends Controller
                     if ($menu2) {
                         Menu::create(['name' => '消息详情', 'route' => 'admin_client/msg/detail', 'pid' => $menu2->id, 'uuid' => $manager->uuid, 'type' => 3, 'module_id' => $module->id, 'sort' => 0]);
                     }
+
                 }
 
                 $menu = Menu::create(['name' => '系统管理', 'route' => '', 'pid' => 0, 'type' => 1, 'uuid' => $manager->uuid, 'module_id' => $module->id, 'sort' => 0]);
@@ -81,13 +82,13 @@ class InitController extends Controller
                             DB::table('admin_menu')->insert($data);
                         }
 
-                        $menu3 = Menu::create(['name' => '用户管理', 'route' => 'admin/manager/index', 'pid' => $menu2->id, 'uuid' => $manager->uuid, 'type' => 2, 'module_id' => $module->id, 'sort' => 99]);
+                        $menu3 = Menu::create(['name' => '管理员', 'route' => 'admin/manager/index', 'pid' => $menu2->id, 'uuid' => $manager->uuid, 'type' => 2, 'module_id' => $module->id, 'sort' => 99]);
                         if ($menu3) {
                             $data = [];
-                            $data[] = ['name' => '用户增加', 'route' => 'admin/manager/add', 'pid' => $menu3->id, 'uuid' => $manager->uuid, 'type' => 3, 'module_id' => $module->id, 'sort' => 99];
-                            $data[] = ['name' => '用户修改', 'route' => 'admin/manager/edit', 'pid' => $menu3->id, 'uuid' => $manager->uuid, 'type' => 3, 'module_id' => $module->id, 'sort' => 99];
-                            $data[] = ['name' => '用户删除', 'route' => 'admin/manager/del', 'pid' => $menu3->id, 'uuid' => $manager->uuid, 'type' => 3, 'module_id' => $module->id, 'sort' => 99];
-                            $data[] = ['name' => '用户角色', 'route' => 'admin/manager/role', 'pid' => $menu3->id, 'uuid' => $manager->uuid, 'type' => 3, 'module_id' => $module->id, 'sort' => 99];
+                            $data[] = ['name' => '管理员增加', 'route' => 'admin/manager/add', 'pid' => $menu3->id, 'uuid' => $manager->uuid, 'type' => 3, 'module_id' => $module->id, 'sort' => 99];
+                            $data[] = ['name' => '管理员修改', 'route' => 'admin/manager/edit', 'pid' => $menu3->id, 'uuid' => $manager->uuid, 'type' => 3, 'module_id' => $module->id, 'sort' => 99];
+                            $data[] = ['name' => '管理员删除', 'route' => 'admin/manager/del', 'pid' => $menu3->id, 'uuid' => $manager->uuid, 'type' => 3, 'module_id' => $module->id, 'sort' => 99];
+                            $data[] = ['name' => '管理员角色', 'route' => 'admin/manager/role', 'pid' => $menu3->id, 'uuid' => $manager->uuid, 'type' => 3, 'module_id' => $module->id, 'sort' => 99];
                             DB::table('admin_menu')->insert($data);
                         }
 
@@ -133,6 +134,27 @@ class InitController extends Controller
                             $data[] = ['name' => '通信修改', 'route' => 'admin/comm/edit', 'pid' => $menu3->id, 'uuid' => $manager->uuid, 'type' => 3, 'module_id' => $module->id, 'sort' => 0];
                             $data[] = ['name' => '通信删除', 'route' => 'admin/comm/del', 'pid' => $menu3->id, 'uuid' => $manager->uuid, 'type' => 3, 'module_id' => $module->id, 'sort' => 0];
                             $data[] = ['name' => '通信模块', 'route' => 'admin/comm/module', 'pid' => $menu3->id, 'uuid' => $manager->uuid, 'type' => 3, 'module_id' => $module->id, 'sort' => 0];
+                            DB::table('admin_menu')->insert($data);
+                        }
+
+                        $menu3 = Menu::create(['name' => '用户管理', 'route' => 'admin/user/index', 'pid' => $menu2->id, 'uuid' => $manager->uuid, 'type' => 2, 'module_id' => $module->id, 'sort' => 101]);
+                        if ($menu3) {
+                            $data=[];
+                            $data[] =['name' => '用户编辑','route' =>'admin/user/edit','pid'=>$menu3->id,'uuid'=>$manager->uuid,'type'=>3,'module_id'=>$module->id,'sort'=>0];
+                            $data[] =['name' => '用户密码','route' =>'admin/user/password','pid'=>$menu3->id,'uuid'=>$manager->uuid,'type'=>3,'module_id'=>$module->id,'sort'=>0];
+                            $data[] =['name' => '用户删除','route' =>'admin/user/del','pid'=>$menu3->id,'uuid'=>$manager->uuid,'type'=>3,'module_id'=>$module->id,'sort'=>0];
+                            $data[] =['name' => '用户头像','route' =>'admin/user/avatar','pid'=>$menu3->id,'uuid'=>$manager->uuid,'type'=>3,'module_id'=>$module->id,'sort'=>0];
+                            $data[] =['name' => '邮箱校验','route' =>'admin/user/verify','pid'=>$menu3->id,'uuid'=>$manager->uuid,'type'=>3,'module_id'=>$module->id,'sort'=>0];
+                            DB::table('admin_menu')->insert($data);
+                        }
+
+                        $menu3 = Menu::create(['name' => '导航管理', 'route' => 'admin/links/index', 'pid' => $menu2->id, 'uuid' => $manager->uuid, 'type' => 2, 'module_id' => $module->id, 'sort' => 0]);
+                        if ($menu3) {
+                            $data = [];
+                            $data[] = ['name' => '导航增加', 'route' => 'admin/links/add', 'pid' => $menu3->id, 'uuid' => $manager->uuid, 'type' => 3, 'module_id' => $module->id, 'sort' => 0];
+                            $data[] = ['name' => '导航修改', 'route' => 'admin/links/edit', 'pid' => $menu3->id, 'uuid' => $manager->uuid, 'type' => 3, 'module_id' => $module->id, 'sort' => 0];
+                            $data[] = ['name' => '导航删除', 'route' => 'admin/links/del', 'pid' => $menu3->id, 'uuid' => $manager->uuid, 'type' => 3, 'module_id' => $module->id, 'sort' => 0];
+                            $data[] = ['name' => '导航树形', 'route' => 'admin/links/tree', 'pid' => $menu3->id, 'uuid' => $manager->uuid, 'type' => 3, 'module_id' => $module->id, 'sort' => 0];
                             DB::table('admin_menu')->insert($data);
                         }
 

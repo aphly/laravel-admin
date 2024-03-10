@@ -36,7 +36,7 @@ Route::middleware(['web'])->group(function () {
                     ['manager', '\ManagerController'], ['role', '\RoleController'], ['api', '\ApiController'],
                     ['menu', '\MenuController'],  ['config', '\ConfigController'], ['module', '\ModuleController'],
                     ['dict', '\DictController'],  ['level', '\LevelController'],  ['notice', '\NoticeController'],
-                    ['msg', '\MsgController'],['comm', '\CommController'],
+                    ['msg', '\MsgController'],['comm', '\CommController'],['links','\LinksController']
                 ];
 
                 foreach ($route_arr as $val) {
@@ -68,12 +68,22 @@ Route::middleware(['web'])->group(function () {
                 Route::get('menu/tree', 'Aphly\LaravelAdmin\Controllers\MenuController@tree');
                 Route::get('level/tree', 'Aphly\LaravelAdmin\Controllers\LevelController@tree');
                 Route::get('level/rebuild', 'Aphly\LaravelAdmin\Controllers\LevelController@rebuild');
+                Route::get('links/tree', 'Aphly\LaravelAdmin\Controllers\LinksController@tree');
+
 
                 Route::match(['post'],'notice/img', 'Aphly\LaravelAdmin\Controllers\NoticeController@uploadImg');
                 Route::match(['post'],'msg/img', 'Aphly\LaravelAdmin\Controllers\MsgController@uploadImg');
 
                 Route::get('module/install', 'Aphly\LaravelAdmin\Controllers\ModuleController@install');
                 Route::get('module/import', 'Aphly\LaravelAdmin\Controllers\ModuleController@import');
+
+                Route::get('user/index', 'Aphly\LaravelAdmin\Controllers\UserController@index');
+                Route::match(['get', 'post'],'user/edit', 'Aphly\LaravelAdmin\Controllers\UserController@edit');
+                Route::match(['get', 'post'],'user/password', 'Aphly\LaravelAdmin\Controllers\UserController@password');
+                Route::post('user/del', 'Aphly\LaravelAdmin\Controllers\UserController@del');
+                Route::match(['get', 'post'],'user/avatar', 'Aphly\LaravelAdmin\Controllers\UserController@avatar');
+                Route::match(['get', 'post'],'user/verify', 'Aphly\LaravelAdmin\Controllers\UserController@verify');
+
 
             });
         });
